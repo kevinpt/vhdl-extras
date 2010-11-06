@@ -31,7 +31,7 @@
 --# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 --# DEALINGS IN THE SOFTWARE.
 --#
---# DEPENDENCIES: strings strings_maps strings_maps_constants characters_handling
+--# DEPENDENCIES: strings strings_maps strings_maps_constants
 --#
 --# DESCRIPTION:
 --#  This package provides a string library for operating on fixed length
@@ -151,8 +151,6 @@ package strings_fixed is
 
 end package;
 
-library extras;
-use extras.characters_handling.is_space;
 
 package body strings_fixed is
 
@@ -495,7 +493,7 @@ package body strings_fixed is
 
     ltrim := 0;
     for i in src'range loop
-      if not is_space(src(i)) then
+      if src(i) /= ' ' then -- not space
         ltrim := i;
         exit;
       end if;
@@ -507,7 +505,7 @@ package body strings_fixed is
     else
       rtrim := src'right;
       for i in src'reverse_range loop
-        if not is_space(src(i)) then
+        if src(i) /= ' ' then -- not space
           rtrim := i;
           exit;
         end if;

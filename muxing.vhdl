@@ -82,7 +82,8 @@ package body muxing is
   begin
 
     -- generate the one-hot vector from binary encoded Sel
-    result := (to_integer(Sel) => '1', others => '0');
+    result := (others => '0');
+    result(to_integer(Sel)) := '1';
     return result;
   end function;
 
@@ -119,7 +120,8 @@ package body muxing is
         & " is too big for the selection vector"
       severity failure;
 
-    pad_inputs := (inputs_asc'range => inputs_asc, others => '0');
+    pad_inputs := (others => '0');
+    pad_inputs(inputs_asc'range) := inputs_asc;
     result := pad_inputs(to_integer(Sel));
 
     return result;
@@ -137,19 +139,21 @@ package body muxing is
     return std_ulogic is
 
     constant SIZE : positive := Inputs'length;
-    assert One_hot_sel'length = SIZE
-      report "One_hot_sel does not match Inputs vector length"
-      severity failure;
 
     alias inputs_asc  : std_ulogic_vector(0 to SIZE-1) is Inputs;
     alias one_hot_asc : std_ulogic_vector(0 to SIZE-1) is One_hot_sel;
 
     variable and_stage : std_ulogic_vector(0 to SIZE-1);
 
-
     function or_reduce( v : std_ulogic_vector ) return std_ulogic is
       variable result : std_ulogic := '0';
     begin
+
+      assert One_hot_sel'length = SIZE
+        report "One_hot_sel does not match Inputs vector length"
+        severity failure;
+
+
       for i in v'range loop
         result := result or v(i);
       end loop;
@@ -163,7 +167,7 @@ package body muxing is
     and_stage := inputs_asc and one_hot_asc;
 
     -- OR stage
-    return := or_reduce(and_stage);
+    return or_reduce(and_stage);
   end function;
 
 
@@ -175,7 +179,8 @@ package body muxing is
   begin
 
     -- generate the decoded vector from binary encoded Sel
-    result := (to_integer(Sel) => Input, others => '0');
+    result := (others => '0');
+    result(to_integer(Sel)) := Input;
     return result;
   end function;
 
