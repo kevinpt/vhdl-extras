@@ -78,8 +78,10 @@ package sizing is
   --## Compute the number of bits needed to encode n items
   function encoding_size(n : positive) return natural;
 
-
-  alias unsigned_size is bit_size[natural return natural];
+  -- synthesis translate_off
+  -- Needed to keep Xilinx ISE 12.1 happy
+  --alias unsigned_size is bit_size[natural return natural];
+  -- synthesis translate_on
 
   --## Compute the total number of bits to represent a 2's complement signed
   --#  integer in binary
