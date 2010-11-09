@@ -108,6 +108,9 @@ The Code
                            simulation-only clock generation   
                            procedure.                         
 
+    *  timing_ops_xilinx.vhdl  A variant of timing_ops to use with
+                               Xilinx XST.
+
   EDAC
 
    Packages for performing error detection and correction.
