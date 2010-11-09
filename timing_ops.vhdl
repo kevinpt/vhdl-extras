@@ -77,7 +77,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 package timing_ops is
-  alias clock_cycles is natural;
+  subtype clock_cycles is natural;
 
   type frequency is range 0 to integer'high units
     Hz;
@@ -89,11 +89,14 @@ package timing_ops is
   --## Convert time to real
   function to_real( Tval : time ) return real;
 
-  --## Convert delay_length to frequency
+  --## Convert period to frequency
   function to_frequency( Period : delay_length ) return frequency;
 
-  --## Convert frequency to delay_length
-  function to_delay_length( Freq : frequency ) return delay_length;
+  --## Convert frequency to period
+  function to_period( Freq : frequency ) return delay_length;
+
+  --## Convert frequency to period
+  function to_period( Freq : real ) return delay_length;
 
   --## Compute clock cycles for the specified number of seconds using a clock
   --#  frequency as the time base
@@ -200,17 +203,23 @@ package body timing_ops is
     return real(Tval / min_time.tval) * min_time.rval;
   end function;
 
-  --## Convert delay_length to frequency
+  --## Convert period to frequency
   function to_frequency( Period : delay_length ) return frequency is
   begin
     return 1 Hz / to_real(Period);
   end function;
 
 
-  --## Convert frequency to delay_length
-  function to_delay_length( Freq : frequency ) return delay_length is
+  --## Convert frequency to period
+  function to_period( Freq : frequency ) return delay_length is
   begin
     return 1 sec / (Freq / Hz);
+  end function;
+
+  --## Convert frequency to period
+  function to_period( Freq : real ) return delay_length is
+  begin
+    return 1 sec / natural(Freq);
   end function;
 
 
@@ -303,7 +312,7 @@ package body timing_ops is
   procedure clock_gen( signal Clock : out std_ulogic; signal Stop_clock : in boolean;
     constant Clock_freq : in frequency; constant Duty : duty_cycle := 0.5 ) is
 
-    constant PERIOD : delay_length := to_delay_length(Clock_freq);
+    constant PERIOD : delay_length := to_period(Clock_freq);
     constant HIGH_TIME : delay_length := PERIOD * Duty;
     constant LOW_TIME  : delay_length := PERIOD - HIGH_TIME;
   begin
