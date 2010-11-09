@@ -56,14 +56,12 @@
 --#  -- counter will resize itself as MAX_COUNT is changed
 --------------------------------------------------------------------
 
-
 package sizing is
+  --## Compute the integeral result of the function floor(log(n)) where b is the base
+  function floor_log(n, b : positive) return natural;
 
   --## Compute the integral result of the function ceil(log(n)) where b is the base
   function ceil_log(n, b : positive) return natural;
-
-  --## Compute the integeral result of the function floor(log(n)) where b is the base
-  function floor_log(n, b : positive) return natural;
 
 
   --## Compute the integeral result of the function floor(log2(n))
