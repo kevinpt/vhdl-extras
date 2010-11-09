@@ -148,7 +148,7 @@ begin
 
   state_change <= '1' when to_x01(samples(3)) /= to_x01(samples(2)) else '0';
 
-  timer: process(Clock, Reset) is
+  timer: process(Clock, Reset, Stable_cycles) is
   begin
     if Reset = RESET_ACTIVE_LEVEL then
       count <= Stable_cycles;
@@ -226,7 +226,7 @@ begin
   sync: process(Clock, Reset) is
   begin
     if Reset = RESET_ACTIVE_LEVEL then
-      samples <= (others => (others => '0'));
+      samples <= (samples'range => (samples(1)'range => '0'));
     elsif rising_edge(Clock) then
       samples <= Noisy & samples(1 to 2);
     end if;
@@ -235,7 +235,7 @@ begin
   state_change <= '1' when
     or_reduce(to_x01(samples(3)) xor to_x01(samples(2))) = '1' else '0';
 
-  timer: process(Clock, Reset) is
+  timer: process(Clock, Reset, Stable_cycles) is
   begin
     if Reset = RESET_ACTIVE_LEVEL then
       count <= Stable_cycles;
