@@ -88,6 +88,9 @@ package timing_ops is
 
   --## Convert time to real
   function to_real( Tval : time ) return real;
+  
+  --## Convert frequency to real
+  function to_real( Freq : frequency ) return real;
 
   --## Convert period to frequency
   function to_frequency( Period : delay_length ) return frequency;
@@ -202,6 +205,13 @@ package body timing_ops is
 
     return real(Tval / min_time.tval) * min_time.rval;
   end function;
+
+  --## Convert frequency to real
+  function to_real( Freq : frequency ) return real is
+  begin
+    return real(Freq / Hz);
+  end function;
+
 
   --## Convert period to frequency
   function to_frequency( Period : delay_length ) return frequency is
