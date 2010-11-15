@@ -51,7 +51,7 @@
 --#    signal secded_word :
 --#      ecc_vector(word'high downto -secded_parity_size(WORD_MSG_SIZE));
 --#    ...
---#    secded_word <= secded_encode(word, WORD_MSG_SIZE);
+--#    secded_word <= secded_encode(word);
 --#    ... <SEU or transmission error flips a bit>
 --#    corrected_word <= secded_decode(hamming_word);
 --#    errors := secded_has_errors(secded_word);
@@ -81,7 +81,7 @@ package secded_edac is
 
   --## SECDED Encode, decode, and error checking functions with and without
   --#  use of shared logic.
-  function secded_encode(Data : std_ulogic_vector; Message_size : positive) return ecc_vector;
+  function secded_encode(Data : std_ulogic_vector ) return ecc_vector;
 
   function secded_encode( Data : std_ulogic_vector; Parity_bits : unsigned )
     return ecc_vector;
@@ -101,46 +101,45 @@ use extras.parity_ops.all;
 package body secded_edac is
 
   --## Determine the size of a message (data interleaved with parity) given
-  --#  the size of data to be protected. Note that this and secded_indices are
-  --#  the only functions in the package with a limit on the maximum size of
-  --#  data that can be handled. The MESSAGE_SIZE_TABLE constant in
-  --#  hamming_edac is currently defined with a max limit of 247 data bits. The
-  --#  constant MAX_TBL_PARITY can be increased to expand the table or this
-  --#  function can be bypassed with the message size determined without using
-  --#  code. The (7,4) code is the smallest practical Hamming code so attempts
-  --#  to use less than 4-bits of data will also cause a failure.
+  --#  the size of data to be protected.
   function secded_message_size( Data_size : positive ) return positive is
   begin
     return hamming_message_size(Data_size) + 1;
   end function;
 
+  --## Determine the number of parity bits for a given message size
   function secded_parity_size( Message_size : positive ) return positive is
   begin
-    return hamming_parity_size(Message_size) + 1;
+    return hamming_parity_size(Message_size-1) + 1;
   end function;
 
-
+  --## Return the left and right indices needed to declare an ecc_vector for the
+  --#  requested data size.
   function secded_indices( Data_size : positive ) return ecc_range is
     variable result : ecc_range;
   begin
     result.left  := Data_size - 1;
-    result.right := -secded_parity_size(hamming_message_size(Data_size));
+    result.right := -secded_parity_size(secded_message_size(Data_size));
 
     return result;
   end function;
 
-
-  function secded_encode(Data : std_ulogic_vector; Message_size : positive)
-    return ecc_vector is
-
-    variable result : ecc_vector(Data'length-1 downto -secded_parity_size(Message_size));
+  --## Encode the supplied data into an ecc_vector using Hamming code for
+  --#  the parity and an additional overall parity for SECDED. This version
+  --#  uses self contained logic.
+  function secded_encode(Data : std_ulogic_vector) return ecc_vector is
+    constant MSG_SIZE : positive := secded_message_size(Data'length);
+    variable result : ecc_vector(Data'length-1 downto -secded_parity_size(MSG_SIZE));
   begin
-    result(result'high downto result'low+1) := hamming_encode(Data, Message_size);
+    result(result'high downto result'low+1) := hamming_encode(Data);
     result(result'low) := parity(even, to_sulv(result(result'high downto result'low+1)));
 
     return result;
   end function;
 
+  --## Encode the supplied data into an ecc_vector using Hamming code for
+  --#  the parity and an additional overall parity for SECDED. This version
+  --#  depends on external logic to generate the Hamming parity bits.
   function secded_encode( Data : std_ulogic_vector; Parity_bits : unsigned )
     return ecc_vector is
 
@@ -154,13 +153,16 @@ package body secded_edac is
     return result;
   end function;
 
-
+  --## Decode an ecc_vector into the plain data bits, potentially correcting
+  --#  a single-bit error if a bit has flipped. This version uses self
+  --#  contained logic.
   function secded_decode( Encoded_data : ecc_vector ) return std_ulogic_vector is
   begin
     return hamming_decode(Encoded_data(Encoded_data'high downto Encoded_data'low+1));
   end function;
 
-
+  --## Test for a single-bit and double-bit errors in an ecc_vector. Returns
+  --#  true for each error type.
   function secded_has_errors( Encoded_data : ecc_vector ) return secded_errors is
     variable errors : secded_errors;
   begin
@@ -171,6 +173,9 @@ package body secded_edac is
     return errors;
   end function;
 
+  --## Test for a single-bit and double-bit errors in an ecc_vector. Returns
+  --#  true for each error type. This version depends on external logic to
+  --#  generate a syndrome.
   function secded_has_errors( Encoded_data : ecc_vector; Syndrome : unsigned )
     return secded_errors is
 
