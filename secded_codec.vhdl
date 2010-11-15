@@ -145,7 +145,7 @@ use extras.pipeline_pkg.all;
 
 architecture rtl of secded_codec is
 
-  constant MSG_SIZE : positive := hamming_message_size(Data'length);
+  constant MSG_SIZE : positive := secded_message_size(Data'length);
 
   subtype ecc_word is
     ecc_vector(Data'length-1 downto -secded_parity_size(MSG_SIZE));
