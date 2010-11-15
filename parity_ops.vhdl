@@ -46,8 +46,8 @@ package parity_ops is
 
   function parity( ptype : parity_kind; val : std_ulogic_vector ) return std_ulogic;
 
-  function check_parity( val : std_ulogic_vector; parity_bit : std_ulogic;
-    ptype : parity_kind ) return boolean;
+  function check_parity( ptype : parity_kind; val : std_ulogic_vector;
+    parity_bit : std_ulogic ) return boolean;
 
 end package;
 
@@ -78,9 +78,9 @@ package body parity_ops is
   end function;
 
 
-  --## Verify parity
-  function check_parity( val : std_ulogic_vector; parity_bit : std_ulogic;
-    ptype : parity_kind ) return boolean is
+  --## Verify parity. Returns true when parity matches, false for a mismatch.
+  function check_parity( ptype : parity_kind; val : std_ulogic_vector;
+    parity_bit : std_ulogic ) return boolean is
   begin
     return parity(ptype, val) = parity_bit;
   end function;
