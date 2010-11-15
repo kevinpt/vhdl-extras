@@ -46,12 +46,6 @@
 --#  they can handle. For practical reasons, these functions should not be used
 --#  with less than four data bits.
 --#
---#  The utility functions hamming_message_size and hamming_indices depend on
---#  data filled into a table MESSAGE_SIZE_TABLE. These functions are limited
---#  to the message sizes listed in the table. For larger messages you can
---#  either expand the table by increasing MAX_TBL_PARITY or manually compute
---#  the necessary message size.
---#
 --#  The layout of an ecc_vector is determined by its range. All objects of
 --#  this type must use a descending range with a positive upper bound and a
 --#  negative lower bound. Note that the conversion function to_ecc_vector does
@@ -102,7 +96,7 @@
 --#    signal hamming_word :
 --#      ecc_vector(word'high downto -hamming_parity_size(WORD_MSG_SIZE));
 --#    ...
---#    hamming_word <= hamming_encode(word, WORD_MSG_SIZE);
+--#    hamming_word <= hamming_encode(word);
 --#    ... <SEU or transmission error flips a bit>
 --#    corrected_word <= hamming_decode(hamming_word);
 --#    if hamming_has_error(hamming_word) then ... -- check for error
@@ -169,8 +163,7 @@ package hamming_edac is
 
   --## Hamming Encode, decode, and error checking functions with and without
   --#  use of shared logic.
-  function hamming_encode( Data : std_ulogic_vector; Message_size : positive )
-    return ecc_vector;
+  function hamming_encode( Data : std_ulogic_vector ) return ecc_vector;
   function hamming_encode( Data : std_ulogic_vector; Parity_bits : unsigned )
     return ecc_vector;
 
@@ -185,7 +178,7 @@ end package;
 
 
 library extras;
-use extras.sizing.ceil_log2;
+use extras.sizing.all;
 
 package body hamming_edac is
 
@@ -210,34 +203,34 @@ package body hamming_edac is
   end function;
 
 
-  type integer_vector is array( natural range <> ) of integer;
-
-  -- Set maximum number of parity bits for calculating values of
-  -- MESSAGE_SIZE_TABLE. This does not prevent using messages with more parity
-  -- bits but hamming_message_size and hamming_indices will fail and you will
-  -- have to compute the size on your own.
-  constant MAX_TBL_PARITY : positive := 8;
-
-  -- // Compute values for MESSAGE_SIZE_TABLE
-  -- /  The lower bound on data size is for a (7,4) code: 4 data, 3 parity
-  function init_size_table return  integer_vector is
-    variable table : integer_vector(4 to 2**MAX_TBL_PARITY - 1 - MAX_TBL_PARITY);
-  begin
-
-    for k in table'range loop
-      for p in 3 to MAX_TBL_PARITY loop
-        if k + p <= (2**p - 1) then -- these parity bits are sufficient
-          table(k) := k + p; -- store message size
-          exit;
-        end if;
-      end loop;
-    end loop;
-
-    return table;
-  end function;
-
-  constant MESSAGE_SIZE_TABLE : integer_vector(4 to 2**MAX_TBL_PARITY - 1 - MAX_TBL_PARITY)
-    := init_size_table;
+--   type integer_vector is array( natural range <> ) of integer;
+-- 
+--   -- Set maximum number of parity bits for calculating values of
+--   -- MESSAGE_SIZE_TABLE. This does not prevent using messages with more parity
+--   -- bits but hamming_message_size and hamming_indices will fail and you will
+--   -- have to compute the size on your own.
+--   constant MAX_TBL_PARITY : positive := 8;
+-- 
+--   -- // Compute values for MESSAGE_SIZE_TABLE
+--   -- /  The lower bound on data size is for a (7,4) code: 4 data, 3 parity
+--   function init_size_table return  integer_vector is
+--     variable table : integer_vector(4 to 2**MAX_TBL_PARITY - 1 - MAX_TBL_PARITY);
+--   begin
+-- 
+--     for k in table'range loop
+--       for p in 3 to MAX_TBL_PARITY loop
+--         if k + p <= (2**p - 1) then -- these parity bits are sufficient
+--           table(k) := k + p; -- store message size
+--           exit;
+--         end if;
+--       end loop;
+--     end loop;
+-- 
+--     return table;
+--   end function;
+-- 
+--   constant MESSAGE_SIZE_TABLE : integer_vector(4 to 2**MAX_TBL_PARITY - 1 - MAX_TBL_PARITY)
+--     := init_size_table;
 
 
 
@@ -287,26 +280,17 @@ package body hamming_edac is
 
 
   --## Determine the size of a message (data interleaved with parity) given
-  --#  the size of data to be protected. Note that this and hamming_indices are
-  --#  the only functions in the package with a limit on the maximum size of
-  --#  data that can be handled. The MESSAGE_SIZE_TABLE constant is currently
-  --#  defined with a max limit of 247 data bits. The constant MAX_TBL_PARITY
-  --#  can be increased to expand the table or this function can be bypassed
-  --#  with the message size determined without using code. The (7,4) code is
-  --#  the smallest practical Hamming code so attempts to use less than 4-bits
-  --#  of data will also cause a failure.
+  --#  the size of data to be protected.
   function hamming_message_size( Data_size : positive ) return positive is
+    variable psize : natural;
   begin
-    assert Data_size <= MESSAGE_SIZE_TABLE'high
-      report "Data size is too large for precomputed message sizing table." &
-             LF & "Derive the size manually or increase MAX_TBL_PARITY."
-      severity failure;
-
-    assert Data_size >= MESSAGE_SIZE_TABLE'low
-      report "Data size is too small for precomputed message sizing table"
-      severity failure;
-
-    return MESSAGE_SIZE_TABLE(Data_size);
+    psize := floor_log2(Data_size) + 1;
+    
+    if (2**psize - 1) - psize < Data_size then -- not enough parity bits
+      psize := psize + 1;
+    end if;
+    
+    return Data_size + psize;
   end function;
 
   --## Determine the number of parity bits for a given message size
@@ -420,13 +404,12 @@ package body hamming_edac is
 
 
   --## Encode the supplied data into an ecc_vector using Hamming code for
-  --#  the parity. This version uses self containted logic.
-  function hamming_encode( Data : std_ulogic_vector; Message_size : positive )
-    return ecc_vector is
-
+  --#  the parity. This version uses self contained logic.
+  function hamming_encode( Data : std_ulogic_vector ) return ecc_vector is
     alias data_desc : std_ulogic_vector(data'length-1 downto 0) is Data;
-
-    variable parity_bits : unsigned(hamming_parity_size(Message_size) downto 1);
+    
+    constant MSG_SIZE : positive := hamming_message_size(Data'length);
+    variable parity_bits : unsigned(hamming_parity_size(MSG_SIZE) downto 1);
 
     variable result : ecc_vector(Data'length-1 downto -parity_bits'length);
   begin
