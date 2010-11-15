@@ -127,7 +127,7 @@ begin
     if Reset = RESET_ACTIVE_LEVEL then
       sr <= (others => '0');
     elsif rising_edge(Clock) then
-      sr <= Bit_in & sr(1 to sr'right-1);
+      sr <= to_X01(Bit_in) & sr(1 to sr'right-1);
     end if;
   end process;
 
