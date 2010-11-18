@@ -34,7 +34,7 @@
 --# DEPENDENCIES: none
 --#
 --# DESCRIPTION:
---#  This package provided a component that implements the Wolfram Linear
+--#  This package provides a component that implements the Wolfram Linear
 --#  Cellular Automata Register (LCAR) as described in "Statistical Mechanics
 --#  of Cellular Automata", Wolfram 1983. The LCAR implemented in wolfram_lcar
 --#  uses rules 90 and 150 for each cell as defined by an input Rule_map where

@@ -203,37 +203,6 @@ package body hamming_edac is
   end function;
 
 
---   type integer_vector is array( natural range <> ) of integer;
--- 
---   -- Set maximum number of parity bits for calculating values of
---   -- MESSAGE_SIZE_TABLE. This does not prevent using messages with more parity
---   -- bits but hamming_message_size and hamming_indices will fail and you will
---   -- have to compute the size on your own.
---   constant MAX_TBL_PARITY : positive := 8;
--- 
---   -- // Compute values for MESSAGE_SIZE_TABLE
---   -- /  The lower bound on data size is for a (7,4) code: 4 data, 3 parity
---   function init_size_table return  integer_vector is
---     variable table : integer_vector(4 to 2**MAX_TBL_PARITY - 1 - MAX_TBL_PARITY);
---   begin
--- 
---     for k in table'range loop
---       for p in 3 to MAX_TBL_PARITY loop
---         if k + p <= (2**p - 1) then -- these parity bits are sufficient
---           table(k) := k + p; -- store message size
---           exit;
---         end if;
---       end loop;
---     end loop;
--- 
---     return table;
---   end function;
--- 
---   constant MESSAGE_SIZE_TABLE : integer_vector(4 to 2**MAX_TBL_PARITY - 1 - MAX_TBL_PARITY)
---     := init_size_table;
-
-
-
 -- PUBLIC:
 -- =======
 
