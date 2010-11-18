@@ -38,13 +38,28 @@
 --#  and convert between different representations. The clock_gen procedures
 --#  can be used to create a clock signal for simulation.
 --#
---#  NOTE: The to_clock_cycles functions can introduce rounding errors
---#  and produce a result that is slightly different from what would be
---#  expected assuming infinite precision. The magnitude of any errors
---#  will be small but they can accumulate over time if the results are
---#  used repetitively as in a delay counter. To help detect this situation
---#  the time_duration and report_time_precision routines can be used in
---#  simulation to indicate deviation from the requested time span.
+--#  A new physical type 'frequency' is introduced and conversions between time,
+--#  frequency, and real are provided. Functions to convert from time in these
+--#  representations to integral clock_cycles are also included. The conversion
+--#  from time to real uses an integral intermediate representation of time. It
+--#  is designed to compensate for tools that use 64-bit time and 32-bit
+--#  integers but only 32-bits of precision will be maintained in such cases.
+--#
+--#  The to_clock_cycles functions can introduce rounding errors and produce a
+--#  result that is different from what would be expected assuming infinite
+--#  precision. The magnitude of any errors will depend on how close the
+--#  converted time is to the clock period. To assist in controlling the
+--#  errors, a rounding_style parameter is available on all forms of
+--#  to_clock_cycles that use real as an intermediate type for the calculation.
+--#  It is set by default to round up toward infinity in anticipation that
+--#  these functions will most often be used to compute the minium number of
+--#  cycles for a delay. You can override this behavior to either round down or
+--#  maintain normal round to nearest for the conversion from real to
+--#  clock_cycles.
+--#
+--#  To help detect the effect of rounding errors the time_duration and
+--#  report_time_precision routines can be used in simulation to indicate
+--#  deviation from the requested time span.
 --#
 --# EXAMPLE USAGE:
 --#  library extras; use extras.sizing.bit_size; use extras.timing_ops.all;
@@ -85,6 +100,14 @@ package timing_ops is
     MHz = 1000 kHz;
     GHz = 1000 MHz;
   end units;
+  
+  type time_rounding is (
+    round_nearest, -- normal floating point round to nearest integer
+    round_inf,     -- round up to +infinity
+    round_neginf   -- round down to -infinity
+  );
+
+  constant TIME_ROUND_STYLE : time_rounding := round_inf;
 
   --## Convert time to real
   function to_real( Tval : time ) return real;
@@ -94,6 +117,9 @@ package timing_ops is
 
   --## Convert period to frequency
   function to_frequency( Period : delay_length ) return frequency;
+  
+  --## Convert period to frequency
+  function to_frequency( Period : real ) return frequency;
 
   --## Convert frequency to period
   function to_period( Freq : frequency ) return delay_length;
@@ -103,24 +129,33 @@ package timing_ops is
 
   --## Compute clock cycles for the specified number of seconds using a clock
   --#  frequency as the time base
-  function to_clock_cycles( Secs : delay_length; Clock_freq : frequency )
-    return clock_cycles;
-  function to_clock_cycles( Secs : delay_length; Clock_freq : real ) return clock_cycles;
-  function to_clock_cycles( Secs : real; Clock_freq : real ) return clock_cycles;
-  function to_clock_cycles( Secs : real; Clock_freq : frequency ) return clock_cycles;
+  function to_clock_cycles( Secs : delay_length; Clock_freq : frequency;
+    round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles;
+
+  function to_clock_cycles( Secs : delay_length; Clock_freq : real;
+    round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles;
+
+  function to_clock_cycles( Secs : real; Clock_freq : real;
+    round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles;
+
+  function to_clock_cycles( Secs : real; Clock_freq : frequency;
+    round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles;
 
   --## Compute clock cycles for the specified number of seconds using a clock
   --#  period as the time base
   function to_clock_cycles( Secs : delay_length; Clock_period : delay_length )
     return clock_cycles;
-  function to_clock_cycles( Secs : real; Clock_period : delay_length )
-    return clock_cycles;
+
+  function to_clock_cycles( Secs : real; Clock_period : delay_length;
+    round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles;
 
   --## Calculate the time span represented by a number of clock cycles
   function time_duration( Cycles : clock_cycles; Clock_freq : real )
     return delay_length;
+
   function time_duration( Cycles : clock_cycles; Clock_period : delay_length )
     return delay_length;
+
   function time_duration( Cycles : clock_cycles; Clock_freq : real )
     return real;
 
@@ -141,6 +176,7 @@ package timing_ops is
 
   procedure clock_gen( signal Clock : out std_ulogic; signal Stop_clock : in boolean;
     constant Clock_period : in delay_length; constant Duty : duty_cycle := 0.5 );
+
 end package;
 
 
@@ -186,6 +222,8 @@ package body timing_ops is
     return time_resolution'(1 ns, 1.0e-9);
   end function;
 
+  type tr_vector is array(time_rounding) of real;
+  constant ROUND_ADJ : tr_vector := (0.0, 0.5, -0.5);
 
 -- PUBLIC functions:
 -- =================
@@ -219,6 +257,12 @@ package body timing_ops is
     return 1 Hz / to_real(Period);
   end function;
 
+  --## Convert period to frequency
+  function to_frequency( Period : real ) return frequency is
+  begin
+    return 1 Hz / Period;
+  end function;
+
 
   --## Convert frequency to period
   function to_period( Freq : frequency ) return delay_length is
@@ -235,26 +279,28 @@ package body timing_ops is
 
   --## Compute clock cycles for the specified number of seconds using a clock
   --#  frequency as the time base
-  function to_clock_cycles( Secs : delay_length; Clock_freq : frequency )
-    return clock_cycles is
+  function to_clock_cycles( Secs : delay_length; Clock_freq : frequency;
+    round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles is
   begin
-    return clock_cycles(to_real(Secs) * real(Clock_freq / Hz));
+    return clock_cycles(to_real(Secs) * real(Clock_freq / Hz) + ROUND_ADJ(round_style));
   end function;
 
-  function to_clock_cycles( Secs : delay_length; Clock_freq : real )
-    return clock_cycles is
+  function to_clock_cycles( Secs : delay_length; Clock_freq : real;
+    round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles is
   begin
-    return clock_cycles(to_real(Secs) * Clock_freq);
+    return clock_cycles(to_real(Secs) * Clock_freq + ROUND_ADJ(round_style));
   end function;
 
-  function to_clock_cycles( Secs : real; Clock_freq : real ) return clock_cycles is
+  function to_clock_cycles( Secs : real; Clock_freq : real;
+    round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles is
   begin
-    return clock_cycles(Secs * Clock_freq);
+    return clock_cycles(Secs * Clock_freq + ROUND_ADJ(round_style));
   end function;
 
-  function to_clock_cycles( Secs : real; Clock_freq : frequency ) return clock_cycles is
+  function to_clock_cycles( Secs : real; Clock_freq : frequency;
+    round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles is
   begin
-    return clock_cycles(Secs * real(Clock_freq / Hz));
+    return clock_cycles(Secs * real(Clock_freq / Hz) + ROUND_ADJ(round_style));
   end function;
 
 
@@ -266,10 +312,10 @@ package body timing_ops is
     return clock_cycles(Secs / Clock_period);
   end function;
 
-  function to_clock_cycles( Secs : real; Clock_period : delay_length )
-    return clock_cycles is
+  function to_clock_cycles( Secs : real; Clock_period : delay_length;
+     round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles is
   begin
-    return clock_cycles(Secs / to_real(Clock_period));
+    return clock_cycles(Secs / to_real(Clock_period) + ROUND_ADJ(round_style));
   end function;
 
 
