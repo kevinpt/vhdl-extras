@@ -39,15 +39,18 @@
 --#  switches directly connected to a device. The glitch_filter component works
 --#  with a single std_ulogic signal while array_glitch_filter provides
 --#  filtering for a std_ulogic_vector. These components include synchronizing
---#  flip-flops and can be directly tied to input pads. It is assumed that the
---#  signal being recovered changes relatively slowly compared to the clock
---#  period. The filters come in two forms. One is controlled by a generic
---#  FILTER_CYCLES and the other dynamic versions have a signal Filter_cycles.
---#  These controls indicate the number of clock cycles the input(s) must
---#  remain stable before the filtered output register(s) are updated. The
---#  filtered output will lag the inputs by Filter_cycles+3 clock cycles. The
---#  dynamic versions can have their filter delay changed at any time if their
---#  Filter_cycles input is connected to a signal.
+--#  flip-flops and can be directly tied to input pads.
+--#
+--#  It is assumed that the signal being recovered changes relatively slowly
+--#  compared to the clock period. These filters come in two forms. One is
+--#  controlled by a generic FILTER_CYCLES and the other, dynamic versions have
+--#  a signal Filter_cycles. These controls indicate the number of clock cycles
+--#  the input(s) must remain stable before the filtered output register(s) are
+--#  updated. The filtered output will lag the inputs by Filter_cycles+3 clock
+--#  cycles. The dynamic versions can have their filter delay changed at any
+--#  time if their Filter_cycles input is connected to a signal. The minimum
+--#  pulse width that will pass through the filter will be Filter_cycles + 1
+--#  clock cycles wide.
 --#
 --# EXAMPLE USAGE:
 --#  library extras;
@@ -62,10 +65,10 @@
 --#    generic map (
 --#      FILTER_CYCLES => FILTER_CYCLES
 --#    ) port map (
---#      Clock         => clock,
---#      Reset         => reset,
---#      Noisy         => noisy,
---#      Filtered      => filtered
+--#      Clock    => clock,
+--#      Reset    => reset,
+--#      Noisy    => noisy,
+--#      Filtered => filtered
 --#    );
 --------------------------------------------------------------------
 
@@ -74,7 +77,8 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 package glitch_filter_pkg is
-
+  --## Basic glitch filter with a constant filter delay
+  --#  This version filters a single signal of std_ulogic
   component glitch_filter is
     generic (
       FILTER_CYCLES : positive; -- Number of clock cycles to filter
@@ -89,7 +93,8 @@ package glitch_filter_pkg is
     );
   end component;
 
-  component dynamic_glitch_filter is
+  --## Glitch filter with a dynamically alterable filter delay
+  --#  This version filters a single signal of std_ulogic  component dynamic_glitch_filter is
     generic (
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
@@ -105,7 +110,8 @@ package glitch_filter_pkg is
   end component;
 
 
-
+  --## Basic glitch filter with a constant filter delay
+  --#  This version filters an array of std_ulogic
   component array_glitch_filter is
     generic (
       FILTER_CYCLES : positive; -- Number of clock cycles to filter
@@ -120,6 +126,8 @@ package glitch_filter_pkg is
     );
   end component;
 
+  --## Glitch filter with a dynamically alterable filter delay
+  --#  This version filters an array of std_ulogic
   component dynamic_array_glitch_filter is
     generic (
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
@@ -162,6 +170,8 @@ library extras;
 use extras.sizing.bit_size;
 use extras.glitch_filter_pkg.dynamic_glitch_filter;
 
+--## Basic glitch filter with a constant filter delay
+--#  This version filters a single signal of std_ulogic
 architecture rtl of glitch_filter is
   constant TIMER_SIZE : positive := bit_size(FILTER_CYCLES);
   constant FILTER_CYCLES_UNS : unsigned(TIMER_SIZE-1 downto 0) :=
@@ -174,7 +184,7 @@ begin
     ) port map (
       Clock => Clock,
       Reset => Reset,
-      
+
       Filter_cycles => FILTER_CYCLES_UNS,
 
       Noisy    => Noisy,
@@ -187,6 +197,8 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+--## Glitch filter with a dynamically alterable filter delay
+--#  This version filters a single signal of std_ulogic
 entity dynamic_glitch_filter is
   generic (
     RESET_ACTIVE_LEVEL : std_ulogic := '1'
@@ -203,12 +215,12 @@ entity dynamic_glitch_filter is
 end entity;
 
 architecture rtl of dynamic_glitch_filter is
-  signal samples : std_ulogic_vector(1 to 3);
+  signal samples : std_ulogic_vector(1 to 3); -- shift register of sampled inputs
 
-  signal state_change : std_ulogic;
+  signal state_change : std_ulogic; -- flag for a change in the input state
 
-  signal count : unsigned(Filter_cycles'range);
-  signal timer_done : std_ulogic;
+  signal count : unsigned(Filter_cycles'range); -- timer count
+  signal timer_done : std_ulogic; -- timer flag
 
 begin
 
@@ -224,6 +236,9 @@ begin
 
   state_change <= '1' when to_x01(samples(3)) /= to_x01(samples(2)) else '0';
 
+  -- Run count down continuously. Reset count whenever a state change occurs.
+  -- If the count reaches 0 then the input has been stable for the requested
+  -- length of time.
   timer: process(Clock, Reset, Filter_cycles) is
   begin
     if Reset = RESET_ACTIVE_LEVEL then
@@ -240,6 +255,8 @@ begin
   timer_done <= '1' when count = (count'range => '0') else '0';
 
 
+  -- Update the filtered output whenever the input has been stable for enough
+  -- cycles.
   capture: process(Clock, Reset) is
   begin
     if Reset = RESET_ACTIVE_LEVEL then
@@ -259,6 +276,8 @@ end architecture;
 library ieee;
 use ieee.std_logic_1164.all;
 
+--## Basic glitch filter with a constant filter delay
+--#  This version filters an array of std_ulogic
 entity array_glitch_filter is
   generic (
     FILTER_CYCLES : positive; -- Number of clock cycles to filter
@@ -292,7 +311,7 @@ begin
     ) port map (
       Clock => Clock,
       Reset => Reset,
-      
+
       Filter_cycles => FILTER_CYCLES_UNS,
 
       Noisy    => Noisy,
@@ -305,6 +324,8 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+--## Glitch filter with a dynamically alterable filter delay
+--#  This version filters an array of std_ulogic
 entity dynamic_array_glitch_filter is
   generic (
     RESET_ACTIVE_LEVEL : std_ulogic := '1'
@@ -322,12 +343,12 @@ end entity;
 
 architecture rtl of dynamic_array_glitch_filter is
   type sample_reg is array (1 to 3) of std_ulogic_vector(Noisy'range);
-  signal samples : sample_reg;
+  signal samples : sample_reg; -- shift register of sampled inputs
 
-  signal state_change : std_ulogic;
+  signal state_change : std_ulogic; -- flag for a change in the input state
 
-  signal count : unsigned(Filter_cycles'range);
-  signal timer_done : std_ulogic;
+  signal count : unsigned(Filter_cycles'range); -- timer count
+  signal timer_done : std_ulogic; -- timer flag
 
   function or_reduce( v : std_ulogic_vector ) return std_ulogic is
     variable result : std_ulogic := '0';
@@ -357,6 +378,9 @@ begin
   state_change <= '1' when
     or_reduce(to_x01(samples(3)) xor to_x01(samples(2))) = '1' else '0';
 
+  -- Run count down continuously. Reset count whenever a state change occurs.
+  -- If the count reaches 0 then the input has been stable for the requested
+  -- length of time.
   timer: process(Clock, Reset, Filter_cycles) is
   begin
     if Reset = RESET_ACTIVE_LEVEL then
@@ -372,7 +396,8 @@ begin
 
   timer_done <= '1' when count = (count'range => '0') else '0';
 
-
+  -- Update the filtered output whenever the input has been stable for enough
+  -- cycles.
   capture: process(Clock, Reset) is
   begin
     if Reset = RESET_ACTIVE_LEVEL then
