@@ -38,12 +38,16 @@
 --#  and convert between different representations. The clock_gen procedures
 --#  can be used to create a clock signal for simulation.
 --#
---#  A new physical type 'frequency' is introduced and conversions between time,
---#  frequency, and real are provided. Functions to convert from time in these
---#  representations to integral clock_cycles are also included. The conversion
---#  from time to real uses an integral intermediate representation of time. It
---#  is designed to compensate for tools that use 64-bit time and 32-bit
---#  integers but only 32-bits of precision will be maintained in such cases.
+--#  Conversions between time and real (time and frequency) are provided.
+--#  Functions to convert from time in these three forms to integral
+--#  clock_cycles are also included. The conversion from time to real uses an
+--#  integral intermediate representation of time. It is designed to compensate
+--#  for tools that use 64-bit time and 32-bit integers but only 31-bits of
+--#  precision will be maintained in such cases.
+--#
+--#  For all conversion functions, real values of time are expressed in units
+--#  of seconds and real frequencies are in 1/sec. e.g. 1 ns = 1.0e-9,
+--#  1 MHz = 1.0e6.
 --#
 --#  The to_clock_cycles functions can introduce rounding errors and produce a
 --#  result that is different from what would be expected assuming infinite
@@ -62,7 +66,7 @@
 --#  deviation from the requested time span.
 --#
 --#  XILINX NOTE: This version of timing_ops is needed for synthesis with
---#  Xilinx XST. The physical type "frequency" and any associated functions have
+--#  Xilinx XST. The physical type 'frequency' and any associated functions have
 --#  been removed. The standard timing_ops package will still work with most
 --#  third party synthesizers when targeting Xilinx devices so consider using
 --#  it instead if XST is not being used.
@@ -108,10 +112,17 @@ package timing_ops is
 
   constant TIME_ROUND_STYLE : time_rounding := round_inf;
 
-  --## Convert time to real
+  --## Convert time to real time
   function to_real( Tval : time ) return real;
 
-  --## Convert frequency to period
+  --## Convert real frequency to real time
+  function to_real( Freq : real ) return real;
+
+
+  --## Convert real time to time
+  function to_time( Rval : real ) return time;
+
+  --## Convert real frequency to period
   function to_period( Freq : real ) return delay_length;
 
 
@@ -160,7 +171,7 @@ end package;
 
 
 library extras;
-use extras.sizing.ceil_log;
+use extras.sizing.ceil_log2;
 
 package body timing_ops is
 
@@ -202,32 +213,67 @@ package body timing_ops is
   end function;
 
   type tr_vector is array(time_rounding) of real;
-  constant ROUND_ADJ : tr_vector := (0.0, 0.5, -0.5);
+  constant ROUND_ADJ : tr_vector := (
+    round_nearest =>  0.0,
+    round_inf     =>  0.5,
+    round_neginf  => -0.5
+  );
 
 -- PUBLIC functions:
 -- =================
 
-  --## Convert time to real
+  --## Convert time to real time
   function to_real( Tval : time ) return real is
+    variable t : time := Tval;
     variable min_time : time_resolution := resolution_limit;
     variable scale    : positive;
+    variable large_time_adj : real := 1.0;
   begin
+
+    -- We need to work with positive time values.
+    if t < 0 sec then
+      t := -t;
+      large_time_adj := -1.0; -- This will restore the sign later.
+    end if;
+
     -- Make adjustment to min_time values to avoid overflow upon conversion
     -- from time to integer. This takes care of simulators with 64-bit time and
     -- 32-bit integers.
-    if Tval > (integer'high * min_time.tval) then
-      scale := ceil_log(Tval / (integer'high * min_time.tval), 10);
-      min_time := (min_time.tval * 10**scale, min_time.rval * 10.0**scale);
+    if t > (integer'high * min_time.tval) then -- too large for direct conversion
+
+      -- We need to keep the output of ceil_log2 at or below 30 to get working
+      -- integer exponentiation on 32-bit platforms. This requires t to be no
+      -- greater than time'high / 4  ((63 - log2(4)) - 31 = 30).
+      while t > time'high / 4 loop
+        t := t / 2;
+        large_time_adj := large_time_adj * 2.0;
+      end loop;
+      
+      scale := ceil_log2(t / (integer'high * min_time.tval));
+      min_time := (min_time.tval * 2**scale, min_time.rval * 2.0**scale);
     end if;
 
-    return real(Tval / min_time.tval) * min_time.rval;
+    return real(t / min_time.tval) * min_time.rval * large_time_adj;
   end function;
 
-  --## Convert frequency to period
+  --## Convert real frequency to real time
+  function to_real( Freq : real ) return real is
+  begin
+    return 1.0 / Freq;
+  end function;
+
+  --## Convert real time to time
+  function to_time( Rval : real ) return time is
+  begin
+    return Rval * 1 sec;
+  end function;
+
+  --## Convert real frequency to period
   function to_period( Freq : real ) return delay_length is
   begin
-    return 1 sec / natural(Freq);
+    return 1 sec / Freq;
   end function;
+
 
   --## Compute clock cycles for the specified number of seconds using a clock
   --#  frequency as the time base
