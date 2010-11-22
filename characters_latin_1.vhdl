@@ -31,6 +31,19 @@
 --# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 --# DEALINGS IN THE SOFTWARE.
 --#
+--# This package is derived from the Ada 95 Reference Manual (ARM):
+--# <ARM copyright terms>
+--#   Copyright © 1992, 1993, 1994, 1995, Intermetrics, Inc.
+--#   This copyright is assigned to the U.S. Government. All rights reserved.
+--#
+--#   This document may be copied, in whole or in part, in any form or by any
+--#   means, as is or with alterations, provided that (1) alterations are
+--#   clearly marked as alterations and (2) this copyright notice is included
+--#   unmodified in any copy. Compiled copies of standard library units and
+--#   examples need not contain this copyright notice so long as the notice is
+--#   included in all copies of source code and documentation.
+--# <end ARM copyright terms>
+--#
 --# DEPENDENCIES: none
 --#
 --# DESCRIPTION:
