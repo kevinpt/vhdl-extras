@@ -31,7 +31,7 @@
 --# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 --# DEALINGS IN THE SOFTWARE.
 --#
---# DEPENDENCIES: secded_edac pipeline_pkg sizing hamming_edac parity_ops
+--# DEPENDENCIES: secded_edac pipelining sizing hamming_edac parity_ops
 --#
 --# DESCRIPTION:
 --#  This package provides a component that implements SECDED EDAC as a
@@ -141,7 +141,7 @@ library extras;
 use extras.hamming_edac.all;
 use extras.secded_edac.all;
 use extras.secded_codec_pkg.all;
-use extras.pipeline_pkg.all;
+use extras.pipelining.all;
 
 architecture rtl of secded_codec is
 
