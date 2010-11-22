@@ -431,9 +431,10 @@ package body hamming_edac is
       )) & '0';
 
     -- If a single bit has flipped the syndrome indicates which one it is
-    -- otherwise it indicates 0 which is out dummy.
+    -- otherwise it indicates 0 which is our dummy.
     perfect_msg(to_integer(syndrome)) := not perfect_msg(to_integer(syndrome));
 
+    -- Slice off the extra bits and deinterleave.
     return hamming_deinterleave(perfect_msg(msg'range));
   end function;
 
@@ -457,6 +458,7 @@ package body hamming_edac is
     -- otherwise it indicates 0 which is our dummy.
     perfect_msg(to_integer(syndrome)) := not perfect_msg(to_integer(syndrome));
 
+    -- Slice off the extra bits and deinterleave.
     return hamming_deinterleave(perfect_msg(msg'range));
   end function;
 
