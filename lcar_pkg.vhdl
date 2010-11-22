@@ -239,7 +239,7 @@ package body lcar_pkg is
   function next_wolfram_lcar(State, Rule_map : std_ulogic_vector;
     Left_in, Right_in : std_ulogic := '0' ) return std_ulogic_vector is
 
-    alias sr : std_ulogic_vector(1 to State'length-1) is State;
+    alias sr : std_ulogic_vector(1 to State'length) is State;
     variable fb : std_ulogic_vector(sr'range);
   begin
    fb := sr and Rule_map; -- '1' -> rule 150, '0' -> rule 90
