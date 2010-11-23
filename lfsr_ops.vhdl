@@ -7,7 +7,7 @@
 --                           =====     /                          --
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
---# lfsr_pkg.vhdl - Linear Feedback Shift Registers
+--# lfsr_ops.vhdl - Linear Feedback Shift Registers
 --# $Id$
 --# Freely available from VHDL-extras (http://vhdl-extras.org)
 --#
@@ -129,7 +129,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-package lfsr_pkg is
+package lfsr_ops is
 
   type lfsr_coefficients is array(natural range <>) of natural;
 
@@ -207,7 +207,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 library extras;
-use extras.lfsr_pkg.all;
+use extras.lfsr_ops.all;
 
 --## Basic Galois LFSR. With Maximal length coefficients it will cycle through
 --#  (2**n)-1 states
@@ -274,7 +274,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 library extras;
-use extras.lfsr_pkg.all;
+use extras.lfsr_ops.all;
 
 entity fibonacci_lfsr is
   generic (
@@ -326,7 +326,7 @@ begin
 end architecture;
 
 
-package body lfsr_pkg is
+package body lfsr_ops is
 
 -- PRIVATE functions:
 -- ==================

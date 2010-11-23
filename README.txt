@@ -85,7 +85,7 @@ The Code
                            decoders, and demultiplexers.       
 
                            Configurable pipeline registers for 
-    *  pipeline_pkg.vhdl   use with automated retiming during  
+    *  pipelining.vhdl     use with automated retiming during  
                            synthesis.                          
 
                            A set of functions for computing                      
@@ -149,14 +149,14 @@ The Code
 
                      An implementation of the Wolfram Linear                     
                      Cellular Automata. This is useful for          
-    *  lcar_pkg.vhdl generating pseudo-random numbers with low       
+    *  lcar_ops.vhdl generating pseudo-random numbers with low       
                      correlation between bits. Adaptable to any     
                      number of cells. Constants are provided for    
                      maximal length sequences of up to 100 bits.    
 
                      Various implementations of Galois and          
                      Fibonacci Linear Feedback Shift Registers.     
-    *  lfsr_pkg.vhdl These adapt to any size register. Coefficients 
+    *  lfsr_ops.vhdl These adapt to any size register. Coefficients 
                      are provided for maximal length sequences up   
                      to 100 bits.                                   
 
@@ -195,8 +195,8 @@ The Code
 
    Additional packages of useful functions.
 
-    *  glitch_filter.vhdl A configurable filter for removing                     
-                          spurious transitions from noisy inputs.   
+    *  glitch_filtering.vhdl A configurable filter for removing                     
+                             spurious transitions from noisy inputs.
 
 Licensing
 
