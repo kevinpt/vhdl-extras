@@ -58,14 +58,29 @@
 --#  provided elsewhere in the VHDL-extras library. It produces more suitable
 --#  randomness in its state register without the correlation between
 --#  neighboring bits that the LFSR implementations do. However, these LFSRs
---#  are sufficient for producing a pseudo-random signal from a single bit.
+--#  are sufficient for producing a pseudo-random signal on a single bit.
 --#
---#  The entities use unconstrained arrays for the state register and the
---#  tap_map. They can implement an LFSR of any size from 2-bits and up. The
---#  only requirement is that the tap_map be one bit shorter than the state
---#  register since it works on the "spaces" between the register bits. The
---#  code is written with the intent of using 1-based ascending ranges for the
---#  arrays but any ranges will work correctly.
+--#  The LFSRs are each implemented in function that dteremines the next state
+--#  of the LFSR based on the current state. These functions have two
+--#  configuration parameters: Kind and Full_cycle.
+--#
+--#  The Kind parameter specifies whether to implement a normal circuit with
+--#  XORs or to invert the logic and use XNORs. The difference between the two
+--#  is that for 'normal', the all-0's state is inacessible while for
+--#  'inverted' the all-1's state is inaccessible. If the LFSR is initialized
+--#  in these inaccessible states it will be unable to change states.
+--#
+--#  The other parameter, Full_cycle, will add logic to make the invalid states
+--#  reachable. When a maximal length polynomial is used, normally only 2**n-1
+--#  states are reachable. With Full_cycle true, the LFSR will enter all 2**n
+--#  possible states.
+--#
+--#  The functions use unconstrained arrays for the state and tap_map. They can
+--#  implement an LFSR of any size from 2-bits and up. The only requirement is
+--#  that the tap_map be one bit shorter than the state register since it works
+--#  on the "spaces" between the register bits. The code is written with the
+--#  intent of using 1-based ascending ranges for the arrays but any ranges
+--#  will work correctly.
 --#
 --#  A table of coefficients for maximal length polynomials covering 2 to
 --#  100-bit LFSRs is provided in LFSR_COEFF_TABLE. You can use these to
@@ -81,6 +96,34 @@
 --#  true. For the complete implementations only the initial reset value is
 --#  changed as they can recover from an all 0's state with their existing
 --#  logic.
+--#
+--# EXAMPLE USAGE:
+--#    signal state, statec : std_ulogic_vector(1 to 8);
+--#    constant TAP_MAP : std_ulogic_vector(1 to state'length-1) :=
+--#      to_tap_map(state'length-1, LFSR_COEFF_TABLE(state'length));
+--#    ...
+--#    state <= next_galois_lfsr(state, TAP_MAP, inverted, Full_cycle => true);
+--#    ...
+--#    gl: galois_lfsr
+--#      generic map (
+--#        INIT_ZERO  => true,
+--#        FULL_CYCLE => true
+--#      ) port map (
+--#        Clock   => clock,
+--#        Reset   => reset,
+--#        Enable  => enable,
+--#        Tap_map => TAP_MAP,
+--#        State   => statec
+--#      );
+--#
+--#  Generate taps for any arbitrary polynomial:
+--#    -- G(x) = x**11 + x**9 + x**8 + x**7 + x**2 + 1  (CRC-11)
+--#    signal crc_state : std_ulogic_vector(1 to 11);
+--#    signal crc_taps  : std_ulogic_vector(1 to crc_state'length-1);
+--#    ...
+--#    -- Discard the default feedback/forward taps:
+--#    --                x**9 + x**8 + x**7 + x**2
+--#    crc_taps <= to_tap_map((9, 8, 7, 2), crc_taps'length);
 --------------------------------------------------------------------
 
 library ieee;
@@ -95,13 +138,25 @@ package lfsr_pkg is
 
   --## Convert a coefficient list to an expanded vector with a '1' in the place
   --#  of each coefficient.
-  function to_tap_map(map_length : positive; c : lfsr_coefficients) return std_ulogic_vector;
+  function to_tap_map( C : lfsr_coefficients; Map_length : positive;
+    Reverse : boolean := false ) return std_ulogic_vector;
 
-  --## Basic Galois LFSR. With Maximal length coefficients it will cycle through
-  --#  (2**n)-1 states
+  type lfsr_kind is (normal, inverted);
+
+  function next_galois_lfsr( State : std_ulogic_vector; Tap_map : std_ulogic_vector;
+    constant Kind : lfsr_kind := normal; constant Full_cycle : boolean := false )
+    return std_ulogic_vector;
+
+  function next_fibonacci_lfsr( State : std_ulogic_vector; Tap_map : std_ulogic_vector;
+    constant Kind : lfsr_kind := normal; constant Full_cycle : boolean := false )
+    return std_ulogic_vector;
+
+  --## Galois LFSR. With Maximal length coefficients it will cycle through
+  --#  (2**n)-1 states when FULL_CYCLE = false, 2**n when true.
   component galois_lfsr is
     generic (
-      INIT_ZERO : boolean := false;
+      INIT_ZERO  : boolean := false;
+      FULL_CYCLE : boolean := false;
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
@@ -114,28 +169,12 @@ package lfsr_pkg is
     );
   end component;
 
-  --## Complete Galois LFSR. With Maximal length coefficients it will cycle
-  --#  through 2**n states
-  component galois_lfsr_complete is
-    generic (
-      INIT_ZERO : boolean := false;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
-    );
-    port (
-      Clock  : in std_ulogic;
-      Reset  : in std_ulogic; -- Asynchronous reset
-      Enable : in std_ulogic; -- Synchronous enable
-
-      Tap_map : in std_ulogic_vector; -- '1' for taps that receive feedback
-      State   : out std_ulogic_vector -- The LFSR state register
-    );
-  end component;
-
-  --## Basic Fibonacci LFSR. With Maximal length coefficients it will cycle through
-  --#  (2**n)-1 states
+  --## Fibonacci LFSR. With Maximal length coefficients it will cycle through
+  --#  (2**n)-1 states when FULL_CYCLE = false, 2**n states when true.
   component fibonacci_lfsr is
     generic (
-      INIT_ZERO : boolean := false;
+      INIT_ZERO  : boolean := false;
+      FULL_CYCLE : boolean := false;
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
@@ -144,23 +183,6 @@ package lfsr_pkg is
       Enable : in std_ulogic; -- Synchronous enable
 
       Tap_map : in std_ulogic_vector; -- '1' for taps that receive feedback
-      State   : out std_ulogic_vector -- The LFSR state register
-    );
-  end component;
-
-  --## Complete Fibonacci LFSR. With Maximal length coefficients it will cycle
-  --#  through 2**n states
-  component  fibonacci_lfsr_complete is
-    generic (
-      INIT_ZERO : boolean := false;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
-    );
-    port (
-      Clock  : in std_ulogic;
-      Reset  : in std_ulogic; -- Asynchronous reset
-      Enable : in std_ulogic; -- Synchronous enable
-
-      Tap_map : in std_ulogic_vector; -- '1' for taps that generate feedback
       State   : out std_ulogic_vector -- The LFSR state register
     );
   end component;
@@ -184,11 +206,15 @@ end package;
 library ieee;
 use ieee.std_logic_1164.all;
 
+library extras;
+use extras.lfsr_pkg.all;
+
 --## Basic Galois LFSR. With Maximal length coefficients it will cycle through
 --#  (2**n)-1 states
 entity galois_lfsr is
   generic (
-    INIT_ZERO : boolean := false;
+    INIT_ZERO  : boolean := false;
+    FULL_CYCLE : boolean := false;
     RESET_ACTIVE_LEVEL : std_ulogic := '1'
   );
   port (
@@ -210,7 +236,6 @@ begin
     severity failure;
 
   reg: process(Clock, Reset)
-    variable fb : std_ulogic_vector(Tap_map'range);
   begin
     if Reset = RESET_ACTIVE_LEVEL then
       if INIT_ZERO then
@@ -220,82 +245,12 @@ begin
       end if;
     elsif rising_edge(Clock) then
       if Enable = '1' then
-        fb := (others => sr(sr'right)); -- replicate the feedback bit to all taps
-
         if INIT_ZERO then
-          sr <= sr(sr'right) & (sr(1 to sr'right-1) xnor (fb and Tap_map)); -- right shift
+          sr <= next_galois_lfsr(sr, Tap_map, inverted, FULL_CYCLE);
         else
-          sr <= sr(sr'right) & (sr(1 to sr'right-1) xor (fb and Tap_map)); -- right shift
+          sr <= next_galois_lfsr(sr, Tap_map, normal, FULL_CYCLE);
         end if;
-      end if;
-    end if;
-  end process;
 
-  State <= sr;
-end architecture;
-
-
-library ieee;
-use ieee.std_logic_1164.all;
-
---## Alternate Galois LFSR that will provide complete state coverage when used
---#  with maximal length coefficients by inserting an all-zeros state.
-entity galois_lfsr_complete is
-  generic (
-    INIT_ZERO : boolean := false;
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
-  );
-  port (
-    Clock  : in std_ulogic;
-    Reset  : in std_ulogic; -- Asynchronous reset
-    Enable : in std_ulogic; -- Synchronous enable
-
-    Tap_map : in std_ulogic_vector; -- '1' for taps that receive feedback
-    State   : out std_ulogic_vector -- The LFSR state register
-  );
-end entity;
-
-architecture rtl of galois_lfsr_complete is
-  signal sr : std_ulogic_vector(1 to State'length);
-
-  function or_reduce( v : std_ulogic_vector ) return std_ulogic is
-    variable result : std_ulogic := '0';
-  begin
-    for i in v'range loop
-      result := result or v(i);
-    end loop;
-
-    return result;
-  end function;
-
-begin
-
-  assert Tap_map'length = State'length-1
-    report "Tap_map must be one bit shorter than the state register"
-    severity failure;
-
-  reg: process(Clock, Reset)
-    variable all_zero, fb_bit : std_ulogic;
-    variable fb : std_ulogic_vector(Tap_map'range);
-  begin
-    if Reset = RESET_ACTIVE_LEVEL then
-      if INIT_ZERO then
-        sr <= (others => '0');
-      else
-        sr <= (others => '1');
-      end if;
-    elsif rising_edge(Clock) then
-      if Enable = '1' then
-        -- detect all zeros and generate a '1'
-        all_zero := not or_reduce(sr(1 to sr'right-1));
-        -- Insert XOR after the right most register. This will cause the
-        -- the insertion of the all-zeros state when the current state is
-        -- "00...01".
-        fb_bit := all_zero xor sr(sr'right);
-
-        fb := (others => fb_bit); -- replicate the feedback bit to all taps
-
-        sr <= fb_bit & (sr(1 to sr'right-1) xor (fb and Tap_map)); -- right shift
       end if;
     end if;
   end process;
@@ -318,9 +273,13 @@ end architecture;
 library ieee;
 use ieee.std_logic_1164.all;
 
+library extras;
+use extras.lfsr_pkg.all;
+
 entity fibonacci_lfsr is
   generic (
-    INIT_ZERO : boolean := false;
+    INIT_ZERO  : boolean := false;
+    FULL_CYCLE : boolean := false;
     RESET_ACTIVE_LEVEL : std_ulogic := '1'
   );
   port (
@@ -344,8 +303,6 @@ begin
     severity failure;
 
   reg: process(Clock, Reset)
-    variable taps : std_ulogic_vector(Tap_map'range);
-    variable fb : std_ulogic;
   begin
     if Reset = RESET_ACTIVE_LEVEL then
       if INIT_ZERO then
@@ -355,20 +312,12 @@ begin
       end if;
     elsif rising_edge(Clock) then
       if Enable = '1' then
-        taps := sr(2 to sr'right) and Tap_map; -- select active taps
-
-        fb := sr(1); -- bit-1 is always in the feedback path
-
-        -- XOR the taps together. In synthesis, unused taps will optimize away.
-        for i in taps'range loop
-          fb := fb xor taps(i);
-        end loop;
-
-        if INIT_ZERO then -- feedback XNOR
-          fb := not fb;
+        if INIT_ZERO then
+          sr <= next_fibonacci_lfsr(sr, Tap_map, inverted, FULL_CYCLE);
+        else
+          sr <= next_fibonacci_lfsr(sr, Tap_map, normal, FULL_CYCLE);
         end if;
 
-        sr <= sr(2 to sr'right) & fb; -- left shift and append feedback
       end if;
     end if;
   end process;
@@ -377,28 +326,10 @@ begin
 end architecture;
 
 
-library ieee;
-use ieee.std_logic_1164.all;
+package body lfsr_pkg is
 
---## Basic Fibonacci LFSR. With Maximal length coefficients it will cycle through
---#  (2**n)-1 states
-entity fibonacci_lfsr_complete is
-  generic (
-    INIT_ZERO : boolean := true;
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
-  );
-  port (
-    Clock  : in std_ulogic;
-    Reset  : in std_ulogic; -- Asynchronous reset
-    Enable : in std_ulogic; -- Synchronous enable
-
-    Tap_map : in std_ulogic_vector; -- '1' for taps that generate feedback
-    State   : out std_ulogic_vector -- The LFSR state register
-  );
-end entity;
-
-architecture rtl of fibonacci_lfsr_complete is
-  signal sr : std_ulogic_vector(1 to State'length);
+-- PRIVATE functions:
+-- ==================
 
   function or_reduce( v : std_ulogic_vector ) return std_ulogic is
     variable result : std_ulogic := '0';
@@ -410,66 +341,159 @@ architecture rtl of fibonacci_lfsr_complete is
     return result;
   end function;
 
-begin
-  assert Tap_map'length = State'length-1
-    report "Tap_map must be one bit shorter than the state register"
-    severity failure;
-
-  reg: process(Clock, Reset)
-    variable taps : std_ulogic_vector(Tap_map'range);
-    variable all_zero, fb : std_ulogic;
+  function and_reduce( v : std_ulogic_vector ) return std_ulogic is
+    variable result : std_ulogic := '1';
   begin
-    if Reset = RESET_ACTIVE_LEVEL then
-      if INIT_ZERO then
-        sr <= (others => '0');
-      else
-        sr <= (others => '1');
-      end if;
-    elsif rising_edge(Clock) then
-      if Enable = '1' then
-
-        taps := sr(2 to sr'right) and Tap_map; -- select active taps
-
-        -- detect all zeros and generate a '1'
-        all_zero := not or_reduce(sr(2 to sr'right));
-        -- Insert XOR after the left most register. This will cause the
-        -- the insertion of the all-zeros state when the current state is
-        -- "10...00".
-        fb := all_zero xor sr(1);
-
-        -- XOR the taps together. In synthesis, unused taps will optimize away.
-        for i in taps'range loop
-          fb := fb xor taps(i);
-        end loop;
-
-        sr <= sr(2 to sr'right) & fb; -- left shift and append feedback
-      end if;
-    end if;
-  end process;
-
-  State <= sr;
-end architecture;
-
-
-
-package body lfsr_pkg is
-
-  --## Convert a coefficient list to an expanded vector with a '1' in the place
-  --#  of each coefficient.
-  function to_tap_map(map_length : positive; c : lfsr_coefficients) return std_ulogic_vector is
-    variable tm : std_ulogic_vector(0 to map_length) := (others => '0');
-  begin
-
-    for i in c'range loop
-      tm(c(i)) := '1';
+    for i in v'range loop
+      result := result and v(i);
     end loop;
 
-    return tm(1 to tm'high); -- slice off dummy bit-0
+    return result;
   end function;
 
 
-  -- A table of coefficients that produce maximal length sequences. The table
-  -- index corresponds to the length of the shift register.
+-- PUBLIC functions:
+-- =================
+
+  function next_galois_lfsr( State : std_ulogic_vector; Tap_map : std_ulogic_vector;
+    constant Kind : lfsr_kind := normal; constant Full_cycle : boolean := false )
+    return std_ulogic_vector is
+
+    alias sr : std_ulogic_vector(1 to State'length) is State;
+    
+    variable extra_state, fb_bit : std_ulogic;
+
+    variable fb : std_ulogic_vector(Tap_map'range);
+    variable result : std_ulogic_vector(sr'range);
+  begin
+
+  -- Galois LFSR structure:
+  --
+  --  .->[1]-X--[2]--X-[3]-...-X-[n]-->--.
+  --  |      ^       ^         ^         |
+  --  |      |       |         |         |
+  --  |      *-tm(1) *-tm(2)   *-tm(n-1) |
+  --  |__/___|_______|_____..._|____/____|
+  --     \                          \
+  --
+  --  X = XOR   * = AND   [n] = bit-n of state register   tm(n) = tap_map bit-n
+
+    if Full_cycle = false then -- Plain feedback
+      -- For maximal length polymonials, the LFSR will skip one state:
+      --   all-'0's for normal, all-'1's for inverted
+      fb_bit := sr(sr'right);
+    else
+      -- Insert an extra state so maximal length polynomials will cover all states
+      if Kind = normal then
+        -- Detect when all but the right most bit is a '0'
+        extra_state := not or_reduce(sr(1 to sr'right-1));
+      else -- inverted
+        -- Detect when all but the right most bit is a '1'
+        extra_state := and_reduce(sr(1 to sr'right-1));
+      end if;
+
+      -- Invert the feedback bit to enter and exit the inserted state
+      fb_bit := extra_state xor sr(sr'right);
+    end if;
+
+    fb := (others => fb_bit); -- Replicate the feedback bit to all taps
+    
+    if Kind = normal then
+      result := fb_bit & (sr(1 to sr'right-1) xor (fb and Tap_map)); -- right shift
+    else
+      result := fb_bit & (sr(1 to sr'right-1) xnor (fb or not Tap_map)); -- right shift
+    end if;
+
+    return result;
+  end function;
+
+
+  function next_fibonacci_lfsr( State : std_ulogic_vector; Tap_map : std_ulogic_vector;
+    constant Kind : lfsr_kind := normal; constant Full_cycle : boolean := false )
+    return std_ulogic_vector is
+
+    alias sr : std_ulogic_vector(1 to State'length) is State;
+    
+    variable extra_state, fb_bit : std_ulogic;
+    
+    variable taps : std_ulogic_vector(Tap_map'range);
+    variable result : std_ulogic_vector(sr'range);
+  begin
+  -- Fibonacci LFSR Structure:
+  --
+  --  .-<-[1]-.--[2]--.-[3]-...-.-[n]<----.
+  --  |       |       |         |         |
+  --  |       v       v         v         |
+  --  |       *-tm(1) *-tm(2)   *-tm(n-1) |
+  --  |       |       |         |         |
+  --  '--->---X-------X-----...-X--->-----'
+  --
+  --  X = XOR   * = AND   [n] = bit-n of state register   tm(n) = tap_map bit-n
+
+    if Full_cycle = false then -- Plain feedback
+      -- For maximal length polymonials, the LFSR will skip one state:
+      --   all-'0's for normal, all-'1's for inverted
+      fb_bit := sr(1); -- bit-1 is always in the feedback path
+    else
+      -- Insert an extra state so maximal length polynomials will cover all states
+      if Kind = normal then
+        -- Detect when all but the right most bit is a '0'
+        extra_state := not or_reduce(sr(2 to sr'right));
+      else -- inverted
+        -- Detect when all but the right most bit is a '1'
+        extra_state := and_reduce(sr(2 to sr'right));     
+      end if;
+
+       -- Invert the feedback bit to enter and exit the inserted state     
+      fb_bit := extra_state xor sr(1);
+    end if;
+
+    taps := sr(2 to sr'right) and Tap_map; -- select active taps
+
+    -- XOR the taps together. In synthesis, unused taps will optimize away.
+    for i in taps'range loop
+      fb_bit := fb_bit xor taps(i);
+    end loop;
+
+    if Kind = inverted then -- switch to XNOR
+      fb_bit := not fb_bit;
+    end if;
+  
+    result := sr(2 to sr'right) & fb_bit; -- left shift and append feedback
+    return result;
+  end function;
+
+
+  --## Convert a coefficient list to an expanded vector with a '1' in the place
+  --#  of each coefficient.
+  function to_tap_map( C : lfsr_coefficients; Map_length : positive;
+    Reverse : boolean := false ) return std_ulogic_vector is
+
+    variable tm : std_ulogic_vector(0 to Map_length) := (others => '0');
+    variable tm_d : std_ulogic_vector(tm'reverse_range);
+  begin
+
+    for i in C'range loop
+      tm(C(i)) := '1';
+    end loop;
+
+    if Reverse = false then -- keep ascending range
+      return tm(1 to tm'high); -- slice off dummy bit-0
+
+    else -- reverse bits for descending range 
+
+      for i in tm'range loop
+        tm_d(i) := tm(i);
+      end loop;
+
+      return tm_d(tm_d'high downto 1); -- slice off dummy bit-0
+    end if;
+  end function;
+
+
+  -- The following is a table of coefficients that produce maximal length
+  -- sequences. The table index corresponds to the length of the shift
+  -- register.
   
   -- These coefficients are taken from  primitive polynomials listed in
   -- "Built-in Test for VLSI: Pseudorandom Techniques" Bardell, McAnney, and
