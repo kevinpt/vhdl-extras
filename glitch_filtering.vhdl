@@ -95,6 +95,7 @@ package glitch_filtering is
 
   --## Glitch filter with a dynamically alterable filter delay
   --#  This version filters a single signal of std_ulogic  component dynamic_glitch_filter is
+  component dynamic_glitch_filter is
     generic (
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
