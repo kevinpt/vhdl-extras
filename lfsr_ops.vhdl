@@ -8,7 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# lfsr_ops.vhdl - Linear Feedback Shift Registers
---# $Id$
+--# $Id: lfsr_ops.vhdl,v 3e6683f29597 2010/11/23 04:26:40 vhdl $
 --# Freely available from VHDL-extras (http://vhdl-extras.org)
 --#
 --# Copyright © 2010 Kevin Thibedeau
@@ -100,7 +100,7 @@
 --# EXAMPLE USAGE:
 --#    signal state, statec : std_ulogic_vector(1 to 8);
 --#    constant TAP_MAP : std_ulogic_vector(1 to state'length-1) :=
---#      to_tap_map(state'length-1, LFSR_COEFF_TABLE(state'length));
+--#      lfsr_taps(state'length);
 --#    ...
 --#    state <= next_galois_lfsr(state, TAP_MAP, inverted, Full_cycle => true);
 --#    ...
@@ -133,13 +133,14 @@ package lfsr_ops is
 
   type lfsr_coefficients is array(natural range <>) of natural;
 
-  type coefficient_list is array(natural range <>) of lfsr_coefficients(1 to 3);
-  constant LFSR_COEFF_TABLE : coefficient_list; -- defined below in the body
-
   --## Convert a coefficient list to an expanded vector with a '1' in the place
   --#  of each coefficient.
   function to_tap_map( C : lfsr_coefficients; Map_length : positive;
     Reverse : boolean := false ) return std_ulogic_vector;
+
+  --## Lookup a predefined tap coefficients from the table
+  function lfsr_taps( Size : positive ) return std_ulogic_vector;
+
 
   type lfsr_kind is (normal, inverted);
 
@@ -470,7 +471,7 @@ package body lfsr_ops is
     Reverse : boolean := false ) return std_ulogic_vector is
 
     variable tm : std_ulogic_vector(0 to Map_length) := (others => '0');
-    variable tm_d : std_ulogic_vector(tm'reverse_range);
+    variable tm_d : std_ulogic_vector(tm'high downto tm'low);
   begin
 
     for i in C'range loop
@@ -503,6 +504,7 @@ package body lfsr_ops is
   -- simplify the sharing between the Galois and Fibonacci implementations. The
   -- 0's that appear in the following list are dummy placeholders needed to pad
   -- out arrays with only one or two taps.
+  type coefficient_list is array(natural range <>) of lfsr_coefficients(1 to 3);
 
   constant LFSR_COEFF_TABLE : coefficient_list(2 to 100) := (
     (1,0,0),   -- 2
@@ -605,5 +607,17 @@ package body lfsr_ops is
     (47,45,2), -- 99
     (37,0,0)   -- 100
   );
+
+  --## Lookup a predefined tap coefficients from the table
+  function lfsr_taps( Size : positive ) return std_ulogic_vector is
+    variable result : std_ulogic_vector(1 to Size-1);
+  begin
+    assert (Size >= LFSR_COEFF_TABLE'low) and (Size <= LFSR_COEFF_TABLE'high)
+      report "Size is out of range for predefined LCAR rules"
+      severity failure;
+    
+    result := to_tap_map(LFSR_COEFF_TABLE(Size), Size - 1);
+    return result;
+  end function;
 
 end package body;
