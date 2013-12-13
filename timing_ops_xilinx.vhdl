@@ -8,7 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# timing_ops_xilinx.vhdl - Routines for time calculations; Xilinx version
---# $Id$
+--# $Id: timing_ops_xilinx.vhdl,v 79136e58c064 2010/11/22 11:40:06 vhdl $
 --# Freely available from VHDL-extras (http://vhdl-extras.org)
 --#
 --# Copyright © 2010 Kevin Thibedeau
@@ -74,10 +74,10 @@
 --# EXAMPLE USAGE:
 --#  library extras; use extras.sizing.bit_size; use extras.timing_ops.all;
 --#
---#    constant : SYS_CLOCK_FREQ : real := 50.0e6 -- 50 MHz;
---#    constant : COUNT_1US : clock_cycles
+--#    constant SYS_CLOCK_FREQ : real := 50.0e6 -- 50 MHz;
+--#    constant COUNT_1US : clock_cycles
 --#      := to_clock_cycles(1 us, SYS_CLOCK_FREQ);
---#    signal   : counter   : unsigned(bit_size(COUNT_1US)-1 downto 0);
+--#    signal   counter   : unsigned(bit_size(COUNT_1US)-1 downto 0);
 --#    ...
 --#    counter <= to_unsigned(COUNT_1US, counter'length); -- initialize counter
 --#    report_time_precision("COUNT_1US", COUNT_1US, 1 us,

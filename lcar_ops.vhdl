@@ -8,7 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# lcar_ops.vhdl - Linear Cellular Automata Registers
---# $Id$
+--# $Id: lcar_ops.vhdl,v 3e6683f29597 2010/11/23 04:26:40 vhdl $
 --# Freely available from VHDL-extras (http://vhdl-extras.org)
 --#
 --# Copyright © 2010 Kevin Thibedeau
@@ -59,12 +59,7 @@ package lcar_ops is
   function next_wolfram_lcar(State, Rule_map : std_ulogic_vector;
     Left_in, Right_in : std_ulogic := '0' ) return std_ulogic_vector;
 
-
-  subtype lcar_table_entry is std_ulogic_vector(1 to 100);
-  type lcar_rule_list is array( natural range <> ) of lcar_table_entry;
-  
-  constant LCAR_RULE_TABLE : lcar_rule_list; -- defined below in body
-  
+  --## Lookup a predefined rule set from the table  
   function lcar_rule( Size : positive ) return std_ulogic_vector;
   
 
@@ -203,6 +198,9 @@ package body lcar_ops is
   -- The rules in the table have been padded out with '-' to make all strings
   -- the same length. Use the lcar_rule(Size) function to index and strip the
   -- don't cares from these predefined rules.
+
+  subtype lcar_table_entry is std_ulogic_vector(1 to 100);
+  type lcar_rule_list is array( natural range <> ) of lcar_table_entry;
 
   constant LCAR_RULE_TABLE : lcar_rule_list(2 to 100) := (
     "10--------------------------------------------------------------------------------------------------", -- 2

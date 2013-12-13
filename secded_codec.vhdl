@@ -8,7 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# secded_codec.vhdl - Synthesizable SECDED encoder/decoder component
---# $Id$
+--# $Id: secded_codec.vhdl,v 0fe618aa4971 2010/11/22 11:39:09 vhdl $
 --# Freely available from VHDL-extras (http://vhdl-extras.org)
 --#
 --# Copyright © 2010 Kevin Thibedeau
@@ -42,7 +42,7 @@
 --#
 --#  Optional pipelining is available to reduce the maximum delay through the
 --#  internal logic. To be effective, you must activate the retiming feature of
---#  the synthesis tool being used. See the notes in pipelike_pkg.vhdl for more
+--#  the synthesis tool being used. See the notes in pipelining.vhdl for more
 --#  information on how to accomplish this. The pipelining is controlled with
 --#  the PIPELINE_STAGES generic.
 --#
