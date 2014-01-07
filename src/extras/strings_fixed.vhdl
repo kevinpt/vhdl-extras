@@ -175,7 +175,7 @@ package body strings_fixed is
 
         when right =>
           tgt(1 to tgt'length-src'length) := (tgt'length-src'length) * pad;
-          target(tgt'length - src'length + 1 to tgt'length) := src;
+          tgt(tgt'length - src'length + 1 to tgt'length) := src;
 
         when center =>
           lpad := (tgt'length - src'length) / 2;
