@@ -115,7 +115,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
---use ieee.math_real."**";
 
 library extras;
 use extras.sizing.bit_size;
@@ -206,33 +205,6 @@ package body ddfs_pkg is
     return size + bit_size(integer(tol_count + 0.5));
 
   end function;
-
-
---   -- compute 2**n with a floating point result that can exceed the max range
---   -- of integer.
---   function pow2(n : natural) return real is
---     variable val : real;
---     variable pow : natural;
---   begin
---     -- VHDL exponentiation is limited to integers up to +30 for most tools
---     -- We compute a real exponent through repeated multiplication to support
---     -- larger exponents
--- 
---     pow := n;
---     val := 1.0;
---     
---     for i in 30 to 128 loop
---       exit when pow <= 30;
--- 
---       val := val * 2.0;
---       pow := pow - 1;
---     
---     end loop;
---     
---     -- pow is now small enough to use the exponentiation operator    
---     return  val * (2.0 ** pow);
--- 
---   end function;
 
 
   --## Compute the increment value needed to generate a target frequency
