@@ -32,8 +32,75 @@
 --# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 --# DEALINGS IN THE SOFTWARE.
 --#
---# DEPENDENCIES: memory_pkg
+--# DEPENDENCIES: memory_pkg, sizing, synchronizing
 --#
+--# DESCRIPTION:
+--#  This package implements a set of generic FIFO components. There are three
+--#  variants. All use the same basic interface for the read/write ports and
+--#  status flags. The FIFOs have the following differences:
+--#
+--#  * simple_fifo - Basic minimal FIFO for use in a single clock domain. This
+--#                  component lacks the synchronizing logic needed for the
+--#                  other two FIFOs and will synthesize more compactly.
+--#  * fifo        - General FIFO with separate domains for read and write ports.
+--#  * packet_fifo - Extension of fifo component with ability to discard
+--#                  written data before it is read. Useful for managing
+--#                  packetized protocols with error detection at the end.
+--#
+--#  All of these FIFOs use the dual_port_ram component from memory_pkg. Its
+--#  SYNC_READ generic is provided on the FIFO components to select between
+--#  synchronous or asynchronous read ports. When SYNC_READ is false,
+--#  distributed memory will be synthesized rather than RAM primitives. The
+--#  read port will update one cycle earlier than when SYNC_READ is true.
+--#
+--#  The MEM_SIZE generic is used to set the number of words stored in the
+--#  FIFO. The read and write ports are unconstrained arrays. The size of
+--#  the words is established by the signals attached to the ports.
+--#
+--#  The FIFOs have the following status flags:
+--#  * Empty        - '1' when FIFO is empty
+--#  * Full         - '1' when FIFO is full
+--#  * Almost_empty - '1' when there are less than Almost_empty_thresh
+--#                   words in the FIFO. '0' when completely empty.
+--#  * Almost_full  - '1' when there are less than Almost_full_thresh
+--#                   unused words in the FIFO. '0' when completely full.
+--#
+--#  Note that the almost empty and full flags are kept inactive when the
+--#  empty or full conditions are true.
+--#
+--#  For the dual clock domain FIFOs, the Full and Almost_full flags are
+--#  registered on the write port clock domain. The Empty and Almost_empty
+--#  flags are registered on the read port clock domain. If the Almost_*
+--#  thresholds are connected to signals they will need to be registered
+--#  in their corresponding domains.
+--#
+--#  Writes and reads can be performed continuously on successive cycles
+--#  until the Full or Empty flags become active. No effort is made to detect
+--#  overflow or underflow conditions. External logic can be used to check for
+--#  writes when full or reads when empty if necessary.
+--#
+--#  The dual clock domain FIFOs use four-phase synchronization to pass
+--#  internal address pointers across domains. This results in delayed
+--#  updating of the status flags after writes and reads are performed.
+--#  Proper operation is guaranteed but you will see behavior such as the
+--#  full condition persisting for a few cycles after space has been freed by
+--#  a read. This will add some latency in the flow of data through these FIFOs
+--#  but will not cause overflow or underflow to occur. This only affects
+--#  cross-domain flag updates that *deassert* the flags. Assertion of the
+--#  flags will not be delayed. i.e. a read when the FIFO contains one entry
+--#  will assert the Empty flag one cycle later. Likewise, a write when the
+--#  FIFO has one empty entry left will assert the Full flag one cycle later.
+--#
+--#  The simple_fifo component always updates all of its status flags on the
+--#  cycle after a read or write regardless of whether thay are asserted or
+--#  deasserted. 
+--#
+--#  The Almost_* flags use more complex comparison logic than the Full and
+--#  Empty flags. You can save some synthesized logic and boost clock speeds by
+--#  leaving them unconnected (open) if they are not needed in a design.
+--#  Similarly, if the thresholds are connected to constants rather than
+--#  signals, the comparison logic will be reduced during synthesis.
+--------------------------------------------------------------------
 
 
 library ieee;
@@ -41,7 +108,7 @@ use ieee.std_logic_1164.all;
 
 package fifo_pkg is
 
-  component fifo_simple is
+  component simple_fifo is
     generic (
       RESET_ACTIVE_LEVEL : std_ulogic := '1';
       MEM_SIZE           : positive;
@@ -132,7 +199,7 @@ use ieee.std_logic_1164.all;
 library extras;
 use extras.memory_pkg.dual_port_ram;
 
-entity fifo_simple is
+entity simple_fifo is
   generic (
     RESET_ACTIVE_LEVEL : std_ulogic := '1';
     MEM_SIZE           : positive;
@@ -157,7 +224,7 @@ entity fifo_simple is
     );
 end entity;
 
-architecture rtl of fifo_simple is
+architecture rtl of simple_fifo is
 
   signal head, tail : natural range 0 to MEM_SIZE-1;
   signal dpr_we     : std_ulogic;
