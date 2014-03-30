@@ -35,7 +35,10 @@
 --#
 --# DESCRIPTION:
 --#  This package provides a facility for storing buffered text. It can be used
---#  to represent the contents of a text file or store
+--#  to represent the contents of a text file as a linked list of dynamically
+--#  allocated strings for each line. A text file can be read into a buffer and
+--#  the resulting data structure can be incorporated into records passable
+--#  to procedures without having to maintain a separate file handle.
 --------------------------------------------------------------------
 
 use std.textio.all;

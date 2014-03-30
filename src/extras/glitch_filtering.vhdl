@@ -56,8 +56,8 @@
 --#  library extras;
 --#  use extras.glitch_filtering.all; use extras.timing_ops.all;
 --#  ...
---#  constant CLOCK_FREQ  : frequency := 100 MHz;
---#  constant FILTER_TIME : delay_length := 200 ns;
+--#  constant CLOCK_FREQ    : frequency    := 100 MHz;
+--#  constant FILTER_TIME   : delay_length := 200 ns;
 --#  constant FILTER_CYCLES : clock_cycles :=
 --#    to_clock_cycles(FILTER_TIME, CLOCK_FREQ);
 --#  ...
@@ -70,6 +70,16 @@
 --#      Noisy    => noisy,
 --#      Filtered => filtered
 --#    );
+--#
+--#  Xilinx XST doesn't support user defined physical types so the frequency
+--#  type from timing_ops.vhdl can't be used with that synthesizer. An alternate
+--#  solution using XST-compatible timing_ops_xilinx.vhdl follows:
+--#
+--#  constant CLOCK_FREQ    : real         := 100.0e6; -- Using real in place of frequency
+--#  constant FILTER_TIME   : delay_length := 200 ns;
+--#  constant FILTER_CYCLES : clock_cycles :=
+--#    to_clock_cycles(FILTER_TIME, CLOCK_FREQ)
+--#  ...
 --------------------------------------------------------------------
 
 library ieee;

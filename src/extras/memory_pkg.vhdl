@@ -32,6 +32,16 @@
 --# DEALINGS IN THE SOFTWARE.
 --#
 --# DEPENDENCIES: none
+--#
+--# DESCRIPTION:
+--#  This package provides general purpose components for inferred RAM and ROM.
+--#  These memories share a SYNC_READ generic which will optionally generate synchronous
+--#  or asynchronous read ports for each instance. On Xilinx devices asynchronous
+--#  read forces the synthesis of distributed RAM using LUTs rather than BRAMs.
+--#
+--#  The ROM component gets its contents using synthesizable file IO to read a list
+--#  of binary or hex values.
+--------------------------------------------------------------------
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -45,12 +55,12 @@ package memory_pkg is
     );
     port (
       Wr_clock : in std_ulogic;
-      We     : in std_ulogic;
+      We       : in std_ulogic;
       Wr_addr  : in natural range 0 to MEM_SIZE-1;
       Wr_data  : in std_ulogic_vector;
 
       Rd_clock : in std_ulogic;
-      Re     : in std_ulogic;
+      Re       : in std_ulogic;
       Rd_addr  : in natural range 0 to MEM_SIZE-1;
       Rd_data  : out std_ulogic_vector
     );
@@ -67,7 +77,7 @@ package memory_pkg is
     );
     port (
       Clock : in std_ulogic;
-      Re     : in std_ulogic;
+      Re    : in std_ulogic;
       Addr  : in natural range 0 to MEM_SIZE-1;
       Data  : out std_ulogic_vector
     );
@@ -88,12 +98,12 @@ entity dual_port_ram is
   );
   port (
     Wr_clock : in std_ulogic;
-    We     : in std_ulogic;
+    We       : in std_ulogic;
     Wr_addr  : in natural range 0 to MEM_SIZE-1;
     Wr_data  : in std_ulogic_vector;
 
     Rd_clock : in std_ulogic;
-    Re     : in std_ulogic;
+    Re       : in std_ulogic;
     Rd_addr  : in natural range 0 to MEM_SIZE-1;
     Rd_data  : out std_ulogic_vector
   );
@@ -151,7 +161,7 @@ entity rom is
   );
   port (
     Clock : in std_ulogic;
-    Re     : in std_ulogic;
+    Re    : in std_ulogic;
     Addr  : in natural range 0 to MEM_SIZE-1;
     Data  : out std_ulogic_vector
   );
