@@ -63,6 +63,10 @@
 --#    constant xor_out     : bit_vector := X"FFFF";
 --#    constant reflect_in  : boolean := true;
 --#    constant reflect_out : boolean := true;
+--#
+--#    subtype word is bit_vector(7 downto 0);
+--#    type word_vec is array( natural range <> ) of word;
+--#    variable data : word_vec(0 to 9);
 --#    variable crc : bit_vector(poly'range);
 --#    ...
 --#    crc := init_crc(xor_in);
@@ -70,6 +74,34 @@
 --#      crc := next_crc(crc, poly, reflect_in, data(i));
 --#    end loop;
 --#    crc := end_crc(crc, reflect_out, xor_out);
+--#
+--#  A synthesizable component is provided to serve as a guide to using these
+--#  functions in practical designs. The input data port has been left unconstrained
+--#  to allow variable sized data to be fed into the CRC. Limiting its width to
+--#  1-bit will result in a bit-serial implementation. The synthesized logic will be
+--#  minimized if all of the CRC configuration parameters are constants.
+--#
+--#    signal nibble   : std_ulogic_vector(3 downto 0); -- Process 4-bits at a time
+--#    signal checksum : std_ulogic_vector(15 downto 0);
+--#    ...
+--#    crc_16: crc
+--#      port map (
+--#        Clock => clock,
+--#        Reset => reset,
+--#
+--#        -- CRC configuration parameters
+--#        Poly        => poly,
+--#        Xor_in      => xor_in,
+--#        Xor_out     => xor_out,
+--#        Reflect_in  => reflect_in,
+--#        Reflect_out => reflect_out,
+--#    
+--#        Initialize => crc_init, -- Resets CRC register with init_crc function
+--#        Enable     => crc_en,   -- Process next nibble
+--#    
+--#        Data     => nibble,
+--#        Checksum => checksum
+--#      );    
 --------------------------------------------------------------------
 
 library ieee;
