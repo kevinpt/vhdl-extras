@@ -1,4 +1,116 @@
--- Direct Digital Frequency Synthesizer
+--------------------------------------------------------------------
+--  _    __ __  __ ____   __   =                                  --
+-- | |  / // / / // __ \ / /   =                                  --
+-- | | / // /_/ // / / // /    =    .__  |/ _/_  .__   .__    __  --
+-- | |/ // __  // /_/ // /___  =   /___) |  /   /   ) /   )  (_ ` --
+-- |___//_/ /_//_____//_____/  =  (___  /| (_  /     (___(_ (__)  --
+--                           =====     /                          --
+--                            ===                                 --
+-----------------------------  =  ----------------------------------
+--# ddfs.vhdl - Direct Digital Frequency Synthesizer
+--# $Id$
+--# Freely available from VHDL-extras (http://vhdl-extras.org)
+--#
+--# Copyright © 2014 Kevin Thibedeau
+--#
+--# Permission is hereby granted, free of charge, to any person obtaining a
+--# copy of this software and associated documentation files (the "Software"),
+--# to deal in the Software without restriction, including without limitation
+--# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+--# and/or sell copies of the Software, and to permit persons to whom the
+--# Software is furnished to do so, subject to the following conditions:
+--#
+--# The above copyright notice and this permission notice shall be included in
+--# all copies or substantial portions of the Software.
+--#
+--# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+--# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+--# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+--# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+--# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+--# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+--# DEALINGS IN THE SOFTWARE.
+--#
+--# DEPENDENCIES: sizing
+--#
+--# DESCRIPTION:
+--#  This package provides a set of functions and a component used for implementing
+--#  a Direct Digital Frequency Synthesizer (DDFS). The DDFS component is a simple
+--#  accumulator that increments by a pre computed value each cycle. The MSB of the
+--#  accumulator switches at the requested frequency established by the ddfs_increment
+--#  function. The provided functions perform computations with real values and, as such,
+--#  are only synthesizable when used to define constants.
+--#
+--#  There are two sets of functions for generating the increment values needed by the
+--#  DDFS accumulator. One set is used to compute static increments that are assigned to
+--#  constants. The other functions work in conjunction with a procedure to dynamically
+--#  generate the increment value using a single inferred multiplier.
+--#
+--#  It is possible to generate multiple frequencies by computing more than one increment
+--#  constant and multiplexing between them. The ddfs_size function should be called with
+--#  the smallest target frequency to be used to guarantee the requested tolerance is met.
+--#
+--#  EXAMPLE USAGE:
+--#  The ddfs_size and ddfs_increment functions are used to compute static increment values:
+--#    constant SYS_FREQ  : real    := 50.0e6; -- 50 MHz
+--#    constant TGT_FREQ  : real    := 2600.0; -- 2600 Hz
+--#    constant DDFS_TOL  : real    := 0.001;  -- 0.1%
+--#    constant SIZE      : natural := ddfs_size(SYS_FREQ, TGT_FREQ, DDFS_TOL);
+--#    constant INCREMENT : unsigned(SIZE-1 downto 0)
+--#                                 ddfs_increment(SYS_FREQ, TGT_FREQ, SIZE);
+--#    ...
+--#    whistle: ddfs
+--#      port map (
+--#        Clock => clock,
+--#        Reset => reset,
+--#      
+--#        Increment   => INCREMENT,
+--#        Accumulator => accum,
+--#        Synth_clock => synth_tone, -- Signal with ~2600 Hz clock
+--#        Synth_pulse => open
+--#      );
+--#    ...
+--#    -- Report the DDFS precision (simulation only)
+--#    report "True synthesized frequency: "
+--#      & real'image(ddfs_frequency(SYS_FREQ, TGT_FREQ, SIZE)
+--#    report "DDFS error: " & real'image(ddfs_error(SYS_FREQ, TGT_FREQ, SIZE)
+--#
+--#  The alternate set of functions are used to precompute a multiplier factor that is
+--#  used to dynamically generate an increment value in synthesizable logic:
+--#
+--#    constant MIN_TGT_FREQ : natural := 2000;
+--#    constant MAX_TGT_FREQ : natural := 60000;
+--#    constant FRAC_BITS    : natural := min_fraction_bits(SYS_FREQ, MIN_TGT_FREQ, SIZE, DDFS_TOL);
+--#    constant DDFS_FACTOR  : natural := ddfs_dynamic_factor(SYS_FREQ, SIZE, FRAC_BITS);
+--#    signal dyn_freq : unsigned(bit_size(MAX_TGT_FREQ)-1 downto 0);
+--#    signal dyn_inc  : unsigned(SIZE-1 downto 0);
+--#    ...
+--#    dyn_freq <= to_unsigned(50000, dyn_freq'length); -- Generate 50 KHz
+--#    ...
+--#    dyn_freq <= to_unsigned(12000, dyn_freq'length); -- Change to 12 KHz
+--#    ...
+--#    -- Wrap ddfs_dynamic_inc in a sequencial process to synthesize a multiplier
+--#    -- with registered product.
+--#    dyn: process(clock, reset) is
+--#    begin
+--#      if reset = '1' then
+--#        dyn_inc <= (others => '0');
+--#      elsif rising_edge(clock) then
+--#        ddfs_dynamic_inc(DDFS_FACTOR, FRAC_BITS, dyn_freq, dyn_inc);
+--#      end if;
+--#    end process;
+--#
+--#    fsynth: ddfs
+--#      port map (
+--#        Clock => clock,
+--#        Reset => reset,
+--#
+--#        Increment   => dyn_inc,
+--#        Accumulator => accum,
+--#        Synth_clock => synth_tone,
+--#        Synth_pulse => open
+--#      );
+--------------------------------------------------------------------
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -20,6 +132,17 @@ package ddfs_pkg is
   function ddfs_increment(sys_freq : real; target_freq : real;
     size : natural) return unsigned;
 
+
+  function min_fraction_bits(sys_freq : real; target_freq : real;
+    size : natural; tolerance : real) return natural;
+
+  function ddfs_dynamic_factor(sys_freq : real; size : natural;
+    fraction_bits : natural) return natural;
+
+  procedure ddfs_dynamic_inc(dynamic_factor : in natural; fraction_bits : in natural;
+    signal target_freq : in unsigned; signal increment : out unsigned);
+
+
   function ddfs_frequency(sys_freq : real; target_freq : real;
     size : natural) return real;
 
@@ -37,11 +160,11 @@ package ddfs_pkg is
       
       Enable : in std_ulogic := '1';
 
-      Increment : in unsigned;
+      Increment : in unsigned;      -- Value controlling the synthesized frequency
 
-      Accumulator : out unsigned;
-      Synth_clock : out std_ulogic;
-      Synth_pulse : out std_ulogic
+      Accumulator : out unsigned;   -- Internal accumulator value
+      Synth_clock : out std_ulogic; -- Synthesized frequency
+      Synth_pulse : out std_ulogic  -- Single cycle pulse for rising edge of synth_clock
     );
   end component;
 
@@ -49,6 +172,9 @@ end package;
 
 package body ddfs_pkg is
 
+  --## Compute the necessary size of a DDFS accumulator based on system and
+  --#  target frequencies with a specified tolerance. The DDFS accumulator
+  --#  must be at least as large as the result to achieve the requested tolerance.
   function ddfs_size(sys_freq : real; target_freq : real;
     tolerance : real) return natural is
 
@@ -109,6 +235,7 @@ package body ddfs_pkg is
 --   end function;
 
 
+  --## Compute the increment value needed to generate a target frequency
   function ddfs_increment(sys_freq : real; target_freq : real;
     size : natural) return natural is
 
@@ -134,7 +261,7 @@ package body ddfs_pkg is
 
   end function;
 
-
+  --## Compute the increment value needed to generate a target frequency
   function ddfs_increment(sys_freq : real; target_freq : real;
     size : natural) return unsigned is
 
@@ -160,13 +287,68 @@ package body ddfs_pkg is
 
   end function;
 
+  --## Find the minimum number of fraction bits needed to meet
+  --#  the tolerance requirement for a dynamic DDFS. The target
+  --#  frequency should be the lowest frequency to ensure proper
+  --#  results.
+  function min_fraction_bits(sys_freq : real; target_freq : real;
+    size : natural; tolerance : real) return natural is
 
-  -- Compute the actual synthesized frequency for the specified accumulator
-  -- size
+    variable factor, inc : natural;
+    variable synth_freq, synth_error : real;
+  begin
+    for s in 1 to Size loop
+      factor := natural((2.0**size / sys_freq) * 2.0**s);
+      inc := natural(real(factor) * target_freq / 2.0**s);
+      synth_freq := sys_freq * real(inc) / 2.0**size;
+      synth_error := abs(synth_freq / target_freq - 1.0);
+      if synth_error <= tolerance then
+        return s;
+      end if;
+    end loop;
+
+    return size;
+  end function;
+
+  --## Compute the factor used to generate dynamic increment values.
+  --#  The result is a fixed point integer.
+  function ddfs_dynamic_factor(sys_freq : real; size : natural;
+    fraction_bits : natural) return natural is
+  begin
+    return natural((2.0**size / sys_freq) * 2.0**fraction_bits);
+  end function;
+
+  --## This procedure computes dynamic increment values by multiplying
+  --#  the result of a previous call to ddfs_dynamic_factor by the
+  --#  integral target frequency. The result is an integral value with
+  --#  fractional bits removed.
+  --#  This can be synthesized by invocation within a synchronous
+  --#  process.
+  procedure ddfs_dynamic_inc(dynamic_factor : in natural; fraction_bits : in natural;
+    signal target_freq : in unsigned; signal increment : out unsigned) is
+
+    variable factor : unsigned(bit_size(dynamic_factor)-1 downto 0);
+    variable prod : unsigned(factor'length + target_freq'length - 1 downto 0);
+  begin
+    factor := to_unsigned(dynamic_factor, factor'length);
+
+    -- Multiply the precomputed dynamic factor by the desired frequency.
+    -- The result is a fixed point number whose integer portion can be
+    -- used as the increment value for a DDFS component.
+    prod := factor * target_freq;
+
+    -- Slice off the fractional part of the fixed point product
+    increment <= resize(prod(prod'high downto fraction_bits), increment'length);
+  end procedure;
+
+
+
+  --## Compute the actual synthesized frequency for the specified accumulator
+  --#  size
   function ddfs_frequency(sys_freq : real; target_freq : real;
     size : natural) return real is
 
-    constant INC_N : natural := to_integer(ddfs_increment(sys_freq, target_freq, size));
+    constant INC_N : natural := ddfs_increment(sys_freq, target_freq, size);
 
     constant ACCUM_MAX : real := 2.0**size; --pow2(size);
   begin
@@ -175,8 +357,8 @@ package body ddfs_pkg is
   end function;
 
 
-  -- Compute the error between the requested output frequency and the actual
-  -- output frequency
+  --## Compute the error between the requested output frequency and the actual
+  --#  output frequency
   function ddfs_error(sys_freq : real; target_freq : real;
     size : natural) return real is
 
@@ -193,10 +375,6 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-library extras;
-use extras.sizing.bit_size;
-
-
 entity ddfs is
   generic (
     RESET_ACTIVE_LEVEL : std_ulogic := '1'
@@ -207,11 +385,11 @@ entity ddfs is
     
     Enable : in std_ulogic := '1';
     
-    Increment : in unsigned;
+    Increment : in unsigned;      -- Value controlling the synthesized frequency
 
-    Accumulator : out unsigned;
-    Synth_clock : out std_ulogic;
-    Synth_pulse : out std_ulogic
+    Accumulator : out unsigned;   -- Internal accumulator value
+    Synth_clock : out std_ulogic; -- Synthesized frequency
+    Synth_pulse : out std_ulogic  -- Single cycle pulse for rising edge of synth_clock
   );
 end entity;
 
@@ -235,11 +413,11 @@ begin
 
   Accumulator <= accum;
 
-  -- output the MSB of the accumulator
+  -- Output the MSB of the accumulator
   Synth_clock <= accum(accum'high);
 
 
-  -- detect rising edge of synth_clock to make a 1-cycle pulse
+  -- Detect rising edge of synth_clock to make a 1-cycle pulse
   ed: process(Clock, Reset)
   begin
     if Reset = RESET_ACTIVE_LEVEL then
