@@ -9,9 +9,10 @@
 -----------------------------  =  ----------------------------------
 --# strings_maps_constants.vhdl - Constants for use with character mapping
 --# $Id$
---# Freely available from VHDL-extras (http://vhdl-extras.org)
+--# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
 --#
 --# Copyright © 2010 Kevin Thibedeau
+--# (kevin 'dot' thibedeau 'at' gmail 'punto' com)
 --# Portions Copyright © 2001 Free Software Foundation
 --#
 --# LICENSING:

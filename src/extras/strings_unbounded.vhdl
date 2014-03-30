@@ -9,9 +9,10 @@
 -----------------------------  =  ----------------------------------
 --# strings_unbounded.vhdl - A library for unbounded length strings
 --# $Id$
---# Freely available from VHDL-extras (http://vhdl-extras.org)
+--# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
 --#
 --# Copyright © 2010 Kevin Thibedeau
+--# (kevin 'dot' thibedeau 'at' gmail 'punto' com)
 --#
 --# Permission is hereby granted, free of charge, to any person obtaining a
 --# copy of this software and associated documentation files (the "Software"),
