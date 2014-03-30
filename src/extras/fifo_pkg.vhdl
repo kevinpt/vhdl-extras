@@ -43,83 +43,83 @@ package fifo_pkg is
   component fifo_simple is
     generic (
       RESET_ACTIVE_LEVEL : std_ulogic := '1';
-      MEM_SIZE : positive;
-      SYNC_READ : boolean := true
-    );
+      MEM_SIZE           : positive;
+      SYNC_READ          : boolean    := true
+      );
     port (
-      Clock : in std_ulogic;
-      Reset : in std_ulogic;
-      We : in std_ulogic;
+      Clock   : in std_ulogic;
+      Reset   : in std_ulogic;
+      We      : in std_ulogic;
       Wr_data : in std_ulogic_vector;
 
-      Re : in std_ulogic;
+      Re      : in  std_ulogic;
       Rd_data : out std_ulogic_vector;
 
       Empty : out std_ulogic;
-      Full : out std_ulogic;
+      Full  : out std_ulogic;
 
-      Almost_empty_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-      Almost_full_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-      Almost_empty : out std_ulogic;
-      Almost_full : out std_ulogic
-    );
+      Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1;
+      Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1;
+      Almost_empty        : out std_ulogic;
+      Almost_full         : out std_ulogic
+      );
   end component;
 
   component fifo is
     generic (
       RESET_ACTIVE_LEVEL : std_ulogic := '1';
-      MEM_SIZE : positive;
-      SYNC_READ : boolean := true
-    );
+      MEM_SIZE           : positive;
+      SYNC_READ          : boolean    := true
+      );
     port (
       Wr_clock : in std_ulogic;
       Wr_reset : in std_ulogic;
-      We : in std_ulogic;
-      Wr_data : in std_ulogic_vector;
+      We       : in std_ulogic;
+      Wr_data  : in std_ulogic_vector;
 
-      Rd_clock : in std_ulogic;
-      Rd_reset : in std_ulogic;
-      Re : in std_ulogic;
-      Rd_data : out std_ulogic_vector;
+      Rd_clock : in  std_ulogic;
+      Rd_reset : in  std_ulogic;
+      Re       : in  std_ulogic;
+      Rd_data  : out std_ulogic_vector;
 
       Empty : out std_ulogic;
-      Full : out std_ulogic;
+      Full  : out std_ulogic;
 
-      Almost_empty_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-      Almost_full_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-      Almost_empty : out std_ulogic;
-      Almost_full : out std_ulogic
-    );
+      Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1;
+      Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1;
+      Almost_empty        : out std_ulogic;
+      Almost_full         : out std_ulogic
+      );
   end component;
 
 
   component packet_fifo is
     generic (
       RESET_ACTIVE_LEVEL : std_ulogic := '1';
-      MEM_SIZE : positive;
-      SYNC_READ : boolean := true
-    );
+      MEM_SIZE           : positive;
+      SYNC_READ          : boolean    := true
+      );
     port (
       Wr_clock : in std_ulogic;
       Wr_reset : in std_ulogic;
-      We : in std_ulogic;
-      Wr_data : in std_ulogic_vector;
-      Keep    : in std_ulogic;
-      Discard : in std_ulogic;
+      We       : in std_ulogic;
+      Wr_data  : in std_ulogic_vector;
+      Keep     : in std_ulogic;
+      Discard  : in std_ulogic;
 
-      Rd_clock : in std_ulogic;
-      Rd_reset : in std_ulogic;
-      Re : in std_ulogic;
-      Rd_data : out std_ulogic_vector;
+      Rd_clock : in  std_ulogic;
+      Rd_reset : in  std_ulogic;
+      Re       : in  std_ulogic;
+      Rd_data  : out std_ulogic_vector;
 
       Empty : out std_ulogic;
-      Full : out std_ulogic;
+      Full  : out std_ulogic;
 
-      Almost_empty_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-      Almost_full_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-      Almost_empty : out std_ulogic;
-      Almost_full : out std_ulogic
-    );
+      Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1;
+      Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1;
+      Almost_empty        : out std_ulogic;
+      Almost_full         : out std_ulogic
+      );
   end component;
 
 end package;
@@ -134,80 +134,80 @@ use extras.memory_pkg.dual_port_ram;
 entity fifo_simple is
   generic (
     RESET_ACTIVE_LEVEL : std_ulogic := '1';
-    MEM_SIZE : positive;
-    SYNC_READ : boolean := true
-  );
+    MEM_SIZE           : positive;
+    SYNC_READ          : boolean    := true
+    );
   port (
-    Clock : in std_ulogic;
-    Reset : in std_ulogic;
-    We : in std_ulogic;
+    Clock   : in std_ulogic;
+    Reset   : in std_ulogic;
+    We      : in std_ulogic;
     Wr_data : in std_ulogic_vector;
 
-    Re : in std_ulogic;
+    Re      : in  std_ulogic;
     Rd_data : out std_ulogic_vector;
 
     Empty : out std_ulogic;
-    Full : out std_ulogic;
+    Full  : out std_ulogic;
 
-    Almost_empty_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-    Almost_full_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-    Almost_empty : out std_ulogic;
-    Almost_full : out std_ulogic
-  );
+    Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1;
+    Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1;
+    Almost_empty        : out std_ulogic;
+    Almost_full         : out std_ulogic
+    );
 end entity;
 
 architecture rtl of fifo_simple is
 
   signal head, tail : natural range 0 to MEM_SIZE-1;
-  signal dpr_we : std_ulogic;
+  signal dpr_we     : std_ulogic;
   signal wraparound : boolean;
 
   signal empty_loc, full_loc : std_ulogic;
 begin
 
-  dpr: dual_port_ram
+  dpr : dual_port_ram
     generic map (
-      MEM_SIZE => MEM_SIZE,
+      MEM_SIZE  => MEM_SIZE,
       SYNC_READ => SYNC_READ
-    )
+      )
     port map (
       Wr_clock => Clock,
-      We     => dpr_we,
+      We       => dpr_we,
       Wr_addr  => head,
       Wr_data  => Wr_data,
 
       Rd_clock => Clock,
-      Re     => Re,
+      Re       => Re,
       Rd_addr  => tail,
       Rd_data  => Rd_data
-    );
+      );
 
   dpr_we <= '1' when we = '1' and full_loc = '0' else '0';
 
-  wr_rd: process(Clock, Reset) is
+  wr_rd : process(Clock, Reset) is
     variable head_v, tail_v : natural range 0 to MEM_SIZE-1;
-    variable wraparound_v : boolean;
+    variable wraparound_v   : boolean;
   begin
 
     if Reset = RESET_ACTIVE_LEVEL then
-      head <= 0;
-      tail <= 0;
-      full_loc <= '0';
-      empty_loc <= '1';
-      Almost_full <= '0';
+      head         <= 0;
+      tail         <= 0;
+      full_loc     <= '0';
+      empty_loc    <= '1';
+      Almost_full  <= '0';
       Almost_empty <= '0';
 
       wraparound <= false;
 
     elsif rising_edge(Clock) then
-      head_v := head;
-      tail_v := tail;
+      head_v       := head;
+      tail_v       := tail;
       wraparound_v := wraparound;
 
       if We = '1' and (wraparound = false or head /= tail) then
         
         if head_v = MEM_SIZE-1 then
-          head_v := 0;
+          head_v       := 0;
           wraparound_v := true;
         else
           head_v := head_v + 1;
@@ -216,7 +216,7 @@ begin
 
       if Re = '1' and (wraparound = true or head /= tail) then
         if tail_v = MEM_SIZE-1 then
-          tail_v := 0;
+          tail_v       := 0;
           wraparound_v := false;
         else
           tail_v := tail_v + 1;
@@ -226,7 +226,7 @@ begin
 
       if head_v /= tail_v then
         empty_loc <= '0';
-        full_loc <= '0';
+        full_loc  <= '0';
       else
         if wraparound_v then
           full_loc <= '1';
@@ -235,7 +235,7 @@ begin
         end if;
       end if;
 
-      Almost_full <= '0';
+      Almost_full  <= '0';
       Almost_empty <= '0';
       if head /= tail then
         if head > tail then
@@ -256,14 +256,14 @@ begin
       end if;
 
 
-      head <= head_v;
-      tail <= tail_v;
+      head       <= head_v;
+      tail       <= tail_v;
       wraparound <= wraparound_v;
     end if;
   end process;
 
   Empty <= empty_loc;
-  Full <= full_loc;
+  Full  <= full_loc;
 
 end architecture;
 
@@ -281,49 +281,49 @@ use extras.memory_pkg.dual_port_ram;
 entity fifo is
   generic (
     RESET_ACTIVE_LEVEL : std_ulogic := '1';
-    MEM_SIZE : positive;
-    SYNC_READ : boolean := true
-  );
+    MEM_SIZE           : positive;
+    SYNC_READ          : boolean    := true
+    );
   port (
     Wr_clock : in std_ulogic;
     Wr_reset : in std_ulogic;
-    We : in std_ulogic;
-    Wr_data : in std_ulogic_vector;
+    We       : in std_ulogic;
+    Wr_data  : in std_ulogic_vector;
 
-    Rd_clock : in std_ulogic;
-    Rd_reset : in std_ulogic;
-    Re : in std_ulogic;
-    Rd_data : out std_ulogic_vector;
+    Rd_clock : in  std_ulogic;
+    Rd_reset : in  std_ulogic;
+    Re       : in  std_ulogic;
+    Rd_data  : out std_ulogic_vector;
 
     Empty : out std_ulogic;
-    Full : out std_ulogic;
+    Full  : out std_ulogic;
 
-    Almost_empty_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-    Almost_full_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-    Almost_empty : out std_ulogic;
-    Almost_full : out std_ulogic
-  );
+    Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1;
+    Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1;
+    Almost_empty        : out std_ulogic;
+    Almost_full         : out std_ulogic
+    );
 end entity;
 
 architecture rtl of fifo is
 
-  signal head, tail, head_rd, tail_wr : natural range 0 to MEM_SIZE-1;
-  signal dpr_we : std_ulogic;
-  signal wraparound_wr, wraparound_rd : boolean;
+  signal head, tail, head_rd, tail_wr                 : natural range 0 to MEM_SIZE-1;
+  signal dpr_we                                       : std_ulogic;
+  signal wraparound_wr, wraparound_rd                 : boolean;
   signal wrap_set, wrap_clr, wrap_set_rd, wrap_clr_wr : std_ulogic;
 
   signal empty_loc, full_loc : std_ulogic;
 
-  constant ADDR_SIZE : natural := bit_size(MEM_SIZE-1);
-  signal head_sulv, head_rd_sulv : std_ulogic_vector(ADDR_SIZE-1 downto 0);
-  signal tail_sulv, tail_wr_sulv : std_ulogic_vector(ADDR_SIZE-1 downto 0);
+  constant ADDR_SIZE               : natural := bit_size(MEM_SIZE-1);
+  signal   head_sulv, head_rd_sulv : std_ulogic_vector(ADDR_SIZE-1 downto 0);
+  signal   tail_sulv, tail_wr_sulv : std_ulogic_vector(ADDR_SIZE-1 downto 0);
 begin
 
-  dpr: dual_port_ram
+  dpr : dual_port_ram
     generic map (
       MEM_SIZE  => MEM_SIZE,
       SYNC_READ => SYNC_READ
-    )
+      )
     port map (
       Wr_clock => Wr_clock,
       We       => dpr_we,
@@ -334,33 +334,33 @@ begin
       Re       => Re,
       Rd_addr  => tail,
       Rd_data  => Rd_data
-    );
+      );
 
   dpr_we <= '1' when we = '1' and full_loc = '0' else '0';
 
-  wr: process(Wr_clock, Wr_reset) is
-    variable head_v : natural range 0 to MEM_SIZE-1;
+  wr : process(Wr_clock, Wr_reset) is
+    variable head_v       : natural range 0 to MEM_SIZE-1;
     variable wraparound_v : boolean;
   begin
 
     if Wr_reset = RESET_ACTIVE_LEVEL then
-      head <= 0;
-      full_loc <= '0';
+      head        <= 0;
+      full_loc    <= '0';
       Almost_full <= '0';
 
       wraparound_wr <= false;
-      wrap_set <= '0';
+      wrap_set      <= '0';
 
     elsif rising_edge(Wr_clock) then
-      wrap_set <= '0';
-      head_v := head;
+      wrap_set     <= '0';
+      head_v       := head;
       wraparound_v := wraparound_wr;
 
       if We = '1' and (wraparound_v = false or head_v /= tail_wr) then
         if head_v = MEM_SIZE-1 then
-          head_v := 0;
+          head_v       := 0;
           wraparound_v := true;
-          wrap_set <= '1';
+          wrap_set     <= '1';
         else
           head_v := head_v + 1;
         end if;
@@ -401,29 +401,29 @@ begin
   end process;
 
 
-  rd: process(Rd_clock, Rd_reset) is
-    variable tail_v : natural range 0 to MEM_SIZE-1;
+  rd : process(Rd_clock, Rd_reset) is
+    variable tail_v       : natural range 0 to MEM_SIZE-1;
     variable wraparound_v : boolean;
   begin
 
     if Rd_reset = RESET_ACTIVE_LEVEL then
-      tail <= 0;
-      empty_loc <= '1';
+      tail         <= 0;
+      empty_loc    <= '1';
       Almost_empty <= '0';
 
       wraparound_rd <= false;
-      wrap_clr <= '0';
+      wrap_clr      <= '0';
 
     elsif rising_edge(Rd_clock) then
-      wrap_clr <= '0';
-      tail_v := tail;
+      wrap_clr     <= '0';
+      tail_v       := tail;
       wraparound_v := wraparound_rd;
 
       if Re = '1' and (wraparound_v = true or head_rd /= tail_v) then
         if tail_v = MEM_SIZE-1 then
-          tail_v := 0;
+          tail_v       := 0;
           wraparound_v := false;
-          wrap_clr <= '1';
+          wrap_clr     <= '1';
         else
           tail_v := tail_v + 1;
         end if;
@@ -464,13 +464,13 @@ begin
   end process;
 
   Empty <= empty_loc;
-  Full <= full_loc;
+  Full  <= full_loc;
 
   -- Synchronize head and tail pointers across domains
-  hs_head: handshake_synchronizer
+  hs_head : handshake_synchronizer
     generic map (
       RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL
-    )
+      )
     port map (
       Clock_tx => Wr_clock,
       Reset_tx => Wr_reset,
@@ -484,17 +484,17 @@ begin
       Sending   => open,
       Data_sent => open,
 
-      Rx_data => head_rd_sulv,
+      Rx_data  => head_rd_sulv,
       New_data => open
-    );
+      );
 
   head_sulv <= to_stdulogicvector(std_logic_vector(to_unsigned(head, head_sulv'length)));
-  head_rd <= to_integer(unsigned(to_stdlogicvector(head_rd_sulv)));
+  head_rd   <= to_integer(unsigned(to_stdlogicvector(head_rd_sulv)));
 
-  hs_tail: handshake_synchronizer
+  hs_tail : handshake_synchronizer
     generic map (
       RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL
-    )
+      )
     port map (
       Clock_tx => Rd_clock,
       Reset_tx => Rd_reset,
@@ -510,36 +510,36 @@ begin
 
       Rx_data  => tail_wr_sulv,
       New_data => open
-    );
+      );
 
   tail_sulv <= to_stdulogicvector(std_logic_vector(to_unsigned(tail, tail_sulv'length)));
-  tail_wr <= to_integer(unsigned(to_stdlogicvector(tail_wr_sulv)));
+  tail_wr   <= to_integer(unsigned(to_stdlogicvector(tail_wr_sulv)));
 
 
   -- Synchronize wraparound control flags
-  wc_wr: bit_synchronizer
+  wc_wr : bit_synchronizer
     generic map (
       RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL
-    )
+      )
     port map (
       Clock => Wr_clock,
       Reset => Wr_reset,
 
       Bit_in => wrap_clr,
-      Sync => wrap_clr_wr
-    );
+      Sync   => wrap_clr_wr
+      );
 
-  ws_rd: bit_synchronizer
+  ws_rd : bit_synchronizer
     generic map (
       RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL
-    )
+      )
     port map (
       Clock => Rd_clock,
       Reset => Rd_reset,
 
       Bit_in => wrap_set,
-      Sync => wrap_set_rd
-    );
+      Sync   => wrap_set_rd
+      );
 
 end architecture;
 
@@ -558,54 +558,54 @@ use extras.memory_pkg.dual_port_ram;
 entity packet_fifo is
   generic (
     RESET_ACTIVE_LEVEL : std_ulogic := '1';
-    MEM_SIZE : positive;
-    SYNC_READ : boolean := true
-  );
+    MEM_SIZE           : positive;
+    SYNC_READ          : boolean    := true
+    );
   port (
     Wr_clock : in std_ulogic;
     Wr_reset : in std_ulogic;
-    We : in std_ulogic;
-    Wr_data : in std_ulogic_vector;
-    Keep    : in std_ulogic;
-    Discard : in std_ulogic;
+    We       : in std_ulogic;
+    Wr_data  : in std_ulogic_vector;
+    Keep     : in std_ulogic;
+    Discard  : in std_ulogic;
 
-    Rd_clock : in std_ulogic;
-    Rd_reset : in std_ulogic;
-    Re : in std_ulogic;
-    Rd_data : out std_ulogic_vector;
+    Rd_clock : in  std_ulogic;
+    Rd_reset : in  std_ulogic;
+    Re       : in  std_ulogic;
+    Rd_data  : out std_ulogic_vector;
 
     Empty : out std_ulogic;
-    Full : out std_ulogic;
+    Full  : out std_ulogic;
 
-    Almost_empty_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-    Almost_full_thresh : in natural range 0 to MEM_SIZE-1 := 1;
-    Almost_empty : out std_ulogic;
-    Almost_full : out std_ulogic
-  );
+    Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1;
+    Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1;
+    Almost_empty        : out std_ulogic;
+    Almost_full         : out std_ulogic
+    );
 end entity;
 
 architecture rtl of packet_fifo is
 
-  signal head, tail, head_rd, tail_wr : natural range 0 to MEM_SIZE-1;
-  signal dpr_we : std_ulogic;
-  signal wraparound_wr, wraparound_rd : boolean;
+  signal head, tail, head_rd, tail_wr                 : natural range 0 to MEM_SIZE-1;
+  signal dpr_we                                       : std_ulogic;
+  signal wraparound_wr, wraparound_rd                 : boolean;
   signal wrap_set, wrap_clr, wrap_set_rd, wrap_clr_wr : std_ulogic;
 
-  signal pkt_head : natural range 0 to MEM_SIZE-1;
+  signal pkt_head       : natural range 0 to MEM_SIZE-1;
   signal pkt_wraparound : boolean;
 
   signal empty_loc, full_loc : std_ulogic;
 
-  constant ADDR_SIZE : natural := bit_size(MEM_SIZE-1);
-  signal head_sulv, head_rd_sulv : std_ulogic_vector(ADDR_SIZE-1 downto 0);
-  signal tail_sulv, tail_wr_sulv : std_ulogic_vector(ADDR_SIZE-1 downto 0);
+  constant ADDR_SIZE               : natural := bit_size(MEM_SIZE-1);
+  signal   head_sulv, head_rd_sulv : std_ulogic_vector(ADDR_SIZE-1 downto 0);
+  signal   tail_sulv, tail_wr_sulv : std_ulogic_vector(ADDR_SIZE-1 downto 0);
 begin
 
-  dpr: dual_port_ram
+  dpr : dual_port_ram
     generic map (
       MEM_SIZE  => MEM_SIZE,
       SYNC_READ => SYNC_READ
-    )
+      )
     port map (
       Wr_clock => Wr_clock,
       We       => dpr_we,
@@ -616,36 +616,36 @@ begin
       Re       => Re,
       Rd_addr  => tail,
       Rd_data  => Rd_data
-    );
+      );
 
   dpr_we <= '1' when we = '1' and full_loc = '0' else '0';
 
-  wr: process(Wr_clock, Wr_reset) is
-    variable head_v : natural range 0 to MEM_SIZE-1;
+  wr : process(Wr_clock, Wr_reset) is
+    variable head_v       : natural range 0 to MEM_SIZE-1;
     variable wraparound_v : boolean;
   begin
 
     if Wr_reset = RESET_ACTIVE_LEVEL then
-      head <= 0;
-      full_loc <= '0';
+      head        <= 0;
+      full_loc    <= '0';
       Almost_full <= '0';
 
       wraparound_wr <= false;
-      wrap_set <= '0';
+      wrap_set      <= '0';
 
-      pkt_head <= 0;
+      pkt_head       <= 0;
       pkt_wraparound <= false;
 
     elsif rising_edge(Wr_clock) then
-      wrap_set <= '0';
-      head_v := pkt_head;
+      wrap_set     <= '0';
+      head_v       := pkt_head;
       wraparound_v := pkt_wraparound;
 
       if We = '1' and (wraparound_v = false or head_v /= tail_wr) then
         if head_v = MEM_SIZE-1 then
-          head_v := 0;
+          head_v       := 0;
           wraparound_v := true;
-          wrap_set <= '1';
+          wrap_set     <= '1';
         else
           head_v := head_v + 1;
         end if;
@@ -683,10 +683,10 @@ begin
       end if;
 
       if Discard = '1' then
-        pkt_head <= head;
+        pkt_head       <= head;
         pkt_wraparound <= wraparound_wr;
       elsif Keep = '1' then
-        head <= pkt_head;
+        head          <= pkt_head;
         wraparound_wr <= pkt_wraparound;
       end if;
 
@@ -694,29 +694,29 @@ begin
   end process;
 
 
-  rd: process(Rd_clock, Rd_reset) is
-    variable tail_v : natural range 0 to MEM_SIZE-1;
+  rd : process(Rd_clock, Rd_reset) is
+    variable tail_v       : natural range 0 to MEM_SIZE-1;
     variable wraparound_v : boolean;
   begin
 
     if Rd_reset = RESET_ACTIVE_LEVEL then
-      tail <= 0;
-      empty_loc <= '1';
+      tail         <= 0;
+      empty_loc    <= '1';
       Almost_empty <= '0';
 
       wraparound_rd <= false;
-      wrap_clr <= '0';
+      wrap_clr      <= '0';
 
     elsif rising_edge(Rd_clock) then
-      wrap_clr <= '0';
-      tail_v := tail;
+      wrap_clr     <= '0';
+      tail_v       := tail;
       wraparound_v := wraparound_rd;
 
       if Re = '1' and (wraparound_v = true or head_rd /= tail_v) then
         if tail_v = MEM_SIZE-1 then
-          tail_v := 0;
+          tail_v       := 0;
           wraparound_v := false;
-          wrap_clr <= '1';
+          wrap_clr     <= '1';
         else
           tail_v := tail_v + 1;
         end if;
@@ -757,13 +757,13 @@ begin
   end process;
 
   Empty <= empty_loc;
-  Full <= full_loc;
+  Full  <= full_loc;
 
   -- Synchronize head and tail pointers across domains
-  hs_head: handshake_synchronizer
+  hs_head : handshake_synchronizer
     generic map (
       RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL
-    )
+      )
     port map (
       Clock_tx => Wr_clock,
       Reset_tx => Wr_reset,
@@ -777,17 +777,17 @@ begin
       Sending   => open,
       Data_sent => open,
 
-      Rx_data => head_rd_sulv,
+      Rx_data  => head_rd_sulv,
       New_data => open
-    );
+      );
 
   head_sulv <= to_stdulogicvector(std_logic_vector(to_unsigned(head, head_sulv'length)));
-  head_rd <= to_integer(unsigned(to_stdlogicvector(head_rd_sulv)));
+  head_rd   <= to_integer(unsigned(to_stdlogicvector(head_rd_sulv)));
 
-  hs_tail: handshake_synchronizer
+  hs_tail : handshake_synchronizer
     generic map (
       RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL
-    )
+      )
     port map (
       Clock_tx => Rd_clock,
       Reset_tx => Rd_reset,
@@ -803,35 +803,35 @@ begin
 
       Rx_data  => tail_wr_sulv,
       New_data => open
-    );
+      );
 
   tail_sulv <= to_stdulogicvector(std_logic_vector(to_unsigned(tail, tail_sulv'length)));
-  tail_wr <= to_integer(unsigned(to_stdlogicvector(tail_wr_sulv)));
+  tail_wr   <= to_integer(unsigned(to_stdlogicvector(tail_wr_sulv)));
 
 
   -- Synchronize wraparound control flags
-  wc_wr: bit_synchronizer
+  wc_wr : bit_synchronizer
     generic map (
       RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL
-    )
+      )
     port map (
       Clock => Wr_clock,
       Reset => Wr_reset,
 
       Bit_in => wrap_clr,
-      Sync => wrap_clr_wr
-    );
+      Sync   => wrap_clr_wr
+      );
 
-  ws_rd: bit_synchronizer
+  ws_rd : bit_synchronizer
     generic map (
       RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL
-    )
+      )
     port map (
       Clock => Rd_clock,
       Reset => Rd_reset,
 
       Bit_in => wrap_set,
-      Sync => wrap_set_rd
-    );
+      Sync   => wrap_set_rd
+      );
 
 end architecture;
