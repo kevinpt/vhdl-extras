@@ -169,75 +169,51 @@ entity rom is
 end entity;
 
 architecture rtl of rom is
-  type rom_type is array (0 to MEM_SIZE-1) of bit_vector(Data'length-1 downto 0);
+  type rom_mem is array (0 to MEM_SIZE-1) of bit_vector(Data'length-1 downto 0);
 
-  procedure char_to_hex(ch: in character; nibble: out bit_vector(3 downto 0)) is
-    variable cp, val : integer;
+
+  impure function read_hex_file(file_name : string; format : in rom_format) return rom_mem is
+    -- Read a hex ROM file
+    file fh       : text open read_mode is file_name;
+    variable ln   : line;
+    variable addr : natural := 0;
+    variable word : std_logic_vector(Data'length-1 downto 0);
+    variable rom  : rom_mem;
+
+    procedure read_hex(ln : inout line; hex : out std_logic_vector) is
+      -- The standard hread() procedure doesn't work well when the target bit vector
+      -- is not a multiple of four. This wrapper provides better behavior.
+      variable hex4 : std_logic_vector(((hex'length + 3) / 4) * 4 - 1 downto 0);
+    begin
+      hread(ln, hex4);
+      -- Trim upper bits if the target is shorter than the nibble adjusted word
+      hex := hex4(hex'length-1 downto 0);
+    end procedure;
+
   begin
-    cp := character'pos(ch);
-    val := 0;
-    if cp >= character'pos('0') or cp <= character'pos('9') then
-      val := cp - character'pos('0');
-    elsif cp >= character'pos('A') or cp <= character'pos('F') then
-      val := cp - character'pos('A');
-    elsif cp >= character'pos('a') or cp <= character'pos('f') then
-      val := cp - character'pos('a');
-    end if;
 
-    nibble := bit_vector(to_unsigned(val, 4));
-  end procedure;
+    while addr < MEM_SIZE loop
+      if endfile(fh) then
+        exit;
+      end if;
 
-  procedure read_hex(l: inout line; hex: out bit_vector) is
-    variable ch: character;
-    variable nibble : bit_vector(3 downto 0);
-    variable h: bit_vector(hex'length-1 downto 0) := (others => '0');
-    variable i : natural := h'left;
-    variable good : boolean;
-  begin
-    loop
-      read(l, ch, good);
-      exit when ch /= ' ' and ch /= CR and ch /= HT;
-    end loop;
-
-    --while l.all'length > 0 loop
-    --for x in 1 to 3 loop
-    --for x in l'length / 4 loop
-    while good loop
-      char_to_hex(ch, nibble);
-
-      h := h(h'left-4 downto 0) & nibble;
-      i := i - 4;
-
-      exit when i < 0;
-
-      read(l, ch, good);
-    end loop;
-
-    hex := h;
-  end procedure;
-
-  impure function init_rom(File_name: in string; format: in rom_format) return rom_type is
-    file fh : text open read_mode is File_name;
-    variable ln : line;
-    variable hex : std_logic_vector(Data'range);
-    variable rom_v : rom_type;
-  begin
-    for a in rom_type'range loop
       readline(fh, ln);
 
       if format = HEX_TEXT then
-        --read_hex(ln, rom_v(a));
-        hread(ln, hex);
-        rom_v(a) := to_bitvector(hex);
-      else -- binary text
-        read(ln, rom_v(a));
+        read_hex(ln, word); -- Convert hex string to bits
+      else -- Binary text
+        read(ln, word);
       end if;
+      rom(addr) := to_bitvector(word);
+
+      addr := addr + 1;
     end loop;
-    
-    return rom_v;
+
+    return rom;
   end function;
 
-  signal rom_mem : rom_type := init_rom(ROM_FILE, FORMAT);
+
+  signal rom_data : rom_mem := read_hex_file(ROM_FILE, FORMAT);
 
   signal sync_rdata : std_ulogic_vector(Data'range);
 begin
@@ -246,11 +222,14 @@ begin
   begin
     if rising_edge(Clock) then
       if Re = '1' then
-        sync_rdata <= to_stdulogicvector(rom_mem(Addr));
+        sync_rdata <= to_stdulogicvector(rom_data(Addr));
       end if;
     end if;
   end process;
 
-  Data <= to_stdulogicvector(rom_mem(Addr)) when SYNC_READ = false else sync_rdata;
+  Data <= to_stdulogicvector(rom_data(Addr)) when SYNC_READ = false else sync_rdata;
 
 end architecture;
+
+
+
