@@ -47,11 +47,12 @@
 --#                  written data before it is read. Useful for managing
 --#                  packetized protocols with error detection at the end.
 --#
---#  All of these FIFOs use the dual_port_ram component from memory_pkg. Its
---#  SYNC_READ generic is provided on the FIFO components to select between
---#  synchronous or asynchronous read ports. When SYNC_READ is false,
---#  distributed memory will be synthesized rather than RAM primitives. The
---#  read port will update one cycle earlier than when SYNC_READ is true.
+--#  All of these FIFOs use the dual_port_ram component from memory_pkg. Reads
+--#  can be performed concurrently with writes. The dual_port_ram SYNC_READ
+--#  generic is provided on the FIFO components to select between synchronous
+--#  or asynchronous read ports. When SYNC_READ is false, distributed memory
+--#  will be synthesized rather than RAM primitives. The read port will update
+--#  one cycle earlier than when SYNC_READ is true.
 --#
 --#  The MEM_SIZE generic is used to set the number of words stored in the
 --#  FIFO. The read and write ports are unconstrained arrays. The size of
@@ -100,6 +101,15 @@
 --#  leaving them unconnected (open) if they are not needed in a design.
 --#  Similarly, if the thresholds are connected to constants rather than
 --#  signals, the comparison logic will be reduced during synthesis.
+--#
+--#  The packet_fifo component has two additional control signals Keep and
+--#  Discard. When writing to the FIFO, the internal address pointers are
+--#  not updated on the read port domain until Keep is pulsed high. If written
+--#  data is not needed it can be dropped by pulsing Discard high. It is not
+--#  possible to discard data once Keep has been applied. Reads can be
+--#  performed concurrently with writes but the Empty flag will activate if
+--#  previously kept data is consumed even if new data has been written but
+--#  not yet retained with Keep.
 --------------------------------------------------------------------
 
 
