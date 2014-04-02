@@ -1,6 +1,6 @@
 # VHDL make file
 
-SRC_ROOT := src
+RTL_ROOT := rtl
 VCOM_FLAGS := -93 -source -quiet
 BUILD_DIR := build
 TAG_DIR := $(BUILD_DIR)/tags
@@ -13,23 +13,19 @@ WARN_COLOR=\x1b[33;01m
 
 OK=$(OK_COLOR)[OK]$(NO_COLOR)
 
-# Find the source files
-#SRC_DIRS := $(sort $(dir $(wildcard $(SRC_ROOT)/*)))
-SRC_DIRS := $(wildcard $(SRC_ROOT)/*)
-LIB_DIRS := $(foreach sdir, $(SRC_DIRS), $(LIB_BASE_DIR)/$(notdir $(sdir)) )
+# Find the RTL source files
+RTL_DIRS := $(wildcard $(RTL_ROOT)/*)
+LIB_DIRS := $(foreach sdir, $(RTL_DIRS), $(LIB_BASE_DIR)/$(notdir $(sdir)) )
 
-VPATH = $(SRC_DIRS)
+VPATH = $(RTL_DIRS)
 VPATH += $(TAG_DIR)
 
-EXCLUDE_SRC := timing_ops_xilinx.vhdl
-SRC := $(filter-out $(EXCLUDE_SRC), $(foreach sdir, $(SRC_DIRS), $(notdir $(wildcard $(sdir)/*.vhd*))))
-SRC := $(filter %.vhd %.vhdl, $(SRC))
+# Skip XST specific timing package
+EXCLUDE_RTL := timing_ops_xilinx.vhdl
+RTL := $(filter-out $(EXCLUDE_RTL), $(foreach sdir, $(RTL_DIRS), $(notdir $(wildcard $(sdir)/*.vhd*))))
+RTL := $(filter %.vhd %.vhdl, $(RTL))
 
-#$(info $(SRC))
-#$(info $(SRC_DIRS))
-#$(info $(LIB_DIRS))
-
-TAG_OBJS := $(foreach fname, $(SRC), $(basename $(notdir $(fname))).tag)
+TAG_OBJS := $(foreach fname, $(RTL), $(basename $(notdir $(fname))).tag)
 
 .SUFFIXES:
 .SUFFIXES: .vhdl .vhd
@@ -60,7 +56,7 @@ clean:
 # Generate dependency rules
 RULES := auto_rules.mk
 
-$(BUILD_DIR)/$(RULES): $(SRC) | $(BUILD_DIR)
+$(BUILD_DIR)/$(RULES): $(RTL) | $(BUILD_DIR)
 	@echo Making rules
 	@python scripts/vdep.py $^ > $@
 
@@ -76,7 +72,6 @@ $(TAG_DIR): | $(BUILD_DIR)
 
 
 $(LIB_BASE_DIR): | $(BUILD_DIR)
-	mkdir $(LIB_BASE_DIR)
 
 $(LIB_DIRS): | $(LIB_BASE_DIR)
 	@echo $(LIB_DIRS) | xargs -n 1 vlib
@@ -84,7 +79,6 @@ $(LIB_DIRS): | $(LIB_BASE_DIR)
 
 
 $(TAG_OBJS): | $(TAG_DIR) $(LIB_DIRS) $(BUILD_DIR)/$(RULES)
-
 
 #all: $(TAG_OBJS)
 
