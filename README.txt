@@ -1,5 +1,5 @@
                                   VHDL-extras
-                             http://vhdl-extras.org
+                      http://code.google.com/p/vhdl-extras
    ---------------------------------------------------------------------------
 
    This archive contains all of the code for the VHDL-extras library. These
@@ -14,7 +14,7 @@
    in digital logic design. These packages can be used for logic simulations
    and, in most cases, can be synthesized to hardware with an FPGA or ASIC
    target.
-   
+
 Usage
 
    You will need to be aware of any library mappings required to use the
@@ -75,71 +75,77 @@ The Code
    These packages provide core functionality that is of general use in a
    wide array of applications.
 
-                           Procedures for general binary file                    
-                           IO. Support is provided for reading 
-    *  binaryio.vhdl       and writing vectors of any size      
-                           with big and little-endian byte     
-                           order.                              
+                           Procedures for general binary file
+                           IO. Support is provided for reading
+    *  binaryio.vhdl       and writing vectors of any size
+                           with big and little-endian byte
+                           order.
 
-    *  muxing.vhdl         Parameterized multiplexers,                           
-                           decoders, and demultiplexers.       
+    *  muxing.vhdl         Parameterized multiplexers,
+                           decoders, and demultiplexers.
 
-                           Configurable pipeline registers for 
-    *  pipelining.vhdl     use with automated retiming during  
-                           synthesis.                          
+                           Configurable pipeline registers for
+    *  pipelining.vhdl     use with automated retiming during
+                           synthesis.
 
-                           A set of functions for computing                      
-    *  sizing.vhdl         integer logarithms in any base and   
-                           for determing the size of binary    
-                           numbers and encodings.              
+                           A set of functions for computing
+    *  sizing.vhdl         integer logarithms in any base and
+                           for determing the size of binary
+                           numbers and encodings.
 
-                           Synchronizer entities for           
-    *  synchronizing.vhdl  transferring signals between clock  
-                           domains.                            
+                           Synchronizer entities for
+    *  synchronizing.vhdl  transferring signals between clock
+                           domains.
 
-                           Procedures for storing text files  
-    *  text_buffering.vhdl in an internal buffer and for      
-                           accumulating text log information  
-                           before writing to a file.          
+                           Procedures for storing text files
+    *  text_buffering.vhdl in an internal buffer and for
+                           accumulating text log information
+                           before writing to a file.
 
-                           Functions for conversions between  
-                           time, frequency, and clock cycles. 
-    *  timing_ops.vhdl     Also includes a flexible,          
-                           simulation-only clock generation   
-                           procedure.                         
+                           Functions for conversions between
+                           time, frequency, and clock cycles.
+    *  timing_ops.vhdl     Also includes a flexible,
+                           simulation-only clock generation
+                           procedure.
 
     *  timing_ops_xilinx.vhdl  A variant of timing_ops to use with
-                               Xilinx XST.
+                               Xilinx XST. It is stripped of the
+                               frequency physical type which XST
+                               cannot support.
 
   EDAC
 
    Packages for performing error detection and correction.
 
-                         A flexible implementation of the  
-    *  hamming_edac.vhdl Hamming code for any data size of 
-                         4-bits or greater.                
+                         A general purpose set of functions
+    *  crc_ops.vhdl      and component for generating
+                         CRCs.
 
-    *  parity_ops.vhdl   Basic parity operations.          
+                         A flexible implementation of the
+    *  hamming_edac.vhdl Hamming code for any data size of
+                         4-bits or greater.
 
-                         Single Error Correction, Double   
-    *  secded_edac.vhdl  Error Detection implemented with  
-                         extended Hamming code.            
+    *  parity_ops.vhdl   Basic parity operations.
 
-                         An entity providing a combined    
-                         SECDED encoder and decoder with   
-    *  secded_codec.vhdl added error injection for system  
-                         verification. Optional pipelining 
-                         is provided.                      
+                         Single Error Correction, Double
+    *  secded_edac.vhdl  Error Detection implemented with
+                         extended Hamming code.
+
+                         An entity providing a combined
+                         SECDED encoder and decoder with
+    *  secded_codec.vhdl added error injection for system
+                         verification. Optional pipelining
+                         is provided.
 
   Encoding
 
    Packages for encoding data into alternate forms.
 
 
-    *  bcd_conversion.vhdl Conversion to and from packed Binary          
-                           Coded Decimal. Supports any data size.   
+    *  bcd_conversion.vhdl Conversion to and from packed Binary
+                           Coded Decimal. Supports any data size.
 
-    *  gray_code.vhdl      Conversion between binary and Gray code.      
+    *  gray_code.vhdl      Conversion between binary and Gray code.
 
 
   LFSRs
@@ -147,55 +153,55 @@ The Code
    These packages provide linear feedback shift registers and related
    structures.
 
-                     An implementation of the Wolfram Linear                     
-                     Cellular Automata. This is useful for          
-    *  lcar_ops.vhdl generating pseudo-random numbers with low       
-                     correlation between bits. Adaptable to any     
-                     number of cells. Constants are provided for    
-                     maximal length sequences of up to 100 bits.    
+                     An implementation of the Wolfram Linear
+                     Cellular Automata. This is useful for
+    *  lcar_ops.vhdl generating pseudo-random numbers with low
+                     correlation between bits. Adaptable to any
+                     number of cells. Constants are provided for
+                     maximal length sequences of up to 100 bits.
 
-                     Various implementations of Galois and          
-                     Fibonacci Linear Feedback Shift Registers.     
-    *  lfsr_ops.vhdl These adapt to any size register. Coefficients 
-                     are provided for maximal length sequences up   
-                     to 100 bits.                                   
+                     Various implementations of Galois and
+                     Fibonacci Linear Feedback Shift Registers.
+    *  lfsr_ops.vhdl These adapt to any size register. Coefficients
+                     are provided for maximal length sequences up
+                     to 100 bits.
 
   String and Character Library
 
    A set of packages that provide string and character operations adapted
    from the Ada standard library.
 
-                                   Functions for                                 
-    *  characters_handling.vhdl    identifying character 
-                                   classification.       
+                                   Functions for
+    *  characters_handling.vhdl    identifying character
+                                   classification.
 
-                                   Constants for the     
-    *  characters_latin_1.vhdl     Latin-1 character     
-                                   names.                
+                                   Constants for the
+    *  characters_latin_1.vhdl     Latin-1 character
+                                   names.
 
-    *  strings.vhdl                Shared types for the  
-                                   string packages.      
+    *  strings.vhdl                Shared types for the
+                                   string packages.
 
-                                   Operations for fixed  
-    *  strings_fixed.vhdl          length strings using  
-                                   the built in string   
-                                   type.                 
+                                   Operations for fixed
+    *  strings_fixed.vhdl          length strings using
+                                   the built in string
+                                   type.
 
-    *  strings_maps.vhdl           Functions for mapping 
-                                   character sets.       
+    *  strings_maps.vhdl           Functions for mapping
+                                   character sets.
 
-    *  strings_maps_constants.vhdl Constants for basic   
-                                   character sets.       
+    *  strings_maps_constants.vhdl Constants for basic
+                                   character sets.
 
-                                   Operations for        
-    *  strings_unbounded.vhdl      dynamically allocated 
-                                   strings.              
+                                   Operations for
+    *  strings_unbounded.vhdl      dynamically allocated
+                                   strings.
 
   Miscellaneous
 
    Additional packages of useful functions.
 
-    *  glitch_filtering.vhdl A configurable filter for removing                     
+    *  glitch_filtering.vhdl A configurable filter for removing
                              spurious transitions from noisy inputs.
 
 Licensing
@@ -265,3 +271,4 @@ Licensing
      covered  by the  GNU  General  Public  License.  This exception does not
      however invalidate  any other reasons why  the executable file  might be
      covered by the  GNU Public License.
+
