@@ -72,6 +72,7 @@ $(TAG_DIR): | $(BUILD_DIR)
 
 
 $(LIB_BASE_DIR): | $(BUILD_DIR)
+	mkdir $(LIB_BASE_DIR)
 
 $(LIB_DIRS): | $(LIB_BASE_DIR)
 	@echo $(LIB_DIRS) | xargs -n 1 vlib
