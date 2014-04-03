@@ -49,7 +49,7 @@ Usage
    code is written in conformance to the VHDL-93 standard. Various synthesis
    tools may differ in their support for the language constructs used within
    VHDL-extras. For Synopsys Design Compiler you will need to activate the
-   newer presto VHDL compiler.
+   newer presto VHDL compiler if it isn't set as the default.
 
    In this library, the std_ulogic and std_ulogic_vector types are
    preferentially used in favor of std_logic and std_logic_vector. Using the
@@ -201,9 +201,17 @@ The Code
 
    Additional packages of useful functions.
 
+    *  ddfs.vhdl             A set of functions for implementing
+                             Direct Digital Frequency Synthesizers.
+
     *  glitch_filtering.vhdl A configurable filter for removing
                              spurious transitions from noisy inputs.
 
+    *  fifo_pkg.vhdl         A set of general purpose single and dual
+                             clock domain FIFOs.
+
+    *  memory_pkg.vhdl       Generic dual ported RAM and synthesizable
+                             ROM with file I/O.
 Licensing
 
    All of the source files distributed as part of VHDL-extras, with one

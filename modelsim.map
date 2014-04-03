@@ -1,4 +1,4 @@
 
 [Library]
-;test = $MGC_WD/build/lib/test
+test = $MGC_WD/build/lib/test
 extras = $MGC_WD/build/lib/extras
