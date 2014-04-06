@@ -57,7 +57,7 @@
 --#    constant TGT_FREQ  : real    := 2600.0; -- 2600 Hz
 --#    constant DDFS_TOL  : real    := 0.001;  -- 0.1%
 --#    constant SIZE      : natural := ddfs_size(SYS_FREQ, TGT_FREQ, DDFS_TOL);
---#    constant INCREMENT : unsigned(SIZE-1 downto 0)
+--#    constant INCREMENT : unsigned(SIZE-1 downto 0) :=
 --#                                 ddfs_increment(SYS_FREQ, TGT_FREQ, SIZE);
 --#    ...
 --#    whistle: ddfs
@@ -79,16 +79,16 @@
 --#  The alternate set of functions are used to precompute a multiplier factor that is
 --#  used to dynamically generate an increment value in synthesizable logic:
 --#
---#    constant MIN_TGT_FREQ : natural := 2000;
---#    constant MAX_TGT_FREQ : natural := 60000;
+--#    constant MIN_TGT_FREQ : natural := 27;
+--#    constant MAX_TGT_FREQ : natural := 4200;
 --#    constant FRAC_BITS    : natural := min_fraction_bits(SYS_FREQ, MIN_TGT_FREQ, SIZE, DDFS_TOL);
 --#    constant DDFS_FACTOR  : natural := ddfs_dynamic_factor(SYS_FREQ, SIZE, FRAC_BITS);
 --#    signal dyn_freq : unsigned(bit_size(MAX_TGT_FREQ)-1 downto 0);
 --#    signal dyn_inc  : unsigned(SIZE-1 downto 0);
 --#    ...
---#    dyn_freq <= to_unsigned(50000, dyn_freq'length); -- Generate 50 KHz
+--#    dyn_freq <= to_unsigned(261, dyn_freq'length); -- Middle C
 --#    ...
---#    dyn_freq <= to_unsigned(12000, dyn_freq'length); -- Change to 12 KHz
+--#    dyn_freq <= to_unsigned(440, dyn_freq'length); -- Change to A4
 --#    ...
 --#    -- Wrap ddfs_dynamic_inc in a sequencial process to synthesize a multiplier
 --#    -- with registered product.
