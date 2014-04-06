@@ -5,6 +5,7 @@ import time
 import subprocess as subp
 from threading import Thread
 import Queue as queue
+import scripts.color as color
 
 
 def enqueue_pipe(pipe, queue):
@@ -32,7 +33,7 @@ class Modelsim(object):
     self._setup_vsim_process()
 
   def _setup_vsim_process(self):
-    #print('#### INIT VSIM')
+    print('\n' + color.success('*** Starting Modelsim ***'))
     env = { 'MGC_WD': os.getcwd(), 'PATH': os.environ['PATH'] }
     self.p = subp.Popen(['vsim',  '-c', '-l', self.log_file], env=env, stdin=subp.PIPE, stderr=subp.PIPE, stdout=subp.PIPE)
 
@@ -103,6 +104,7 @@ class Modelsim(object):
 
 
   def quit(self):
+    print('\n\n' + color.note('*** Stopping Modelsim ***'))
     self.p.stdin.write('quit\n')
     self.p.kill()
     self.p = None

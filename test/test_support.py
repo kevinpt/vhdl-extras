@@ -52,7 +52,7 @@ def relativelyEqual(a, b, epsilon):
         return abs(a - b) / (abs(a) + abs(b)) < epsilon
 
 
-def run_modelsim(entity, log_file, generics=None):
+def XXrun_modelsim(entity, log_file, generics=None):
     env = { 'MGC_WD': os.getcwd(), 'PATH': os.environ['PATH'] }
     vsim_cmd = ['vsim', '-c', entity, '-l', log_file, '-do', 'run -all; quit']
 
@@ -63,7 +63,7 @@ def run_modelsim(entity, log_file, generics=None):
     p.communicate()
     return modelsim_success(log_file)
 
-def modelsim_success(log_file):
+def XXmodelsim_success(log_file):
     with open(log_file, 'r') as fh:
         for ln in fh:
             if ln.startswith('# Stopped at') or ln.startswith('# FATAL ERROR'):
@@ -108,7 +108,7 @@ class VHDLTestCase(unittest.TestCase):
 
     def setUp(self):
         self.vsim = self.__class__.modelsim_proc
-        print('\n')
+        print('')
 
     def update_progress(self, cur_trial, dotted=True):
         self.trial = cur_trial
@@ -133,10 +133,13 @@ class VHDLTestCase(unittest.TestCase):
                 for ln in fh: print(ln, end='')
         self.assertTrue(status, 'Simulation failed')
 
-    def run_simulation(self, entity, **generics):
+    def run_simulation(self, entity, update=True, **generics):
         log_file = os.path.join('test', 'test-output', entity.split('.')[1] + '.log')
-        self.test_name = 'Testbench ' + entity
-        self.update_progress(1)
+
+        if update:
+            self.test_name = 'Testbench ' + entity
+            self.update_progress(1)
+
         vsim_args = ''
         if generics is not None:
             vsim_args = ' '.join('-G{}={}'.format(k, v) for k, v in generics.iteritems())
@@ -153,7 +156,7 @@ class VHDLTestCase(unittest.TestCase):
 
         # Write log
         with open(log_file, 'w') as fh:
-          fh.write(''.join(cmds))
+            fh.write(''.join(cmds))
 
         self.assertTrue(status, 'Simulation failed')
 
@@ -165,20 +168,18 @@ class VHDLTestCase(unittest.TestCase):
 
 
 
-class RandomSeededTestCase(unittest.TestCase):
+class RandomSeededTestCase(VHDLTestCase):
     def __init__(self, methodName='runTest', seedVarName='TEST_SEED'):
         unittest.TestCase.__init__(self, methodName=methodName)
         self.seed_var_name = seedVarName
         self.test_name = 'Unnamed test'
         self.trial = 0
         self.trial_count = 0
+        self.seed = 1
 
     @classmethod
     def setupClass(cls):
-        out_dir = os.path.join('test', 'test-output')
-        if not os.path.exists(out_dir):
-            os.mkdir(out_dir)
-
+        super(RandomSeededTestCase, self).setupClass(cls)
 
     def setUp(self):
         # In sub classes use the following to call this setUp() from an overrided setUp()
@@ -186,15 +187,17 @@ class RandomSeededTestCase(unittest.TestCase):
         
         # Use seed from enviroment if it is set
         try:
-            seed = long(os.environ[self.seed_var_name])
+            self.seed = long(os.environ[self.seed_var_name])
         except KeyError:
             random.seed()
-            seed = long(random.random() * 1e9)
+            self.seed = long(random.random() * 1e9)
 
-        print(color.note('\n * Random seed: {} *'.format(seed)))
-        random.seed(seed)
+        print(color.note('\n * Random seed: {} *'.format(self.seed)))
+        random.seed(self.seed)
 
-    def update_progress(self, cur_trial, dotted=True):
+        VHDLTestCase.setUp(self)
+
+    def XXXupdate_progress(self, cur_trial, dotted=True):
         self.trial = cur_trial
         if not dotted:
             print('\r  {} {} / {}  '.format(self.test_name, self.trial, self.trial_count), end='')
@@ -207,7 +210,7 @@ class RandomSeededTestCase(unittest.TestCase):
         sys.stdout.flush()
 
 
-    def assertRelativelyEqual(self, a, b, epsilon, msg=None):
+    def XXXassertRelativelyEqual(self, a, b, epsilon, msg=None):
         if not relativelyEqual(a, b, epsilon):
             if msg is None:
                 msg = '{} != {}'.format(a, b)

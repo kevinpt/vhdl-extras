@@ -26,7 +26,7 @@ begin
     variable poly   : word;
     variable crc1, crc2, crca, crcb, crc1a, crc2b : word;
   begin
-
+    report "Seed: " & integer'image(TEST_SEED);
     seed(TEST_SEED);
 
     for p in 1 to 2**word'length-1 loop -- Try all possible polynomials
