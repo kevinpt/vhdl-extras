@@ -34,4 +34,18 @@ class TestVHDL(tsup.VHDLTestCase):
         entity = 'test.test_bcd_conversion'
         self.run_simulation(entity)
 
+    def test_characters_handling(self):
+        entity = 'test.test_characters_handling'
+        self.run_simulation(entity)
 
+    def test_sizing(self):
+        entity = 'test.test_sizing'
+        self.run_simulation(entity)
+
+    def test_ddfs(self):
+        entity = 'test.test_ddfs'
+        self.run_simulation(entity)
+
+    def test_crc_ops(self):
+        entity = 'test.test_crc_ops'
+        self.run_simulation(entity)

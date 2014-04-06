@@ -32,10 +32,11 @@ import unittest
 import random
 import time
 import gc
+import subprocess as subp
+
 from eng import eng_si
 import scripts.color as color
-
-import subprocess as subp
+from modelsim import Modelsim
 
 
 def relativelyEqual(a, b, epsilon):
@@ -70,21 +71,43 @@ def modelsim_success(log_file):
 
     return True
 
+def command_success(results):
+  for ln in results.split('\n'):
+    if ln.startswith('# Stopped at') or ln.startswith('# FATAL ERROR') or ln.startswith('# Error loading'):
+        return False
+
+  return True
+
 
 class VHDLTestCase(unittest.TestCase):
+    modelsim_proc = None
+
     def __init__(self, methodName='runTest'):
         unittest.TestCase.__init__(self, methodName=methodName)
         self.test_name = 'Unnamed test'
         self.trial = 0
         self.trial_count = 0
+        #if modelsim_proc is None:
+        #    modelsim_proc = Modelsim('test/test-output/unittest.log')
+        self.vsim = None
 
     @classmethod
-    def setupClass(cls):
+    def setUpClass(cls):
         out_dir = os.path.join('test', 'test-output')
         if not os.path.exists(out_dir):
             os.mkdir(out_dir)
 
+        cls.modelsim_proc = Modelsim('test/test-output/unittest.log')
+
+    @classmethod
+    def tearDownClass(cls):
+        if cls.modelsim_proc is not None:
+            cls.modelsim_proc.quit()
+            cls.modelsim_proc = None 
+
+
     def setUp(self):
+        self.vsim = self.__class__.modelsim_proc
         print('\n')
 
     def update_progress(self, cur_trial, dotted=True):
@@ -100,7 +123,7 @@ class VHDLTestCase(unittest.TestCase):
         sys.stdout.flush()
 
 
-    def run_simulation(self, entity, **generics):
+    def Xrun_simulation(self, entity, **generics):
         log_file = os.path.join('test', 'test-output', entity.split('.')[1] + '.log')
         self.test_name = 'Testbench ' + entity
         self.update_progress(1)
@@ -110,6 +133,29 @@ class VHDLTestCase(unittest.TestCase):
                 for ln in fh: print(ln, end='')
         self.assertTrue(status, 'Simulation failed')
 
+    def run_simulation(self, entity, **generics):
+        log_file = os.path.join('test', 'test-output', entity.split('.')[1] + '.log')
+        self.test_name = 'Testbench ' + entity
+        self.update_progress(1)
+        vsim_args = ''
+        if generics is not None:
+            vsim_args = ' '.join('-G{}={}'.format(k, v) for k, v in generics.iteritems())
+
+        cmds = []
+        cmds.append(self.vsim.exec_tcl('vsim {} {}; run -all'.format(entity, vsim_args)))
+        process_died = self.vsim.process_done()
+        if process_died:
+          self.vsim.restart()
+
+        status = command_success(cmds[-1]) and not process_died
+        if not status:
+            print(''.join(cmds))
+
+        # Write log
+        with open(log_file, 'w') as fh:
+          fh.write(''.join(cmds))
+
+        self.assertTrue(status, 'Simulation failed')
 
     def assertRelativelyEqual(self, a, b, epsilon, msg=None):
         if not relativelyEqual(a, b, epsilon):
@@ -132,6 +178,7 @@ class RandomSeededTestCase(unittest.TestCase):
         out_dir = os.path.join('test', 'test-output')
         if not os.path.exists(out_dir):
             os.mkdir(out_dir)
+
 
     def setUp(self):
         # In sub classes use the following to call this setUp() from an overrided setUp()

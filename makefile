@@ -21,7 +21,7 @@ VPATH = $(RTL_DIRS)
 VPATH += $(TAG_DIR)
 
 # Skip XST specific timing package
-EXCLUDE_RTL := timing_ops_xilinx.vhdl
+EXCLUDE_RTL := timing_ops_xilinx.vhdl random_20xx.vhdl
 RTL := $(filter-out $(EXCLUDE_RTL), $(foreach sdir, $(RTL_DIRS), $(notdir $(wildcard $(sdir)/*.vhd*))))
 RTL := $(filter %.vhd %.vhdl, $(RTL))
 
