@@ -1,0 +1,433 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>VHDL-extras packages &mdash; VHDL-extras 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/vhdl-extras.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="VHDL-extras 1.0 documentation" href="../index.html" />
+    <link rel="prev" title="VHDL-extras library documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="VHDL-extras library documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">VHDL-extras 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="vhdl-extras-packages">
+<h1>VHDL-extras packages<a class="headerlink" href="#vhdl-extras-packages" title="Permalink to this headline">¶</a></h1>
+<p>The following is a detailed description of the packages provided in VHDL-extras.</p>
+<div class="section" id="core-packages">
+<h2>Core Packages<a class="headerlink" href="#core-packages" title="Permalink to this headline">¶</a></h2>
+<p>These packages provide core functionality that is of general use in a
+wide array of applications.</p>
+<div class="section" id="pipelining">
+<span id="id1"></span><h3>pipelining<a class="headerlink" href="#pipelining" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/pipelining.vhdl">pipelining.vhdl</a></p>
+<p>Configurable pipeline registers for
+use with automated retiming during
+synthesis.</p>
+</div>
+<div class="section" id="sizing">
+<span id="id2"></span><h3>sizing<a class="headerlink" href="#sizing" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/sizing.vhdl">sizing.vhdl</a></p>
+<p>A set of functions for computing integer logarithms and for determing the size of binary numbers and encodings. Generalized functions for computing floor(log(n, b)) and ceil(log(n, b)) for any base b are provided as well as special purpose convenience functions like bit_size and encoding_size. See the <a class="reference internal" href="#bcd-conversion"><em>bcd_conversion</em></a> implementation for a practical example of computing integer logs in base-10 using this package.</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">constant</span> <span class="n">MAX_COUNT</span>  <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">COUNT_SIZE</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="n">bit_size</span><span class="p">(</span><span class="n">MAX_COUNT</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">counter</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">COUNT_SIZE</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">counter</span> <span class="o">&lt;=</span> <span class="n">to_unsigned</span><span class="p">(</span><span class="n">MAX_COUNT</span><span class="p">,</span> <span class="n">COUNT_SIZE</span><span class="p">);</span>
+<span class="c1">-- counter will resize itself as MAX_COUNT is changed</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="synchronizing">
+<span id="id3"></span><h3>synchronizing<a class="headerlink" href="#synchronizing" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/synchronizing.vhdl">synchronizing.vhdl</a></p>
+<p>Synchronizer entities for transferring signals between clock domains. There are three entities provided:</p>
+<ul class="simple">
+<li>bit_synchronizer &#8211; Suitable for synchronizing individual bit-wide signals</li>
+<li>reset_synchronizer &#8211; A special synchronizer for generating asyncronous resets that are synchronously released</li>
+<li>handshake_synchronizer &#8211; A synchronizer using the four-phase protocol to transfer vectors between domains</li>
+</ul>
+<p>bit_synchronizer and reset_synchronizer have a configurable number of stages with a default of 2.</p>
+</div>
+<div class="section" id="timing-ops">
+<span id="id4"></span><h3>timing_ops<a class="headerlink" href="#timing-ops" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/timing_ops.vhdl">timing_ops.vhdl</a></p>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/timing_ops_xilinx.vhdl">timing_ops_xilinx.vhdl</a></p>
+<p>Functions for conversions between time, frequency, and clock cycles. Also includes a flexible,
+simulation-only clock generation procedure. A variant of timing_ops is provided for use with Xilinx XST. It is stripped of the frequency physical type which XST cannot support. You can perform computations and conversions on time and frequency using real, integers, and physical types. This provides a powerful mechanism to generate synthesizable time related constants without manual precomputation.</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">library</span> <span class="nn">extras</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.sizing.bit_size</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.timing_ops.all</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="k">constant</span> <span class="n">SYS_CLOCK_FREQ</span> <span class="o">:</span> <span class="n">frequency</span> <span class="o">:=</span> <span class="mi">50</span> <span class="n">MHz</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">COUNT_1US</span> <span class="o">:</span> <span class="n">clock_cycles</span> <span class="o">:=</span> <span class="n">to_clock_cycles</span><span class="p">(</span><span class="mi">1</span> <span class="n">us</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">);</span>
+<span class="k">signal</span>   <span class="n">counter</span>   <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">bit_size</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">counter</span> <span class="o">&lt;=</span> <span class="n">to_unsigned</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">,</span> <span class="n">counter</span><span class="na">&#39;length</span><span class="p">);</span> <span class="c1">-- initialize counter</span>
+<span class="n">report_time_precision</span><span class="p">(</span><span class="s">&quot;COUNT_1US&quot;</span><span class="p">,</span> <span class="n">COUNT_1US</span><span class="p">,</span> <span class="mi">1</span> <span class="n">us</span><span class="p">,</span> <span class="n">time_duration</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">));</span>
+
+<span class="c1">-- The value of the &quot;COUNT_1US&quot; constant will change to reflect any change in</span>
+<span class="c1">-- the system clock frequency and the size of the signal &quot;counter&quot; will now</span>
+<span class="c1">-- automatically adapt to guarantee it can represent the count for 1 us.</span>
+
+<span class="c1">-- The clock_gen procedure can be called from a process to generate a clock</span>
+<span class="c1">-- in simulation with the requested frequency or period and an optional duty</span>
+<span class="c1">-- cycle specification:</span>
+
+<span class="n">sys_clock_gen</span><span class="o">:</span> <span class="k">process</span>
+<span class="k">begin</span>
+  <span class="n">clock_gen</span><span class="p">(</span><span class="n">sys_clock</span><span class="p">,</span> <span class="n">stop_clock</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">);</span>
+  <span class="k">wait</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="error-handling">
+<h2>Error handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
+<p>Packages for performing error detection and correction.</p>
+<div class="section" id="crc-ops">
+<span id="id5"></span><h3>crc_ops<a class="headerlink" href="#crc-ops" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/crc_ops.vhdl">crc_ops.vhdl</a></p>
+<p>A general purpose set of functions
+and component for generating
+CRCs.</p>
+</div>
+<div class="section" id="hamming-edac">
+<span id="id6"></span><h3>hamming_edac<a class="headerlink" href="#hamming-edac" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/hamming_edac.vhdl">hamming_edac.vhdl</a></p>
+<p>A flexible implementation of the
+Hamming code for any data size of
+4-bits or greater.</p>
+</div>
+<div class="section" id="parity-ops">
+<span id="id7"></span><h3>parity_ops<a class="headerlink" href="#parity-ops" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/parity_ops.vhdl">parity_ops.vhdl</a></p>
+<p>Basic parity operations.</p>
+</div>
+<div class="section" id="secded-edac">
+<span id="id8"></span><h3>secded_edac<a class="headerlink" href="#secded-edac" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/secded_edac.vhdl">secded_edac.vhdl</a></p>
+<p>Single Error Correction, Double
+Error Detection implemented with
+extended Hamming code.</p>
+</div>
+<div class="section" id="secded-codec">
+<span id="id9"></span><h3>secded_codec<a class="headerlink" href="#secded-codec" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/secded_codec.vhdl">secded_codec.vhdl</a></p>
+<p>An entity providing a combined
+SECDED encoder and decoder with
+added error injection for system
+verification. Optional pipelining
+is provided.</p>
+</div>
+</div>
+<div class="section" id="encoding">
+<h2>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h2>
+<p>Packages for encoding data into alternate forms.</p>
+<div class="section" id="bcd-conversion">
+<span id="id10"></span><h3>bcd_conversion<a class="headerlink" href="#bcd-conversion" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/bcd_conversion.vhdl">bcd_conversion.vhdl</a></p>
+<p>Conversion to and from packed Binary
+Coded Decimal. Supports any data size.</p>
+</div>
+<div class="section" id="gray-code">
+<span id="id11"></span><h3>gray_code<a class="headerlink" href="#gray-code" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/gray_code.vhdl">gray_code.vhdl</a></p>
+<p>Conversion between binary and Gray code.</p>
+</div>
+<div class="section" id="muxing">
+<span id="id12"></span><h3>muxing<a class="headerlink" href="#muxing" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/muxing.vhdl">muxing.vhdl</a></p>
+<p>Parameterized multiplexers,
+decoders, and demultiplexers.</p>
+</div>
+</div>
+<div class="section" id="memories">
+<h2>Memories<a class="headerlink" href="#memories" title="Permalink to this headline">¶</a></h2>
+<p>Packages with internal memories</p>
+<div class="section" id="fifo-pkg">
+<span id="id13"></span><h3>fifo_pkg<a class="headerlink" href="#fifo-pkg" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/fifo_pkg.vhdl">fifo_pkg.vhdl</a></p>
+<p>A set of general purpose single and dual
+clock domain FIFOs.</p>
+</div>
+<div class="section" id="memory-pkg">
+<span id="id14"></span><h3>memory_pkg<a class="headerlink" href="#memory-pkg" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/memory_pkg.vhdl">memory_pkg.vhdl</a></p>
+<p>Generic dual ported RAM and synthesizable
+ROM with file I/O.</p>
+</div>
+</div>
+<div class="section" id="randomization">
+<h2>Randomization<a class="headerlink" href="#randomization" title="Permalink to this headline">¶</a></h2>
+<p>These packages provide linear feedback shift registers and related
+structures for creating randomized output.</p>
+<div class="section" id="lcar-ops">
+<span id="id15"></span><h3>lcar_ops<a class="headerlink" href="#lcar-ops" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/lcar_ops.vhdl">lcar_ops.vhdl</a></p>
+<p>An implementation of the Wolfram Linear
+Cellular Automata. This is useful for
+generating pseudo-random numbers with low
+correlation between bits. Adaptable to any
+number of cells. Constants are provided for
+maximal length sequences of up to 100 bits.</p>
+</div>
+<div class="section" id="lfsr-ops">
+<span id="id16"></span><h3>lfsr_ops<a class="headerlink" href="#lfsr-ops" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/lfsr_ops.vhdl">lfsr_ops.vhdl</a></p>
+<p>Various implementations of Galois and
+Fibonacci Linear Feedback Shift Registers.
+These adapt to any size register. Coefficients
+are provided for maximal length sequences up
+to 100 bits.</p>
+</div>
+<div class="section" id="random">
+<span id="id17"></span><h3>random<a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/random.vhdl">random.vhdl</a></p>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/random_20xx.vhdl">random_20xx.vhdl</a></p>
+</div>
+</div>
+<div class="section" id="string-and-character-handling">
+<h2>String and character handling<a class="headerlink" href="#string-and-character-handling" title="Permalink to this headline">¶</a></h2>
+<p>A set of packages that provide string and character operations adapted
+from the Ada standard library.</p>
+<div class="section" id="characters-handling">
+<span id="id18"></span><h3>characters_handling<a class="headerlink" href="#characters-handling" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/characters_handling.vhdl">characters_habdling.vhdl</a></p>
+<p>Functions for
+identifying character
+classification.</p>
+</div>
+<div class="section" id="characters-latin-1">
+<h3>characters_latin_1<a class="headerlink" href="#characters-latin-1" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/characters_latin_1.vhdl">characters_latin_1.vhdl</a></p>
+<p>Constants for the
+Latin-1 character
+names.</p>
+</div>
+<div class="section" id="strings">
+<span id="id19"></span><h3>strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings.vhdl">strings.vhdl</a></p>
+<p>Shared types for the
+string packages.</p>
+</div>
+<div class="section" id="strings-fixed">
+<span id="id20"></span><h3>strings_fixed<a class="headerlink" href="#strings-fixed" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_fixed.vhdl">strings_fixed.vhdl</a></p>
+<p>Operations for fixed
+length strings using
+the built in string
+type.</p>
+</div>
+<div class="section" id="strings-maps">
+<span id="id21"></span><h3>strings_maps<a class="headerlink" href="#strings-maps" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_maps.vhdl">strings_maps.vhdl</a></p>
+<p>Functions for mapping
+character sets.</p>
+</div>
+<div class="section" id="strings-maps-constants">
+<span id="id22"></span><h3>strings_maps_constants<a class="headerlink" href="#strings-maps-constants" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_maps_constants.vhdl">strings_maps_constants.vhdl</a></p>
+<p>Constants for basic
+character sets.</p>
+</div>
+<div class="section" id="strings-unbounded">
+<span id="id23"></span><h3>strings_unbounded<a class="headerlink" href="#strings-unbounded" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_unbounded.vhdl">strings_unbounded.vhdl</a></p>
+<p>Operations for
+dynamically allocated
+strings.</p>
+</div>
+</div>
+<div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<p>Additional packages of useful functions.</p>
+<div class="section" id="binaryio">
+<span id="id24"></span><h3>binaryio<a class="headerlink" href="#binaryio" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/binaryio.vhdl">binaryio.vhdl</a></p>
+<p>Procedures for general binary file
+IO. Support is provided for reading
+and writing vectors of any size
+with big and little-endian byte
+order.</p>
+</div>
+<div class="section" id="text-buffering">
+<span id="id25"></span><h3>text_buffering<a class="headerlink" href="#text-buffering" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/text_buffering.vhdl">text_buffering.vhdl</a></p>
+<p>Procedures for storing text files
+in an internal buffer and for
+accumulating text log information
+before writing to a file.</p>
+</div>
+<div class="section" id="ddfs">
+<span id="id26"></span><h3>ddfs<a class="headerlink" href="#ddfs" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/ddfs.vhdl">ddfs.vhdl</a></p>
+<p>A set of functions for implementing
+Direct Digital Frequency Synthesizers.</p>
+</div>
+<div class="section" id="glitch-filtering">
+<span id="id27"></span><h3>glitch_filtering<a class="headerlink" href="#glitch-filtering" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/glitch_filtering.vhdl">glitch_filtering.vhdl</a></p>
+<p>A configurable filter for removing
+spurious transitions from noisy inputs.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/vhdl-extras-sm.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">VHDL-extras packages</a><ul>
+<li><a class="reference internal" href="#core-packages">Core Packages</a><ul>
+<li><a class="reference internal" href="#pipelining">pipelining</a></li>
+<li><a class="reference internal" href="#sizing">sizing</a></li>
+<li><a class="reference internal" href="#synchronizing">synchronizing</a></li>
+<li><a class="reference internal" href="#timing-ops">timing_ops</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#error-handling">Error handling</a><ul>
+<li><a class="reference internal" href="#crc-ops">crc_ops</a></li>
+<li><a class="reference internal" href="#hamming-edac">hamming_edac</a></li>
+<li><a class="reference internal" href="#parity-ops">parity_ops</a></li>
+<li><a class="reference internal" href="#secded-edac">secded_edac</a></li>
+<li><a class="reference internal" href="#secded-codec">secded_codec</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#encoding">Encoding</a><ul>
+<li><a class="reference internal" href="#bcd-conversion">bcd_conversion</a></li>
+<li><a class="reference internal" href="#gray-code">gray_code</a></li>
+<li><a class="reference internal" href="#muxing">muxing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#memories">Memories</a><ul>
+<li><a class="reference internal" href="#fifo-pkg">fifo_pkg</a></li>
+<li><a class="reference internal" href="#memory-pkg">memory_pkg</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#randomization">Randomization</a><ul>
+<li><a class="reference internal" href="#lcar-ops">lcar_ops</a></li>
+<li><a class="reference internal" href="#lfsr-ops">lfsr_ops</a></li>
+<li><a class="reference internal" href="#random">random</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#string-and-character-handling">String and character handling</a><ul>
+<li><a class="reference internal" href="#characters-handling">characters_handling</a></li>
+<li><a class="reference internal" href="#characters-latin-1">characters_latin_1</a></li>
+<li><a class="reference internal" href="#strings">strings</a></li>
+<li><a class="reference internal" href="#strings-fixed">strings_fixed</a></li>
+<li><a class="reference internal" href="#strings-maps">strings_maps</a></li>
+<li><a class="reference internal" href="#strings-maps-constants">strings_maps_constants</a></li>
+<li><a class="reference internal" href="#strings-unbounded">strings_unbounded</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
+<li><a class="reference internal" href="#binaryio">binaryio</a></li>
+<li><a class="reference internal" href="#text-buffering">text_buffering</a></li>
+<li><a class="reference internal" href="#ddfs">ddfs</a></li>
+<li><a class="reference internal" href="#glitch-filtering">glitch_filtering</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">VHDL-extras library documentation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/rst/packages.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="VHDL-extras library documentation"
+             >previous</a> |</li>
+        <li><a href="../index.html">VHDL-extras 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Kevin Thibedeau.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49656006-1', 'google.com');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>
