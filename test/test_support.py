@@ -1,26 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-'''Ripyl protocol decode library
-   test support functions
+'''Vhdl-extras library
+   Test support functions
 '''
 
-# Copyright © 2013 Kevin Thibedeau
+# Copyright © 2014 Kevin Thibedeau
 
-# This file is part of Ripyl.
-
-# Ripyl is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as
-# published by the Free Software Foundation, either version 3 of
-# the License, or (at your option) any later version.
-
-# Ripyl is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public
-# License along with Ripyl. If not, see <http://www.gnu.org/licenses/>.
+# This file is part of VHDL-extras.
 
 from __future__ import print_function, division
 

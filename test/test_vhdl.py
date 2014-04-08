@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-'''Ripyl protocol decode library
-   can.py test suite
+'''VHDL-extras library
+   Test suite
 '''
 
 # Copyright © 2014 Kevin Thibedeau
@@ -42,13 +42,6 @@ class TestVHDL(tsup.VHDLTestCase):
         entity = 'test.test_sizing'
         self.run_simulation(entity)
 
-    #def test_ddfs(self):
-    #    entity = 'test.test_ddfs'
-    #    self.run_simulation(entity)
-
-    #def test_crc_ops(self):
-    #    entity = 'test.test_crc_ops'
-    #    self.run_simulation(entity)
 
 
 class TestRandVHDL(tsup.RandomSeededTestCase):
@@ -56,6 +49,11 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
     def test_crc_ops(self):
         entity = 'test.test_crc_ops'
         self.run_simulation(entity, TEST_SEED=self.seed)
+
+    def test_fifo(self):
+        entity = 'test.test_simple_fifo'
+        self.run_simulation(entity, TEST_SEED=self.seed)
+
 
     def test_ddfs(self):
         entity = 'test.test_ddfs'
