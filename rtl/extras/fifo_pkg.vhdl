@@ -315,19 +315,19 @@ begin
 
       Almost_full  <= '0';
       Almost_empty <= '0';
-      if head /= tail then
-        if head > tail then
-          if Almost_full_thresh >= MEM_SIZE - (head - tail) then
+      if head_v /= tail_v then
+        if head_v > tail_v then
+          if Almost_full_thresh >= MEM_SIZE - (head_v - tail_v) then
             Almost_full <= '1';
           end if;
-          if Almost_empty_thresh >= head - tail then
+          if Almost_empty_thresh >= head_v - tail_v then
             Almost_empty <= '1';
           end if;
         else
-          if Almost_full_thresh >= tail - head then
+          if Almost_full_thresh >= tail_v - head_v then
             Almost_full <= '1';
           end if;
-          if Almost_empty_thresh >= MEM_SIZE - (tail - head) then
+          if Almost_empty_thresh >= MEM_SIZE - (tail_v - head_v) then
             Almost_empty <= '1';
           end if;
         end if;
