@@ -1,7 +1,7 @@
 #!/bin/sh
 export MGC_WD=`pwd`
 
-# Create default modelsim.ini with sltered library mapping
+# Create default modelsim.ini with altered library mapping
 if [ ! -f modelsim.ini ]; then
   python scripts/init_modelsim.py
 fi
