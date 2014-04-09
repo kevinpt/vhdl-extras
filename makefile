@@ -6,6 +6,10 @@ BUILD_DIR := build
 TAG_DIR := $(BUILD_DIR)/tags
 LIB_BASE_DIR := $(BUILD_DIR)/lib
 
+VERSION := $(shell grep -e "^version" doc/conf.py | sed -e "s/.*'\([^']*\)'/\1/")
+DIST_NAME := vhdl-extras-$(VERSION)
+DIST_DIR := $(BUILD_DIR)/dist/$(DIST_NAME)
+
 NO_COLOR=\x1b[0m
 SUCC_COLOR=\x1b[32;01m
 ERROR_COLOR=\x1b[31;01m
@@ -44,14 +48,16 @@ endef
 	$(BUILD_VHDL)
 
 
-.PHONY: compile clean
+.PHONY: compile clean dist
 
 compile: $(TAG_OBJS)
 
 clean:
 	rm -rf $(BUILD_DIR)
 
-
+dist: $(DIST_DIR)
+	rm -rf $(DIST_DIR)/* $(DIST_DIR)/.* 2>&-; hg clone . $(DIST_DIR)
+	cd $(BUILD_DIR)/dist; tar czf $(DIST_NAME).tgz $(DIST_NAME); zip -q -r $(DIST_NAME).zip $(DIST_NAME)
 
 # Generate dependency rules
 RULES := auto_rules.mk
@@ -84,4 +90,6 @@ $(TAG_OBJS): | $(TAG_DIR) $(LIB_DIRS) $(BUILD_DIR)/$(RULES)
 #all: $(TAG_OBJS)
 
 
+$(DIST_DIR): | $(BUILD_DIR)
+	mkdir -p $(DIST_DIR)
 
