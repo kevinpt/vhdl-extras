@@ -32,11 +32,10 @@ architecture tb of test_simple_fifo is
 begin
 
   stim: process
-    variable wr_log, rd_log : word_vec(0 to FIFO_SIZE-1);
+    variable wr_log, rd_log : word_vec(0 to FIFO_SIZE*5);
     variable exp_ae, exp_af : std_ulogic;
 
     constant RD_DELAY : natural := 10;
-    variable wr_long, rd_long : word_vec(0 to FIFO_SIZE * 5);
   begin
     seed(TEST_SEED);
 
@@ -51,7 +50,7 @@ begin
     wait for CPERIOD * 2;
 
     -- Generate random data
-    for i in wr_log'range loop
+    for i in 0 to FIFO_SIZE-1 loop
       wr_log(i) := std_ulogic_vector(to_stdlogicvector(random(word'length)));
     end loop;
 
@@ -59,14 +58,14 @@ begin
     assert empty = '1' and full = '0' and almost_empty = '0' and almost_full = '0'
       report "Bad flags when empty" severity failure;
 
-    for i in wr_log'range loop
+    for i in 0 to FIFO_SIZE-1 loop
       wr_data <= wr_log(i);
       we <= '1';
       wait for CPERIOD;
 
       assert empty = '0' report "Bad empty flag:" & integer'image(i) severity failure;
 
-      if i < wr_log'high then
+      if i < FIFO_SIZE - 1 then
         assert full = '0' report "Bad full flag:" & integer'image(i) severity failure;
       end if;
 
@@ -77,7 +76,7 @@ begin
       end if;
       assert almost_empty = exp_ae report "Bad almost empty flag:" & integer'image(i) severity failure;
 
-      if i >= wr_log'high - almost_full_thresh and i < wr_log'high then
+      if i >= FIFO_SIZE - 1 - almost_full_thresh and i < FIFO_SIZE-1 then
         exp_af := '1';
       else
         exp_af := '0';
@@ -92,50 +91,48 @@ begin
       report "Bad flags when full" severity failure;
 
     -- Read back FIFO
-    for i in rd_log'range loop
+    for i in 0 to FIFO_SIZE-1 loop
       re <= '1';
       wait for CPERIOD;
 
       rd_log(i) := rd_data;
+
+    -- Verify read matches write
+      assert rd_log(i) = wr_log(i) report "Read mismatch: " & integer'image(i) severity failure;
     end loop;
     re <= '0';
     wait for CPERIOD;
-
-    -- Verify read matches write
-    for i in rd_log'range loop
-      assert rd_log(i) = wr_log(i) report "Read mismatch: " & integer'image(i) severity failure;
-    end loop;
 
     assert empty = '1' and full = '0' and almost_empty = '0' and almost_full = '0'
       report "Bad flags when empty after read" severity failure;
 
 
     -- Continuous write and delayed read across wraparound boundary
-    for i in wr_long'range loop
-      wr_long(i) := std_ulogic_vector(to_stdlogicvector(random(word'length)));
-      wr_data <= wr_long(i);
+    for i in wr_log'range loop
+      wr_log(i) := std_ulogic_vector(to_stdlogicvector(random(word'length)));
+      wr_data <= wr_log(i);
       we <= '1';
       re <= '1' after CPERIOD * RD_DELAY;
       wait for CPERIOD;
 
       if i >= RD_DELAY then
-        rd_long(i-RD_DELAY) := rd_data;
+        rd_log(i-RD_DELAY) := rd_data;
       end if;
       
     end loop;
     we <= '0';
 
     -- Finish off delayed reads
-    for i in rd_long'high - RD_DELAY + 1 to rd_long'high loop
+    for i in rd_log'high - RD_DELAY + 1 to rd_log'high loop
       wait for CPERIOD;
-      rd_long(i) := rd_data;
+      rd_log(i) := rd_data;
     end loop;
     re <= '0';
 
     wait for CPERIOD;
 
-    for i in rd_long'range loop
-      assert rd_long(i) = wr_long(i) report "Continuous read mismatch: " & integer'image(i)
+    for i in rd_log'range loop
+      assert rd_log(i) = wr_log(i) report "Continuous read mismatch: " & integer'image(i)
         severity failure;
     end loop;
 

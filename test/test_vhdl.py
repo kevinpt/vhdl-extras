@@ -50,8 +50,16 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
         entity = 'test.test_crc_ops'
         self.run_simulation(entity, TEST_SEED=self.seed)
 
-    def test_fifo(self):
+    def test_simple_fifo(self):
         entity = 'test.test_simple_fifo'
+        self.run_simulation(entity, TEST_SEED=self.seed)
+
+    def test_fifo(self):
+        entity = 'test.test_fifo'
+        self.run_simulation(entity, TEST_SEED=self.seed)
+
+    def test_packet_fifo(self):
+        entity = 'test.test_packet_fifo'
         self.run_simulation(entity, TEST_SEED=self.seed)
 
 
