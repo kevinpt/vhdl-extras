@@ -308,7 +308,9 @@ begin
       else
         if wraparound_v then
           full_loc <= '1';
+          empty_loc <= '0';
         else
+          full_loc <= '0';
           empty_loc <= '1';
         end if;
       end if;
@@ -450,6 +452,8 @@ begin
       else
         if wraparound_v then
           full_loc <= '1';
+        else
+          full_loc <= '0';
         end if;
       end if;
 
@@ -513,6 +517,8 @@ begin
       else
         if not wraparound_v then
           empty_loc <= '1';
+        else
+          empty_loc <= '0';
         end if;
       end if;
 
@@ -735,6 +741,8 @@ begin
       else
         if wraparound_v then
           full_loc <= '1';
+        else
+          full_loc <= '0';
         end if;
       end if;
 
@@ -806,6 +814,8 @@ begin
       else
         if not wraparound_v then
           empty_loc <= '1';
+        else
+          empty_loc <= '0';
         end if;
       end if;
 
