@@ -103,9 +103,27 @@ crc_ops
 
 `crc_ops.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/crc_ops.vhdl>`_
 
-A general purpose set of functions
-and component for generating
-CRCs.
+This package provides a general purpose CRC implementation. It consists
+of a set of functions that can be used to iteratively process successive
+data vectors as well an an entity that combines the functions into a
+synthesizable form. The CRC can be readily specified using the Rocksoft
+notation described in "A Painless Guide to CRC Error Detection Algorithms",
+*Williams 1993*. A CRC specification consists of the following parameters:
+
+  | Poly       : The generator polynomial
+  | Xor_in     : The initialization vector "xored" with an all-'0's shift register
+  | Xor_out    : A vector xored with the shift register to produce the final value
+  | Reflect_in : Process data bits from left to right (false) or right to left (true)
+  | Reflect_out: Determine bit order of final crc result
+
+A CRC can be computed using a set of three functions `init_crc`, `next_crc`, and `end_crc`.
+All functions are assigned to a common variable/signal that maintans the shift
+register state between succesive calls. After initialization with `init_crc`, data
+is processed by repeated calls to `next_crc`. The width of the data vector is
+unconstrained allowing you to process bits in chunks of any desired size. Using
+a 1-bit array for data is equivalent to a bit-serial CRC implementation. When
+all data has been passed through the CRC it is completed with a call to `end_crc` to
+produce the final CRC value.
 
 .. _hamming_edac:
 
@@ -114,9 +132,7 @@ hamming_edac
 
 `hamming_edac.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/hamming_edac.vhdl>`_
 
-A flexible implementation of the
-Hamming code for any data size of
-4-bits or greater.
+A flexible implementation of the Hamming code for any data size of 4-bits or greater.
 
 .. _parity_ops:
 
@@ -134,9 +150,7 @@ secded_edac
 
 `secded_edac.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/secded_edac.vhdl>`_
 
-Single Error Correction, Double
-Error Detection implemented with
-extended Hamming code.
+Single Error Correction, Double Error Detection implemented with extended Hamming code.
 
 .. _secded_codec:
 
@@ -145,11 +159,7 @@ secded_codec
 
 `secded_codec.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/secded_codec.vhdl>`_
 
-An entity providing a combined
-SECDED encoder and decoder with
-added error injection for system
-verification. Optional pipelining
-is provided.
+An entity providing a combined SECDED encoder and decoder with added error injection for system verification. Optional pipelining is provided.
 
 Encoding
 --------
@@ -163,8 +173,23 @@ bcd_conversion
 
 `bcd_conversion.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/bcd_conversion.vhdl>`_
 
-Conversion to and from packed Binary
-Coded Decimal. Supports any data size.
+This package provides functions and components for performing conversion
+between binary and packed Binary Coded Decimal (BCD). The functions
+to_bcd and to_binary can be used to create synthesizable combinatinal
+logic for performing a conversion. In synthesized code they are best used
+with shorter arrays comprising only a few digits. For larger numbers, the
+components binary_to_bcd and bcd_to_binary can be used to perform a
+conversion over multiple clock cycles. The utility function decimal_size
+can be used to determine the number of decimal digits in a BCD array. Its
+result must be multiplied by 4 to get the length of a packed BCD array.
+
+.. code-block:: vhdl
+
+    signal binary  : unsigned(7 downto 0);
+    constant DSIZE : natural := decimal_size(2**binary'length - 1);
+    signal bcd : unsigned(DSIZE*4-1 downto 0);
+    ...
+    bcd <= to_bcd(binary);
 
 .. _gray_code:
 
@@ -173,7 +198,16 @@ gray_code
 
 `gray_code.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/gray_code.vhdl>`_
 
-Conversion between binary and Gray code.
+This package provides functions to convert between Gray code and binary. An example implementation of a Gray code counter is also included.
+
+.. code-block:: vhdl
+
+  signal bin, gray, bin2 : std_ulogic_vector(7 downto 0);
+  ...
+  bin  <= X"C5";
+  gray <= to_gray(bin);
+  bin2 <= to_binary(gray);
+
 
 .. _muxing:
 
@@ -182,8 +216,7 @@ muxing
 
 `muxing.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/muxing.vhdl>`_
 
-Parameterized multiplexers,
-decoders, and demultiplexers.
+Parameterized multiplexers, decoders, and demultiplexers.
 
 
 Memories
@@ -199,9 +232,14 @@ fifo_pkg
 
 `fifo_pkg.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/fifo_pkg.vhdl>`_
 
+This package implements a set of generic FIFO components. There are three
+variants. All use the same basic interface for the read/write ports and
+status flags. The FIFOs have the following differences:
 
-A set of general purpose single and dual
-clock domain FIFOs.
+
+* simple_fifo -- Basic minimal FIFO for use in a single clock domain. This component lacks the synchronizing logic needed for the other two FIFOs and will synthesize more compactly.
+* fifo        -- General FIFO with separate domains for read and write ports.
+* packet_fifo -- Extension of fifo component with ability to discard written data before it is read. Useful for managing packetized protocols with error detection at the end.
 
 .. _memory_pkg:
 
@@ -210,8 +248,7 @@ memory_pkg
 
 `memory_pkg.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/memory_pkg.vhdl>`_
 
-Generic dual ported RAM and synthesizable
-ROM with file I/O.
+This package provides general purpose components for inferred dual-ported RAM and ROM.
 
 
 Randomization
@@ -227,11 +264,7 @@ lcar_ops
 
 `lcar_ops.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/lcar_ops.vhdl>`_
 
-An implementation of the Wolfram Linear
-Cellular Automata. This is useful for
-generating pseudo-random numbers with low
-correlation between bits. Adaptable to any
-number of cells. Constants are provided for
+An implementation of the Wolfram Linear Cellular Automata. This is useful for generating pseudo-random numbers with low correlation between bits. Adaptable to any number of cells. Constants are provided for
 maximal length sequences of up to 100 bits.
 
 .. _lfsr_ops:
@@ -241,11 +274,7 @@ lfsr_ops
 
 `lfsr_ops.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/lfsr_ops.vhdl>`_
 
-Various implementations of Galois and
-Fibonacci Linear Feedback Shift Registers.
-These adapt to any size register. Coefficients
-are provided for maximal length sequences up
-to 100 bits.
+Various implementations of Galois and Fibonacci Linear Feedback Shift Registers. These adapt to any size register. Coefficients are provided for maximal length sequences up to 100 bits.
 
 .. _random:
 
@@ -255,6 +284,21 @@ random
 `random.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/random.vhdl>`_
 
 `random_20xx.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/random_20xx.vhdl>`_
+
+This package provides a general set of pseudo-random number functions.
+It is implemented as a wrapper around the ieee.math_real.uniform
+procedure and is only suitable for simulation not synthesis. See the
+LCAR and LFSR packages for synthesizable random generators.
+
+This package makes use of shared variables to keep track of the PRNG
+state more conveniently than calling uniform directly. Because
+VHDL-2002 broke forward compatability of shared variables there are
+two versions of this package. One (random.vhdl) is for VHDL-93 using
+the classic shared variable mechanism. The other (random_20xx.vhdl)
+is for VHDL-2002 and later using a protected type to manage the
+PRNG state. Both files define a package named "random" and only one
+can be in use at any time. The user visible subprograms are the same
+in both implementations.
 
 
 String and character handling
@@ -268,11 +312,12 @@ from the Ada standard library.
 characters_handling
 ~~~~~~~~~~~~~~~~~~~
 
-`characters_habdling.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/characters_handling.vhdl>`_
+`characters_handling.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/characters_handling.vhdl>`_
 
-Functions for
-identifying character
-classification.
+This is a package of functions that replicate the behavior of the Ada
+standard library package ada.characters.handling. Included are functions
+to test for different character classifications and perform conversion
+of characters and strings to upper and lower case.
 
 .. characters_latin_1:
 
@@ -281,9 +326,9 @@ characters_latin_1
 
 `characters_latin_1.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/characters_latin_1.vhdl>`_
 
-Constants for the
-Latin-1 character
-names.
+This package provides Latin-1 character constants. These constants are
+adapted from the definitions in the Ada'95 ARM for the package
+Ada.Characters.Latin_1.
 
 .. _strings:
 
@@ -292,8 +337,7 @@ strings
 
 `strings.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings.vhdl>`_
 
-Shared types for the
-string packages.
+Shared types for the string packages.
 
 .. _strings_fixed:
 
@@ -302,10 +346,10 @@ strings_fixed
 
 `strings_fixed.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_fixed.vhdl>`_
 
-Operations for fixed
-length strings using
-the built in string
-type.
+This package provides a string library for operating on fixed length
+strings. This is a clone of the Ada'95 library Ada.Strings.Fixed. It is a
+nearly complete implementation with only the procedures taking character
+mapping functions omitted because of VHDL limitations.
 
 .. _strings_maps:
 
@@ -314,8 +358,8 @@ strings_maps
 
 `strings_maps.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_maps.vhdl>`_
 
-Functions for mapping
-character sets.
+This package provides types and functions for manipulating character sets.
+It is a clone of the Ada'95 package Ada.Strings.Maps.
 
 .. _strings_maps_constants:
 
@@ -324,8 +368,10 @@ strings_maps_constants
 
 `strings_maps_constants.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_maps_constants.vhdl>`_
 
-Constants for basic
-character sets.
+Constants for various character sets from the range
+of Latin-1 and mappings for upper case, lower case, and basic (unaccented)
+characters. It is a clone of the Ada'95 package
+Ada.Strings.Maps.Constants.
 
 .. _strings_unbounded:
 
@@ -334,10 +380,15 @@ strings_unbounded
 
 `strings_unbounded.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_unbounded.vhdl>`_
 
-
-Operations for
-dynamically allocated
-strings.
+This package provides a string library for operating on unbounded length
+strings. This is a clone of the Ada'95 library Ada.Strings.Unbounded. Due
+to the VHDL restriction on using access types as function parameters only
+a limited subset of the Ada library is reproduced. The unbounded strings
+are represented by the subtype string_acc which is derived from line to
+ease interoperability with std.textio. line and string_acc are of type
+access to string. Their contents are dynamically allocated. Because
+operators cannot be provided, a new set of "copy" procedures are included
+to simplify duplication of an existing unbounded string.
 
 Miscellaneous
 -------------
@@ -352,11 +403,8 @@ binaryio
 
 `binaryio.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/binaryio.vhdl>`_
 
-Procedures for general binary file
-IO. Support is provided for reading
-and writing vectors of any size
-with big and little-endian byte
-order.
+Procedures for general binary file IO. Support is provided for reading and writing vectors of any size
+with big and little-endian byte order.
 
 .. _text_buffering:
 
@@ -365,10 +413,11 @@ text_buffering
 
 `text_buffering.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/text_buffering.vhdl>`_
 
-Procedures for storing text files
-in an internal buffer and for
-accumulating text log information
-before writing to a file.
+This package provides a facility for storing buffered text. It can be used
+to represent the contents of a text file as a linked list of dynamically
+allocated strings for each line. A text file can be read into a buffer and
+the resulting data structure can be incorporated into records passable
+to procedures without having to maintain a separate file handle.
 
 
 .. _ddfs:
@@ -378,8 +427,7 @@ ddfs
 
 `ddfs.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/ddfs.vhdl>`_
 
-A set of functions for implementing
-Direct Digital Frequency Synthesizers.
+A set of functions for implementing Direct Digital Frequency Synthesizers.
 
 .. _glitch_filtering:
 
@@ -388,8 +436,12 @@ glitch_filtering
 
 `glitch_filtering.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/glitch_filtering.vhdl>`_
 
-A configurable filter for removing
-spurious transitions from noisy inputs.
+Glitch filter components that can be used to remove
+noise from digital input signals. This can be useful for debouncing
+switches directly connected to a device. The glitch_filter component works
+with a single std_ulogic signal while array_glitch_filter provides
+filtering for a std_ulogic_vector. These components include synchronizing
+flip-flops and can be directly tied to input pads.
 
 
 

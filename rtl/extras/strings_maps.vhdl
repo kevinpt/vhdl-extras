@@ -35,7 +35,7 @@
 --# DEPENDENCIES: none
 --#
 --# DESCRIPTION:
---#  This package provided types and functions for manipulating character sets.
+--#  This package provides types and functions for manipulating character sets.
 --#  It is a clone of the Ada'95 package Ada.Strings.Maps.
 --------------------------------------------------------------------
 

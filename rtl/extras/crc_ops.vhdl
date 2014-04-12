@@ -51,7 +51,7 @@
 --#  A CRC can be computed using a set of three functions init_crc, next_crc, and end_crc.
 --#  All functions are assigned to a common variable/signal that maintans the shift
 --#  register state between succesive calls. After initialization with init_crc, data
---#  is processed by repeated calls fo next_crc. The width of the data vector is
+--#  is processed by repeated calls to next_crc. The width of the data vector is
 --#  unconstrained allowing you to process bits in chunks of any desired size. Using
 --#  a 1-bit array for data is equivalent to a bit-serial CRC implementation. When
 --#  all data has been passed through the CRC it is completed with a call to end_crc to
