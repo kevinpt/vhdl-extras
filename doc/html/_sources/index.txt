@@ -7,10 +7,9 @@ VHDL-extras library documentation
 =================================
 
 
-This library provides some "extra" bits of code that are not found in the standard VHDL libraries. With VHDL-extras you can create designs that will resize to varying data widths, compute with time, frequency, and clock cycles, include error correction, and many more commonly enountered issues
-in digital logic design. These packages can be used for logic simulations and, in most cases, can be synthesized to hardware with an FPGA or ASIC target.
+This library provides some "extra" bits of code that are not found in the standard VHDL libraries. With VHDL-extras you can create designs that will resize to varying data widths, compute with time, frequency, and clock cycles, include error correction, and many more commonly encountered issues in digital logic design. These packages can be used for logic simulations and, in most cases, can be synthesized to hardware with an FPGA or ASIC target.
 
-All of the packages are designed to work with VHDL-93. In cases where forward compatability is broken in newer VHDL standards an alternate package is provided. The code should work in most VHDL-93 compliant tools. In one instance with the :ref:`timing_ops` package, a simplified Xilinx specific implementation is provided because of limitations with the XST synthesizer.
+All of the packages are designed to work with VHDL-93. In cases where forward compatibility is broken in newer VHDL standards an alternate package is provided. The code should work in most VHDL-93 compliant tools. In one instance with the :ref:`timing_ops` package, a simplified Xilinx specific implementation is provided because of limitations with the XST synthesizer.
 
 Requirements
 ============

@@ -124,16 +124,34 @@ simulation-only clock generation procedure. A variant of timing_ops is provided 
 <div class="section" id="crc-ops">
 <span id="id5"></span><h3>crc_ops<a class="headerlink" href="#crc-ops" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/crc_ops.vhdl">crc_ops.vhdl</a></p>
-<p>A general purpose set of functions
-and component for generating
-CRCs.</p>
+<p>This package provides a general purpose CRC implementation. It consists
+of a set of functions that can be used to iteratively process successive
+data vectors as well an an entity that combines the functions into a
+synthesizable form. The CRC can be readily specified using the Rocksoft
+notation described in &#8220;A Painless Guide to CRC Error Detection Algorithms&#8221;,
+<em>Williams 1993</em>. A CRC specification consists of the following parameters:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">Poly       : The generator polynomial</div>
+<div class="line">Xor_in     : The initialization vector &#8220;xored&#8221; with an all-&#8216;0&#8217;s shift register</div>
+<div class="line">Xor_out    : A vector xored with the shift register to produce the final value</div>
+<div class="line">Reflect_in : Process data bits from left to right (false) or right to left (true)</div>
+<div class="line">Reflect_out: Determine bit order of final crc result</div>
+</div>
+</div></blockquote>
+<p>A CRC can be computed using a set of three functions <cite>init_crc</cite>, <cite>next_crc</cite>, and <cite>end_crc</cite>.
+All functions are assigned to a common variable/signal that maintans the shift
+register state between succesive calls. After initialization with <cite>init_crc</cite>, data
+is processed by repeated calls to <cite>next_crc</cite>. The width of the data vector is
+unconstrained allowing you to process bits in chunks of any desired size. Using
+a 1-bit array for data is equivalent to a bit-serial CRC implementation. When
+all data has been passed through the CRC it is completed with a call to <cite>end_crc</cite> to
+produce the final CRC value.</p>
 </div>
 <div class="section" id="hamming-edac">
 <span id="id6"></span><h3>hamming_edac<a class="headerlink" href="#hamming-edac" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/hamming_edac.vhdl">hamming_edac.vhdl</a></p>
-<p>A flexible implementation of the
-Hamming code for any data size of
-4-bits or greater.</p>
+<p>A flexible implementation of the Hamming code for any data size of 4-bits or greater.</p>
 </div>
 <div class="section" id="parity-ops">
 <span id="id7"></span><h3>parity_ops<a class="headerlink" href="#parity-ops" title="Permalink to this headline">¶</a></h3>
@@ -143,18 +161,12 @@ Hamming code for any data size of
 <div class="section" id="secded-edac">
 <span id="id8"></span><h3>secded_edac<a class="headerlink" href="#secded-edac" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/secded_edac.vhdl">secded_edac.vhdl</a></p>
-<p>Single Error Correction, Double
-Error Detection implemented with
-extended Hamming code.</p>
+<p>Single Error Correction, Double Error Detection implemented with extended Hamming code.</p>
 </div>
 <div class="section" id="secded-codec">
 <span id="id9"></span><h3>secded_codec<a class="headerlink" href="#secded-codec" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/secded_codec.vhdl">secded_codec.vhdl</a></p>
-<p>An entity providing a combined
-SECDED encoder and decoder with
-added error injection for system
-verification. Optional pipelining
-is provided.</p>
+<p>An entity providing a combined SECDED encoder and decoder with added error injection for system verification. Optional pipelining is provided.</p>
 </div>
 </div>
 <div class="section" id="encoding">
@@ -163,19 +175,39 @@ is provided.</p>
 <div class="section" id="bcd-conversion">
 <span id="id10"></span><h3>bcd_conversion<a class="headerlink" href="#bcd-conversion" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/bcd_conversion.vhdl">bcd_conversion.vhdl</a></p>
-<p>Conversion to and from packed Binary
-Coded Decimal. Supports any data size.</p>
+<p>This package provides functions and components for performing conversion
+between binary and packed Binary Coded Decimal (BCD). The functions
+to_bcd and to_binary can be used to create synthesizable combinatinal
+logic for performing a conversion. In synthesized code they are best used
+with shorter arrays comprising only a few digits. For larger numbers, the
+components binary_to_bcd and bcd_to_binary can be used to perform a
+conversion over multiple clock cycles. The utility function decimal_size
+can be used to determine the number of decimal digits in a BCD array. Its
+result must be multiplied by 4 to get the length of a packed BCD array.</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">binary</span>  <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">constant</span> <span class="n">DSIZE</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="n">decimal_size</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">binary</span><span class="na">&#39;length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">bcd</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">DSIZE</span><span class="o">*</span><span class="mi">4</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">bcd</span> <span class="o">&lt;=</span> <span class="n">to_bcd</span><span class="p">(</span><span class="n">binary</span><span class="p">);</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="gray-code">
 <span id="id11"></span><h3>gray_code<a class="headerlink" href="#gray-code" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/gray_code.vhdl">gray_code.vhdl</a></p>
-<p>Conversion between binary and Gray code.</p>
+<p>This package provides functions to convert between Gray code and binary. An example implementation of a Gray code counter is also included.</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">bin</span><span class="p">,</span> <span class="n">gray</span><span class="p">,</span> <span class="n">bin2</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">bin</span>  <span class="o">&lt;=</span> <span class="n">X</span><span class="s">&quot;C5&quot;</span><span class="p">;</span>
+<span class="n">gray</span> <span class="o">&lt;=</span> <span class="n">to_gray</span><span class="p">(</span><span class="n">bin</span><span class="p">);</span>
+<span class="n">bin2</span> <span class="o">&lt;=</span> <span class="n">to_binary</span><span class="p">(</span><span class="n">gray</span><span class="p">);</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="muxing">
 <span id="id12"></span><h3>muxing<a class="headerlink" href="#muxing" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/muxing.vhdl">muxing.vhdl</a></p>
-<p>Parameterized multiplexers,
-decoders, and demultiplexers.</p>
+<p>Parameterized multiplexers, decoders, and demultiplexers.</p>
 </div>
 </div>
 <div class="section" id="memories">
@@ -184,14 +216,19 @@ decoders, and demultiplexers.</p>
 <div class="section" id="fifo-pkg">
 <span id="id13"></span><h3>fifo_pkg<a class="headerlink" href="#fifo-pkg" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/fifo_pkg.vhdl">fifo_pkg.vhdl</a></p>
-<p>A set of general purpose single and dual
-clock domain FIFOs.</p>
+<p>This package implements a set of generic FIFO components. There are three
+variants. All use the same basic interface for the read/write ports and
+status flags. The FIFOs have the following differences:</p>
+<ul class="simple">
+<li>simple_fifo &#8211; Basic minimal FIFO for use in a single clock domain. This component lacks the synchronizing logic needed for the other two FIFOs and will synthesize more compactly.</li>
+<li>fifo        &#8211; General FIFO with separate domains for read and write ports.</li>
+<li>packet_fifo &#8211; Extension of fifo component with ability to discard written data before it is read. Useful for managing packetized protocols with error detection at the end.</li>
+</ul>
 </div>
 <div class="section" id="memory-pkg">
 <span id="id14"></span><h3>memory_pkg<a class="headerlink" href="#memory-pkg" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/memory_pkg.vhdl">memory_pkg.vhdl</a></p>
-<p>Generic dual ported RAM and synthesizable
-ROM with file I/O.</p>
+<p>This package provides general purpose components for inferred dual-ported RAM and ROM.</p>
 </div>
 </div>
 <div class="section" id="randomization">
@@ -201,26 +238,31 @@ structures for creating randomized output.</p>
 <div class="section" id="lcar-ops">
 <span id="id15"></span><h3>lcar_ops<a class="headerlink" href="#lcar-ops" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/lcar_ops.vhdl">lcar_ops.vhdl</a></p>
-<p>An implementation of the Wolfram Linear
-Cellular Automata. This is useful for
-generating pseudo-random numbers with low
-correlation between bits. Adaptable to any
-number of cells. Constants are provided for
+<p>An implementation of the Wolfram Linear Cellular Automata. This is useful for generating pseudo-random numbers with low correlation between bits. Adaptable to any number of cells. Constants are provided for
 maximal length sequences of up to 100 bits.</p>
 </div>
 <div class="section" id="lfsr-ops">
 <span id="id16"></span><h3>lfsr_ops<a class="headerlink" href="#lfsr-ops" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/lfsr_ops.vhdl">lfsr_ops.vhdl</a></p>
-<p>Various implementations of Galois and
-Fibonacci Linear Feedback Shift Registers.
-These adapt to any size register. Coefficients
-are provided for maximal length sequences up
-to 100 bits.</p>
+<p>Various implementations of Galois and Fibonacci Linear Feedback Shift Registers. These adapt to any size register. Coefficients are provided for maximal length sequences up to 100 bits.</p>
 </div>
 <div class="section" id="random">
 <span id="id17"></span><h3>random<a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/random.vhdl">random.vhdl</a></p>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/random_20xx.vhdl">random_20xx.vhdl</a></p>
+<p>This package provides a general set of pseudo-random number functions.
+It is implemented as a wrapper around the ieee.math_real.uniform
+procedure and is only suitable for simulation not synthesis. See the
+LCAR and LFSR packages for synthesizable random generators.</p>
+<p>This package makes use of shared variables to keep track of the PRNG
+state more conveniently than calling uniform directly. Because
+VHDL-2002 broke forward compatability of shared variables there are
+two versions of this package. One (random.vhdl) is for VHDL-93 using
+the classic shared variable mechanism. The other (random_20xx.vhdl)
+is for VHDL-2002 and later using a protected type to manage the
+PRNG state. Both files define a package named &#8220;random&#8221; and only one
+can be in use at any time. The user visible subprograms are the same
+in both implementations.</p>
 </div>
 </div>
 <div class="section" id="string-and-character-handling">
@@ -229,50 +271,58 @@ to 100 bits.</p>
 from the Ada standard library.</p>
 <div class="section" id="characters-handling">
 <span id="id18"></span><h3>characters_handling<a class="headerlink" href="#characters-handling" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/characters_handling.vhdl">characters_habdling.vhdl</a></p>
-<p>Functions for
-identifying character
-classification.</p>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/characters_handling.vhdl">characters_handling.vhdl</a></p>
+<p>This is a package of functions that replicate the behavior of the Ada
+standard library package ada.characters.handling. Included are functions
+to test for different character classifications and perform conversion
+of characters and strings to upper and lower case.</p>
 </div>
 <div class="section" id="characters-latin-1">
 <h3>characters_latin_1<a class="headerlink" href="#characters-latin-1" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/characters_latin_1.vhdl">characters_latin_1.vhdl</a></p>
-<p>Constants for the
-Latin-1 character
-names.</p>
+<p>This package provides Latin-1 character constants. These constants are
+adapted from the definitions in the Ada&#8216;95 ARM for the package
+Ada.Characters.Latin_1.</p>
 </div>
 <div class="section" id="strings">
 <span id="id19"></span><h3>strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings.vhdl">strings.vhdl</a></p>
-<p>Shared types for the
-string packages.</p>
+<p>Shared types for the string packages.</p>
 </div>
 <div class="section" id="strings-fixed">
 <span id="id20"></span><h3>strings_fixed<a class="headerlink" href="#strings-fixed" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_fixed.vhdl">strings_fixed.vhdl</a></p>
-<p>Operations for fixed
-length strings using
-the built in string
-type.</p>
+<p>This package provides a string library for operating on fixed length
+strings. This is a clone of the Ada&#8216;95 library Ada.Strings.Fixed. It is a
+nearly complete implementation with only the procedures taking character
+mapping functions omitted because of VHDL limitations.</p>
 </div>
 <div class="section" id="strings-maps">
 <span id="id21"></span><h3>strings_maps<a class="headerlink" href="#strings-maps" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_maps.vhdl">strings_maps.vhdl</a></p>
-<p>Functions for mapping
-character sets.</p>
+<p>This package provides types and functions for manipulating character sets.
+It is a clone of the Ada&#8216;95 package Ada.Strings.Maps.</p>
 </div>
 <div class="section" id="strings-maps-constants">
 <span id="id22"></span><h3>strings_maps_constants<a class="headerlink" href="#strings-maps-constants" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_maps_constants.vhdl">strings_maps_constants.vhdl</a></p>
-<p>Constants for basic
-character sets.</p>
+<p>Constants for various character sets from the range
+of Latin-1 and mappings for upper case, lower case, and basic (unaccented)
+characters. It is a clone of the Ada&#8216;95 package
+Ada.Strings.Maps.Constants.</p>
 </div>
 <div class="section" id="strings-unbounded">
 <span id="id23"></span><h3>strings_unbounded<a class="headerlink" href="#strings-unbounded" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_unbounded.vhdl">strings_unbounded.vhdl</a></p>
-<p>Operations for
-dynamically allocated
-strings.</p>
+<p>This package provides a string library for operating on unbounded length
+strings. This is a clone of the Ada&#8216;95 library Ada.Strings.Unbounded. Due
+to the VHDL restriction on using access types as function parameters only
+a limited subset of the Ada library is reproduced. The unbounded strings
+are represented by the subtype string_acc which is derived from line to
+ease interoperability with std.textio. line and string_acc are of type
+access to string. Their contents are dynamically allocated. Because
+operators cannot be provided, a new set of &#8220;copy&#8221; procedures are included
+to simplify duplication of an existing unbounded string.</p>
 </div>
 </div>
 <div class="section" id="miscellaneous">
@@ -281,31 +331,32 @@ strings.</p>
 <div class="section" id="binaryio">
 <span id="id24"></span><h3>binaryio<a class="headerlink" href="#binaryio" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/binaryio.vhdl">binaryio.vhdl</a></p>
-<p>Procedures for general binary file
-IO. Support is provided for reading
-and writing vectors of any size
-with big and little-endian byte
-order.</p>
+<p>Procedures for general binary file IO. Support is provided for reading and writing vectors of any size
+with big and little-endian byte order.</p>
 </div>
 <div class="section" id="text-buffering">
 <span id="id25"></span><h3>text_buffering<a class="headerlink" href="#text-buffering" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/text_buffering.vhdl">text_buffering.vhdl</a></p>
-<p>Procedures for storing text files
-in an internal buffer and for
-accumulating text log information
-before writing to a file.</p>
+<p>This package provides a facility for storing buffered text. It can be used
+to represent the contents of a text file as a linked list of dynamically
+allocated strings for each line. A text file can be read into a buffer and
+the resulting data structure can be incorporated into records passable
+to procedures without having to maintain a separate file handle.</p>
 </div>
 <div class="section" id="ddfs">
 <span id="id26"></span><h3>ddfs<a class="headerlink" href="#ddfs" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/ddfs.vhdl">ddfs.vhdl</a></p>
-<p>A set of functions for implementing
-Direct Digital Frequency Synthesizers.</p>
+<p>A set of functions for implementing Direct Digital Frequency Synthesizers.</p>
 </div>
 <div class="section" id="glitch-filtering">
 <span id="id27"></span><h3>glitch_filtering<a class="headerlink" href="#glitch-filtering" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/glitch_filtering.vhdl">glitch_filtering.vhdl</a></p>
-<p>A configurable filter for removing
-spurious transitions from noisy inputs.</p>
+<p>Glitch filter components that can be used to remove
+noise from digital input signals. This can be useful for debouncing
+switches directly connected to a device. The glitch_filter component works
+with a single std_ulogic signal while array_glitch_filter provides
+filtering for a std_ulogic_vector. These components include synchronizing
+flip-flops and can be directly tied to input pads.</p>
 </div>
 </div>
 </div>
