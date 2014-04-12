@@ -14,6 +14,7 @@ from __future__ import print_function, division
 
 import random
 import test.test_support as tsup
+import unittest
 
 
 class TestVHDL(tsup.VHDLTestCase):
@@ -42,6 +43,14 @@ class TestVHDL(tsup.VHDLTestCase):
         entity = 'test.test_sizing'
         self.run_simulation(entity)
 
+    def test_glitch_filter(self):
+        entity = 'test.test_glitch_filter'
+        self.run_simulation(entity)
+
+    def test_array_glitch_filter(self):
+        entity = 'test.test_array_glitch_filter'
+        self.run_simulation(entity)
+
 
 
 class TestRandVHDL(tsup.RandomSeededTestCase):
@@ -63,6 +72,7 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
         self.run_simulation(entity, TEST_SEED=self.seed)
 
 
+    #@unittest.skip('debug')
     def test_ddfs(self):
         entity = 'test.test_ddfs'
 
