@@ -3,14 +3,19 @@ from __future__ import print_function, division
 import os
 import time
 import subprocess as subp
+import threading
 from threading import Thread
 import Queue as queue
 import scripts.color as color
 
 
 def enqueue_pipe(pipe, queue):
-  for ln in iter(pipe.readline, b''):
-    queue.put(ln)
+  try:
+    for ln in iter(pipe.readline, b''):
+      queue.put(ln)
+  except:
+    pass
+
   pipe.close()
 
 
@@ -105,9 +110,14 @@ class Modelsim(object):
 
   def quit(self):
     print('\n\n' + color.note('*** Stopping Modelsim ***'))
+    err = get_output(self.errq);
+    #print('### Threads:', threading.enumerate())
     self.p.stdin.write('quit\n')
     self.p.kill()
     self.p = None
+
+    if len(err) > 0:
+      print('#### Errors:\n', err)
 
     # Strip sentinel commands from the log
     with open(self.log_file, 'r') as fh:
