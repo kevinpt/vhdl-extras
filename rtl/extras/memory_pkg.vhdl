@@ -36,12 +36,13 @@
 --#
 --# DESCRIPTION:
 --#  This package provides general purpose components for inferred RAM and ROM.
---#  These memories share a SYNC_READ generic which will optionally generate synchronous
---#  or asynchronous read ports for each instance. On Xilinx devices asynchronous
---#  read forces the synthesis of distributed RAM using LUTs rather than BRAMs.
+--#  These memories share a SYNC_READ generic which will optionally generate
+--#  synchronous or asynchronous read ports for each instance. On Xilinx devices
+--#  asynchronous read forces the synthesis of distributed RAM using LUTs rather
+--#  than BRAMs. When SYNC_READ is false the Read enable input is unused.
 --#
---#  The ROM component gets its contents using synthesizable file IO to read a list
---#  of binary or hex values.
+--#  The ROM component gets its contents using synthesizable file IO to read a
+--#  list of binary or hex values.
 --------------------------------------------------------------------
 
 library ieee;
@@ -56,12 +57,12 @@ package memory_pkg is
     );
     port (
       Wr_clock : in std_ulogic;
-      We       : in std_ulogic;
+      We       : in std_ulogic; -- Write enable
       Wr_addr  : in natural range 0 to MEM_SIZE-1;
       Wr_data  : in std_ulogic_vector;
 
       Rd_clock : in std_ulogic;
-      Re       : in std_ulogic;
+      Re       : in std_ulogic; -- Read enable
       Rd_addr  : in natural range 0 to MEM_SIZE-1;
       Rd_data  : out std_ulogic_vector
     );
@@ -78,7 +79,7 @@ package memory_pkg is
     );
     port (
       Clock : in std_ulogic;
-      Re    : in std_ulogic;
+      Re    : in std_ulogic; -- Read enable
       Addr  : in natural range 0 to MEM_SIZE-1;
       Data  : out std_ulogic_vector
     );
@@ -99,12 +100,12 @@ entity dual_port_ram is
   );
   port (
     Wr_clock : in std_ulogic;
-    We       : in std_ulogic;
+    We       : in std_ulogic; -- Write enable
     Wr_addr  : in natural range 0 to MEM_SIZE-1;
     Wr_data  : in std_ulogic_vector;
 
     Rd_clock : in std_ulogic;
-    Re       : in std_ulogic;
+    Re       : in std_ulogic; -- Read enable
     Rd_addr  : in natural range 0 to MEM_SIZE-1;
     Rd_data  : out std_ulogic_vector
   );
@@ -116,6 +117,7 @@ architecture rtl of dual_port_ram is
 
   signal sync_rdata : std_ulogic_vector(Rd_data'range);
 begin
+  assert Wr_data'length = Rd_data'length report "Data bus size mismatch" severity failure;
 
   wr: process(Wr_clock)
   begin
@@ -162,7 +164,7 @@ entity rom is
   );
   port (
     Clock : in std_ulogic;
-    Re    : in std_ulogic;
+    Re    : in std_ulogic; -- Read enable
     Addr  : in natural range 0 to MEM_SIZE-1;
     Data  : out std_ulogic_vector
   );
@@ -172,8 +174,8 @@ architecture rtl of rom is
   type rom_mem is array (0 to MEM_SIZE-1) of bit_vector(Data'length-1 downto 0);
 
 
-  impure function read_hex_file(file_name : string; format : in rom_format) return rom_mem is
-    -- Read a hex ROM file
+  impure function read_rom_file(file_name : string; format : in rom_format) return rom_mem is
+    -- Read a ROM file in hex or binary format
     file fh       : text open read_mode is file_name;
     variable ln   : line;
     variable addr : natural := 0;
@@ -213,7 +215,7 @@ architecture rtl of rom is
   end function;
 
 
-  signal rom_data : rom_mem := read_hex_file(ROM_FILE, FORMAT);
+  signal rom_data : rom_mem := read_rom_file(ROM_FILE, FORMAT);
 
   signal sync_rdata : std_ulogic_vector(Data'range);
 begin
