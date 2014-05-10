@@ -159,6 +159,14 @@ package body random is
     return integer(trunc(real(max - min + 1) * random)) + min;
   end function;
 
+--  ## NOTE: Example implementation for randtime
+--  # This depends on conversion functions from timing_ops.vhdl to work
+--  # and has been omitted to prevent forming that dependency.
+--  # Copy this reference implementation to your code if you need it.
+--  impure function randtime(min, max : time) return time is
+--  begin
+--    return to_time(to_real(max - min + resolution_limit) * random) + min;
+--  end function;
 
   impure function random return natural is
   begin
