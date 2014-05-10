@@ -110,9 +110,14 @@ use ieee.std_logic_1164.all;
 
 package crc_ops is
 
+  --## Initialize CRC state
   function init_crc(Xor_in : bit_vector) return bit_vector;
+
+  --## Add new data to the CRC
   function next_crc(Crc : bit_vector; Poly : bit_vector; Reflect_in : boolean;
     Data : bit_vector) return bit_vector;
+
+  --## Finalize the CRC
   function end_crc(Crc : bit_vector; Reflect_out: boolean; Xor_out : bit_vector)
     return bit_vector;
 
@@ -124,17 +129,18 @@ package crc_ops is
       Clock : in std_ulogic;
       Reset : in std_ulogic;
 
+      -- CRC configuration parameters
       Poly        : in std_ulogic_vector;
       Xor_in      : in std_ulogic_vector;
       Xor_out     : in std_ulogic_vector;
       Reflect_in  : in boolean;
       Reflect_out : in boolean;
 
-      Initialize : in std_ulogic;
+      Initialize : in std_ulogic;      -- Reset the CRC state
 
-      Enable   : in std_ulogic;
-      Data     : in std_ulogic_vector;
-      Checksum : out std_ulogic_vector    
+      Enable   : in std_ulogic;        -- Indicates data is valid for next CRC update
+      Data     : in std_ulogic_vector; -- New data (can be any width needed)
+      Checksum : out std_ulogic_vector -- Computed CRC
     );
   end component;
 
@@ -142,6 +148,10 @@ end package;
 
 package body crc_ops is
 
+-- PRIVATE:
+-- ========
+
+  --// Reverse the bits in a vector
   function reversed(v: in bit_vector) return bit_vector is
     variable result: bit_vector(v'range);
     alias vr: bit_vector(v'reverse_range) is v;
@@ -152,18 +162,24 @@ package body crc_ops is
     return result;
   end function;
 
+
+-- PUBLIC:
+-- =======
+
+  --## Initialize CRC state
   function init_crc(Xor_in : bit_vector) return bit_vector is
   begin
     return Xor_in;
   end function;
 
-
+  --## Add new data to the CRC
   function next_crc(Crc : bit_vector; Poly : bit_vector; Reflect_in : boolean;
     Data : bit_vector) return bit_vector is
     variable sreg : bit_vector(Crc'length-1 downto 0) := Crc;
     variable leftbit : bit;
     variable d : bit_vector(Data'range) := Data;
   begin
+    assert Crc'length = Poly'length report "Mismatched Polynomial and CRC state size" severity failure;
 
     if Reflect_in then
       d := reversed(d);
@@ -180,10 +196,12 @@ package body crc_ops is
     return sreg;
   end function;
 
+  --## Finalize the CRC
   function end_crc(Crc : bit_vector; Reflect_out: boolean; Xor_out : bit_vector)
     return bit_vector is
     variable sreg : bit_vector(Crc'length-1 downto 0) := Crc;
   begin
+    assert Crc'length = Xor_out'length report "Mismatched XOR and CRC state size" severity failure;
 
     if Reflect_out then
       sreg := reversed(sreg);
@@ -211,17 +229,18 @@ entity crc is
     Clock : in std_ulogic;
     Reset : in std_ulogic;
 
+    -- CRC configuration parameters
     Poly        : in std_ulogic_vector;
     Xor_in      : in std_ulogic_vector;
     Xor_out     : in std_ulogic_vector;
     Reflect_in  : in boolean;
     Reflect_out : in boolean;
 
-    Initialize : in std_ulogic;
+    Initialize : in std_ulogic;      -- Reset the CRC state
 
-    Enable   : in std_ulogic;
-    Data     : in std_ulogic_vector;
-    Checksum : out std_ulogic_vector    
+    Enable   : in std_ulogic;        -- Indicates data is valid for next CRC update
+    Data     : in std_ulogic_vector; -- New data (can be any width needed)
+    Checksum : out std_ulogic_vector -- Computed CRC
   );
 end entity;
 
