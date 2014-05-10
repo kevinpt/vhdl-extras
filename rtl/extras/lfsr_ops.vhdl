@@ -61,8 +61,8 @@
 --#  neighboring bits that the LFSR implementations do. However, these LFSRs
 --#  are sufficient for producing a pseudo-random signal on a single bit.
 --#
---#  The LFSRs are each implemented in function that dteremines the next state
---#  of the LFSR based on the current state. These functions have two
+--#  The LFSRs are each implemented in a function that determines the next
+--#  state of the LFSR based on the current state. These functions have two
 --#  configuration parameters: Kind and Full_cycle.
 --#
 --#  The Kind parameter specifies whether to implement a normal circuit with
