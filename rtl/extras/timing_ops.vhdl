@@ -125,9 +125,6 @@ package timing_ops is
   --## Convert time to real time
   function to_real( Tval : time ) return real;
 
-  --## Convert real frequency to real time
-  function to_real( Freq : real ) return real;
-
 
   --## Convert real time to time
   function to_time( Rval : real ) return time;
@@ -300,13 +297,6 @@ package body timing_ops is
 
     return real(t / min_time.tval) * min_time.rval * large_time_adj;
   end function;
-
-  --## Convert real frequency to real time
-  function to_real( Freq : real ) return real is
-  begin
-    return 1.0 / Freq;
-  end function;
-
 
 
   --## Convert real time to time
