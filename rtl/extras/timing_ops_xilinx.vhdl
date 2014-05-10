@@ -68,9 +68,9 @@
 --#
 --#  XILINX NOTE: This version of timing_ops is needed for synthesis with
 --#  Xilinx XST. The physical type 'frequency' and any associated functions have
---#  been removed. The standard timing_ops package will still work with most
---#  third party synthesizers when targeting Xilinx devices so consider using
---#  it instead if XST is not being used.
+--#  been removed. The standard timing_ops package will work with Xilinx Vivado
+--#  and most third party synthesizers when devices so consider using it instead
+--#  if XST is not being used.
 --#
 --# EXAMPLE USAGE:
 --#  library extras; use extras.sizing.bit_size; use extras.timing_ops.all;
@@ -111,7 +111,10 @@ package timing_ops is
     round_neginf   -- round down to -infinity
   );
 
-  constant TIME_ROUND_STYLE : time_rounding := round_inf;
+  constant TIME_ROUND_STYLE : time_rounding := round_nearest;
+
+  --## Get the current simulation time resolution
+  function resolution_limit return delay_length;
 
   --## Convert time to real time
   function to_real( Tval : time ) return real;
@@ -223,6 +226,15 @@ package body timing_ops is
 -- PUBLIC functions:
 -- =================
 
+  --## Get the current simulation time resolution
+  function resolution_limit return delay_length is
+    variable tr : time_resolution;
+  begin
+    tr := resolution_limit;
+    return tr.tval;
+  end function;
+
+
   --## Convert time to real time
   function to_real( Tval : time ) return real is
     variable t : time := Tval;
@@ -250,7 +262,9 @@ package body timing_ops is
         large_time_adj := large_time_adj * 2.0;
       end loop;
       
-      scale := ceil_log2(t / (integer'high * min_time.tval));
+      -- Note: scale must be at least 1 so we add 1 to guarantee we never call
+      -- ceil_log_2(1) when t > [max int time] and t < 2*[max int time].
+      scale := ceil_log2(t / (integer'high * min_time.tval) + 1);
       min_time := (min_time.tval * 2**scale, min_time.rval * 2.0**scale);
     end if;
 
