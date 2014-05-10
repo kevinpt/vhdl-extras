@@ -43,7 +43,10 @@ Usage
    All components are designed to use asynchronous resets. The active level
    of the reset is controlled with the RESET_ACTIVE_LEVEL generic on each
    component. It defaults to '1' meaning the reset will be active-high. Set
-   it to '0' if you want to use active-low resets in a design.
+   it to '0' if you want to use active-low resets in a design. You should
+   ensure that the asynchronous resets in your design are released
+   synchronously to prevent spurious setup and hold violations when coming
+   out of reset.
 
    Most but not all of these packages are usable for synthesis. All of the
    code is written in conformance to the VHDL-93 standard. Various synthesis
@@ -51,167 +54,85 @@ Usage
    VHDL-extras. For Synopsys Design Compiler you will need to activate the
    newer presto VHDL compiler if it isn't set as the default.
 
-   In this library, the std_ulogic and std_ulogic_vector types are
-   preferentially used in favor of std_logic and std_logic_vector. Using the
-   unresolved types adds an extra level of assurance to a design by
-   preventing accidental connections of multiple signal drivers. Using these
-   types can require a little extra work with type conversions and
-   consequently most resources for VHDL avoid using them. Since std_logic is
-   a subtype and closely related to std_ulogic you can freely interchange
-   signals of those types but the same is not the case for the arrays
-   std_ulogic_vector and std_logic_vector. For these, you will have to
-   employ explicit type conversions with implementations of the language
-   before VHDL-2008. The 2008 standard revised the library to define
-   std_logic_vector as a resolved subtype of std_ulogic_vector rather than
+   In this library, the unresolved std_ulogic and std_ulogic_vector types are
+   preferentially used in favor of std_logic and std_logic_vector. Driver
+   resolution isn't needed in most cases and using the unresolved types adds an
+   extra level of assurance to a design by preventing accidental connections of
+   multiple signal drivers. Using these types can require a little extra work
+   with type conversions and consequently most resources for VHDL avoid
+   demonstrating their use. Since std_logic is a subtype and closely related
+   to std_ulogic you can freely interchange signals of those types but the same
+   is not the case for the arrays std_ulogic_vector and std_logic_vector. For
+   these, you will have to employ explicit type conversions with implementations
+   of the language before VHDL-2008. The 2008 standard revised the library to
+   define std_logic_vector as a resolved subtype of std_ulogic_vector rather than
    an independent type. With tools that support VHDL-2008 you will be able
-   to interchange the array types without calling conversion functions. This
+   to interchange these array types without calling conversion functions. This
    library employs std_ulogic_vector for non-numeric arrays in anticipation
    of wider adoption of the latest standard.
 
 The Code
 
-  Core Packages
+The VHDL-extras library contains the following packages:
 
-   These packages provide core functionality that is of general use in a
-   wide array of applications.
+  * Core packages
 
-                           Procedures for general binary file
-                           IO. Support is provided for reading
-    *  binaryio.vhdl       and writing vectors of any size
-                           with big and little-endian byte
-                           order.
+      pipelining -- Pipeline registers
 
-    *  muxing.vhdl         Parameterized multiplexers,
-                           decoders, and demultiplexers.
+      sizing -- Generalized integer logarithms and array size computation
 
-                           Configurable pipeline registers for
-    *  pipelining.vhdl     use with automated retiming during
-                           synthesis.
+      synchronizing -- Clock domain synchronizing components
 
-                           A set of functions for computing
-    *  sizing.vhdl         integer logarithms in any base and
-                           for determing the size of binary
-                           numbers and encodings.
+      timing_ops -- Conversions for time, frequency, and clock cycles
 
-                           Synchronizer entities for
-    *  synchronizing.vhdl  transferring signals between clock
-                           domains.
+  * Error handling
+      crc_ops -- Compute CRCs
 
-                           Procedures for storing text files
-    *  text_buffering.vhdl in an internal buffer and for
-                           accumulating text log information
-                           before writing to a file.
+      hamming_edac -- Generalized Hamming error correction encoding and decoding
 
-                           Functions for conversions between
-                           time, frequency, and clock cycles.
-    *  timing_ops.vhdl     Also includes a flexible,
-                           simulation-only clock generation
-                           procedure.
+      parity_ops -- Basic parity operations
 
-    *  timing_ops_xilinx.vhdl  A variant of timing_ops to use with
-                               Xilinx XST. It is stripped of the
-                               frequency physical type which XST
-                               cannot support.
+      secded_edac -- Hamming extension with double-error detection
 
-  EDAC
+  * Encoding
+      bcd_conversion -- Encode and decode packed Binary Coded Decimal
 
-   Packages for performing error detection and correction.
+      gray_code -- Encode and decode Gray code
 
-                         A general purpose set of functions
-    *  crc_ops.vhdl      and component for generating
-                         CRCs.
+      muxing -- Decoder and muxing operations
 
-                         A flexible implementation of the
-    *  hamming_edac.vhdl Hamming code for any data size of
-                         4-bits or greater.
+  * Memories
+      fifo_pkg -- General purpose FIFOs
 
-    *  parity_ops.vhdl   Basic parity operations.
+      memory_pkg -- Synthesizable memories
 
-                         Single Error Correction, Double
-    *  secded_edac.vhdl  Error Detection implemented with
-                         extended Hamming code.
+  * Randomization
+      lcar_ops -- Linear Cellular Automata
 
-                         An entity providing a combined
-                         SECDED encoder and decoder with
-    *  secded_codec.vhdl added error injection for system
-                         verification. Optional pipelining
-                         is provided.
+      lfsr_ops -- Linear Feedback Shift Registers
 
-  Encoding
+      random -- Simulation-only random umber generation
 
-   Packages for encoding data into alternate forms.
+  * String and character handling
+      characters_handling -- Character class identification and case conversions
+
+      strings_fixed -- Operations on fixed length strings
+
+      strings_maps -- Mapping character sets
+
+      strings_unbounded -- Operations on unbounded strings
+
+  * Miscellaneous
+
+      binaryio -- Binary file I/O
+
+      text_buffering -- Store text files in internal buffers
+
+      ddfs -- Direct Digital Frequency Synthesizer
+
+      glitch_filtering -- Clean up noisy inputs
 
 
-    *  bcd_conversion.vhdl Conversion to and from packed Binary
-                           Coded Decimal. Supports any data size.
-
-    *  gray_code.vhdl      Conversion between binary and Gray code.
-
-
-  LFSRs
-
-   These packages provide linear feedback shift registers and related
-   structures.
-
-                     An implementation of the Wolfram Linear
-                     Cellular Automata. This is useful for
-    *  lcar_ops.vhdl generating pseudo-random numbers with low
-                     correlation between bits. Adaptable to any
-                     number of cells. Constants are provided for
-                     maximal length sequences of up to 100 bits.
-
-                     Various implementations of Galois and
-                     Fibonacci Linear Feedback Shift Registers.
-    *  lfsr_ops.vhdl These adapt to any size register. Coefficients
-                     are provided for maximal length sequences up
-                     to 100 bits.
-
-  String and Character Library
-
-   A set of packages that provide string and character operations adapted
-   from the Ada standard library.
-
-                                   Functions for
-    *  characters_handling.vhdl    identifying character
-                                   classification.
-
-                                   Constants for the
-    *  characters_latin_1.vhdl     Latin-1 character
-                                   names.
-
-    *  strings.vhdl                Shared types for the
-                                   string packages.
-
-                                   Operations for fixed
-    *  strings_fixed.vhdl          length strings using
-                                   the built in string
-                                   type.
-
-    *  strings_maps.vhdl           Functions for mapping
-                                   character sets.
-
-    *  strings_maps_constants.vhdl Constants for basic
-                                   character sets.
-
-                                   Operations for
-    *  strings_unbounded.vhdl      dynamically allocated
-                                   strings.
-
-  Miscellaneous
-
-   Additional packages of useful functions.
-
-    *  ddfs.vhdl             A set of functions for implementing
-                             Direct Digital Frequency Synthesizers.
-
-    *  glitch_filtering.vhdl A configurable filter for removing
-                             spurious transitions from noisy inputs.
-
-    *  fifo_pkg.vhdl         A set of general purpose single and dual
-                             clock domain FIFOs.
-
-    *  memory_pkg.vhdl       Generic dual ported RAM and synthesizable
-                             ROM with file I/O.
 Licensing
 
    All of the source files distributed as part of VHDL-extras, with one

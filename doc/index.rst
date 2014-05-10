@@ -127,13 +127,72 @@ The makefile prepares a `build` directory with Modelsim libraries and scans the 
 Testing
 =======
 
-A unit test suite is provided to verify the library is correct. It depends on the built-in Python 2.7  unittest library with automatic test discovery. After building the library according to the installation instructions you can run the test suite with the following command:
+A unit test suite is provided to verify the library is correct. It depends on the built-in Python 2.7  unittest library with automatic test discovery and Modelsim. After building the library according to the installation instructions you can run the test suite with the following command:
 
 .. code-block:: sh
 
   > python -m unittest discover
 
 This will run the Python test suite defined in the `test` directory which will launch Modelsim simulations and validate the library. The output of each test case is recorded in `test/test-output`.
+
+Using the library
+=================
+
+You will need to be aware of any library mappings required to use the
+VHDL-extras packages. Those packages lacking any dependencies may be used
+directly without any additional steps necessary. The remaining packages
+with dependencies on other portions of the VHDL-extras library need their
+dependencies mapped into a new "extras" library rather than the default
+"work" library. Consult your tool documentation on how to accomplish
+this. The installation scripts take care of this when using Modelsim.
+
+Each file provides a package of publicly accessible types, constants,
+subprograms, and components. Once the "extras" library has been mapped
+you can access a package with the following code:
+
+.. code-block:: vhdl
+
+   library extras;
+   use extras.<package_name>.all;
+
+Most of the packages employ parameterization through the use of unbounded
+arrays in subprogram parameter lists and entity ports. You control the
+size of the logic with the signals and variables connected to these
+interfaces. In some cases there are implied size relationships between
+various input and output arrays that must be observed to produce correct
+results. These will usually be verified by assertions but may be missed
+if no attempt is made to simulate a design before synthesis.
+
+All components are designed to use asynchronous resets. The active level
+of the reset is controlled with the `RESET_ACTIVE_LEVEL` generic on each
+component. It defaults to `'1'` meaning the reset will be active-high. Set
+it to `'0'` if you want to use active-low resets in a design. You should ensure
+that the asynchronous resets in your design are released synchronously to prevent
+spurious setup and hold violations when coming out of reset.
+
+Most but not all of these packages are usable for synthesis. All of the
+code is written in conformance to the VHDL-93 standard. Various synthesis
+tools may differ in their support for the language constructs used within
+VHDL-extras. For Synopsys Design Compiler you will need to activate the
+newer presto VHDL compiler if it isn't set as the default.
+
+In this library, the unresolved `std_ulogic` and `std_ulogic_vector` types are
+preferentially used in favor of `std_logic` and `std_logic_vector`. Driver
+resolution isn't needed in most cases and using the unresolved types adds an
+extra level of assurance to a design by preventing accidental connections of
+multiple signal drivers. Using these types can require a little extra work with
+type conversions and consequently most resources for VHDL avoid demonstrating
+their use. Since `std_logic` is a subtype and closely related to `std_ulogic`
+you can freely interchange signals of those types but the same is not the case
+for the arrays `std_ulogic_vector` and `std_logic_vector`. For these, you will
+have to employ explicit type conversions with implementations of the language
+before VHDL-2008. The 2008 standard revised the library to define
+`std_logic_vector` as a resolved subtype of `std_ulogic_vector` rather than
+an independent type. With tools that support VHDL-2008 you will be able
+to interchange these array types without calling conversion functions. This
+library employs `std_ulogic_vector` for non-numeric arrays in anticipation
+of wider adoption of the latest standard.
+
 
 Licensing
 =========
