@@ -56,6 +56,28 @@ class TestVHDL(tsup.VHDLTestCase):
         entity = 'test.test_hamming_size'
         self.run_simulation(entity)
 
+    def test_lcar_ops(self):
+        entity = 'test.test_lcar_ops'
+
+        self.test_name = 'Testbench ' + entity
+        self.trial_count = 20 # Go up to maximal length rules for 22-bit array
+        for i in xrange(self.trial_count):
+            self.update_progress(i+1)
+
+            self.run_simulation(entity, update=False, WIDTH=i+2)
+
+    def test_lfsr_ops(self):
+        entity = 'test.test_lfsr_ops'
+
+        self.test_name = 'Testbench ' + entity
+        self.trial_count = 10
+        for i in xrange(self.trial_count):
+            self.update_progress(i+1)
+
+            self.run_simulation(entity, update=False, WIDTH=i+2, KIND='normal')
+            self.run_simulation(entity, update=False, WIDTH=i+2, KIND='inverted')
+            self.run_simulation(entity, update=False, WIDTH=i+2, KIND='normal', FULL_CYCLE='true')
+            self.run_simulation(entity, update=False, WIDTH=i+2, KIND='inverted', FULL_CYCLE='true')
 
 
 class TestRandVHDL(tsup.RandomSeededTestCase):
@@ -151,4 +173,6 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
             freq = float(random.randint(min_freq, max_freq))
 
             self.run_simulation(entity, update=False, TGT_FREQ=freq)
+
+
 
