@@ -79,6 +79,8 @@ package secded_edac is
   function secded_message_size( Data_size : positive ) return positive;
   function secded_indices( Data_size : positive ) return ecc_range;
   function secded_parity_size( Message_size : positive ) return positive;
+  function secded_data_size( Message_size : positive ) return positive;
+
 
   --## SECDED Encode, decode, and error checking functions with and without
   --#  use of shared logic.
@@ -112,6 +114,12 @@ package body secded_edac is
   function secded_parity_size( Message_size : positive ) return positive is
   begin
     return hamming_parity_size(Message_size-1) + 1;
+  end function;
+
+  --## Determine the number of data bits for a given message size
+  function secded_data_size( Message_size : positive ) return positive is
+  begin
+    return Message_size - secded_parity_size(Message_size);
   end function;
 
   --## Return the left and right indices needed to declare an ecc_vector for the
