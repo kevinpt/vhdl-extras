@@ -26,7 +26,7 @@ begin
     seed(TEST_SEED);
 
     for i in 1 to 100 loop
-      vec := to_stdulogicvector(std_logic_vector(to_unsigned(randint(0, 2**vec'length-1), vec'length)));
+      vec := to_stdulogicvector(random(vec'length));
 
       set_bits := 0;
       for j in vec'range loop

@@ -189,8 +189,20 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
             self.run_simulation(entity, update=False, TGT_FREQ=freq)
 
 
-    def test_dual_parity_ops(self):
+    def test_parity_ops(self):
         entity = 'test.test_parity_ops'
         self.run_simulation(entity, TEST_SEED=self.seed)
 
+    def test_handshake_synchronizer(self):
+        entity = 'test.test_handshake_synchronizer'
+
+        self.test_name = 'Testbench ' + entity
+        self.trial_count = 50
+        for i in xrange(self.trial_count):
+            self.update_progress(i+1)
+
+            # Select random frequencies for tx and rx sides
+            tx_freq = '{}MHz'.format(random.randint(1, 100))
+            rx_freq = '{}MHz'.format(random.randint(1, 100))
+            self.run_simulation(entity, update=False, TEST_SEED=self.seed, TX_FREQ=tx_freq, RX_FREQ=rx_freq)
 

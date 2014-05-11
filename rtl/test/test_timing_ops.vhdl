@@ -54,23 +54,6 @@ architecture test of test_timing_ops is
 
 begin
 
--- Functions to test:
--- * to_real[ time ]
--- * to_time[ real ]
--- * to_period[ frequency ]
--- * to_period[ real ]
--- * to_real[ frequency ]
--- * to_frequency[ delay_length ]
--- * to_frequency[ real ]
--- * to_clock_cycles[ delay_length, frequency, time_rounding]
--- * to_clock_cycles[ delay_length, real, time_rounding]
--- * to_clock_cycles[ real, real, time_rounding]
--- * to_clock_cycles[ real, frequency, time_rounding]
--- * to_clock_cycles[ delay_length, delay_length ]
--- * to_clock_cycles[ real, delay_length, time_rounding]
--- * time_duration[ clock_cycles, real, return delay_length ]
--- * time_duration[ clock_cycles, delay_length ]
--- * time_duration[ clock_cycles, real, return real ]
 
   test: process
     variable r, r2 : real;

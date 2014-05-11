@@ -71,7 +71,7 @@ begin
 
     -- Compare
     for i in wr_log'range loop
-      assert wr_log(i) = rd_log(i) report "Read mismatch: " & integer'image(i) severity warning;
+      assert wr_log(i) = rd_log(i) report "Read mismatch: " & integer'image(i) severity failure;
     end loop;
 
     sim_done <= true;
