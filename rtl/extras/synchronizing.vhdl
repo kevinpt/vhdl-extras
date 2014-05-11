@@ -238,11 +238,10 @@ begin
     end if;
   end process;
 
-  Sending <= req_tx;
   Data_sent <= '1' when ack_tx = '0' and prev_ack = '1' else '0';
 
   fsm: block
-    type states is (IDLE, SEND);
+    type states is (IDLE, SEND, FINISH);
 
     signal cur_state : states;
   begin
@@ -254,19 +253,25 @@ begin
         cur_state <= IDLE;
         tx_reg_en <= '0';
         req_tx <= '0';
+        Sending <= '0';
       elsif rising_edge(Clock_tx) then
 
         next_state := cur_state;
         tx_reg_en <= '0';
         case cur_state is
           when IDLE =>
-            if Send_data = '1' and ack_tx = '0' then
+            if Send_data = '1' then
               next_state := SEND;
               tx_reg_en <= '1';
             end if;
 
-          when SEND =>
+          when SEND => -- Wait for Rx side to assert ack
             if ack_tx = '1' then
+              next_state := FINISH;
+            end if;
+
+          when FINISH => -- Wait for Rx side to deassert ack
+            if ack_tx = '0' then
               next_state := IDLE;
             end if;
 
@@ -277,6 +282,7 @@ begin
         cur_state <= next_state;
 
         req_tx <= '0';
+        Sending <= '0';
 
         case next_state is
           when IDLE =>
@@ -284,6 +290,10 @@ begin
 
           when SEND =>
             req_tx <= '1';
+            Sending <= '1';
+
+          when FINISH =>
+            Sending <= '1';
 
           when others =>
             null;
@@ -324,7 +334,7 @@ begin
       Sync   => req_rx
     );
 
-    ack_rx <= req_tx;
+    ack_rx <= req_rx;
 
   req_change: process(Clock_rx, Reset_rx) is
   begin
@@ -336,7 +346,7 @@ begin
       prev_req <= req_rx;
       New_data <= '0';
 
-      if req_rx = '1' and prev_req = '0' then -- capture data
+      if req_rx = '1' and prev_req = '0' then -- Capture data
         Rx_data  <= tx_data_reg;
         New_data <= '1';
       end if;
