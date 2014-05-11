@@ -51,6 +51,8 @@
 --#               balancing. Valid values are "yes", "no", "forward", and
 --#               "backward".
 --#
+--#   Xilinx Vivado: phys_opt_design -retime
+--#
 --#   Synplify Pro: syn_allow_retiming attributes are implemented in the design
 --#
 --#   Altera Quartus II: Enable "Perform register retiming" in

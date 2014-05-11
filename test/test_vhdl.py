@@ -56,6 +56,10 @@ class TestVHDL(tsup.VHDLTestCase):
         entity = 'test.test_hamming_size'
         self.run_simulation(entity)
 
+    def test_secded_size(self):
+        entity = 'test.test_secded_size'
+        self.run_simulation(entity)
+
     def test_lcar_ops(self):
         entity = 'test.test_lcar_ops'
 
@@ -78,6 +82,11 @@ class TestVHDL(tsup.VHDLTestCase):
             self.run_simulation(entity, update=False, WIDTH=i+2, KIND='inverted')
             self.run_simulation(entity, update=False, WIDTH=i+2, KIND='normal', FULL_CYCLE='true')
             self.run_simulation(entity, update=False, WIDTH=i+2, KIND='inverted', FULL_CYCLE='true')
+
+    def test_muxing(self):
+        entity = 'test.test_muxing'
+        self.run_simulation(entity)
+
 
 
 class TestRandVHDL(tsup.RandomSeededTestCase):
@@ -105,6 +114,11 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
     def test_hamming_edac(self):
         entity = 'test.test_hamming_edac'
         self.run_simulation(entity, TEST_SEED=self.seed)
+
+    def test_secded_edac(self):
+        entity = 'test.test_secded_edac'
+        self.run_simulation(entity, TEST_SEED=self.seed)
+
 
     def test_dual_port_ram(self):
         entity = 'test.test_dual_port_ram'
@@ -174,5 +188,9 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
 
             self.run_simulation(entity, update=False, TGT_FREQ=freq)
 
+
+    def test_dual_parity_ops(self):
+        entity = 'test.test_parity_ops'
+        self.run_simulation(entity, TEST_SEED=self.seed)
 
 

@@ -18,16 +18,16 @@ begin
   test: process
     constant rule : std_ulogic_vector(WIDTH-1 downto 0) := lcar_rule(WIDTH);
     variable state : std_ulogic_vector(WIDTH-1 downto 0) := (others => '1');
-    variable index : unsigned(state'range);
+    variable index : integer;
 
     type nat_vec is array(natural range <>) of natural;
     variable counts : nat_vec(1 to 2**rule'length-1);
   begin
     for i in counts'range loop
       state := next_wolfram_lcar(state, rule);
-      index := unsigned(std_logic_vector(state));
+      index := to_integer(unsigned(std_logic_vector(state)));
 
-      counts(to_integer(index)) := counts(to_integer(index)) + 1;
+      counts(index) := counts(index) + 1;
     end loop;
 
     -- We should have completed a full cycle of the maximal length rule.
