@@ -64,11 +64,11 @@ package strings_fixed is
   --## Find the index of the first non-space character in source
   function index_non_blank( source : string; going : direction := forward ) return natural;
 
-  --## Count the occurances of pattern in source
+  --## Count the occurrences of pattern in source
   function count( source : string; pattern : string;
     mapping : character_mapping := identity ) return natural;
 
-  --## Count the ocurances of characters from set in source
+  --## Count the occurrences of characters from set in source
   function count( source : string; set : character_set ) return natural;
 
   --## Return the indices of a slice of source that satisfys the membership
@@ -251,14 +251,14 @@ package body strings_fixed is
       when forward =>
         for i in 1 to src'length - pat'length + 1 loop
           if src(i to i+pat'length-1) = pat then
-            return i;
+            return source'left-1 + i;
           end if;
         end loop;
 
       when backward =>
         for i in src'length - pat'length + 1 downto 1 loop
-          if src(i to i+pat'length-1) /= pat then
-            return i;
+          if src(i to i+pat'length-1) = pat then
+            return source'left-1 + i;
           end if;
         end loop;
     end case;
@@ -315,7 +315,7 @@ package body strings_fixed is
   end function;
 
 
-  --## Count the occurances of pattern in source
+  --## Count the occurrences of pattern in source
   function count( source : string; pattern : string;
     mapping : character_mapping := identity ) return natural is
 
@@ -337,7 +337,7 @@ package body strings_fixed is
     return c;
   end function;
 
-  --## Count the ocurances of characters from set in source
+  --## Count the occurrences of characters from set in source
   function count( source : string; set : character_set ) return natural is
     variable c : natural := 0;
   begin
@@ -528,11 +528,10 @@ package body strings_fixed is
     move(trim(source, side), source, justify => justify, pad => pad);
   end procedure;
 
-  --## Remove all leading characters in left and trailing characters in left
+  --## Remove all leading characters in left and trailing characters in right
   --#  from source
   function trim( source : string; left : character_set; right : character_set ) return string is
     variable ltrim, rtrim : natural;
-    variable result : string(1 to source'length);
   begin
     ltrim := index(source, left, outside, forward);
     if ltrim = 0 then
@@ -544,8 +543,7 @@ package body strings_fixed is
       return "";
     end if;
 
-    result := source(ltrim to rtrim);
-    return result;
+    return source(ltrim to rtrim);
   end function;
 
   --## Remove all leading characters in left and trailing characters in left
@@ -571,8 +569,9 @@ package body strings_fixed is
   --## Return the first count characters from source
   procedure head( source : inout string; count : in natural; justify : in alignment := left;
     pad : in character := ' ') is
+    variable s2 : string(1 to source'length) := source;
   begin
-    move(head(source, count, pad), source, justify => justify, pad => pad);
+    move(head(s2, count, pad), source, justify => justify, pad => pad);
   end procedure;
 
 
