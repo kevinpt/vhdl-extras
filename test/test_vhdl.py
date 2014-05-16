@@ -87,6 +87,9 @@ class TestVHDL(tsup.VHDLTestCase):
         entity = 'test.test_muxing'
         self.run_simulation(entity)
 
+    def test_strings_fixed(self):
+        entity = 'test.test_strings_fixed'
+        self.run_simulation(entity)
 
 
 class TestRandVHDL(tsup.RandomSeededTestCase):
@@ -206,3 +209,6 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
             rx_freq = '{}MHz'.format(random.randint(1, 100))
             self.run_simulation(entity, update=False, TEST_SEED=self.seed, TX_FREQ=tx_freq, RX_FREQ=rx_freq)
 
+    def test_secded_codec(self):
+        entity = 'test.test_secded_codec'
+        self.run_simulation(entity, TEST_SEED=self.seed)

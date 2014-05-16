@@ -334,7 +334,7 @@ begin
       Sync   => req_rx
     );
 
-    ack_rx <= req_rx;
+  ack_rx <= req_rx;
 
   req_change: process(Clock_rx, Reset_rx) is
   begin

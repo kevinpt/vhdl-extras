@@ -37,6 +37,7 @@ begin
 
     constant RD_DELAY : natural := 10;
   begin
+    report "Seed: " & integer'image(TEST_SEED);
     seed(TEST_SEED);
 
     reset <= '1', '0' after CPERIOD;
