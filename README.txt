@@ -135,21 +135,13 @@ The VHDL-extras library contains the following packages:
 
 Licensing
 
-   All of the source files distributed as part of VHDL-extras, with one
-   exception, are made freely available under the MIT license. The license
-   permits unrestricted use of this code for commercial and non-commercial
-   use. You may freely mix VHDL-extras code with proprietary code. You may
-   make any modifications necessary without any requirement to redistribute
-   your source code. The only requirement is to maintain the copyright and
-   licensing information in the file headers.
-
-   The exception is strings_maps_constants.vhdl which contains code adapted
-   from the GPLv2 licensed Ada library distributed with GNAT 3.15p. The
-   license for this version of GNAT includes an exception clause that
-   prevents the normal extension of the GPL terms to code that "links" or
-   instantiates code from the package. This exception permits proprietary
-   code to be combined with this file without imposing the requirement to
-   redistribute the proprietary portions of the code.
+   All of the source files distributed as part of VHDL-extras are made freely
+   available under the MIT license. The license permits unrestricted use of
+   this code for commercial and non-commercial use. You may freely mix
+   VHDL-extras code with proprietary code. You may make any modifications
+   necessary without any requirement to redistribute your source code. The only
+   requirement is to maintain the copyright and licensing information in the
+   file headers.
 
    It is presumed that portions of the VHDL-extras library will be
    translated into circuitry with synthesis software. The resulting hardware
@@ -179,25 +171,4 @@ Licensing
      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
      FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
      DEALINGS IN THE SOFTWARE.
-
-  GNAT License
-
-     GNAT licensing terms from a-stmaco.ads v1.11
-     GNAT is free software;  you can  redistribute it  and/or modify it under
-     terms of the  GNU General Public License as published  by the Free Soft-
-     ware  Foundation;  either version 2,  or (at your option) any later ver-
-     sion.  GNAT is distributed in the hope that it will be useful, but WITH-
-     OUT ANY WARRANTY;  without even the  implied warranty of MERCHANTABILITY
-     or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-     for  more details.  You should have  received  a copy of the GNU General
-     Public License  distributed with GNAT;  see file COPYING.  If not, write
-     to  the Free Software Foundation,  59 Temple Place - Suite 330,  Boston,
-     MA 02111-1307, USA.
-
-     As a special exception,  if other files  instantiate  generics from this
-     unit, or you link  this unit with other files  to produce an executable,
-     this  unit  does not  by itself cause  the resulting  executable  to  be
-     covered  by the  GNU  General  Public  License.  This exception does not
-     however invalidate  any other reasons why  the executable file  might be
-     covered by the  GNU Public License.
 

@@ -197,10 +197,7 @@ of wider adoption of the latest standard.
 Licensing
 =========
 
-The VHDL-extras library is licensed for free commercial and non-commercial use under the terms of the MIT license. One exception is the `strings_maps_constants.vhdl` package which contains code adapted
-from the GPLv2 licensed Ada library distributed with GNAT 3.15p. The license for this version of GNAT includes an exception clause that prevents the normal extension of the GPL terms to code that "links" or
-instantiates code from the package. This exception permits proprietary code to be combined with this file without imposing the requirement to redistribute the proprietary portions of the code.
-
+The VHDL-extras library is licensed for free commercial and non-commercial use under the terms of the MIT license.
 
 
 Contents:
