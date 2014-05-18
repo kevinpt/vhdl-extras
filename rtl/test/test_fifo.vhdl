@@ -39,7 +39,7 @@ begin
     variable wr_log, rd_log : word_vec(0 to FIFO_SIZE*5);
     variable exp_ae, exp_af : std_ulogic;
 
-    constant RD_DELAY : natural := 10;
+    constant RD_DELAY : natural := 20;
   begin
     seed(TEST_SEED);
 
