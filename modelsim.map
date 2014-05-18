@@ -2,3 +2,4 @@
 [Library]
 test = $MGC_WD/build/lib/test
 extras = $MGC_WD/build/lib/extras
+extras_2008 = $MGC_WD/build/lib/extras_2008

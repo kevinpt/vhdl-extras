@@ -1,7 +1,7 @@
 # VHDL make file
 
 RTL_ROOT := rtl
-VCOM_FLAGS := -93 -source -quiet
+VCOM_FLAGS := -source -quiet
 BUILD_DIR := build
 TAG_DIR := $(BUILD_DIR)/tags
 LIB_BASE_DIR := $(BUILD_DIR)/lib
@@ -25,7 +25,7 @@ VPATH = $(RTL_DIRS)
 VPATH += $(TAG_DIR)
 
 # Skip XST specific timing package
-EXCLUDE_RTL := timing_ops_xilinx.vhdl random_20xx.vhdl
+EXCLUDE_RTL := timing_ops_xilinx.vhdl
 RTL := $(filter-out $(EXCLUDE_RTL), $(foreach sdir, $(RTL_DIRS), $(notdir $(wildcard $(sdir)/*.vhd*))))
 RTL := $(filter %.vhd %.vhdl, $(RTL))
 
@@ -35,9 +35,14 @@ TAG_OBJS := $(foreach fname, $(RTL), $(basename $(notdir $(fname))).tag)
 .SUFFIXES: .vhdl .vhd
 
 define BUILD_VHDL
-@echo "** Compiling:" $<
-dir=`dirname $<`; \
-vcom $(VCOM_FLAGS) -work `basename $$dir` $<
+@dir=`dirname $<`; \
+if [ -z $${dir##*_*} ]; then \
+std=$${dir##*_}; \
+else \
+std=93; \
+fi; \
+echo "** Compiling:" std=$$std lib=`basename $$dir` $<; \
+vcom $(VCOM_FLAGS) -$$std -work `basename $$dir` $<
 @touch $(TAG_DIR)/$@
 endef
 
