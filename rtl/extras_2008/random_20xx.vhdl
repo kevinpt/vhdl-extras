@@ -86,6 +86,9 @@ package random is
   --## Generate a random boolean
   impure function random return boolean;
 
+  --## Generate a random character
+  impure function random return character;
+
   --## Generate a random bit_vector of size bits
   impure function random(size : positive) return bit_vector;
 
@@ -176,6 +179,11 @@ package body random is
   impure function random return boolean is
   begin
     return randint(0, 1) = 1;
+  end function;
+
+  impure function random return character is
+  begin
+    return character'val(randint(0, 255));
   end function;
 
   impure function random(size : positive) return bit_vector is

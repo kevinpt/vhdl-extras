@@ -171,10 +171,17 @@ that the asynchronous resets in your design are released synchronously to preven
 spurious setup and hold violations when coming out of reset.
 
 Most but not all of these packages are usable for synthesis. All of the
-code is written in conformance to the VHDL-93 standard. Various synthesis
-tools may differ in their support for the language constructs used within
-VHDL-extras. For Synopsys Design Compiler you will need to activate the
-newer presto VHDL compiler if it isn't set as the default.
+code in the `extras` library is written in conformance to the VHDL-93 standard.
+Various synthesis tools may differ in their support for the language
+constructs used within VHDL-extras. For Synopsys Design Compiler you will
+need to activate the newer presto VHDL compiler if it isn't set as the
+default.
+
+Some more modern language features are implemented in the code present in
+the `extras_2008` library. Files that are VHDL-2000 compliant have a "_20xx"
+suffix while VHDL-2008 specific code has a "_2008" suffix. The Modelsim
+build script compiles all of these files in 2008 mode. You will have to
+manually build anything you want in 2000 (or 2002) mode.
 
 In this library, the unresolved `std_ulogic` and `std_ulogic_vector` types are
 preferentially used in favor of `std_logic` and `std_logic_vector`. Driver
