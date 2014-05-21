@@ -67,7 +67,7 @@ package strings_maps is
 
   subtype character_sequence is string;
 
-  --## Conversion vetween character sets and sequences
+  --## Conversion between character sets and sequences
   function to_set( sequence : character_sequence ) return character_set;
   function to_set( singleton : character ) return character_set;
   function to_sequence( set : character_set ) return character_sequence;
@@ -162,6 +162,8 @@ package body strings_maps is
       else
         max_ranges(ix).high := character'pred(ch);
       end if;
+
+      exit when set(ch) = true or ch = character'right;
     end loop;
 
     return max_ranges(1 to ix);
