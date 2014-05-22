@@ -152,6 +152,10 @@ package strings_unbounded is
   --## Remove space characters from leading, trailing, or both ends of source
   procedure trim( source : inout string_acc; side : in trim_end );
 
+  --## Remove all leading characters in left and trailing characters in left
+  --#  from source
+  procedure trim( source : inout string_acc; left : in character_set; right : in character_set);
+
 end package;
 
 
@@ -468,6 +472,17 @@ package body strings_unbounded is
   begin
     source := new string'(trim(old.all, side));
     deallocate(old);
+  end procedure;
+
+
+  --## Remove all leading characters in left and trailing characters in left
+  --#  from source
+  procedure trim( source : inout string_acc; left : in character_set; right : in character_set) is
+    variable old : string_acc := source;
+  begin
+    source := new string'(trim(old.all, left, right));
+    deallocate(old);
+    report integer'image(integer'value("12_3"));
   end procedure;
 
 end package body;
