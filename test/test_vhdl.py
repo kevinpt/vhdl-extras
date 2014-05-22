@@ -91,6 +91,10 @@ class TestVHDL(tsup.VHDLTestCase):
         entity = 'test.test_strings_fixed'
         self.run_simulation(entity)
 
+    def test_strings_unbounded(self):
+        entity = 'test.test_strings_unbounded'
+        self.run_simulation(entity)
+
 
 class TestRandVHDL(tsup.RandomSeededTestCase):
 
@@ -212,3 +216,8 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
     def test_secded_codec(self):
         entity = 'test.test_secded_codec'
         self.run_simulation(entity, TEST_SEED=self.seed)
+
+    def test_strings_maps(self):
+        entity = 'test.test_strings_maps'
+        self.run_simulation(entity, TEST_SEED=self.seed)
+
