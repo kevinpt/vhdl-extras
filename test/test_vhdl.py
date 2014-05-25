@@ -221,3 +221,47 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
         entity = 'test.test_strings_maps'
         self.run_simulation(entity, TEST_SEED=self.seed)
 
+    def test_reg_file(self):
+        entity = 'test.test_reg_file'
+
+
+        self.test_name = 'Testbench ' + entity
+        self.trial_count = 10
+        for i in xrange(self.trial_count):
+            self.update_progress(i+1)
+
+            num_regs = random.randint(1, 10);
+            reg_size = 16
+            nibbles = (reg_size + 3) // 4
+
+            strobe_mask = [random.randint(0, 2**reg_size-1) for _ in xrange(num_regs)]
+            direct_read_mask = [random.randint(0, 2**reg_size-1) for _ in xrange(num_regs)]
+
+            strobe_mask = 'X"{}"'.format('_'.join('{:0{}x}'.format(r, nibbles) for r in strobe_mask))
+            direct_read_mask = 'X"{}"'.format('_'.join('{:0{}x}'.format(r, nibbles) for r in direct_read_mask))
+
+            self.run_simulation(entity, update=False, TEST_SEED=self.seed, NUM_REGS=num_regs, \
+              STROBE_BIT_MASK_BV=strobe_mask, DIRECT_READ_BIT_MASK_BV=direct_read_mask)
+
+    def test_reg_file_2008(self):
+        entity = 'test_2008.test_reg_file'
+
+
+        self.test_name = 'Testbench ' + entity
+        self.trial_count = 10
+        for i in xrange(self.trial_count):
+            self.update_progress(i+1)
+
+            num_regs = random.randint(1, 10);
+            reg_size = 16
+            nibbles = (reg_size + 3) // 4
+
+            strobe_mask = [random.randint(0, 2**reg_size-1) for _ in xrange(num_regs)]
+            direct_read_mask = [random.randint(0, 2**reg_size-1) for _ in xrange(num_regs)]
+
+            strobe_mask = 'X"{}"'.format('_'.join('{:0{}x}'.format(r, nibbles) for r in strobe_mask))
+            direct_read_mask = 'X"{}"'.format('_'.join('{:0{}x}'.format(r, nibbles) for r in direct_read_mask))
+
+            self.run_simulation(entity, update=False, TEST_SEED=self.seed, NUM_REGS=num_regs, \
+              STROBE_BIT_MASK_BV=strobe_mask, DIRECT_READ_BIT_MASK_BV=direct_read_mask)
+
