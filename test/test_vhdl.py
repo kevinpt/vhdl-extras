@@ -87,6 +87,10 @@ class TestVHDL(tsup.VHDLTestCase):
         entity = 'test.test_muxing'
         self.run_simulation(entity)
 
+    def test_muxing_2008(self):
+        entity = 'test_2008.test_muxing_2008'
+        self.run_simulation(entity)
+
     def test_strings_fixed(self):
         entity = 'test.test_strings_fixed'
         self.run_simulation(entity)
