@@ -90,7 +90,7 @@ begin
     loop
       wait until rising_edge(done);
       wait for CPERIOD / 2;
-      assert bin2bcd_in = to_binary(bin2bcd_out) report "bin2bcd mismatch" severity error;
+      assert bin2bcd_in = to_binary(bin2bcd_out) report "bin2bcd mismatch" severity failure;
     end loop;
   end process;
 
@@ -138,7 +138,7 @@ begin
     loop
       wait until rising_edge(done_bcd);
       wait for CPERIOD / 2;
-      assert bcd2bin_in = to_bcd(bcd2bin_out) report "bcd2bin mismatch" severity error;
+      assert bcd2bin_in = to_bcd(bcd2bin_out) report "bcd2bin mismatch" severity failure;
     end loop;
   end process;
 

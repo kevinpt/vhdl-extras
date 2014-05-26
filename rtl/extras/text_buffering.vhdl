@@ -58,10 +58,11 @@ package text_buffering is
   end record;
 
   type text_buffer is record
-    buf      : buffer_line_acc;
-    buf_tail : buffer_line_acc;
-    cur_line : buffer_line_acc;
-    lnum     : natural;
+    buf          : buffer_line_acc;
+    buf_tail     : buffer_line_acc;
+    cur_line     : buffer_line_acc;
+    cur_line_num : natural;
+    lines        : natural;
   end record;
 
   --## Load a text file object into a buffer
@@ -70,14 +71,15 @@ package text_buffering is
   --## Load a file into a buffer
   procedure load_buffer( fname : in string; buf : out text_buffer );
 
-  --## Load a string into a buffer
-  procedure load_buffer( variable one_line : in string_acc; buf : out text_buffer );
-
 
   --## Append a text file object to an existing buffer
-  procedure append( file fh : text; buf : out text_buffer );
+  procedure append( file fh : text; buf : inout text_buffer );
 
-  --## Append a string to an existing buffer
+  --## Append a text file to an existing buffer
+  procedure append( fname : in string; buf : inout text_buffer );
+
+
+  --## Append a string to a buffer
   procedure append( variable one_line : in string_acc; buf : inout text_buffer );
 
 
@@ -85,7 +87,10 @@ package text_buffering is
   procedure write( file fh : text; variable buf : in text_buffer );
 
   --## Retrieve the current line from a buffer
-  procedure getline( buf : inout text_buffer; tl : inout string_acc );
+  procedure nextline( buf : inout text_buffer; tl : inout string_acc );
+
+  --## Move to a specific line in the buffer
+  procedure setline( buf : inout text_buffer; n : in positive );
 
   --## Check if the end of the buffer has been reached
   procedure endbuffer( variable buf : in text_buffer; at_end : out boolean );
@@ -110,8 +115,9 @@ package body text_buffering is
     readline(fh, tl);
     tb.buf := new buffer_line;
     tb.buf.s := tl;
-    tb.lnum := 1;
+    tb.cur_line_num := 1;
     tb.cur_line := tb.buf;
+    tb.lines := 1;
 
     cur := tb.buf;
     while(not endfile(fh)) loop
@@ -121,6 +127,7 @@ package body text_buffering is
       succ.s := tl;
       cur.succ := succ;
       cur := succ;
+      tb.lines := tb.lines + 1;
     end loop;
 
     tb.buf_tail := cur;
@@ -145,36 +152,60 @@ package body text_buffering is
 
   end procedure;
 
-  --## Load a string into a buffer
-  procedure load_buffer( variable one_line : in string_acc; buf : out text_buffer ) is
-    variable tb : text_buffer;
-  begin
-    tb.buf := new buffer_line;
-    tb.buf.s := new string'(one_line.all);
-    tb.lnum := 1;
-    tb.cur_line := tb.buf;
-    tb.buf_tail := tb.buf;
-
-    buf := tb;
-  end procedure;
 
   --## Append a text file object to an existing buffer
-  procedure append( file fh : text; buf : out text_buffer ) is
+  procedure append( file fh : text; buf : inout text_buffer ) is
     variable tb : text_buffer;
   begin
     load_buffer(fh, tb);
 
     buf.buf_tail.succ := tb.buf;
+
+    if buf.cur_line = null then -- Fix pointer
+      buf.cur_line := buf.buf_tail.succ;
+    end if;
+
     buf.buf_tail := tb.buf_tail;
+    buf.lines := buf.lines + tb.lines;
 
   end procedure;
 
-  --## Append a string to an existing buffer
+
+  --## Append a text file to an existing buffer
+  procedure append( fname : in string; buf : inout text_buffer ) is
+    file fh : text;
+    variable fstatus : file_open_status;
+  begin
+
+    file_open(fstatus, fh, fname, read_mode);
+    assert fstatus = open_ok
+      report "Unable to open file for append(): " & fname
+      severity failure;
+
+    append(fh, buf);
+
+    file_close(fh);
+
+  end procedure;
+
+
+  --## Append a string to a buffer
   procedure append( variable one_line : in string_acc; buf : inout text_buffer ) is
   begin
-    buf.buf_tail.succ := new buffer_line;
-    buf.buf_tail.succ.s := new string'(one_line.all);
-    buf.buf_tail := buf.buf_tail.succ;
+    if buf.buf_tail /= null then
+      buf.buf_tail.succ := new buffer_line;
+      buf.buf_tail.succ.s := new string'(one_line.all);
+      buf.buf_tail := buf.buf_tail.succ;
+      buf.lines := buf.lines + 1;
+    else
+      buf.buf := new buffer_line;
+      buf.buf.s := new string'(one_line.all);
+
+      buf.buf_tail := buf.buf;
+      buf.cur_line := buf.buf;
+      buf.cur_line_num := 1;
+      buf.lines := 1;
+    end if;
   end procedure;
 
 
@@ -193,16 +224,38 @@ package body text_buffering is
 
 
   --## Retrieve the current line from a buffer
-  procedure getline( buf : inout text_buffer; tl : inout string_acc ) is
+  procedure nextline( buf : inout text_buffer; tl : inout string_acc ) is
   begin
     if buf.buf /= null and buf.cur_line /= null then
       tl := new string'(buf.cur_line.s.all);
       buf.cur_line := buf.cur_line.succ;
-      buf.lnum := buf.lnum + 1;
+      buf.cur_line_num := buf.cur_line_num + 1;
     else
       tl := null;
     end if;
   end procedure;
+
+
+  --## Move to a specific line in the buffer
+  procedure setline( buf : inout text_buffer; n : in positive ) is
+    variable cur : buffer_line_acc;
+    variable lnum : natural := 0;
+  begin
+
+    cur := buf.buf;
+    while cur /= null loop
+      lnum := lnum + 1;
+
+      if lnum = n then
+        exit;
+      end if;
+      cur := cur.succ;
+    end loop;
+
+    buf.cur_line := cur;
+    buf.cur_line_num := n;
+  end procedure;
+
 
   --## Check if the end of the buffer has been reached
   procedure endbuffer( variable buf : in text_buffer; at_end : out boolean ) is
