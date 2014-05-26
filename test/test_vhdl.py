@@ -95,6 +95,10 @@ class TestVHDL(tsup.VHDLTestCase):
         entity = 'test.test_strings_unbounded'
         self.run_simulation(entity)
 
+    def test_text_buffering(self):
+        entity = 'test.test_text_buffering'
+        self.run_simulation(entity)
+
 
 class TestRandVHDL(tsup.RandomSeededTestCase):
 
