@@ -263,6 +263,10 @@ begin
     tail(s, 4, justify => right, pad => '#');
     assert s = "######6789" report "tail 4: unexpected result" severity failure;
 
+    s := "0123456789";
+    tail(s, 10, justify => left);
+    assert s = "0123456789" report "tail 5: unexpected result" severity failure;
+
 
     -- *
     t := 10 * 'X';

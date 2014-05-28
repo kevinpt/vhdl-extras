@@ -26,8 +26,9 @@ begin
     sa := to_string_acc("Line 2");
     append(sa, tb);
 
-    sa := to_string_acc("Line 3");
-    append(sa, tb);
+    --sa := to_string_acc("Line 3");
+    --append(sa, tb);
+    append("Line 3", tb);
 
     assert tb.lines = 3
       report "Line count mismatch" severity failure;
@@ -58,7 +59,7 @@ begin
     free(tb);
 
     -- Append more lines
-    append(fname, tb2);
+    append_file(fname, tb2);
 
     assert tb2.lines = tb.lines * 2
       report "Linecount mismatch in extended tb2" severity failure;

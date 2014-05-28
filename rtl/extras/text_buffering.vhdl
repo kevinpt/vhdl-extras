@@ -45,7 +45,7 @@
 use std.textio.all;
 
 library extras;
-use extras.strings_unbounded.string_acc;
+use extras.strings_unbounded.all;
 
 package text_buffering is
 
@@ -73,14 +73,18 @@ package text_buffering is
 
 
   --## Append a text file object to an existing buffer
-  procedure append( file fh : text; buf : inout text_buffer );
+  procedure append_file( file fh : text; buf : inout text_buffer );
 
   --## Append a text file to an existing buffer
-  procedure append( fname : in string; buf : inout text_buffer );
+  procedure append_file( fname : in string; buf : inout text_buffer );
 
 
   --## Append a string to a buffer
   procedure append( variable one_line : in string_acc; buf : inout text_buffer );
+
+
+  --## Append a string to a buffer
+  procedure append( one_line : in string; buf : inout text_buffer );
 
 
   --## Write a buffer to a text file object
@@ -154,7 +158,7 @@ package body text_buffering is
 
 
   --## Append a text file object to an existing buffer
-  procedure append( file fh : text; buf : inout text_buffer ) is
+  procedure append_file( file fh : text; buf : inout text_buffer ) is
     variable tb : text_buffer;
   begin
     load_buffer(fh, tb);
@@ -172,7 +176,7 @@ package body text_buffering is
 
 
   --## Append a text file to an existing buffer
-  procedure append( fname : in string; buf : inout text_buffer ) is
+  procedure append_file( fname : in string; buf : inout text_buffer ) is
     file fh : text;
     variable fstatus : file_open_status;
   begin
@@ -182,7 +186,7 @@ package body text_buffering is
       report "Unable to open file for append(): " & fname
       severity failure;
 
-    append(fh, buf);
+    append_file(fh, buf);
 
     file_close(fh);
 
@@ -206,6 +210,15 @@ package body text_buffering is
       buf.cur_line_num := 1;
       buf.lines := 1;
     end if;
+  end procedure;
+
+
+  --## Append a string to a buffer
+  procedure append( one_line : in string; buf : inout text_buffer ) is
+    variable sa : string_acc;
+  begin
+    sa := to_string_acc(one_line);
+    append(sa, buf);
   end procedure;
 
 
