@@ -50,6 +50,14 @@
 --#
 --#  For basic pseudo-random state generation it is sufficient to tie the
 --#  Left_in and Right_in inputs to '0'.
+--#
+--# EXAMPLE USAGE:
+--#    constant WIDTH : positive := 8;
+--#    constant rule : std_ulogic_vector(WIDTH-1 downto 0) := lcar_rule(WIDTH);
+--#    variable state : std_ulogic_vector(WIDTH-1 downto 0) := (others => '1');
+--#    ...
+--#    -- Basic usage with default '0's shifting in from ends
+--#    state := next_wolfram_lcar(state, rule);
 --------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;

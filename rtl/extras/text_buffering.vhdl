@@ -40,6 +40,26 @@
 --#  allocated strings for each line. A text file can be read into a buffer and
 --#  the resulting data structure can be incorporated into records passable
 --#  to procedures without having to maintain a separate file handle.
+--#
+--# EXAMPLE USAGE:
+--#    variable buf    : text_buffer;
+--#    variable at_end : boolean;
+--#    variable tl     : string_acc;
+--#
+--#    -- Add lines of text to a buffer
+--#    append("First line", buf);
+--#    append("Second line", buf);
+--#    write("example.txt", buf);
+--#    free(buf);
+--#
+--#    -- Read a file into a buffer and iterate over its lines
+--#    load_buffer("example.txt", buf);
+--#    endbuffer(buf, at_end);
+--#    while not at_end loop
+--#      nextline(buf, tl);
+--#      endbuffer(buf, at_end);
+--#    end loop;
+--#    free(buf);
 --------------------------------------------------------------------
 
 use std.textio.all;
@@ -89,6 +109,10 @@ package text_buffering is
 
   --## Write a buffer to a text file object
   procedure write( file fh : text; variable buf : in text_buffer );
+
+  --## Write a buffer to a text file
+  procedure write( file fname : string; variable buf : in text_buffer );
+
 
   --## Retrieve the current line from a buffer
   procedure nextline( buf : inout text_buffer; tl : inout string_acc );
@@ -233,6 +257,23 @@ package body text_buffering is
       writeline(fh, ln);
       cur := cur.succ;
     end loop;
+  end procedure;
+
+
+  --## Write a buffer to a text file
+  procedure write( file fname : string; variable buf : in text_buffer ) is
+    file fh : text;
+    variable fstatus : file_open_status;
+  begin
+
+    file_open(fstatus, fh, fname, write_mode);
+    assert fstatus = open_ok
+      report "Unable to open file for write(): " & fname
+      severity failure;
+
+    write(fh, buf);
+
+    file_close(fh);
   end procedure;
 
 

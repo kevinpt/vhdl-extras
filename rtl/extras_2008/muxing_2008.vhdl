@@ -39,6 +39,27 @@
 --#  and demultiplexers. This version of the muxing package has an additional
 --#  mux function that can select from multi-bit inputs implemented in
 --#  VHDL-2008 syntax.
+--#
+--# EXAMPLE USAGE:
+--#    signal sel : unsigned(3 downto 0);
+--#    signal d, data : std_ulogic_vector(0 to 2**sel'length-1);
+--#    signal d2  : std_ulogic_vector(0 to 10);
+--#    signal m   : std_ulogic;
+--#    ...
+--#    d <= decode(sel);             -- Full binary decode
+--#    d2 <= decode(sel, d2'length); -- Partial decode
+--#
+--#    m <= mux(data, sel);          -- Mux with internal decoder
+--#    m <= mux(data, d);            -- Mux with external decoder
+--#
+--#    d2 <= demux(m, sel, d2'length);
+--#
+--#  Muxing multi-bit inputs with VHDL-2008:
+--#    library extras_2008; use extras_2008.common.sulv_array;
+--#    signal data : sulv_array(0 to 3)(7 downto 0);
+--#    signal sel  : unsigned(1 downto 0);
+--#    signal m    : std_ulogic_vector(7 downto 0);
+--#    m <= mux(data, sel);
 --------------------------------------------------------------------
 
 library ieee;
@@ -184,7 +205,7 @@ package body muxing is
   end function;
 
 
-  --## Demultiplexer with variable sized output (power of 2)
+  --// Demultiplexer with variable sized output (power of 2)
   function demux( Input : std_ulogic; Sel : unsigned )
     return std_ulogic_vector is
 

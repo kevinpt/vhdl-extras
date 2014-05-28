@@ -37,6 +37,20 @@
 --# DESCRIPTION:
 --#  A set of routines for creating parameterized multiplexers, decoders,
 --#  and demultiplexers
+--#
+--# EXAMPLE USAGE:
+--#    signal sel : unsigned(3 downto 0);
+--#    signal d, data : std_ulogic_vector(0 to 2**sel'length-1);
+--#    signal d2  : std_ulogic_vector(0 to 10);
+--#    signal m   : std_ulogic;
+--#    ...
+--#    d <= decode(sel);             -- Full binary decode
+--#    d2 <= decode(sel, d2'length); -- Partial decode
+--#
+--#    m <= mux(data, sel);          -- Mux with internal decoder
+--#    m <= mux(data, d);            -- Mux with external decoder
+--#
+--#    d2 <= demux(m, sel, d2'length);
 --------------------------------------------------------------------
 
 library ieee;
@@ -172,7 +186,7 @@ package body muxing is
   end function;
 
 
-  --## Demultiplexer with variable sized output (power of 2)
+  --// Demultiplexer with variable sized output (power of 2)
   function demux( Input : std_ulogic; Sel : unsigned )
     return std_ulogic_vector is
 
