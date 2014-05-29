@@ -207,7 +207,9 @@ result must be multiplied by 4 to get the length of a packed BCD array.</p>
 <div class="section" id="muxing">
 <span id="id12"></span><h3>muxing<a class="headerlink" href="#muxing" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/muxing.vhdl">muxing.vhdl</a></p>
-<p>Parameterized multiplexers, decoders, and demultiplexers.</p>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras_2008/muxing_2008.vhdl">muxing_2008.vhdl</a></p>
+<p>Parameterized multiplexers, decoders, and demultiplexers. A VHDL-2008 variant is available that
+implements a fully generic multi-bit mux.</p>
 </div>
 </div>
 <div class="section" id="memories">
@@ -230,26 +232,32 @@ status flags. The FIFOs have the following differences:</p>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/memory_pkg.vhdl">memory_pkg.vhdl</a></p>
 <p>This package provides general purpose components for inferred dual-ported RAM and ROM.</p>
 </div>
+<div class="section" id="reg-file">
+<span id="id15"></span><h3>reg_file<a class="headerlink" href="#reg-file" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/reg_file.vhdl">reg_file.vhdl</a></p>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras_2008/reg_file_2008.vhdl">reg_file_2008.vhdl</a></p>
+<p>This is an implementaiton of a general purpose register file. The VHDL-93 version must be manually customised to set the size of the registers internally. The VHDL-2008 version is fully generic by employing an unconstrained array of unconstrained arrays to implement the registers. In addition to simple read/write registers you can configure individual bits to act as self clearing strobes when written and to read back directly from internal signals rather than from the register contents.</p>
+</div>
 </div>
 <div class="section" id="randomization">
 <h2>Randomization<a class="headerlink" href="#randomization" title="Permalink to this headline">¶</a></h2>
 <p>These packages provide linear feedback shift registers and related
 structures for creating randomized output.</p>
 <div class="section" id="lcar-ops">
-<span id="id15"></span><h3>lcar_ops<a class="headerlink" href="#lcar-ops" title="Permalink to this headline">¶</a></h3>
+<span id="id16"></span><h3>lcar_ops<a class="headerlink" href="#lcar-ops" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/lcar_ops.vhdl">lcar_ops.vhdl</a></p>
 <p>An implementation of the Wolfram Linear Cellular Automata. This is useful for generating pseudo-random numbers with low correlation between bits. Adaptable to any number of cells. Constants are provided for
 maximal length sequences of up to 100 bits.</p>
 </div>
 <div class="section" id="lfsr-ops">
-<span id="id16"></span><h3>lfsr_ops<a class="headerlink" href="#lfsr-ops" title="Permalink to this headline">¶</a></h3>
+<span id="id17"></span><h3>lfsr_ops<a class="headerlink" href="#lfsr-ops" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/lfsr_ops.vhdl">lfsr_ops.vhdl</a></p>
 <p>Various implementations of Galois and Fibonacci Linear Feedback Shift Registers. These adapt to any size register. Coefficients are provided for maximal length sequences up to 100 bits.</p>
 </div>
 <div class="section" id="random">
-<span id="id17"></span><h3>random<a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h3>
+<span id="id18"></span><h3>random<a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/random.vhdl">random.vhdl</a></p>
-<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/random_20xx.vhdl">random_20xx.vhdl</a></p>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras_2008/random_20xx.vhdl">random_20xx.vhdl</a></p>
 <p>This package provides a general set of pseudo-random number functions.
 It is implemented as a wrapper around the ieee.math_real.uniform
 procedure and is only suitable for simulation not synthesis. See the
@@ -270,7 +278,7 @@ in both implementations.</p>
 <p>A set of packages that provide string and character operations adapted
 from the Ada standard library.</p>
 <div class="section" id="characters-handling">
-<span id="id18"></span><h3>characters_handling<a class="headerlink" href="#characters-handling" title="Permalink to this headline">¶</a></h3>
+<span id="id19"></span><h3>characters_handling<a class="headerlink" href="#characters-handling" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/characters_handling.vhdl">characters_handling.vhdl</a></p>
 <p>This is a package of functions that replicate the behavior of the Ada
 standard library package ada.characters.handling. Included are functions
@@ -285,12 +293,12 @@ adapted from the definitions in the Ada&#8216;95 ARM for the package
 Ada.Characters.Latin_1.</p>
 </div>
 <div class="section" id="strings">
-<span id="id19"></span><h3>strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
+<span id="id20"></span><h3>strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings.vhdl">strings.vhdl</a></p>
 <p>Shared types for the string packages.</p>
 </div>
 <div class="section" id="strings-fixed">
-<span id="id20"></span><h3>strings_fixed<a class="headerlink" href="#strings-fixed" title="Permalink to this headline">¶</a></h3>
+<span id="id21"></span><h3>strings_fixed<a class="headerlink" href="#strings-fixed" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_fixed.vhdl">strings_fixed.vhdl</a></p>
 <p>This package provides a string library for operating on fixed length
 strings. This is a clone of the Ada&#8216;95 library Ada.Strings.Fixed. It is a
@@ -298,13 +306,13 @@ nearly complete implementation with only the procedures taking character
 mapping functions omitted because of VHDL limitations.</p>
 </div>
 <div class="section" id="strings-maps">
-<span id="id21"></span><h3>strings_maps<a class="headerlink" href="#strings-maps" title="Permalink to this headline">¶</a></h3>
+<span id="id22"></span><h3>strings_maps<a class="headerlink" href="#strings-maps" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_maps.vhdl">strings_maps.vhdl</a></p>
 <p>This package provides types and functions for manipulating character sets.
 It is a clone of the Ada&#8216;95 package Ada.Strings.Maps.</p>
 </div>
 <div class="section" id="strings-maps-constants">
-<span id="id22"></span><h3>strings_maps_constants<a class="headerlink" href="#strings-maps-constants" title="Permalink to this headline">¶</a></h3>
+<span id="id23"></span><h3>strings_maps_constants<a class="headerlink" href="#strings-maps-constants" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_maps_constants.vhdl">strings_maps_constants.vhdl</a></p>
 <p>Constants for various character sets from the range
 of Latin-1 and mappings for upper case, lower case, and basic (unaccented)
@@ -312,7 +320,7 @@ characters. It is a clone of the Ada&#8216;95 package
 Ada.Strings.Maps.Constants.</p>
 </div>
 <div class="section" id="strings-unbounded">
-<span id="id23"></span><h3>strings_unbounded<a class="headerlink" href="#strings-unbounded" title="Permalink to this headline">¶</a></h3>
+<span id="id24"></span><h3>strings_unbounded<a class="headerlink" href="#strings-unbounded" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/strings_unbounded.vhdl">strings_unbounded.vhdl</a></p>
 <p>This package provides a string library for operating on unbounded length
 strings. This is a clone of the Ada&#8216;95 library Ada.Strings.Unbounded. Due
@@ -329,13 +337,13 @@ to simplify duplication of an existing unbounded string.</p>
 <h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
 <p>Additional packages of useful functions.</p>
 <div class="section" id="binaryio">
-<span id="id24"></span><h3>binaryio<a class="headerlink" href="#binaryio" title="Permalink to this headline">¶</a></h3>
+<span id="id25"></span><h3>binaryio<a class="headerlink" href="#binaryio" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/binaryio.vhdl">binaryio.vhdl</a></p>
 <p>Procedures for general binary file IO. Support is provided for reading and writing vectors of any size
 with big and little-endian byte order.</p>
 </div>
 <div class="section" id="text-buffering">
-<span id="id25"></span><h3>text_buffering<a class="headerlink" href="#text-buffering" title="Permalink to this headline">¶</a></h3>
+<span id="id26"></span><h3>text_buffering<a class="headerlink" href="#text-buffering" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/text_buffering.vhdl">text_buffering.vhdl</a></p>
 <p>This package provides a facility for storing buffered text. It can be used
 to represent the contents of a text file as a linked list of dynamically
@@ -344,12 +352,12 @@ the resulting data structure can be incorporated into records passable
 to procedures without having to maintain a separate file handle.</p>
 </div>
 <div class="section" id="ddfs">
-<span id="id26"></span><h3>ddfs<a class="headerlink" href="#ddfs" title="Permalink to this headline">¶</a></h3>
+<span id="id27"></span><h3>ddfs<a class="headerlink" href="#ddfs" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/ddfs.vhdl">ddfs.vhdl</a></p>
 <p>A set of functions for implementing Direct Digital Frequency Synthesizers.</p>
 </div>
 <div class="section" id="glitch-filtering">
-<span id="id27"></span><h3>glitch_filtering<a class="headerlink" href="#glitch-filtering" title="Permalink to this headline">¶</a></h3>
+<span id="id28"></span><h3>glitch_filtering<a class="headerlink" href="#glitch-filtering" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/glitch_filtering.vhdl">glitch_filtering.vhdl</a></p>
 <p>Glitch filter components that can be used to remove
 noise from digital input signals. This can be useful for debouncing
@@ -397,6 +405,7 @@ flip-flops and can be directly tied to input pads.</p>
 <li><a class="reference internal" href="#memories">Memories</a><ul>
 <li><a class="reference internal" href="#fifo-pkg">fifo_pkg</a></li>
 <li><a class="reference internal" href="#memory-pkg">memory_pkg</a></li>
+<li><a class="reference internal" href="#reg-file">reg_file</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#randomization">Randomization</a><ul>

@@ -216,7 +216,10 @@ muxing
 
 `muxing.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/muxing.vhdl>`_
 
-Parameterized multiplexers, decoders, and demultiplexers.
+`muxing_2008.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras_2008/muxing_2008.vhdl>`_
+
+Parameterized multiplexers, decoders, and demultiplexers. A VHDL-2008 variant is available that
+implements a fully generic multi-bit mux.
 
 
 Memories
@@ -250,6 +253,16 @@ memory_pkg
 
 This package provides general purpose components for inferred dual-ported RAM and ROM.
 
+.. _reg_file:
+
+reg_file
+~~~~~~~~
+
+`reg_file.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/reg_file.vhdl>`_
+
+`reg_file_2008.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras_2008/reg_file_2008.vhdl>`_
+
+This is an implementaiton of a general purpose register file. The VHDL-93 version must be manually customised to set the size of the registers internally. The VHDL-2008 version is fully generic by employing an unconstrained array of unconstrained arrays to implement the registers. In addition to simple read/write registers you can configure individual bits to act as self clearing strobes when written and to read back directly from internal signals rather than from the register contents.
 
 Randomization
 -------------
@@ -283,7 +296,7 @@ random
 
 `random.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/random.vhdl>`_
 
-`random_20xx.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/random_20xx.vhdl>`_
+`random_20xx.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras_2008/random_20xx.vhdl>`_
 
 This package provides a general set of pseudo-random number functions.
 It is implemented as a wrapper around the ieee.math_real.uniform

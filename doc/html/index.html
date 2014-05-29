@@ -51,11 +51,11 @@
   <div class="section" id="vhdl-extras-library-documentation">
 <h1>VHDL-extras library documentation<a class="headerlink" href="#vhdl-extras-library-documentation" title="Permalink to this headline">¶</a></h1>
 <p>This library provides some &#8220;extra&#8221; bits of code that are not found in the standard VHDL libraries. With VHDL-extras you can create designs that will resize to varying data widths, compute with time, frequency, and clock cycles, include error correction, and many more commonly encountered issues in digital logic design. These packages can be used for logic simulations and, in most cases, can be synthesized to hardware with an FPGA or ASIC target.</p>
-<p>All of the packages are designed to work with VHDL-93. In cases where forward compatibility is broken in newer VHDL standards an alternate package is provided. The code should work in most VHDL-93 compliant tools. In one instance with the <a class="reference internal" href="rst/packages.html#timing-ops"><em>timing_ops</em></a> package, a simplified Xilinx specific implementation is provided because of limitations with the XST synthesizer.</p>
+<p>All of the packages are designed to work with VHDL-93. Alternate packages supporting newer VHDL standards are provided where new language features provide enhanced functionality or where forward compatibility is broken. The core code should work in most VHDL-93 compliant tools. In one instance with the <a class="reference internal" href="rst/packages.html#timing-ops"><em>timing_ops</em></a> package, a simplified Xilinx specific implementation is provided because of limitations with the XST synthesizer (fixed in Vivado).</p>
 </div>
 <div class="section" id="requirements">
 <h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h1>
-<p>You can use the VHDL-extras library files piecemeal with no tools other than the simulator or synthesizer you will process them with. If you wish to use the provided Modelsim build scripts you will need Modelsim, Python 2.x, and GNU make. To run the test suite you will need Python 2.7 and Modelsim. See the sections on <a class="reference internal" href="#installation"><em>Installation</em></a> and <a class="reference internal" href="#testing"><em>Testing</em></a> for more information on setting up the VHDL-extras library. You can get optional colorized output from the build and test scripts by installing the Python colorama package.</p>
+<p>You can use the VHDL-extras library files piecemeal with no tools other than the simulator or synthesizer you will process them with. If you wish to use the provided Modelsim build scripts you will need Modelsim, Python 2.x, sed, grep, and GNU make. To run the test suite you will need Python 2.7 and Modelsim. See the sections on <a class="reference internal" href="#installation"><em>Installation</em></a> and <a class="reference internal" href="#testing"><em>Testing</em></a> for more information on setting up the VHDL-extras library. You can get optional colorized output from the build and test scripts by installing the Python colorama package.</p>
 </div>
 <div class="section" id="the-code">
 <h1>The Code<a class="headerlink" href="#the-code" title="Permalink to this headline">¶</a></h1>
@@ -89,7 +89,8 @@
 <li><dl class="first docutils">
 <dt>Memories</dt>
 <dd><p class="first"><a class="reference internal" href="rst/packages.html#fifo-pkg"><em>fifo_pkg</em></a> &#8211; General purpose FIFOs</p>
-<p class="last"><a class="reference internal" href="rst/packages.html#memory-pkg"><em>memory_pkg</em></a> &#8211; Synthesizable memories</p>
+<p><a class="reference internal" href="rst/packages.html#memory-pkg"><em>memory_pkg</em></a> &#8211; Synthesizable memories</p>
+<p class="last"><a class="reference internal" href="rst/packages.html#reg-file"><em>reg_file</em></a> &#8211; General purpose register file</p>
 </dd>
 </dl>
 </li>
@@ -140,9 +141,11 @@ Reading &lt;VHDL-extras base&gt;/modelsim.ini
 Reading &lt;VHDL-extras base&gt;/modelsim.map
 <span class="s2">&quot;test&quot;</span> maps to directory &lt;VHDL-extras base&gt;/build/lib/test.
 <span class="s2">&quot;extras&quot;</span> maps to directory &lt;VHDL-extras base&gt;/vhdl-extras/build/lib/extras.
+<span class="s2">&quot;test_2008&quot;</span> maps to directory &lt;VHDL-extras base&gt;/vhdl-extras/build/lib/test_2008.
+<span class="s2">&quot;extras_2008&quot;</span> maps to directory &lt;VHDL-extras base&gt;/vhdl-extras/build/lib/extras_2008.
 </pre></div>
 </div>
-<p>You should see a mapping for the &#8220;extras&#8221; library.</p>
+<p>You should see a mapping for the &#8220;extras&#8221; and &#8220;extras_2008&#8221; libraries.</p>
 <p>After that is complete, start the build process by running GNU make:</p>
 <div class="highlight-sh"><div class="highlight"><pre>&gt; make
 </pre></div>
@@ -151,17 +154,73 @@ Reading &lt;VHDL-extras base&gt;/modelsim.map
 </div>
 <div class="section" id="testing">
 <span id="id2"></span><h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
-<p>A unit test suite is provided to verify the library is correct. It depends on the built-in Python 2.7  unittest library with automatic test discovery. After building the library according to the installation instructions you can run the test suite with the following command:</p>
+<p>A unit test suite is provided to verify the library is correct. It depends on the built-in Python 2.7  unittest library with automatic test discovery and Modelsim. After building the library according to the installation instructions you can run the test suite with the following command:</p>
 <div class="highlight-sh"><div class="highlight"><pre>&gt; python -m unittest discover
 </pre></div>
 </div>
 <p>This will run the Python test suite defined in the <cite>test</cite> directory which will launch Modelsim simulations and validate the library. The output of each test case is recorded in <cite>test/test-output</cite>.</p>
 </div>
+<div class="section" id="using-the-library">
+<h1>Using the library<a class="headerlink" href="#using-the-library" title="Permalink to this headline">¶</a></h1>
+<p>You will need to be aware of any library mappings required to use the
+VHDL-extras packages. Those packages lacking any dependencies may be used
+directly without any additional steps necessary. The remaining packages
+with dependencies on other portions of the VHDL-extras library need their
+dependencies mapped into a new &#8220;extras&#8221; library rather than the default
+&#8220;work&#8221; library. Consult your tool documentation on how to accomplish
+this. The installation scripts take care of this when using Modelsim.</p>
+<p>Each file provides a package of publicly accessible types, constants,
+subprograms, and components. Once the &#8220;extras&#8221; library has been mapped
+you can access a package with the following code:</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">library</span> <span class="nn">extras</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">extras.</span><span class="o">&lt;</span><span class="n">package_name</span><span class="o">&gt;</span><span class="p">.</span><span class="k">all</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Most of the packages employ parameterization through the use of unbounded
+arrays in subprogram parameter lists and entity ports. You control the
+size of the logic with the signals and variables connected to these
+interfaces. In some cases there are implied size relationships between
+various input and output arrays that must be observed to produce correct
+results. These will usually be verified by assertions but may be missed
+if no attempt is made to simulate a design before synthesis.</p>
+<p>All components are designed to use asynchronous resets. The active level
+of the reset is controlled with the <cite>RESET_ACTIVE_LEVEL</cite> generic on each
+component. It defaults to <cite>&#8216;1&#8217;</cite> meaning the reset will be active-high. Set
+it to <cite>&#8216;0&#8217;</cite> if you want to use active-low resets in a design. You should ensure
+that the asynchronous resets in your design are released synchronously to prevent
+spurious setup and hold violations when coming out of reset.</p>
+<p>Most but not all of these packages are usable for synthesis. All of the
+code in the <cite>extras</cite> library is written in conformance to the VHDL-93 standard.
+Various synthesis tools may differ in their support for the language
+constructs used within VHDL-extras. For Synopsys Design Compiler you will
+need to activate the newer presto VHDL compiler if it isn&#8217;t set as the
+default.</p>
+<p>Some of the code is available as enhanced implementations that take
+advantage of features provided by newer versions of VHDL. These packages
+are provided in the extras_2008 library. Files that are VHDL-2000 compliant
+have a &#8220;_20xx&#8221; suffix while VHDL-2008 specific code has a &#8220;_2008&#8221; suffix.
+The Modelsim build script compiles all of these files in 2008 mode. You will
+have to manually build anything you want in 2000 (or 2002) mode.</p>
+<p>In this library, the unresolved <cite>std_ulogic</cite> and <cite>std_ulogic_vector</cite> types are
+preferentially used in favor of <cite>std_logic</cite> and <cite>std_logic_vector</cite>. Driver
+resolution isn&#8217;t needed in most cases and using the unresolved types adds an
+extra level of assurance to a design by preventing accidental connections of
+multiple signal drivers. Using these types can require a little extra work with
+type conversions and consequently most resources for VHDL avoid demonstrating
+their use. Since <cite>std_logic</cite> is a subtype and closely related to <cite>std_ulogic</cite>
+you can freely interchange signals of those types but the same is not the case
+for the arrays <cite>std_ulogic_vector</cite> and <cite>std_logic_vector</cite>. For these, you will
+have to employ explicit type conversions with implementations of the language
+before VHDL-2008. The 2008 standard revised the library to define
+<cite>std_logic_vector</cite> as a resolved subtype of <cite>std_ulogic_vector</cite> rather than
+an independent type. With tools that support VHDL-2008 you will be able
+to interchange these array types without calling conversion functions. This
+library employs <cite>std_ulogic_vector</cite> for non-numeric arrays in anticipation
+of wider adoption of the latest standard.</p>
+</div>
 <div class="section" id="licensing">
 <h1>Licensing<a class="headerlink" href="#licensing" title="Permalink to this headline">¶</a></h1>
-<p>The VHDL-extras library is licensed for free commercial and non-commercial use under the terms of the MIT license. One exception is the <cite>strings_maps_constants.vhdl</cite> package which contains code adapted
-from the GPLv2 licensed Ada library distributed with GNAT 3.15p. The license for this version of GNAT includes an exception clause that prevents the normal extension of the GPL terms to code that &#8220;links&#8221; or
-instantiates code from the package. This exception permits proprietary code to be combined with this file without imposing the requirement to redistribute the proprietary portions of the code.</p>
+<p>The VHDL-extras library is licensed for free commercial and non-commercial use under the terms of the MIT license.</p>
 <p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul>
@@ -203,6 +262,7 @@ instantiates code from the package. This exception permits proprietary code to b
 <li><a class="reference internal" href="#the-code">The Code</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#using-the-library">Using the library</a></li>
 <li><a class="reference internal" href="#licensing">Licensing</a><ul>
 </ul>
 </li>

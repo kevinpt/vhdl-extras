@@ -55,11 +55,12 @@ Usage
    need to activate the newer presto VHDL compiler if it isn't set as the
    default.
 
-   Some more modern language features are implemented in the code present in
-   the extras_2008 library. Files that are VHDL-2000 compliant have a "_20xx"
-   suffix while VHDL-2008 specific code has a "_2008" suffix. The Modelsim
-   build script compiles all of these files in 2008 mode. You will have to
-   manually build anything you want in 2000 (or 2002) mode.
+   Some of the code is available as enhanced implementations that take
+   advantage of features provided by newer versions of VHDL. These packages
+   are provided in the extras_2008 library. Files that are VHDL-2000 compliant
+   have a "_20xx" suffix while VHDL-2008 specific code has a "_2008" suffix.
+   The Modelsim build script compiles all of these files in 2008 mode. You will
+   have to manually build anything you want in 2000 (or 2002) mode.
 
    In this library, the unresolved std_ulogic and std_ulogic_vector types are
    preferentially used in favor of std_logic and std_logic_vector. Driver
@@ -108,10 +109,16 @@ The VHDL-extras library contains the following packages:
 
       muxing -- Decoder and muxing operations
 
+      muxing_2008 -- Enhanced muxing with unconstrained array of arrays
+
   * Memories
       fifo_pkg -- General purpose FIFOs
 
       memory_pkg -- Synthesizable memories
+
+      reg_file -- General purpose register file
+
+      reg_file_2008 -- Register file with unconstrained array of arrays
 
   * Randomization
       lcar_ops -- Linear Cellular Automata

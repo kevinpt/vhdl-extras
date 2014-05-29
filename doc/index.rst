@@ -9,12 +9,12 @@ VHDL-extras library documentation
 
 This library provides some "extra" bits of code that are not found in the standard VHDL libraries. With VHDL-extras you can create designs that will resize to varying data widths, compute with time, frequency, and clock cycles, include error correction, and many more commonly encountered issues in digital logic design. These packages can be used for logic simulations and, in most cases, can be synthesized to hardware with an FPGA or ASIC target.
 
-All of the packages are designed to work with VHDL-93. In cases where forward compatibility is broken in newer VHDL standards an alternate package is provided. The code should work in most VHDL-93 compliant tools. In one instance with the :ref:`timing_ops` package, a simplified Xilinx specific implementation is provided because of limitations with the XST synthesizer.
+All of the packages are designed to work with VHDL-93. Alternate packages supporting newer VHDL standards are provided where new language features provide enhanced functionality or where forward compatibility is broken. The core code should work in most VHDL-93 compliant tools. In one instance with the :ref:`timing_ops` package, a simplified Xilinx specific implementation is provided because of limitations with the XST synthesizer (fixed in Vivado).
 
 Requirements
 ============
 
-You can use the VHDL-extras library files piecemeal with no tools other than the simulator or synthesizer you will process them with. If you wish to use the provided Modelsim build scripts you will need Modelsim, Python 2.x, and GNU make. To run the test suite you will need Python 2.7 and Modelsim. See the sections on :ref:`installation` and :ref:`testing` for more information on setting up the VHDL-extras library. You can get optional colorized output from the build and test scripts by installing the Python colorama package.
+You can use the VHDL-extras library files piecemeal with no tools other than the simulator or synthesizer you will process them with. If you wish to use the provided Modelsim build scripts you will need Modelsim, Python 2.x, sed, grep, and GNU make. To run the test suite you will need Python 2.7 and Modelsim. See the sections on :ref:`installation` and :ref:`testing` for more information on setting up the VHDL-extras library. You can get optional colorized output from the build and test scripts by installing the Python colorama package.
 
 
 The Code
@@ -52,6 +52,8 @@ The VHDL-extras library contains the following packages:
     :ref:`fifo_pkg` -- General purpose FIFOs
 
     :ref:`memory_pkg` -- Synthesizable memories
+
+    :ref:`reg_file` -- General purpose register file
 
 * Randomization
     :ref:`lcar_ops` -- Linear Cellular Automata
@@ -111,8 +113,10 @@ You can verify Modelsim is setup correctly by running the `vmap` command:
   Reading <VHDL-extras base>/modelsim.map
   "test" maps to directory <VHDL-extras base>/build/lib/test.
   "extras" maps to directory <VHDL-extras base>/vhdl-extras/build/lib/extras.
+  "test_2008" maps to directory <VHDL-extras base>/vhdl-extras/build/lib/test_2008.
+  "extras_2008" maps to directory <VHDL-extras base>/vhdl-extras/build/lib/extras_2008.
 
-You should see a mapping for the "extras" library.
+You should see a mapping for the "extras" and "extras_2008" libraries.
 
 After that is complete, start the build process by running GNU make:
 
@@ -177,11 +181,12 @@ constructs used within VHDL-extras. For Synopsys Design Compiler you will
 need to activate the newer presto VHDL compiler if it isn't set as the
 default.
 
-Some more modern language features are implemented in the code present in
-the `extras_2008` library. Files that are VHDL-2000 compliant have a "_20xx"
-suffix while VHDL-2008 specific code has a "_2008" suffix. The Modelsim
-build script compiles all of these files in 2008 mode. You will have to
-manually build anything you want in 2000 (or 2002) mode.
+Some of the code is available as enhanced implementations that take
+advantage of features provided by newer versions of VHDL. These packages
+are provided in the extras_2008 library. Files that are VHDL-2000 compliant
+have a "_20xx" suffix while VHDL-2008 specific code has a "_2008" suffix.
+The Modelsim build script compiles all of these files in 2008 mode. You will
+have to manually build anything you want in 2000 (or 2002) mode.
 
 In this library, the unresolved `std_ulogic` and `std_ulogic_vector` types are
 preferentially used in favor of `std_logic` and `std_logic_vector`. Driver
