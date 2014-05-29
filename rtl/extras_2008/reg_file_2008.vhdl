@@ -144,6 +144,7 @@ package reg_file_pkg is
 
   component reg_file is
     generic (
+      RESET_ACTIVE_LEVEL : std_ulogic := '1';
       DIRECT_READ_BIT_MASK : reg_array;  -- Masks indicating which register bits are directly read
       STROBE_BIT_MASK      : reg_array;  -- Masks indicating which register bits clear themselves after a write of '1'
       REGISTER_INPUTS    : boolean := true  -- Register the input ports when true
@@ -181,6 +182,7 @@ use extras_2008.reg_file_pkg.all;
 
 entity reg_file is
   generic (
+    RESET_ACTIVE_LEVEL : std_ulogic := '1';
     DIRECT_READ_BIT_MASK : reg_array;  -- Masks indicating which register bits are directly read
     STROBE_BIT_MASK      : reg_array;  -- Masks indicating which register bits clear themselves after a write of '1'
     REGISTER_INPUTS    : boolean := true  -- Register the input ports when true
@@ -215,7 +217,7 @@ begin
   ri : if REGISTER_INPUTS generate
     process(Clock, Reset) is
     begin
-      if Reset = '1' then
+      if Reset = RESET_ACTIVE_LEVEL then
         reg_sel_reg <= (others => '0');
         we_reg   <= '0';
         wr_data_reg <= (others => '0');
@@ -238,7 +240,7 @@ begin
     variable reg_sel_onehot : std_ulogic_vector(Registers'range);
   begin
 
-    if Reset = '1' then
+    if Reset = RESET_ACTIVE_LEVEL then
       registers_loc <= (others            => (others => '0'));
       Reg_written   <= (Reg_written'range => '0');
       Rd_data       <= (Rd_data'range     => '0');
