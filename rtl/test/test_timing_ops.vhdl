@@ -1,3 +1,4 @@
+--# Copyright © 2014 Kevin Thibedeau
 
 library ieee;
 --use ieee.numeric_bit.all;

@@ -1,4 +1,4 @@
-
+--# Copyright © 2014 Kevin Thibedeau
 
 library extras;
 use extras.characters_handling.all;

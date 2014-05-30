@@ -1,3 +1,4 @@
+--# Copyright © 2014 Kevin Thibedeau
 
 library extras;
 use extras.random.all;

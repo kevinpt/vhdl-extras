@@ -1,3 +1,4 @@
+--# Copyright © 2014 Kevin Thibedeau
 
 use std.textio.all;
 

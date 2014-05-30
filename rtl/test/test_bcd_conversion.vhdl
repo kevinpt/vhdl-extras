@@ -1,3 +1,4 @@
+--# Copyright © 2014 Kevin Thibedeau
 
 entity test_bcd_conversion is
 end entity;

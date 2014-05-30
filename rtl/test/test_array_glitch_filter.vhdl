@@ -1,4 +1,4 @@
-
+--# Copyright © 2014 Kevin Thibedeau
 
 library ieee;
 use ieee.std_logic_1164.all;
