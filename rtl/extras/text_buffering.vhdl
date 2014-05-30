@@ -111,7 +111,7 @@ package text_buffering is
   procedure write( file fh : text; variable buf : in text_buffer );
 
   --## Write a buffer to a text file
-  procedure write( file fname : string; variable buf : in text_buffer );
+  procedure write( fname : string; variable buf : in text_buffer );
 
 
   --## Retrieve the current line from a buffer
@@ -261,7 +261,7 @@ package body text_buffering is
 
 
   --## Write a buffer to a text file
-  procedure write( file fname : string; variable buf : in text_buffer ) is
+  procedure write( fname : string; variable buf : in text_buffer ) is
     file fh : text;
     variable fstatus : file_open_status;
   begin
