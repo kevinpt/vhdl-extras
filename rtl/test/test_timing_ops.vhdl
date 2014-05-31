@@ -48,11 +48,6 @@ architecture test of test_timing_ops is
     end if;
   end function;
 
-  impure function randtime(min, max : time) return time is
-  begin
-    return to_time(to_real(max - min + resolution_limit) * random) + min;
-  end function;
-
 begin
 
 
