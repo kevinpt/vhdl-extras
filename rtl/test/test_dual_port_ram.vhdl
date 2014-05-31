@@ -4,7 +4,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 library extras;
-use extras.memory_pkg.all;
+use extras.memory.all;
 use extras.timing_ops.all;
 use extras.random.all;
 

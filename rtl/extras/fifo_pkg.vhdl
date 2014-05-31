@@ -32,7 +32,7 @@
 --# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 --# DEALINGS IN THE SOFTWARE.
 --#
---# DEPENDENCIES: memory_pkg, sizing, synchronizing
+--# DEPENDENCIES: memory, sizing, synchronizing
 --#
 --# DESCRIPTION:
 --#  This package implements a set of generic FIFO components. There are three
@@ -47,12 +47,12 @@
 --#                  written data before it is read. Useful for managing
 --#                  packetized protocols with error detection at the end.
 --#
---#  All of these FIFOs use the dual_port_ram component from memory_pkg. Reads
---#  can be performed concurrently with writes. The dual_port_ram SYNC_READ
---#  generic is provided on the FIFO components to select between synchronous
---#  or asynchronous read ports. When SYNC_READ is false, distributed memory
---#  will be synthesized rather than RAM primitives. The read port will update
---#  one cycle earlier than when SYNC_READ is true.
+--#  All of these FIFOs use the dual_port_ram component from the memory package.
+--#  Reads can be performed concurrently with writes. The dual_port_ram
+--#  SYNC_READ generic is provided on the FIFO components to select between
+--#  synchronous or asynchronous read ports. When SYNC_READ is false,
+--#  distributed memory will be synthesized rather than RAM primitives. The
+--#  read port will update one cycle earlier than when SYNC_READ is true.
 --#
 --#  The MEM_SIZE generic is used to set the number of words stored in the
 --#  FIFO. The read and write ports are unconstrained arrays. The size of
@@ -207,7 +207,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 library extras;
-use extras.memory_pkg.dual_port_ram;
+use extras.memory.dual_port_ram;
 
 entity simple_fifo is
   generic (
@@ -356,7 +356,7 @@ use ieee.numeric_std.all;
 library extras;
 use extras.sizing.bit_size;
 use extras.synchronizing.all;
-use extras.memory_pkg.dual_port_ram;
+use extras.memory.dual_port_ram;
 
 entity fifo is
   generic (
@@ -637,7 +637,7 @@ use ieee.numeric_std.all;
 library extras;
 use extras.sizing.bit_size;
 use extras.synchronizing.all;
-use extras.memory_pkg.dual_port_ram;
+use extras.memory.dual_port_ram;
 
 entity packet_fifo is
   generic (

@@ -244,12 +244,12 @@ status flags. The FIFOs have the following differences:
 * fifo        -- General FIFO with separate domains for read and write ports.
 * packet_fifo -- Extension of fifo component with ability to discard written data before it is read. Useful for managing packetized protocols with error detection at the end.
 
-.. _memory_pkg:
+.. _memory:
 
-memory_pkg
-~~~~~~~~~~
+memory
+~~~~~~
 
-`memory_pkg.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/memory_pkg.vhdl>`_
+`memory.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/memory.vhdl>`_
 
 This package provides general purpose components for inferred dual-ported RAM and ROM.
 

@@ -7,7 +7,7 @@
 --                           =====     /                          --
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
---# memory_pkg.vhdl - Generic memories
+--# memory.vhdl - Generic memories
 --# $Id$
 --# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
 --#
@@ -48,7 +48,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-package memory_pkg is
+package memory is
 
   component dual_port_ram is
     generic (
@@ -153,7 +153,7 @@ use ieee.std_logic_textio.all;
 use std.textio.all;
 
 library extras;
-use extras.memory_pkg.all;
+use extras.memory.all;
 
 entity rom is
   generic (

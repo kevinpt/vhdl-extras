@@ -114,7 +114,7 @@ The VHDL-extras library contains the following packages:
   * Memories
       fifo_pkg -- General purpose FIFOs
 
-      memory_pkg -- Synthesizable memories
+      memory -- Synthesizable memories
 
       reg_file -- General purpose register file
 

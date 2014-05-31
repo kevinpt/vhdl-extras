@@ -7,7 +7,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_textio.all;
 
 library extras;
-use extras.memory_pkg.all;
+use extras.memory.all;
 use extras.timing_ops.all;
 
 entity test_rom is
