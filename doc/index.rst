@@ -49,7 +49,7 @@ The VHDL-extras library contains the following packages:
     :ref:`muxing` -- Decoder and muxing operations
 
 * Memories
-    :ref:`fifo_pkg` -- General purpose FIFOs
+    :ref:`fifos` -- General purpose FIFOs
 
     :ref:`memory` -- Synthesizable memories
 

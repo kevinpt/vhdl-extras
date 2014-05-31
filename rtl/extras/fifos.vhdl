@@ -7,7 +7,7 @@
 --                           =====     /                          --
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
---# fifo_pkg.vhdl - FIFOs
+--# fifos.vhdl - FIFOs
 --# $Id$
 --# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
 --#
@@ -116,7 +116,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-package fifo_pkg is
+package fifos is
 
   component simple_fifo is
     generic (

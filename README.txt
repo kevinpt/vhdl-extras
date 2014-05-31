@@ -112,7 +112,7 @@ The VHDL-extras library contains the following packages:
       muxing_2008 -- Enhanced muxing with unconstrained array of arrays
 
   * Memories
-      fifo_pkg -- General purpose FIFOs
+      fifos -- General purpose FIFOs
 
       memory -- Synthesizable memories
 

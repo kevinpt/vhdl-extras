@@ -5,7 +5,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 library extras;
-use extras.fifo_pkg.all;
+use extras.fifos.all;
 use extras.timing_ops.all;
 use extras.random.all;
 

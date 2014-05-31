@@ -228,12 +228,12 @@ Memories
 Packages with internal memories
 
 
-.. _fifo_pkg:
+.. _fifos:
 
-fifo_pkg
-~~~~~~~~
+fifos
+~~~~~
 
-`fifo_pkg.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/fifo_pkg.vhdl>`_
+`fifos.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/fifos.vhdl>`_
 
 This package implements a set of generic FIFO components. There are three
 variants. All use the same basic interface for the read/write ports and
