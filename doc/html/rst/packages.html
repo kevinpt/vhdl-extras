@@ -58,9 +58,7 @@ wide array of applications.</p>
 <div class="section" id="pipelining">
 <span id="id1"></span><h3>pipelining<a class="headerlink" href="#pipelining" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/pipelining.vhdl">pipelining.vhdl</a></p>
-<p>Configurable pipeline registers for
-use with automated retiming during
-synthesis.</p>
+<p>Configurable pipeline registers for use with automated retiming during synthesis. This provides a variable length chain of registers that can be placed after a section of combinational logic. When your synthesis tool is configured to enable retiming these registers will be dispersed throughought the combinational logic to reduce the worst case delay. You can tweak the pipeline stages with a simple change in a generic to tune your results.</p>
 </div>
 <div class="section" id="sizing">
 <span id="id2"></span><h3>sizing<a class="headerlink" href="#sizing" title="Permalink to this headline">¶</a></h3>
@@ -127,9 +125,10 @@ simulation-only clock generation procedure. A variant of timing_ops is provided 
 <p>This package provides a general purpose CRC implementation. It consists
 of a set of functions that can be used to iteratively process successive
 data vectors as well an an entity that combines the functions into a
-synthesizable form. The CRC can be readily specified using the Rocksoft
+easily instantiated form. The CRC can be readily specified using the Rocksoft
 notation described in &#8220;A Painless Guide to CRC Error Detection Algorithms&#8221;,
-<em>Williams 1993</em>. A CRC specification consists of the following parameters:</p>
+<em>Williams 1993</em>.</p>
+<p>A CRC specification consists of the following parameters:</p>
 <blockquote>
 <div><div class="line-block">
 <div class="line">Poly       : The generator polynomial</div>
@@ -147,6 +146,39 @@ unconstrained allowing you to process bits in chunks of any desired size. Using
 a 1-bit array for data is equivalent to a bit-serial CRC implementation. When
 all data has been passed through the CRC it is completed with a call to <cite>end_crc</cite> to
 produce the final CRC value.</p>
+<p>Implementing a CRC without depending on an external generator tool is easy and flexible:</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="c1">-- CRC-16-USB</span>
+<span class="k">constant</span> <span class="n">poly</span>        <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="n">X</span><span class="s">&quot;8005&quot;</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">xor_in</span>      <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="n">X</span><span class="s">&quot;FFFF&quot;</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">xor_out</span>     <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="n">X</span><span class="s">&quot;FFFF&quot;</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">reflect_in</span>  <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">reflect_out</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">;</span>
+
+<span class="c1">-- Implement CRC-16 with byte-wide inputs:</span>
+<span class="k">subtype</span> <span class="n">word</span> <span class="k">is</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">type</span> <span class="n">word_vec</span> <span class="k">is</span> <span class="k">array</span><span class="p">(</span> <span class="kt">natural</span> <span class="k">range</span> <span class="o">&lt;&gt;</span> <span class="p">)</span> <span class="k">of</span> <span class="n">word</span><span class="p">;</span>
+<span class="k">variable</span> <span class="n">data</span> <span class="o">:</span> <span class="n">word_vec</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">9</span><span class="p">);</span>
+<span class="k">variable</span> <span class="n">crc</span>  <span class="o">:</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="n">poly</span><span class="na">&#39;range</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">crc</span> <span class="o">:=</span> <span class="n">init_crc</span><span class="p">(</span><span class="n">xor_in</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">data</span><span class="na">&#39;range</span> <span class="k">loop</span>
+  <span class="n">crc</span> <span class="o">:=</span> <span class="n">next_crc</span><span class="p">(</span><span class="n">crc</span><span class="p">,</span> <span class="n">poly</span><span class="p">,</span> <span class="n">reflect_in</span><span class="p">,</span> <span class="n">data</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+<span class="n">crc</span> <span class="o">:=</span> <span class="n">end_crc</span><span class="p">(</span><span class="n">crc</span><span class="p">,</span> <span class="n">reflect_out</span><span class="p">,</span> <span class="n">xor_out</span><span class="p">);</span>
+
+<span class="c1">-- Implement CRC-16 with nibble-wide inputs:</span>
+<span class="k">subtype</span> <span class="n">nibble</span> <span class="k">is</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">type</span> <span class="n">nibble_vec</span> <span class="k">is</span> <span class="k">array</span><span class="p">(</span> <span class="kt">natural</span> <span class="k">range</span> <span class="o">&lt;&gt;</span> <span class="p">)</span> <span class="k">of</span> <span class="n">nibble</span><span class="p">;</span>
+<span class="k">variable</span> <span class="n">data</span> <span class="o">:</span> <span class="n">nibble_vec</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">9</span><span class="p">);</span>
+<span class="k">variable</span> <span class="n">crc</span>  <span class="o">:</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="n">poly</span><span class="na">&#39;range</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">crc</span> <span class="o">:=</span> <span class="n">init_crc</span><span class="p">(</span><span class="n">xor_in</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">data</span><span class="na">&#39;range</span> <span class="k">loop</span>
+  <span class="n">crc</span> <span class="o">:=</span> <span class="n">next_crc</span><span class="p">(</span><span class="n">crc</span><span class="p">,</span> <span class="n">poly</span><span class="p">,</span> <span class="n">reflect_in</span><span class="p">,</span> <span class="n">data</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+<span class="n">crc</span> <span class="o">:=</span> <span class="n">end_crc</span><span class="p">(</span><span class="n">crc</span><span class="p">,</span> <span class="n">reflect_out</span><span class="p">,</span> <span class="n">xor_out</span><span class="p">);</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="hamming-edac">
 <span id="id6"></span><h3>hamming_edac<a class="headerlink" href="#hamming-edac" title="Permalink to this headline">¶</a></h3>
@@ -195,7 +227,8 @@ result must be multiplied by 4 to get the length of a packed BCD array.</p>
 <div class="section" id="gray-code">
 <span id="id11"></span><h3>gray_code<a class="headerlink" href="#gray-code" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/gray_code.vhdl">gray_code.vhdl</a></p>
-<p>This package provides functions to convert between Gray code and binary. An example implementation of a Gray code counter is also included.</p>
+<p>This package provides functions to convert between Gray code and binary. An example
+implementation of a Gray code counter is also included.</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">bin</span><span class="p">,</span> <span class="n">gray</span><span class="p">,</span> <span class="n">bin2</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
 <span class="p">...</span>
 <span class="n">bin</span>  <span class="o">&lt;=</span> <span class="n">X</span><span class="s">&quot;C5&quot;</span><span class="p">;</span>
@@ -210,6 +243,30 @@ result must be multiplied by 4 to get the length of a packed BCD array.</p>
 <p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras_2008/muxing_2008.vhdl">muxing_2008.vhdl</a></p>
 <p>Parameterized multiplexers, decoders, and demultiplexers. A VHDL-2008 variant is available that
 implements a fully generic multi-bit mux.</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">sel</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">d</span><span class="p">,</span> <span class="n">data</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">2</span><span class="o">**</span><span class="n">sel</span><span class="na">&#39;length</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">d2</span>  <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">10</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">m</span>   <span class="o">:</span> <span class="kt">std_ulogic</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">d</span> <span class="o">&lt;=</span> <span class="n">decode</span><span class="p">(</span><span class="n">sel</span><span class="p">);</span>             <span class="c1">-- Full binary decode</span>
+<span class="n">d2</span> <span class="o">&lt;=</span> <span class="n">decode</span><span class="p">(</span><span class="n">sel</span><span class="p">,</span> <span class="n">d2</span><span class="na">&#39;length</span><span class="p">);</span> <span class="c1">-- Partial decode</span>
+
+<span class="n">m</span> <span class="o">&lt;=</span> <span class="n">mux</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">sel</span><span class="p">);</span>          <span class="c1">-- Mux with internal decoder</span>
+<span class="n">m</span> <span class="o">&lt;=</span> <span class="n">mux</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>            <span class="c1">-- Mux with external decoder</span>
+
+<span class="c1">-- Demultiplex</span>
+<span class="n">d2</span> <span class="o">&lt;=</span> <span class="n">demux</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">sel</span><span class="p">,</span> <span class="n">d2</span><span class="na">&#39;length</span><span class="p">);</span>
+
+
+<span class="c1">-- Muxing multi-bit inputs with VHDL-2008:</span>
+<span class="k">library</span> <span class="nn">extras_2008</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras_2008.common.sulv_array</span><span class="p">;</span>
+<span class="k">signal</span> <span class="n">data</span> <span class="o">:</span> <span class="n">sulv_array</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">3</span><span class="p">)(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">sel</span>  <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">m</span>    <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="n">m</span> <span class="o">&lt;=</span> <span class="n">mux</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">sel</span><span class="p">);</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="memories">

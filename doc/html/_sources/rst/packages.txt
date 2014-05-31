@@ -17,9 +17,7 @@ pipelining
 
 `pipelining.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/pipelining.vhdl>`_
 
-Configurable pipeline registers for
-use with automated retiming during
-synthesis.
+Configurable pipeline registers for use with automated retiming during synthesis. This provides a variable length chain of registers that can be placed after a section of combinational logic. When your synthesis tool is configured to enable retiming these registers will be dispersed throughought the combinational logic to reduce the worst case delay. You can tweak the pipeline stages with a simple change in a generic to tune your results.
 
 .. _sizing:
 
@@ -106,9 +104,11 @@ crc_ops
 This package provides a general purpose CRC implementation. It consists
 of a set of functions that can be used to iteratively process successive
 data vectors as well an an entity that combines the functions into a
-synthesizable form. The CRC can be readily specified using the Rocksoft
+easily instantiated form. The CRC can be readily specified using the Rocksoft
 notation described in "A Painless Guide to CRC Error Detection Algorithms",
-*Williams 1993*. A CRC specification consists of the following parameters:
+*Williams 1993*.
+
+A CRC specification consists of the following parameters:
 
   | Poly       : The generator polynomial
   | Xor_in     : The initialization vector "xored" with an all-'0's shift register
@@ -124,6 +124,43 @@ unconstrained allowing you to process bits in chunks of any desired size. Using
 a 1-bit array for data is equivalent to a bit-serial CRC implementation. When
 all data has been passed through the CRC it is completed with a call to `end_crc` to
 produce the final CRC value.
+
+Implementing a CRC without depending on an external generator tool is easy and flexible:
+
+.. code-block:: vhdl
+
+    -- CRC-16-USB
+    constant poly        : bit_vector := X"8005";
+    constant xor_in      : bit_vector := X"FFFF";
+    constant xor_out     : bit_vector := X"FFFF";
+    constant reflect_in  : boolean := true;
+    constant reflect_out : boolean := true;
+
+    -- Implement CRC-16 with byte-wide inputs:
+    subtype word is bit_vector(7 downto 0);
+    type word_vec is array( natural range <> ) of word;
+    variable data : word_vec(0 to 9);
+    variable crc  : bit_vector(poly'range);
+    ...
+    crc := init_crc(xor_in);
+    for i in data'range loop
+      crc := next_crc(crc, poly, reflect_in, data(i));
+    end loop;
+    crc := end_crc(crc, reflect_out, xor_out);
+
+    -- Implement CRC-16 with nibble-wide inputs:
+    subtype nibble is bit_vector(3 downto 0);
+    type nibble_vec is array( natural range <> ) of nibble;
+    variable data : nibble_vec(0 to 9);
+    variable crc  : bit_vector(poly'range);
+    ...
+    crc := init_crc(xor_in);
+    for i in data'range loop
+      crc := next_crc(crc, poly, reflect_in, data(i));
+    end loop;
+    crc := end_crc(crc, reflect_out, xor_out);
+
+
 
 .. _hamming_edac:
 
@@ -198,7 +235,8 @@ gray_code
 
 `gray_code.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/gray_code.vhdl>`_
 
-This package provides functions to convert between Gray code and binary. An example implementation of a Gray code counter is also included.
+This package provides functions to convert between Gray code and binary. An example
+implementation of a Gray code counter is also included.
 
 .. code-block:: vhdl
 
@@ -221,6 +259,30 @@ muxing
 Parameterized multiplexers, decoders, and demultiplexers. A VHDL-2008 variant is available that
 implements a fully generic multi-bit mux.
 
+.. code-block:: vhdl
+
+    signal sel : unsigned(3 downto 0);
+    signal d, data : std_ulogic_vector(0 to 2**sel'length-1);
+    signal d2  : std_ulogic_vector(0 to 10);
+    signal m   : std_ulogic;
+    ...
+    d <= decode(sel);             -- Full binary decode
+    d2 <= decode(sel, d2'length); -- Partial decode
+
+    m <= mux(data, sel);          -- Mux with internal decoder
+    m <= mux(data, d);            -- Mux with external decoder
+
+    -- Demultiplex
+    d2 <= demux(m, sel, d2'length);
+
+
+    -- Muxing multi-bit inputs with VHDL-2008:
+    library extras_2008; use extras_2008.common.sulv_array;
+    signal data : sulv_array(0 to 3)(7 downto 0);
+    signal sel  : unsigned(1 downto 0);
+    signal m    : std_ulogic_vector(7 downto 0);
+
+    m <= mux(data, sel);
 
 Memories
 --------
