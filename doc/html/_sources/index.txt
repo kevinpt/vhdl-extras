@@ -49,9 +49,9 @@ The VHDL-extras library contains the following packages:
     :ref:`muxing` -- Decoder and muxing operations
 
 * Memories
-    :ref:`fifo_pkg` -- General purpose FIFOs
+    :ref:`fifos` -- General purpose FIFOs
 
-    :ref:`memory_pkg` -- Synthesizable memories
+    :ref:`memory` -- Synthesizable memories
 
     :ref:`reg_file` -- General purpose register file
 
@@ -60,7 +60,7 @@ The VHDL-extras library contains the following packages:
 
     :ref:`lfsr_ops` -- Linear Feedback Shift Registers
 
-    :ref:`random` -- Simulation-only random umber generation
+    :ref:`random` -- Simulation-only random number generation
 
 * String and character handling
     :ref:`characters_handling` -- Character class identification and case conversions

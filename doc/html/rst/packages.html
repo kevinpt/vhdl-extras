@@ -215,9 +215,9 @@ implements a fully generic multi-bit mux.</p>
 <div class="section" id="memories">
 <h2>Memories<a class="headerlink" href="#memories" title="Permalink to this headline">¶</a></h2>
 <p>Packages with internal memories</p>
-<div class="section" id="fifo-pkg">
-<span id="id13"></span><h3>fifo_pkg<a class="headerlink" href="#fifo-pkg" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/fifo_pkg.vhdl">fifo_pkg.vhdl</a></p>
+<div class="section" id="fifos">
+<span id="id13"></span><h3>fifos<a class="headerlink" href="#fifos" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/fifos.vhdl">fifos.vhdl</a></p>
 <p>This package implements a set of generic FIFO components. There are three
 variants. All use the same basic interface for the read/write ports and
 status flags. The FIFOs have the following differences:</p>
@@ -227,9 +227,9 @@ status flags. The FIFOs have the following differences:</p>
 <li>packet_fifo &#8211; Extension of fifo component with ability to discard written data before it is read. Useful for managing packetized protocols with error detection at the end.</li>
 </ul>
 </div>
-<div class="section" id="memory-pkg">
-<span id="id14"></span><h3>memory_pkg<a class="headerlink" href="#memory-pkg" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/memory_pkg.vhdl">memory_pkg.vhdl</a></p>
+<div class="section" id="memory">
+<span id="id14"></span><h3>memory<a class="headerlink" href="#memory" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/memory.vhdl">memory.vhdl</a></p>
 <p>This package provides general purpose components for inferred dual-ported RAM and ROM.</p>
 </div>
 <div class="section" id="reg-file">
@@ -403,8 +403,8 @@ flip-flops and can be directly tied to input pads.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#memories">Memories</a><ul>
-<li><a class="reference internal" href="#fifo-pkg">fifo_pkg</a></li>
-<li><a class="reference internal" href="#memory-pkg">memory_pkg</a></li>
+<li><a class="reference internal" href="#fifos">fifos</a></li>
+<li><a class="reference internal" href="#memory">memory</a></li>
 <li><a class="reference internal" href="#reg-file">reg_file</a></li>
 </ul>
 </li>
