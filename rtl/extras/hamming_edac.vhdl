@@ -8,7 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# hamming_edac.vhdl - Synthesizable functions for Hamming error correction
---# $Id$
+--# $Id:$
 --# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
 --#
 --# Copyright © 2010 Kevin Thibedeau

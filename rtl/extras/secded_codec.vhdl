@@ -8,7 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# secded_codec.vhdl - Synthesizable SECDED encoder/decoder component
---# $Id$
+--# $Id:$
 --# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
 --#
 --# Copyright © 2010 Kevin Thibedeau
