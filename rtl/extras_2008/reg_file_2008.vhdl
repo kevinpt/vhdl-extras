@@ -37,7 +37,7 @@
 --# DESCRIPTION:
 --#  This package provides a general purpose register file. This version is
 --#  enhanced by a VHDL-2008 package generic that permits the setting of the
---#  register siez without requiring modification to this code.
+--#  register size without requiring modification to this code.
 --#  The implementation in reg_file supports VHDL-93 if tool support for
 --#  VHDL-2008 is not available.
 --#

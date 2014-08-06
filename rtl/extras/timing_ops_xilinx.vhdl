@@ -40,9 +40,9 @@
 --#  can be used to create a clock signal for simulation.
 --#
 --#  Conversions between time and real (time and frequency) are provided.
---#  Functions to convert from time in these three forms to integral
+--#  Functions to convert from time in these three forms to integer
 --#  clock_cycles are also included. The conversion from time to real uses an
---#  integral intermediate representation of time. It is designed to compensate
+--#  integer intermediate representation of time. It is designed to compensate
 --#  for tools that use 64-bit time and 32-bit integers but only 31-bits of
 --#  precision will be maintained in such cases.
 --#

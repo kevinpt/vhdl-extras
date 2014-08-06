@@ -17,7 +17,7 @@ pipelining
 
 `pipelining.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/pipelining.vhdl>`_
 
-Configurable pipeline registers for use with automated retiming during synthesis. This provides a variable length chain of registers that can be placed after a section of combinational logic. When your synthesis tool is configured to enable retiming these registers will be dispersed throughought the combinational logic to reduce the worst case delay. You can tweak the pipeline stages with a simple change in a generic to tune your results.
+Configurable pipeline registers for use with automated retiming during synthesis. This provides a variable length chain of registers that can be placed after a section of combinational logic. When your synthesis tool is configured to enable retiming, these registers will be dispersed throughout the combinational logic to reduce the worst case delay. You can tweak the pipeline stages with a simple change in a generic to tune your results.
 
 .. _sizing:
 
@@ -26,7 +26,7 @@ sizing
 
 `sizing.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras/sizing.vhdl>`_
 
-A set of functions for computing integer logarithms and for determing the size of binary numbers and encodings. Generalized functions for computing floor(log(n, b)) and ceil(log(n, b)) for any base b are provided as well as special purpose convenience functions like bit_size and encoding_size. See the :ref:`bcd_conversion` implementation for a practical example of computing integer logs in base-10 using this package.
+A set of functions for computing integer logarithms and for determining the size of binary numbers and encodings. Generalized functions for computing floor(log(n, b)) and ceil(log(n, b)) for any base b are provided as well as special purpose convenience functions like bit_size and encoding_size. See the :ref:`bcd_conversion` implementation for a practical example of computing integer logs in base-10 using this package.
 
 .. code-block:: vhdl
 
@@ -117,10 +117,10 @@ A CRC specification consists of the following parameters:
   | Reflect_out: Determine bit order of final crc result
 
 A CRC can be computed using a set of three functions `init_crc`, `next_crc`, and `end_crc`.
-All functions are assigned to a common variable/signal that maintans the shift
-register state between succesive calls. After initialization with `init_crc`, data
+All functions are assigned to a common variable/signal that maintains the shift
+register state between successive calls. After initialization with `init_crc`, data
 is processed by repeated calls to `next_crc`. The width of the data vector is
-unconstrained allowing you to process bits in chunks of any desired size. Using
+unconstrained, allowing you to process bits in chunks of any desired size. Using
 a 1-bit array for data is equivalent to a bit-serial CRC implementation. When
 all data has been passed through the CRC it is completed with a call to `end_crc` to
 produce the final CRC value.
@@ -212,7 +212,7 @@ bcd_conversion
 
 This package provides functions and components for performing conversion
 between binary and packed Binary Coded Decimal (BCD). The functions
-to_bcd and to_binary can be used to create synthesizable combinatinal
+to_bcd and to_binary can be used to create synthesizable combinational
 logic for performing a conversion. In synthesized code they are best used
 with shorter arrays comprising only a few digits. For larger numbers, the
 components binary_to_bcd and bcd_to_binary can be used to perform a
@@ -324,7 +324,7 @@ reg_file
 
 `reg_file_2008.vhdl <http://code.google.com/p/vhdl-extras/source/browse/rtl/extras_2008/reg_file_2008.vhdl>`_
 
-This is an implementaiton of a general purpose register file. The VHDL-93 version must be manually customised to set the size of the registers internally. The VHDL-2008 version is fully generic by employing an unconstrained array of unconstrained arrays to implement the registers. In addition to simple read/write registers you can configure individual bits to act as self clearing strobes when written and to read back directly from internal signals rather than from the register contents.
+This is an implementation of a general purpose register file. The VHDL-93 version must be manually customized to set the size of the registers internally. The VHDL-2008 version is fully generic by employing an unconstrained array of unconstrained arrays to implement the registers. In addition to simple read/write registers you can configure individual bits to act as self clearing strobes when written and to read back directly from internal signals rather than from the register contents.
 
 Randomization
 -------------
@@ -367,7 +367,7 @@ LCAR and LFSR packages for synthesizable random generators.
 
 This package makes use of shared variables to keep track of the PRNG
 state more conveniently than calling uniform directly. Because
-VHDL-2002 broke forward compatability of shared variables there are
+VHDL-2002 broke forward compatibility of shared variables there are
 two versions of this package. One (random.vhdl) is for VHDL-93 using
 the classic shared variable mechanism. The other (random_20xx.vhdl)
 is for VHDL-2002 and later using a protected type to manage the

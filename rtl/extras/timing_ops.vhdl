@@ -41,8 +41,8 @@
 --#
 --#  A new physical type 'frequency' is introduced and conversions between time,
 --#  frequency, and real (time and frequency) are provided. Functions to
---#  convert from time in these three forms to integral clock_cycles are also
---#  included. The conversion from time to real uses an integral intermediate
+--#  convert from time in these three forms to integer clock_cycles are also
+--#  included. The conversion from time to real uses an integer intermediate
 --#  representation of time. It is designed to compensate for tools that use
 --#  64-bit time and 32-bit integers but only 31-bits of precision will be
 --#  maintained in such cases.

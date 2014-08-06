@@ -49,7 +49,8 @@
 --#               "Timing Performance". The generic ATTR_REG_BALANCING is
 --#               avaiable on each entity to control the direction of register
 --#               balancing. Valid values are "yes", "no", "forward", and
---#               "backward".
+--#               "backward". If the pipeline stages connect directly to I/O
+--#               then set the strategy to "Performance without IOB packing".
 --#
 --#   Xilinx Vivado: phys_opt_design -retime
 --#

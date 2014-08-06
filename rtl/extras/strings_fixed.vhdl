@@ -121,11 +121,11 @@ package strings_fixed is
   procedure trim( source : inout string; side : in trim_end; justify : in alignment := left;
     pad : in character := ' ' );
 
-  --## Remove all leading characters in left and trailing characters in left
+  --## Remove all leading characters in left and trailing characters in right
   --#  from source
   function trim( source : string; left : character_set; right : character_set ) return string;
 
-  --## Remove all leading characters in left and trailing characters in left
+  --## Remove all leading characters in left and trailing characters in right
   --#  from source
   procedure trim( source : inout string; left : in character_set; right : in character_set;
     justify : in alignment := extras.strings.left; pad : in character := ' ' );
@@ -546,7 +546,7 @@ package body strings_fixed is
     return source(ltrim to rtrim);
   end function;
 
-  --## Remove all leading characters in left and trailing characters in left
+  --## Remove all leading characters in left and trailing characters in right
   --#  from source
   procedure trim( source : inout string; left : in character_set; right : in character_set;
     justify : in alignment := extras.strings.left; pad : in character := ' ' ) is

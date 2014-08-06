@@ -44,7 +44,7 @@
 --#
 --#  These functions can be used in most synthesizers to compute ranges for
 --#  arrays. The core functionality is provided in the ceil_log and
---#  floor_log subprograms. These compute the logarithm in any integral base.
+--#  floor_log subprograms. These compute the logarithm in any integer base.
 --#  For convenenience, base-2 functions are also provided along with the array
 --#  sizing functions.
 --#
@@ -58,17 +58,17 @@
 --------------------------------------------------------------------
 
 package sizing is
-  --## Compute the integeral result of the function floor(log(n)) where b is the base
+  --## Compute the integer result of the function floor(log(n)) where b is the base
   function floor_log(n, b : positive) return natural;
 
-  --## Compute the integral result of the function ceil(log(n)) where b is the base
+  --## Compute the integer result of the function ceil(log(n)) where b is the base
   function ceil_log(n, b : positive) return natural;
 
 
-  --## Compute the integeral result of the function floor(log2(n))
+  --## Compute the integer result of the function floor(log2(n))
   function floor_log2(n : positive) return natural;
 
-  --## Compute the integral result of the function ceil(log2(n))
+  --## Compute the integer result of the function ceil(log2(n))
   function ceil_log2(n : positive) return natural;
 
   --## Compute the total number of bits needed to represent a number in binary
@@ -91,7 +91,7 @@ end package;
 
 package body sizing is
 
-  --## Compute the integeral result of the function floor(log(n)) where b is the base
+  --## Compute the integer result of the function floor(log(n)) where b is the base
   function floor_log(n, b : positive) return natural is
     variable log, residual : natural;
   begin
@@ -106,7 +106,7 @@ package body sizing is
     return log;
   end function;
 
-  --## Compute the integral result of the function ceil(log(n)) where b is the base
+  --## Compute the integer result of the function ceil(log(n)) where b is the base
   function ceil_log(n, b : positive) return natural is
     variable log, residual : natural;
   begin
@@ -123,13 +123,13 @@ package body sizing is
   end function;
 
 
-  --## Compute the integeral result of the function floor(log2(n))
+  --## Compute the integer result of the function floor(log2(n))
   function floor_log2(n : positive) return natural is
   begin
     return floor_log(n, 2);
   end function;
 
-  --## Compute the integral result of the function ceil(log2(n))
+  --## Compute the integer result of the function ceil(log2(n))
   function ceil_log2(n : positive) return natural is
   begin
     return ceil_log(n, 2);

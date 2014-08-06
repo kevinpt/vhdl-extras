@@ -37,7 +37,7 @@
 --# DESCRIPTION:
 --#  This package provides functions and components for performing conversion
 --#  between binary and packed Binary Coded Decimal (BCD). The functions
---#  to_bcd and to_binary can be used to create synthesizable combinatinal
+--#  to_bcd and to_binary can be used to create synthesizable combinational
 --#  logic for performing a conversion. In synthesized code they are best used
 --#  with shorter arrays comprising only a few digits. For larger numbers, the
 --#  components binary_to_bcd and bcd_to_binary can be used to perform a
