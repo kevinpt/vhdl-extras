@@ -74,7 +74,8 @@ begin
     port map (
       Clock => clock,
       Reset => reset,
-    
+      Load_phase => '0',
+      New_phase => "0",
       Increment   => INCREMENT,
       Accumulator => accum,
       Synth_clock => synth_tone,

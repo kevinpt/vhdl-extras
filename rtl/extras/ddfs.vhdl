@@ -123,6 +123,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use ieee.math_real.all;
 
 library extras;
 use extras.sizing.bit_size;
@@ -132,6 +133,9 @@ package ddfs_pkg is
 
   function ddfs_size(sys_freq : real; target_freq : real;
     tolerance : real) return natural;
+
+  function ddfs_tolerance(sys_freq : real; target_freq : real; size : natural)
+    return real;
 
   function ddfs_increment(sys_freq : real; target_freq : real;
     size : natural) return natural;
@@ -157,6 +161,11 @@ package ddfs_pkg is
     size : natural) return real;
 
 
+  function resize_fractional(phase : unsigned; size : positive) return unsigned;
+
+  function radians_to_phase(radians : real; size : positive) return unsigned;
+  function degrees_to_phase(degrees : real; size : positive) return unsigned;
+
   component ddfs is
     generic (
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
@@ -165,7 +174,9 @@ package ddfs_pkg is
       Clock : in std_ulogic;
       Reset : in std_ulogic;
       
-      Enable : in std_ulogic := '1';
+      Enable     : in std_ulogic := '1';
+      Load_phase : in std_ulogic;
+      New_phase  : in unsigned;
 
       Increment : in unsigned;      -- Value controlling the synthesized frequency
 
@@ -215,11 +226,23 @@ package body ddfs_pkg is
   end function;
 
 
+  --## Compute the effective frequency tolerance for a specific size and target
+  --#  frequency.
+  function ddfs_tolerance(sys_freq : real; target_freq : real; size : natural)
+    return real is
+
+    variable tolerance : real;
+  begin
+    tolerance := sys_freq / 2.0**size / target_freq;
+    return tolerance;
+  end function;
+
+
   --## Compute the increment value needed to generate a target frequency
   function ddfs_increment(sys_freq : real; target_freq : real;
     size : natural) return natural is
 
-    constant ACCUM_MAX : real := 2.0**size; --pow2(size);
+    constant ACCUM_MAX : real := 2.0**size;
     constant INC_R : real := target_freq / sys_freq * ACCUM_MAX;
 
   begin
@@ -233,7 +256,7 @@ package body ddfs_pkg is
       report "Increment too large for integer type"
       severity failure;
 
-    assert INC_R <= (2.0**SIZE) - 1.0
+    assert INC_R <= (2.0**size) - 1.0
       report "Increment too large for accumulator"
       severity failure;
 
@@ -259,11 +282,11 @@ package body ddfs_pkg is
       report "Increment too large for integer type"
       severity failure;
 
-    assert INC_R <= (2.0**SIZE) - 1.0
+    assert INC_R <= (2.0**size) - 1.0
       report "Increment too large for accumulator"
       severity failure;
 
-    return to_unsigned(integer(INC_R),SIZE);
+    return to_unsigned(integer(INC_R), size);
 
   end function;
 
@@ -295,12 +318,17 @@ package body ddfs_pkg is
   function ddfs_dynamic_factor(sys_freq : real; size : natural;
     fraction_bits : natural) return natural is
   begin
+    assert fraction_bits < size
+      report "Fraction bits too large: " & integer'image(fraction_bits) &
+        " >= " & integer'image(size)
+      severity error;
+
     return natural((2.0**size / sys_freq) * 2.0**fraction_bits);
   end function;
 
   --## This procedure computes dynamic increment values by multiplying
   --#  the result of a previous call to ddfs_dynamic_factor by the
-  --#  integral target frequency. The result is an integral value with
+  --#  integer target frequency. The result is an integer value with
   --#  fractional bits removed.
   --#  This can be synthesized by invocation within a synchronous
   --#  process.
@@ -347,6 +375,30 @@ package body ddfs_pkg is
        / target_freq - 1.0);
   end function;
 
+
+  function resize_fractional(phase : unsigned; size : positive) return unsigned is
+    alias p: unsigned(phase'length-1 downto 0) is phase;
+    variable result : unsigned(size-1 downto 0) := (others => '0');
+  begin
+    if size <= p'length then
+      result := p(p'high downto p'high-(size-1));
+    else
+      result(result'high downto result'high - p'length + 1) := p;
+    end if;
+
+    return result;
+  end function;
+
+  function radians_to_phase(radians : real; size : positive) return unsigned is
+  begin
+    return to_unsigned(integer(((radians / MATH_2_PI) mod 1.0) * 2.0**size), size);
+  end function;
+
+  function degrees_to_phase(degrees : real; size : positive) return unsigned is
+  begin
+    return to_unsigned(integer(((degrees / 360.0) mod 1.0) * 2.0**size), size);
+  end function;
+
 end package body;
 
 
@@ -354,6 +406,9 @@ end package body;
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+
+library extras;
+use extras.ddfs_pkg.resize_fractional;
 
 entity ddfs is
   generic (
@@ -363,8 +418,10 @@ entity ddfs is
     Clock : in std_ulogic;
     Reset : in std_ulogic;
     
-    Enable : in std_ulogic := '1';
-    
+    Enable     : in std_ulogic := '1';
+    Load_phase : in std_ulogic;
+    New_phase  : in unsigned;
+
     Increment : in unsigned;      -- Value controlling the synthesized frequency
 
     Accumulator : out unsigned;   -- Internal accumulator value
@@ -385,7 +442,9 @@ begin
     if Reset = RESET_ACTIVE_LEVEL then
       accum <= (others => '0');
     elsif rising_edge(Clock) then
-      if Enable = '1' then
+      if Load_phase = '1' then
+        accum <= resize_fractional(New_phase, accum'length);
+      elsif Enable = '1' then
         accum <= accum + Increment;
       end if;
     end if;
