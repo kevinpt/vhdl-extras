@@ -244,6 +244,12 @@ begin
     replace_slice(sb, 4, 5, "ABCD", drop => left);
     assert sb = "2ABCD56789" report "replace_slice 6: unexpected result" severity failure;
 
+    sb := to_bounded_string("0123456789");
+    sb3 := replace_slice(sb, 1, 2, "ABCD", drop => left);
+    assert sb3 = "CD23456789" report "replace_slice 7: unexpected result" severity failure;
+
+    sb3 := replace_slice(sb, 9, 10, "ABCD", drop => right);
+    assert sb3 = "01234567AB" report "replace_slice 8: unexpected result" severity failure;
 
     -- insert
     sb := insert(to_bounded_string("012345"), 1, "ABCD");
@@ -263,6 +269,13 @@ begin
     insert(sb, 4, "ABCD", drop => left);
     assert sb = "BCD3456789" report "insert 5: unsepected result" severity failure;
 
+    sb := to_bounded_string("0123456789");
+    sb3 := insert(sb, 3, "ABCD", drop => left);
+    assert sb3 = "CD23456789" report "insert 6: unsepected result" severity failure;
+
+    sb3 := insert(sb, 9, "ABCD", drop => right);
+    assert sb3 = "01234567AB" report "insert 7: unsepected result" severity failure;
+
     -- overwrite
     sb := overwrite(to_bounded_string("0123456789"), 2, "XYZ");
     assert sb = "0XYZ456789" report "overwrite 1: unexpected result" severity failure;
@@ -277,6 +290,10 @@ begin
     sb := to_bounded_string("0123456789");
     overwrite(sb, 6, "ABCDEF", drop => left);
     assert sb = "1234ABCDEF" report "overwrite 4: unexpected result" severity failure;
+
+    sb := to_bounded_string("0123456789");
+    overwrite(sb, 6, "ABCDEFGHIJKL", drop => left);
+    assert sb = "CDEFGHIJKL" report "overwrite 5: unexpected result" severity failure;
 
     
     -- delete
@@ -293,6 +310,14 @@ begin
     sb := to_bounded_string("0123456789");
     delete(sb, 2, 4);
     assert sb = "0456789" report "delete 4: unexpected result" severity failure;
+
+    sb := to_bounded_string("0123456789");
+    delete(sb, 4, 2);
+    assert sb = "0123456789" report "delete 5: unexpected result" severity failure;
+
+    sb := to_bounded_string("0123456789");
+    delete(sb, 4, 20);
+    assert sb = "012" report "delete 6: unexpected result" severity failure;
 
 
     -- trim
@@ -314,7 +339,7 @@ begin
 
     sb := to_bounded_string("AB01234567");
     trim(sb, to_set("AB"), to_set("Z"));
-    assert sb = "01234567" report "trim 6: unexpected result: " & integer'image(sb.length) severity failure;
+    assert sb = "01234567" report "trim 6: unexpected result" severity failure;
 
 
     -- head

@@ -8,7 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# strings_bounded.vhdl - Bounded length string library
---# $Id:$
+--# $Id$
 --# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
 --#
 --# Copyright © 2014 Kevin Thibedeau
@@ -65,7 +65,7 @@ use extras.strings_maps_constants.all;
 use extras.strings_fixed;
 
 package strings_bounded is
-  generic (MAX : positive);
+  generic (MAX : positive); -- Maximum length of a bounded string
 
   subtype length_range is natural range 0 to MAX;
 
@@ -1218,9 +1218,6 @@ package body strings_bounded is
       report "Strig length error" severity error;
     else
       result.length := l;
-      --for i in 1 to left loop
-      --  result.data(i) := r;
-      --end loop;
       result.data(1 to l) := (others => r);
     end if;
 
