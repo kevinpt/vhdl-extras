@@ -273,3 +273,7 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
             self.run_simulation(entity, update=False, TEST_SEED=self.seed, NUM_REGS=num_regs, \
               STROBE_BIT_MASK_BV=strobe_mask, DIRECT_READ_BIT_MASK_BV=direct_read_mask)
 
+    def test_interrupt_ctl(self):
+        entity = 'test.test_interrupt_ctl'
+        self.run_simulation(entity, TEST_SEED=self.seed)
+
