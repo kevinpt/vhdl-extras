@@ -69,8 +69,8 @@
 --#  XILINX NOTE: This version of timing_ops is needed for synthesis with
 --#  Xilinx XST. The physical type 'frequency' and any associated functions have
 --#  been removed. The standard timing_ops package will work with Xilinx Vivado
---#  and most third party synthesizers when devices so consider using it instead
---#  if XST is not being used.
+--#  and most third party synthesizers so consider using it instead if XST is
+--#  not being used.
 --#
 --# EXAMPLE USAGE:
 --#  library extras; use extras.sizing.bit_size; use extras.timing_ops.all;
@@ -184,9 +184,9 @@ package body timing_ops is
     rval : real;
   end record;
 
-  type time_vector is array( natural range <>) of time_resolution;
+  type time_resolution_array is array( natural range <>) of time_resolution;
 
-  constant BASE_TIME_ARRAY : time_vector := (
+  constant BASE_TIME_ARRAY : time_resolution_array := (
      (1 fs, 1.0e-15),  (10 fs, 1.0e-14),  (100 fs, 1.0e-13),
      (1 ps, 1.0e-12),  (10 ps, 1.0e-11),  (100 ps, 1.0e-10),
      (1 ns, 1.0e-9),   (10 ns, 1.0e-8),   (100 ns, 1.0e-7),
@@ -238,6 +238,9 @@ package body timing_ops is
     variable min_time : time_resolution := resolution_limit;
     variable scale    : positive;
     variable large_time_adj : real := 1.0;
+
+    variable lost_bits : time;
+    variable lost_real : real := 0.0;
   begin
 
     -- We need to work with positive time values.
@@ -258,14 +261,23 @@ package body timing_ops is
         t := t / 2;
         large_time_adj := large_time_adj * 2.0;
       end loop;
-      
+
       -- Note: scale must be at least 1 so we add 1 to guarantee we never call
       -- ceil_log_2(1) when t > [max int time] and t < 2*[max int time].
       scale := ceil_log2(t / (integer'high * min_time.tval) + 1);
+
+      -- The scaling operation drops the least significant bits. IEEE 64-bit float
+      -- Has 53-bits of significand. That leaves 53-31 = 22-bits that are left to
+      -- be filled after converting the scaled integer to real. We capture the truncated
+      -- bits now so that they can be added in the final conversion.
+      lost_bits := t - ((t / 2**scale) * 2**scale);
+      lost_real := real(lost_bits / min_time.tval) * min_time.rval;
+
+      -- Adjust the time scale
       min_time := (min_time.tval * 2**scale, min_time.rval * 2.0**scale);
     end if;
 
-    return real(t / min_time.tval) * min_time.rval * large_time_adj;
+    return real(t / min_time.tval) * min_time.rval * large_time_adj + lost_real;
   end function;
 
   --## Convert real time to time

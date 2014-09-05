@@ -106,12 +106,12 @@ begin
         severity failure;
 
       f2 := to_frequency(to_period(f));
-      assert relatively_equal(f, f2, 0.0001)
+      assert relatively_equal(f, f2, 0.001)
         report "Mismatch in to_frequency[delay_length]: " & frequency'image(f) & " /= " & frequency'image(f2)
         severity failure;
 
       f2 := to_frequency(to_real(to_period(f)));
-      assert relatively_equal(f, f2, 0.0001)
+      assert relatively_equal(f, f2, 0.001)
         report "Mismatch in to_frequency[real]: " & frequency'image(f) & " /= " & frequency'image(f2)
         severity failure;
 
