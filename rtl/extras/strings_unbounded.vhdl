@@ -39,9 +39,9 @@
 --#  strings. This is a clone of the Ada'95 library Ada.Strings.Unbounded. Due
 --#  to the VHDL restriction on using access types as function parameters only
 --#  a limited subset of the Ada library is reproduced. The unbounded strings
---#  are represented by the subtype string_acc which is derived from line to
---#  ease interoperability with std.textio. line and string_acc are of type
---#  access to string. Their contents are dynamically allocated. Because
+--#  are represented by the subtype unbounded_string which is derived from line
+--#  to ease interoperability with std.textio. line and unbounded_string are of
+--#  type access to string. Their contents are dynamically allocated. Because
 --#  operators cannot be provided, a new set of "copy" procedures are included
 --#  to simplify duplication of an existing unbounded string.
 --------------------------------------------------------------------
@@ -55,106 +55,106 @@ use extras.strings_maps.all;
 
 package strings_unbounded is
   -- create a subtype of the textio line type to form a coupling between libraries
-  subtype string_acc is line;
+  subtype unbounded_string is line;
 
-  --## Convert a string to string_acc
-  function to_string_acc( source : string )  return string_acc;
+  --## Convert a string to unbounded_string
+  function to_unbounded_string( source : string )  return unbounded_string;
 
   --## Allocate a string of length
-  function to_string_acc( length : natural ) return string_acc;
+  function to_unbounded_string( length : natural ) return unbounded_string;
 
-  --## Copy a string_acc to the string dest
-  procedure to_string( variable source : in string_acc; dest : out string );
+  --## Copy a unbounded_string to the string dest
+  procedure to_string( variable source : in unbounded_string; dest : out string );
 
-  --## Create an empty string_acc
-  procedure initialize( source : inout string_acc );
+  --## Create an empty unbounded_string
+  procedure initialize( source : inout unbounded_string );
 
   --## Free allocated memory for source
-  procedure free( source : inout string_acc );
+  procedure free( source : inout unbounded_string );
 
-  --## Return the length of a string_acc
-  procedure length( variable source : in string_acc; len : out natural );
+  --## Return the length of a unbounded_string
+  procedure length( variable source : in unbounded_string; len : out natural );
 
   --## Copy at most max characters from source to the unallocated dest
-  procedure copy( variable source : in string_acc; dest : inout string_acc;
+  procedure copy( variable source : in unbounded_string; dest : inout unbounded_string;
     max : in integer := -1 );
 
   --## Copy at most max characters from source to the unallocated dest
-  procedure copy( source : in string; dest : inout string_acc; max : in integer := -1 );
+  procedure copy( source : in string; dest : inout unbounded_string; max : in integer := -1 );
 
-  --## Append string_acc new_item to source
-  procedure append( source : inout string_acc; variable new_item : in string_acc );
+  --## Append unbounded_string new_item to source
+  procedure append( source : inout unbounded_string; variable new_item : in unbounded_string );
 
   --## Append string new_item to source
-  procedure append( source : inout string_acc; new_item : in string );
+  procedure append( source : inout unbounded_string; new_item : in string );
 
   --## Append character new_item to source
-  procedure append( source : inout string_acc; new_item : in character );
+  procedure append( source : inout unbounded_string; new_item : in character );
 
   --## Lookup the character in source at index
-  procedure element( variable source : in string_acc; index : in positive; el : out character );
+  procedure element( variable source : in unbounded_string; index : in positive; el : out character );
 
   --## Replace the character in source at index with by
-  procedure replace_element( source : inout string_acc; index : in positive; by : in character );
+  procedure replace_element( source : inout unbounded_string; index : in positive; by : in character );
 
   --## Extract a slice from source
-  procedure slice( variable source : in string_acc; low : in positive; high : in positive;
-    result : inout string_acc );
+  procedure slice( variable source : in unbounded_string; low : in positive; high : in positive;
+    result : inout unbounded_string );
 
   --## Test if left is identical to right
-  procedure eq( variable left : in string_acc; variable right : in string_acc;
+  procedure eq( variable left : in unbounded_string; variable right : in unbounded_string;
     result : out boolean );
 
   --## Test if left is identical to right
-  procedure eq( variable left : in string_acc; right : in string; result : out boolean );
+  procedure eq( variable left : in unbounded_string; right : in string; result : out boolean );
 
 
   -- Procedures derived from equivalents in strings_fixed:
   -- =====================================================
 
   --## Count the occurances of pattern in source
-  procedure count( variable source : in string_acc; pattern : in string;
+  procedure count( variable source : in unbounded_string; pattern : in string;
     val : out natural );
 
   --## Delete a slice from source. If from is greater than through, source is
   --#  unmodified.
-  procedure delete( source : inout string_acc; from : in positive;
+  procedure delete( source : inout unbounded_string; from : in positive;
     through : in natural );
 
   --## Return the indices of a slice of source that satisfys the membership
   --#  selection for the character set.
-  procedure find_token( variable source : in string_acc; set : in character_set; test : in membership;
+  procedure find_token( variable source : in unbounded_string; set : in character_set; test : in membership;
     first : out positive; last : out natural );
 
   --## Return the first count characters from source
-  procedure head( source : inout string_acc; count : in natural;
+  procedure head( source : inout unbounded_string; count : in natural;
     pad : in character := ' ');
 
   --## Insert the string new_item before the selected index in source
-  procedure insert( source : inout string_acc; before : in positive;
+  procedure insert( source : inout unbounded_string; before : in positive;
     new_item : in string );
 
   --## Overwrite new_item into source starting at the selected position
-  procedure overwrite( source : inout string_acc; position : in positive;
+  procedure overwrite( source : inout unbounded_string; position : in positive;
     new_item : in string );
 
   --## Replace a slice of the source string with the contents of by
-  procedure replace_slice( source : inout string_acc; low : in positive; high : in natural;
+  procedure replace_slice( source : inout unbounded_string; low : in positive; high : in natural;
     by : in string );
 
   --## Return the last count characters from source
-  procedure tail( source : inout string_acc; count : in natural;
+  procedure tail( source : inout unbounded_string; count : in natural;
     pad : in character := ' ' );
 
   --## Convert a source string with the provided character mapping
-  procedure translate( source : inout string_acc; mapping : in character_mapping );
+  procedure translate( source : inout unbounded_string; mapping : in character_mapping );
 
   --## Remove space characters from leading, trailing, or both ends of source
-  procedure trim( source : inout string_acc; side : in trim_end );
+  procedure trim( source : inout unbounded_string; side : in trim_end );
 
   --## Remove all leading characters in left and trailing characters in left
   --#  from source
-  procedure trim( source : inout string_acc; left : in character_set; right : in character_set);
+  procedure trim( source : inout unbounded_string; left : in character_set; right : in character_set);
 
 end package;
 
@@ -164,39 +164,39 @@ use extras.strings_fixed.all;
 
 package body strings_unbounded is
 
-  --## Convert a string to string_acc
-  function to_string_acc( source : string ) return string_acc is
+  --## Convert a string to unbounded_string
+  function to_unbounded_string( source : string ) return unbounded_string is
   begin
     return new string'(source);
   end function;
 
   --## Allocate a string of length
-  function to_string_acc( length : natural ) return string_acc is
+  function to_unbounded_string( length : natural ) return unbounded_string is
   begin
     return new string(1 to length);
   end function;
 
-  --## Copy a string_acc to the string dest
-  procedure to_string( variable source : in string_acc; dest : out string )is
+  --## Copy a unbounded_string to the string dest
+  procedure to_string( variable source : in unbounded_string; dest : out string )is
   begin
     dest := source.all;
   end procedure;
 
-  --## Create an empty string_acc
-  procedure initialize( source : inout string_acc ) is
+  --## Create an empty unbounded_string
+  procedure initialize( source : inout unbounded_string ) is
   begin
     deallocate(source);
     source := new string'("");
   end procedure;
 
   --## Free allocated memory for source
-  procedure free( source : inout string_acc ) is
+  procedure free( source : inout unbounded_string ) is
   begin
     deallocate(source);
   end procedure;
 
-  --## Return the length of a string_acc
-  procedure length( variable source : in string_acc; len : out natural ) is
+  --## Return the length of a unbounded_string
+  procedure length( variable source : in unbounded_string; len : out natural ) is
   begin
     assert source /= null
       report "Null string"
@@ -205,7 +205,7 @@ package body strings_unbounded is
   end procedure;
 
   --## Copy at most max characters from source to the unallocated dest
-  procedure copy( source : in string; dest : inout string_acc; max : in integer := -1 ) is
+  procedure copy( source : in string; dest : inout unbounded_string; max : in integer := -1 ) is
     variable size : positive;
   begin
 
@@ -224,7 +224,7 @@ package body strings_unbounded is
   end procedure;
 
   --## Copy at most max characters from source to the unallocated dest
-  procedure copy( variable source : in string_acc; dest : inout string_acc;
+  procedure copy( variable source : in unbounded_string; dest : inout unbounded_string;
     max : in integer := -1 ) is
 
     variable size : positive;
@@ -248,10 +248,10 @@ package body strings_unbounded is
   end procedure;
 
 
-  --## Append string_acc new_item to source
-  procedure append( source : inout string_acc; variable new_item : in string_acc ) is
+  --## Append unbounded_string new_item to source
+  procedure append( source : inout unbounded_string; variable new_item : in unbounded_string ) is
     variable size : natural;
-    variable sa : string_acc;
+    variable sa : unbounded_string;
   begin
     if source = null or source'length = 0 then -- copy new_item
       if new_item /= null and new_item'length > 0 then
@@ -270,9 +270,9 @@ package body strings_unbounded is
   end procedure;
 
   --## Append string new_item to source
-  procedure append( source : inout string_acc; new_item : in string ) is
+  procedure append( source : inout unbounded_string; new_item : in string ) is
     variable size : natural;
-    variable sa : string_acc;
+    variable sa : unbounded_string;
   begin
     if source = null or source'length = 0 then -- copy new_item
       if new_item'length > 0 then
@@ -291,9 +291,9 @@ package body strings_unbounded is
   end procedure;
 
   --## Append character new_item to source
-  procedure append( source : inout string_acc; new_item : in character ) is
+  procedure append( source : inout unbounded_string; new_item : in character ) is
     variable size : natural;
-    variable sa : string_acc;
+    variable sa : unbounded_string;
   begin
     if source = null or source'length = 0 then -- copy new_item
       sa := new string'("" & new_item);
@@ -310,7 +310,7 @@ package body strings_unbounded is
   end procedure;
 
   --## Lookup the character in source at index
-  procedure element( variable source : in string_acc; index : in positive; el : out character ) is
+  procedure element( variable source : in unbounded_string; index : in positive; el : out character ) is
   begin
     if source = null then
       report "Null string"
@@ -326,7 +326,7 @@ package body strings_unbounded is
   end procedure;
 
   --## Replace the character in source at index with by
-  procedure replace_element( source : inout string_acc; index : in positive; by : in character ) is
+  procedure replace_element( source : inout unbounded_string; index : in positive; by : in character ) is
   begin
     assert source /= null and index <= source'length
       report "Null string or invalid index"
@@ -336,8 +336,8 @@ package body strings_unbounded is
   end procedure;
 
   --## Extract a slice from source
-  procedure slice( variable source : in string_acc; low : in positive; high : in positive;
-    result : inout string_acc ) is
+  procedure slice( variable source : in unbounded_string; low : in positive; high : in positive;
+    result : inout unbounded_string ) is
   begin
     assert source /= null
       report "Null string"
@@ -352,7 +352,7 @@ package body strings_unbounded is
   end procedure;
 
   --## Test if left is identical to right
-  procedure eq( variable left : in string_acc; variable right : in string_acc;
+  procedure eq( variable left : in unbounded_string; variable right : in unbounded_string;
     result : out boolean ) is
   begin
     if left /= null and right /= null then
@@ -365,7 +365,7 @@ package body strings_unbounded is
   end procedure;
 
   --## Test if left is identical to right
-  procedure eq( variable left : in string_acc; right : in string; result : out boolean ) is
+  procedure eq( variable left : in unbounded_string; right : in string; result : out boolean ) is
   begin
     if left /= null then
       result := left.all = right;
@@ -379,7 +379,7 @@ package body strings_unbounded is
   -- =====================================================
 
   --## Count the occurances of pattern in source
-  procedure count( variable source : in string_acc; pattern : in string;
+  procedure count( variable source : in unbounded_string; pattern : in string;
     val : out natural ) is
   begin
     val := count(source.all, pattern);
@@ -387,10 +387,10 @@ package body strings_unbounded is
 
   --## Delete a slice from source. If from is greater than through, source is
   --#  unmodified.
-  procedure delete( source : inout string_acc; from : in positive;
+  procedure delete( source : inout unbounded_string; from : in positive;
     through : in natural ) is
 
-    variable old : string_acc := source;
+    variable old : unbounded_string := source;
   begin
     source := new string'(delete(old.all, from, through));
     deallocate(old);
@@ -398,37 +398,37 @@ package body strings_unbounded is
 
   --## Return the indices of a slice of source that satisfys the membership
   --#  selection for the character set.
-  procedure find_token( variable source : in string_acc; set : in character_set; test : in membership;
+  procedure find_token( variable source : in unbounded_string; set : in character_set; test : in membership;
     first : out positive; last : out natural ) is
   begin
     find_token(source.all, set, test, first, last);
   end procedure;
 
   --## Return the first count characters from source
-  procedure head( source : inout string_acc; count : in natural;
+  procedure head( source : inout unbounded_string; count : in natural;
     pad : in character := ' ') is
 
-    variable old : string_acc := source;
+    variable old : unbounded_string := source;
   begin
     source := new string'(head(old.all, count, pad));
     deallocate(old);
   end procedure;
 
   --## Insert the string new_item before the selected index in source
-  procedure insert( source : inout string_acc; before : in positive;
+  procedure insert( source : inout unbounded_string; before : in positive;
     new_item : in string ) is
 
-    variable old : string_acc := source;
+    variable old : unbounded_string := source;
   begin
     source := new string'(insert(old.all, before, new_item));
     deallocate(old);
   end procedure;
 
   --## Overwrite new_item into source starting at the selected position
-  procedure overwrite( source : inout string_acc; position : in positive;
+  procedure overwrite( source : inout unbounded_string; position : in positive;
     new_item : in string ) is
 
-    variable old : string_acc := source;
+    variable old : unbounded_string := source;
   begin
 
     if position <= source'length - new_item'length + 1 then
@@ -441,34 +441,34 @@ package body strings_unbounded is
   end procedure;
 
   --## Replace a slice of the source string with the contents of by
-  procedure replace_slice( source : inout string_acc; low : in positive; high : in natural;
+  procedure replace_slice( source : inout unbounded_string; low : in positive; high : in natural;
     by : in string ) is
 
-    variable old : string_acc := source;
+    variable old : unbounded_string := source;
   begin
     source := new string'(replace_slice(old.all, low, high, by));
     deallocate(old);
   end procedure;
 
   --## Return the last count characters from source
-  procedure tail( source : inout string_acc; count : in natural;
+  procedure tail( source : inout unbounded_string; count : in natural;
     pad : in character := ' ' ) is
 
-    variable old : string_acc := source;
+    variable old : unbounded_string := source;
   begin
     source := new string'(tail(old.all, count, pad));
     deallocate(old);
   end procedure;
 
   --## Convert a source string with the provided character mapping
-  procedure translate( source : inout string_acc; mapping : in character_mapping ) is
+  procedure translate( source : inout unbounded_string; mapping : in character_mapping ) is
   begin
     translate(source.all, mapping);
   end procedure;
 
   --## Remove space characters from leading, trailing, or both ends of source
-  procedure trim( source : inout string_acc; side : in trim_end ) is
-    variable old : string_acc := source;
+  procedure trim( source : inout unbounded_string; side : in trim_end ) is
+    variable old : unbounded_string := source;
   begin
     source := new string'(trim(old.all, side));
     deallocate(old);
@@ -477,8 +477,8 @@ package body strings_unbounded is
 
   --## Remove all leading characters in left and trailing characters in left
   --#  from source
-  procedure trim( source : inout string_acc; left : in character_set; right : in character_set) is
-    variable old : string_acc := source;
+  procedure trim( source : inout unbounded_string; left : in character_set; right : in character_set) is
+    variable old : unbounded_string := source;
   begin
     source := new string'(trim(old.all, left, right));
     deallocate(old);

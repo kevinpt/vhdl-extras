@@ -44,7 +44,7 @@
 --# EXAMPLE USAGE:
 --#    variable buf    : text_buffer;
 --#    variable at_end : boolean;
---#    variable tl     : string_acc;
+--#    variable tl     : unbounded_string;
 --#
 --#    -- Add lines of text to a buffer
 --#    append("First line", buf);
@@ -73,7 +73,7 @@ package text_buffering is
   type buffer_line_acc is access buffer_line;
 
   type buffer_line is record
-    s : string_acc;
+    s : unbounded_string;
     succ : buffer_line_acc;
   end record;
 
@@ -100,7 +100,7 @@ package text_buffering is
 
 
   --## Append a string to a buffer
-  procedure append( variable one_line : in string_acc; buf : inout text_buffer );
+  procedure append( variable one_line : in unbounded_string; buf : inout text_buffer );
 
 
   --## Append a string to a buffer
@@ -115,7 +115,7 @@ package text_buffering is
 
 
   --## Retrieve the current line from a buffer
-  procedure nextline( buf : inout text_buffer; tl : inout string_acc );
+  procedure nextline( buf : inout text_buffer; tl : inout unbounded_string );
 
   --## Move to a specific line in the buffer
   procedure setline( buf : inout text_buffer; n : in positive );
@@ -134,7 +134,7 @@ package body text_buffering is
 
   --## Load a text file object into a buffer
   procedure load_buffer( file fh : text; buf : out text_buffer ) is
-    variable tl : string_acc;
+    variable tl : unbounded_string;
     variable cur, succ : buffer_line_acc;
     variable tb : text_buffer;
   begin
@@ -218,7 +218,7 @@ package body text_buffering is
 
 
   --## Append a string to a buffer
-  procedure append( variable one_line : in string_acc; buf : inout text_buffer ) is
+  procedure append( variable one_line : in unbounded_string; buf : inout text_buffer ) is
   begin
     if buf.buf_tail /= null then
       buf.buf_tail.succ := new buffer_line;
@@ -239,9 +239,9 @@ package body text_buffering is
 
   --## Append a string to a buffer
   procedure append( one_line : in string; buf : inout text_buffer ) is
-    variable sa : string_acc;
+    variable sa : unbounded_string;
   begin
-    sa := to_string_acc(one_line);
+    sa := to_unbounded_string(one_line);
     append(sa, buf);
   end procedure;
 
@@ -249,7 +249,7 @@ package body text_buffering is
   --## Write a buffer to a text file object
   procedure write( file fh : text; variable buf : in text_buffer ) is
     variable cur : buffer_line_acc;
-    variable ln : string_acc;
+    variable ln : unbounded_string;
   begin
     cur := buf.buf;
     while cur /= null loop
@@ -278,7 +278,7 @@ package body text_buffering is
 
 
   --## Retrieve the current line from a buffer
-  procedure nextline( buf : inout text_buffer; tl : inout string_acc ) is
+  procedure nextline( buf : inout text_buffer; tl : inout unbounded_string ) is
   begin
     if buf.buf /= null and buf.cur_line /= null then
       tl := new string'(buf.cur_line.s.all);

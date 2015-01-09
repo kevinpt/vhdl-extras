@@ -16,17 +16,17 @@ begin
     variable tb, tb2 : text_buffer;
     file fh : text;
     constant fname : string := "test/test-output/test_text_buffering.txt";
-    variable sa, sa2 : string_acc;
+    variable sa, sa2 : unbounded_string;
     variable at_end : boolean;
   begin
 
-    sa := to_string_acc("Line 1");
+    sa := to_unbounded_string("Line 1");
     append(sa, tb);
 
-    sa := to_string_acc("Line 2");
+    sa := to_unbounded_string("Line 2");
     append(sa, tb);
 
-    --sa := to_string_acc("Line 3");
+    --sa := to_unbounded_string("Line 3");
     --append(sa, tb);
     append("Line 3", tb);
 
