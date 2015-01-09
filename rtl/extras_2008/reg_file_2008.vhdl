@@ -37,8 +37,8 @@
 --# DESCRIPTION:
 --#  This package provides a general purpose register file. This version is
 --#  enhanced by a VHDL-2008 package generic that permits the setting of the
---#  register size without requiring modification to this code.
---#  The implementation in reg_file supports VHDL-93 if tool support for
+--#  register width without requiring modification to this code.
+--#  The implementation in reg_file.vhdl supports VHDL-93 if tool support for
 --#  VHDL-2008 is not available.
 --#
 --#  The register file provides an addressable read write port for external
@@ -157,7 +157,7 @@ package reg_file_pkg is
 
       -- Addressable external control port
       Reg_sel : in  unsigned;           -- Register address for write and read 
-      We      : in  std_ulogic;         -- Write to relected register
+      We      : in  std_ulogic;         -- Write to selected register
       Wr_data : in  reg_word;           -- Write port
       Rd_data : out reg_word;           -- Read port
 
@@ -195,7 +195,7 @@ entity reg_file is
 
     -- Addressable external control port
     Reg_sel : in  unsigned;           -- Register address for write and read 
-    We      : in  std_ulogic;         -- Write to relected register
+    We      : in  std_ulogic;         -- Write to selected register
     Wr_data : in  reg_word;           -- Write port
     Rd_data : out reg_word;           -- Read port
 

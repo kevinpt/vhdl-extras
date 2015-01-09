@@ -281,7 +281,7 @@ package body timing_ops is
     -- Make adjustment to min_time values to avoid overflow upon conversion
     -- from time to integer. This takes care of simulators with 64-bit time and
     -- 32-bit integers.
-    if t > (integer'high * min_time.tval) then -- too large for direct conversion
+    if t > (integer'high * min_time.tval) then -- Too large for direct conversion
 
       -- We need to keep the output of ceil_log2 at or below 30 to get working
       -- integer exponentiation on 32-bit platforms. This requires t to be no
@@ -295,10 +295,11 @@ package body timing_ops is
       -- ceil_log_2(1) when t > [max int time] and t < 2*[max int time].
       scale := ceil_log2(t / (integer'high * min_time.tval) + 1);
 
-      -- The scaling operation drops the least significant bits. IEEE 64-bit float
-      -- Has 53-bits of significand. That leaves 53-31 = 22-bits that are left to
-      -- be filled after converting the scaled integer to real. We capture the truncated
-      -- bits now so that they can be added in the final conversion.
+      -- The scaling operation drops the least significant bits. IEEE 64-bit
+      -- float has 53-bits of significand. That leaves 53-31 = 22-bits that
+      -- are left to be filled after converting the scaled integer to real. We
+      -- capture the truncated bits now so that they can be added in the final
+      -- conversion.
       lost_bits := t - ((t / 2**scale) * 2**scale);
       lost_real := real(lost_bits / min_time.tval) * min_time.rval;
 

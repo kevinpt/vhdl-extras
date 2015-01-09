@@ -36,10 +36,11 @@
 --#
 --# DESCRIPTION:
 --#  This package provides a general purpose register file. This version is
---#  implemented in VHDL-93 syntax. This source must be modified to alter the
---#  size of the reg_word type if a register size other than 16-bits is needed.
---#  The implementation in reg_file_2008 is more flexible if tool support for
---#  VHDL-2008 is available.
+--#  implemented in VHDL-93 syntax and the register width is fixed at 16-bits
+--#  by default. This source must be modified to alter the size of the
+--#  reg_word type if a register size other than 16-bits is needed. The
+--#  implementation in reg_file_2008 uses a generic package to avoid this if
+--#  tool support for VHDL-2008 is available.
 --#
 --#  The register file provides an addressable read write port for external
 --#  access as well as a set of signals that allow simultaneous access to
@@ -135,7 +136,9 @@ use ieee.numeric_std.all;
 
 package reg_file_pkg is
 
+  -- ******************************************************************
   -- Redefine this subtype as needed to suit the required register size
+  -- ******************************************************************
   subtype reg_word is std_ulogic_vector(15 downto 0);
 
   type reg_array is array(natural range <>) of reg_word;
@@ -156,7 +159,7 @@ package reg_file_pkg is
 
       -- Addressable external control port
       Reg_sel : in  unsigned;           -- Register address for write and read 
-      We      : in  std_ulogic;         -- Write to relected register
+      We      : in  std_ulogic;         -- Write to selected register
       Wr_data : in  reg_word;           -- Write port
       Rd_data : out reg_word;           -- Read port
 
@@ -192,7 +195,7 @@ entity reg_file is
 
     -- Addressable external control port
     Reg_sel : in  unsigned;           -- Register address for write and read 
-    We      : in  std_ulogic;         -- Write to relected register
+    We      : in  std_ulogic;         -- Write to selected register
     Wr_data : in  reg_word;           -- Write port
     Rd_data : out reg_word;           -- Read port
 
