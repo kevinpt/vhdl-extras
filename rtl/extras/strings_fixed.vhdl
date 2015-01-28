@@ -150,6 +150,9 @@ package strings_fixed is
   --## Replicate a string left number of times
   function "*" ( left : natural; right : string ) return string;
 
+  --## Compute hash value of a string
+  function hash( key : string ) return natural;
+
 end package;
 
 
@@ -615,6 +618,18 @@ package body strings_fixed is
     else
       return "";
     end if;
+  end function;
+
+  --## Compute hash value of a string
+  function hash( key : string ) return natural is
+    variable h : natural := 5381;
+  begin
+    -- Hash using djb2 algorithm (slightly modified using mod 2**31-1)
+    for i in key'range loop
+      h := (h * 33 + character'pos(key(i))) mod natural'high;
+    end loop;
+
+    return h;
   end function;
 
 end package body;
