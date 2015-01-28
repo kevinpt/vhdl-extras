@@ -243,6 +243,7 @@ package body text_buffering is
   begin
     sa := to_unbounded_string(one_line);
     append(sa, buf);
+    free(sa);
   end procedure;
 
 
