@@ -206,7 +206,8 @@ package body strings_unbounded is
 
   --## Copy at most max characters from source to the unallocated dest
   procedure copy( source : in string; dest : inout unbounded_string; max : in integer := -1 ) is
-    variable size : positive;
+    variable size : natural;
+    alias src : string(1 to source'length) is source;
   begin
 
     if max >= 0 and max <= source'length then
@@ -218,7 +219,7 @@ package body strings_unbounded is
     if size = 0 then
       dest := new string'("");
     else
-      dest := new string'(source(1 to size));
+      dest := new string'(src(1 to size));
     end if;
 
   end procedure;
@@ -227,7 +228,8 @@ package body strings_unbounded is
   procedure copy( variable source : in unbounded_string; dest : inout unbounded_string;
     max : in integer := -1 ) is
 
-    variable size : positive;
+    variable size : natural;
+
   begin
     assert source /= null
       report "Null string"
@@ -242,7 +244,7 @@ package body strings_unbounded is
     if size = 0 then
       dest := new string'("");
     else
-      dest := new string'(source(1 to size));
+      dest := new string'(source(source'low to source'low + size - 1));
     end if;
 
   end procedure;
@@ -262,8 +264,9 @@ package body strings_unbounded is
     elsif new_item /= null and new_item'length > 0 then
       size := source'length + new_item'length;
       sa := new string(1 to size);
-      sa(source'range) := source.all;
-      sa(source'high+1 to size) := new_item.all;
+      sa(1 to source'length) := source.all;
+      sa(source'length+1 to size) := new_item.all;
+
       deallocate(source);
       source := sa;
     end if;
@@ -283,12 +286,13 @@ package body strings_unbounded is
     elsif new_item'length > 0 then
       size := source'length + new_item'length;
       sa := new string(1 to size);
-      sa(source'range) := source.all;
-      sa(source'high+1 to size) := new_item;
+      sa(1 to source'length) := source.all;
+      sa(source'length+1 to size) := new_item;
       deallocate(source);
       source := sa;
     end if;
   end procedure;
+
 
   --## Append character new_item to source
   procedure append( source : inout unbounded_string; new_item : in character ) is
@@ -302,7 +306,7 @@ package body strings_unbounded is
     else
       size := source'length + 1;
       sa := new string(1 to size);
-      sa(source'range) := source.all;
+      sa(1 to source'length) := source.all;
       sa(size) := new_item;
       deallocate(source);
       source := sa;
