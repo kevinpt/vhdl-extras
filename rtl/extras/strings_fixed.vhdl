@@ -11,7 +11,7 @@
 --# $Id$
 --# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
 --#
---# Copyright © 2010 Kevin Thibedeau
+--# Copyright © 2010, 2015 Kevin Thibedeau
 --# (kevin 'period' thibedeau 'at' gmail 'punto' com)
 --#
 --# Permission is hereby granted, free of charge, to any person obtaining a
@@ -71,7 +71,7 @@ package strings_fixed is
   --## Count the occurrences of characters from set in source
   function count( source : string; set : character_set ) return natural;
 
-  --## Return the indices of a slice of source that satisfys the membership
+  --## Return the indices of a slice of source that satisfies the membership
   --#  selection for the character set.
   procedure find_token( source : in string; set : in character_set; test : in membership;
     first : out positive; last : out natural );
@@ -354,7 +354,7 @@ package body strings_fixed is
   end function;
 
 
-  --## Return the indices of a slice of source that satisfys the membership
+  --## Return the indices of a slice of source that satisfies the membership
   --#  selection for the character set.
   procedure find_token( source : in string; set : in character_set; test : in membership;
     first : out positive; last : out natural ) is
