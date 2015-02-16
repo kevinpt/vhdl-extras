@@ -85,26 +85,32 @@
 --#
 --#  A table of coefficients for maximal length polynomials covering 2 to
 --#  100-bit LFSRs is provided in LFSR_COEFF_TABLE. You can use these to
---#  generate a tap_map signal with the to_tap_map function or you can provide
---#  any other set of coefficients. Since tap_map is a signal it is possible to
---#  switch coefficient sets in the middle of operation if desired.
+--#  generate a tap_map signal with the lfsr_taps() function. You can build a
+--#  tap_map for any arbitrary set of coefficients with the to_tap_map()
+--#  function. Since tap_map is a signal it is possible to switch coefficient
+--#  sets in the middle of operation if desired. If you implement it as a
+--#  constant the LFSR will have it's logic reduced to the optimal form in
+--#  synthesis.
 --#
---#  All implementations have an INIT_ZERO generic that can be used to start
---#  an LFSR in the all 0's state. For the basic implementations this
---#  inverts the logic and the output bit streams. The initial state switches
---#  from all 1's to all 0's and XORs are replaced with XNORs. The all 1's
---#  state becomes unreachable for maximal length polynomials when INIT_ZERO is
---#  true. For the complete implementations only the initial reset value is
---#  changed as they can recover from an all 0's state with their existing
---#  logic.
+--#  In addition to the LFSR functions, a pair of components (fibonacci_lfsr
+--#  and galois_lfsr) are available for use outside of a process. All
+--#  implementations have an INIT_ZERO generic that can be used to start
+--#  an LFSR in the all 0's state and set the Kind to 'inverted'. When true the
+--#  initial state switches from all 1's to all 0's and XORs are replaced with
+--#  XNORs. The FULL_CYCLE generic activates the full cycle option described
+--#  above.
 --#
 --# EXAMPLE USAGE:
 --#    signal state, statec : std_ulogic_vector(1 to 8);
+--#
+--#    -- Get predefined maximal length polynomial
 --#    constant TAP_MAP : std_ulogic_vector(1 to state'length-1) :=
 --#      lfsr_taps(state'length);
 --#    ...
+--#    -- Implement LFSR in a process
 --#    state <= next_galois_lfsr(state, TAP_MAP, inverted, Full_cycle => true);
 --#    ...
+--#    -- Implement LFSR as a component
 --#    gl: galois_lfsr
 --#      generic map (
 --#        INIT_ZERO  => true,
