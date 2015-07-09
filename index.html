@@ -1,0 +1,395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>VHDL-extras library documentation &mdash; VHDL-extras 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/project.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href='http://fonts.googleapis.com/css?family=Kreon:400,300,700' rel='stylesheet' type='text/css'>
+
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="rst/packages.html" title="VHDL-extras packages"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">VHDL-extras 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="vhdl-extras-library-documentation">
+<h1>VHDL-extras library documentation<a class="headerlink" href="#vhdl-extras-library-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This library provides some &#8220;extra&#8221; bits of code that are not found in the standard VHDL libraries. With VHDL-extras you can create designs that will resize to varying data widths, compute with time, frequency, and clock cycles, include error correction, and many more commonly encountered issues in digital logic design. These packages can be used for logic simulations and, in most cases, can be synthesized to hardware with an FPGA or ASIC target.</p>
+<p>All of the packages are designed to work with VHDL-93. Alternate packages supporting newer VHDL standards are provided where new language features provide enhanced functionality or where forward compatibility is broken. The core code should work in most VHDL-93 compliant tools. In one instance with the <a class="reference internal" href="rst/packages.html#timing-ops"><em>timing_ops</em></a> package, a simplified Xilinx specific implementation is provided because of limitations with the XST synthesizer (fixed in Vivado).</p>
+</div>
+<div class="section" id="requirements">
+<h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h1>
+<p>You can use the VHDL-extras library files piecemeal with no tools other than the simulator or synthesizer you will process them with. If you wish to use the provided Modelsim build scripts you will need Modelsim, Python 2.x, sed, grep, and GNU make. To run the test suite you will need Python 2.7 and Modelsim. See the sections on <a class="reference internal" href="#installation"><em>Installation</em></a> and <a class="reference internal" href="#testing"><em>Testing</em></a> for more information on setting up the VHDL-extras library. You can get optional colorized output from the build and test scripts by installing the Python colorama package.</p>
+</div>
+<div class="section" id="the-code">
+<h1>The Code<a class="headerlink" href="#the-code" title="Permalink to this headline">¶</a></h1>
+<p>The VHDL-extras library contains the following packages:</p>
+<ul>
+<li><p class="first">Core packages</p>
+<blockquote>
+<div><p><a class="reference internal" href="rst/packages.html#pipelining"><em>pipelining</em></a> &#8211; Pipeline registers</p>
+<p><a class="reference internal" href="rst/packages.html#sizing"><em>sizing</em></a> &#8211; Generalized integer logarithms and array size computation</p>
+<p><a class="reference internal" href="rst/packages.html#synchronizing"><em>synchronizing</em></a> &#8211; Clock domain synchronizing components</p>
+<p><a class="reference internal" href="rst/packages.html#timing-ops"><em>timing_ops</em></a> &#8211; Conversions for time, frequency, and clock cycles</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Error handling</dt>
+<dd><p class="first"><a class="reference internal" href="rst/packages.html#crc-ops"><em>crc_ops</em></a> &#8211; Compute CRCs</p>
+<p><a class="reference internal" href="rst/packages.html#hamming-edac"><em>hamming_edac</em></a> &#8211; Generalized Hamming error correction encoding and decoding</p>
+<p><a class="reference internal" href="rst/packages.html#parity-ops"><em>parity_ops</em></a> &#8211; Basic parity operations</p>
+<p class="last"><a class="reference internal" href="rst/packages.html#secded-edac"><em>secded_edac</em></a> &#8211; Hamming extension with double-error detection</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Encoding</dt>
+<dd><p class="first"><a class="reference internal" href="rst/packages.html#bcd-conversion"><em>bcd_conversion</em></a> &#8211; Encode and decode packed Binary Coded Decimal</p>
+<p><a class="reference internal" href="rst/packages.html#gray-code"><em>gray_code</em></a> &#8211; Encode and decode Gray code</p>
+<p class="last"><a class="reference internal" href="rst/packages.html#muxing"><em>muxing</em></a> &#8211; Decoder and muxing operations</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Memories</dt>
+<dd><p class="first"><a class="reference internal" href="rst/packages.html#fifos"><em>fifos</em></a> &#8211; General purpose FIFOs</p>
+<p><a class="reference internal" href="rst/packages.html#memory"><em>memory</em></a> &#8211; Synthesizable memories</p>
+<p class="last"><a class="reference internal" href="rst/packages.html#reg-file"><em>reg_file</em></a> &#8211; General purpose register file</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Randomization</dt>
+<dd><p class="first"><a class="reference internal" href="rst/packages.html#lcar-ops"><em>lcar_ops</em></a> &#8211; Linear Cellular Automata</p>
+<p><a class="reference internal" href="rst/packages.html#lfsr-ops"><em>lfsr_ops</em></a> &#8211; Linear Feedback Shift Registers</p>
+<p class="last"><a class="reference internal" href="rst/packages.html#random"><em>random</em></a> &#8211; Simulation-only random number generation</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>String and character handling</dt>
+<dd><p class="first"><a class="reference internal" href="rst/packages.html#characters-handling"><em>characters_handling</em></a> &#8211; Character class identification and case conversions</p>
+<p><a class="reference internal" href="rst/packages.html#strings-fixed"><em>strings_fixed</em></a> &#8211; Operations on fixed length strings</p>
+<p><a class="reference internal" href="rst/packages.html#strings-maps"><em>strings_maps</em></a> &#8211; Mapping character sets</p>
+<p class="last"><a class="reference internal" href="rst/packages.html#strings-unbounded"><em>strings_unbounded</em></a> &#8211; Operations on unbounded strings</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Miscellaneous</p>
+<blockquote>
+<div><p><a class="reference internal" href="rst/packages.html#binaryio"><em>binaryio</em></a> &#8211; Binary file I/O</p>
+<p><a class="reference internal" href="rst/packages.html#text-buffering"><em>text_buffering</em></a> &#8211; Store text files in internal buffers</p>
+<p><a class="reference internal" href="rst/packages.html#ddfs"><em>ddfs</em></a> &#8211; Direct Digital Frequency Synthesizer</p>
+<p><a class="reference internal" href="rst/packages.html#glitch-filtering"><em>glitch_filtering</em></a> &#8211; Clean up noisy inputs</p>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="installation">
+<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>The library consists of a number of VHDL files and associated test code. No special installation is necessary. It is possible to simply take the portions of the library needed in a design and compile or synthesize them as necessary with your development tools.</p>
+<p>Some packages are dependent on other parts of the library and expect to find them mapped onto the &#8220;extras&#8221; logical library. How you define such a library is tool dependent. In general if you have issues with library mapping check to make sure that the VHDL-extras packages are <em>not</em> mapped to the default &#8220;work&#8221; library.</p>
+<p>A makefile and Python scripted build system has been included to facilitate use with Modelsim. The build scripts will create a standalone Modelsim library that can be referenced from other designs without needing recompilation.</p>
+<p>To run the build scripts you must first ensure that the <cite>MGC_WD</cite> environment variable is set to the current path where you extracted the root of the VHDL-extras distribution. You will also need to ensure that the Modelsim binaries (<cite>vmap</cite>, <cite>vlib</cite>, and <cite>vcom</cite>) are in your <cite>PATH</cite> environment variable. A Bourne shell script (<a class="reference external" href="http://code.google.com/p/vhdl-extras/source/browse/start_proj.sh">start_proj.sh</a>) is provided to perform this setup. You can source it into the current shell with the following:</p>
+<div class="highlight-sh"><div class="highlight"><pre>&gt; . start_proj.sh
+</pre></div>
+</div>
+<p>This will take care of setting MGC_WD, generate a default <cite>modelsim.ini</cite> file, and run a Python script to alter its default library mapping.</p>
+<p>You can verify Modelsim is setup correctly by running the <cite>vmap</cite> command:</p>
+<div class="highlight-sh"><div class="highlight"><pre>&gt; vmap
+Reading &lt;VHDL-extras base&gt;/modelsim.ini
+<span class="s2">&quot;std&quot;</span> maps to directory &lt;modelsim base&gt;/../std.
+<span class="s2">&quot;ieee&quot;</span> maps to directory &lt;modelsim base&gt;/../ieee.
+<span class="s2">&quot;vital2000&quot;</span> maps to directory &lt;modelsim base&gt;/../vital2000.
+<span class="s2">&quot;modelsim_lib&quot;</span> maps to directory &lt;modelsim base&gt;/../modelsim_lib.
+Reading &lt;VHDL-extras base&gt;/modelsim.map
+<span class="s2">&quot;test&quot;</span> maps to directory &lt;VHDL-extras base&gt;/build/lib/test.
+<span class="s2">&quot;extras&quot;</span> maps to directory &lt;VHDL-extras base&gt;/vhdl-extras/build/lib/extras.
+<span class="s2">&quot;test_2008&quot;</span> maps to directory &lt;VHDL-extras base&gt;/vhdl-extras/build/lib/test_2008.
+<span class="s2">&quot;extras_2008&quot;</span> maps to directory &lt;VHDL-extras base&gt;/vhdl-extras/build/lib/extras_2008.
+</pre></div>
+</div>
+<p>You should see a mapping for the &#8220;extras&#8221; and &#8220;extras_2008&#8221; libraries.</p>
+<p>After that is complete, start the build process by running GNU make:</p>
+<div class="highlight-sh"><div class="highlight"><pre>&gt; make
+</pre></div>
+</div>
+<p>The makefile prepares a <cite>build</cite> directory with Modelsim libraries and scans the source code for dependency information. The end result is a compiled Modelsim library located in <cite>build/lib/extras</cite> that you can reference from other Modelsim projects. It will also compile the VHDL portions of the test suite located in <cite>build/lib/test</cite>.</p>
+</div>
+<div class="section" id="testing">
+<span id="id2"></span><h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
+<p>A unit test suite is provided to verify the library is correct. It depends on the built-in Python 2.7  unittest library with automatic test discovery and Modelsim. After building the library according to the installation instructions you can run the test suite with the following command:</p>
+<div class="highlight-sh"><div class="highlight"><pre>&gt; python -m unittest discover
+</pre></div>
+</div>
+<p>This will run the Python test suite defined in the <cite>test</cite> directory which will launch Modelsim simulations and validate the library. The output of each test case is recorded in <cite>test/test-output</cite>.</p>
+</div>
+<div class="section" id="using-the-library">
+<h1>Using the library<a class="headerlink" href="#using-the-library" title="Permalink to this headline">¶</a></h1>
+<p>You will need to be aware of any library mappings required to use the
+VHDL-extras packages. Those packages lacking any dependencies may be used
+directly without any additional steps necessary. The remaining packages
+with dependencies on other portions of the VHDL-extras library need their
+dependencies mapped into a new &#8220;extras&#8221; library rather than the default
+&#8220;work&#8221; library. Consult your tool documentation on how to accomplish
+this. The installation scripts take care of this when using Modelsim.</p>
+<p>Each file provides a package of publicly accessible types, constants,
+subprograms, and components. Once the &#8220;extras&#8221; library has been mapped
+you can access a package with the following code:</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">library</span> <span class="nn">extras</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">extras.</span><span class="o">&lt;</span><span class="n">package_name</span><span class="o">&gt;</span><span class="p">.</span><span class="k">all</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Most of the packages employ parameterization through the use of unbounded
+arrays in subprogram parameter lists and entity ports. You control the
+size of the logic with the signals and variables connected to these
+interfaces. In some cases there are implied size relationships between
+various input and output arrays that must be observed to produce correct
+results. These will usually be verified by assertions but may be missed
+if no attempt is made to simulate a design before synthesis.</p>
+<p>All components are designed to use asynchronous resets. The active level
+of the reset is controlled with the <cite>RESET_ACTIVE_LEVEL</cite> generic on each
+component. It defaults to <cite>&#8216;1&#8217;</cite> meaning the reset will be active-high. Set
+it to <cite>&#8216;0&#8217;</cite> if you want to use active-low resets in a design. You should ensure
+that the asynchronous resets in your design are released synchronously to prevent
+spurious setup and hold violations when coming out of reset.</p>
+<p>Most but not all of these packages are usable for synthesis. All of the
+code in the <cite>extras</cite> library is written in conformance to the VHDL-93 standard.
+Various synthesis tools may differ in their support for the language
+constructs used within VHDL-extras. For Synopsys Design Compiler you will
+need to activate the newer presto VHDL compiler if it isn&#8217;t set as the
+default.</p>
+<p>Some of the code is available as enhanced implementations that take
+advantage of features provided by newer versions of VHDL. These packages
+are provided in the extras_2008 library. Files that are VHDL-2000 compliant
+have a &#8220;_20xx&#8221; suffix while VHDL-2008 specific code has a &#8220;_2008&#8221; suffix.
+The Modelsim build script compiles all of these files in 2008 mode. You will
+have to manually build anything you want in 2000 (or 2002) mode.</p>
+<p>In this library, the unresolved <cite>std_ulogic</cite> and <cite>std_ulogic_vector</cite> types are
+preferentially used in favor of <cite>std_logic</cite> and <cite>std_logic_vector</cite>. Driver
+resolution isn&#8217;t needed in most cases and using the unresolved types adds an
+extra level of assurance to a design by preventing accidental connections of
+multiple signal drivers. Using these types can require a little extra work with
+type conversions and consequently most resources for VHDL avoid demonstrating
+their use. Since <cite>std_logic</cite> is a subtype and closely related to <cite>std_ulogic</cite>
+you can freely interchange signals of those types but the same is not the case
+for the arrays <cite>std_ulogic_vector</cite> and <cite>std_logic_vector</cite>. For these, you will
+have to employ explicit type conversions with implementations of the language
+before VHDL-2008. The 2008 standard revised the library to define
+<cite>std_logic_vector</cite> as a resolved subtype of <cite>std_ulogic_vector</cite> rather than
+an independent type. With tools that support VHDL-2008 you will be able
+to interchange these array types without calling conversion functions. This
+library employs <cite>std_ulogic_vector</cite> for non-numeric arrays in anticipation
+of wider adoption of the latest standard.</p>
+</div>
+<div class="section" id="licensing">
+<h1>Licensing<a class="headerlink" href="#licensing" title="Permalink to this headline">¶</a></h1>
+<p>The VHDL-extras library is licensed for free commercial and non-commercial use under the terms of the MIT license.</p>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rst/packages.html">VHDL-extras packages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rst/packages.html#core-packages">Core Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/packages.html#error-handling">Error handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/packages.html#encoding">Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/packages.html#memories">Memories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/packages.html#randomization">Randomization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/packages.html#string-and-character-handling">String and character handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/packages.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/vhdl-extras-sm.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="#">VHDL-extras</a></h1>
+
+
+
+<p class="blurb">Flexible VHDL library</p>
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="rst/packages.html"
+                        title="next chapter">VHDL-extras packages</a></p>
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">VHDL-extras library documentation</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#the-code">The Code</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#using-the-library">Using the library</a></li>
+<li><a class="reference internal" href="#licensing">Licensing</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+<h3>Other projects</h3>
+
+<div id="proj_list">
+<p>
+<a href="http://kevinpt.github.io/opbasm/">Opbasm</a><br>
+<a href="http://kevinpt.github.io/ripyl/">Ripyl</a><br>
+<a href="http://code.google.com/p/vertcl">Vertcl</a><br>
+
+<a href="http://kevinpt.github.io/lecroy-colorizer/">Lecroy-colorizer</a>
+</p>
+</div>
+
+<script>
+$(function() { // Retrieve list of repositories from Github and dynamically insert them into sidebar
+
+if(!window.sessionStorage || !JSON) { return; } // Punt on crusty browsers (looking at you IE10)
+
+function JSONP( url, callback ) {
+	var id = ( 'jsonp' + Math.random() * new Date() ).replace('.', '');
+	var script = document.createElement('script');
+	script.src = url.replace( 'callback=?', 'callback=' + id );
+	document.body.appendChild( script );
+	window[ id ] = function( data ) {
+		if (callback) {
+			callback( data );
+		}
+	};
+}
+
+function insert_projects(projects) {
+    var links = [];
+    var cur_proj = "VHDL-extras".toLowerCase();
+    $.each(projects, function(key, value) {
+      if(key != cur_proj) {
+        var title = key.replace(/^./, function(match) {return match.toUpperCase()}); // Capitalize first char
+        links.push("<a href='"+ value +"'>" + title + "</a>");
+      }
+    });
+    
+    $("#proj_list").html("<p>"+ links.join("<br>") +"</p>");
+}
+
+var now = new Date().getTime();
+if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) { // Use cached values (5 min. expiry)
+  insert_projects(JSON.parse(sessionStorage.KTprojects));
+} else { // Retrieve current projects
+  JSONP("https://api.github.com/users/kevinpt/repos?type=owner&callback=?", function(response) {
+    var projects = {};
+    $.each(response.data, function(index, value) {
+      projects[value.name] = value.homepage;
+    });
+    
+    insert_projects(projects);
+    
+    // Store data in session cache
+    sessionStorage.KTprojects = JSON.stringify(projects);
+    var now = new Date().getTime();
+    sessionStorage.KTcacheTime = now;
+  });  
+}
+
+});
+</script>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2015, Kevin Thibedeau.
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49656006-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>
