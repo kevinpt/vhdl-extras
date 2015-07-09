@@ -7,17 +7,17 @@ VHDL-extras Library
 
 This library provides some "extra" bits of code that are not found in the standard VHDL libraries. With VHDL-extras you can create designs that will resize to varying data widths, compute with time, frequency, and clock cycles, include error correction, and many more commonly encountered issues in digital logic design. These packages can be used for logic simulations and, in most cases, can be synthesized to hardware with an FPGA or ASIC target.
 
-All of the packages are designed to work with VHDL-93. Alternate packages supporting newer VHDL standards are provided where new language features provide enhanced functionality or where forward compatibility is broken. The core code should work in most VHDL-93 compliant tools. In one instance with the `timing_ops <http://kevinpt.github.io/opbasm/rst/packages.html#timing-ops>`_ package, a simplified Xilinx specific implementation is provided because of limitations with the XST synthesizer (fixed in Vivado).
+All of the packages are designed to work with VHDL-93. Alternate packages supporting newer VHDL standards are provided where new language features provide enhanced functionality or where forward compatibility is broken. The core code should work in most VHDL-93 compliant tools. In one instance with the `timing_ops <http://kevinpt.github.io/vhdl-extras/rst/packages.html#timing-ops>`_ package, a simplified Xilinx specific implementation is provided because of limitations with the XST synthesizer (fixed in Vivado).
 
 Requirements
 ------------
 
-You can use the VHDL-extras library files piecemeal with no tools other than the simulator or synthesizer you will process them with. If you wish to use the provided Modelsim build scripts you will need Modelsim, Python 2.x, sed, grep, and GNU make. To run the test suite you will need Python 2.7 and Modelsim. See the sections on `installation <http://kevinpt.github.io/opbasm/index.html#installation>`_ and `testing <http://kevinpt.github.io/opbasm/index.html#testing>`_ for more information on setting up the VHDL-extras library. You can get optional colorized output from the build and test scripts by installing the Python colorama package.
+You can use the VHDL-extras library files piecemeal with no tools other than the simulator or synthesizer you will process them with. If you wish to use the provided Modelsim build scripts you will need Modelsim, Python 2.x, sed, grep, and GNU make. To run the test suite you will need Python 2.7 and Modelsim. See the sections on `installation <http://kevinpt.github.io/vhdl-extras/index.html#installation>`_ and `testing <http://kevinpt.github.io/vhdl-extras/index.html#testing>`_ for more information on setting up the VHDL-extras library. You can get optional colorized output from the build and test scripts by installing the Python colorama package.
 
 Documentation
 -------------
 
-Take a look at the `online documentation <http://kevinpt.github.io/opbasm/index.html>`_ for more information on what you can do with VHDL-extras.
+Take a look at the `online documentation <http://kevinpt.github.io/vhdl-extras/index.html>`_ for more information on what you can do with VHDL-extras.
 
 
 Download
@@ -31,67 +31,67 @@ The VHDL-extras library contains the following packages:
 
 * Core packages
 
-    `pipelining <http://kevinpt.github.io/opbasm/rst/packages.html#pipelining>`_ -- Pipeline registers
+    `pipelining <http://kevinpt.github.io/vhdl-extras/rst/packages.html#pipelining>`_ -- Pipeline registers
 
-    `sizing <http://kevinpt.github.io/opbasm/rst/packages.html#sizing>`_ -- Generalized integer logarithms and array size computation
+    `sizing <http://kevinpt.github.io/vhdl-extras/rst/packages.html#sizing>`_ -- Generalized integer logarithms and array size computation
 
-    `synchronizing <http://kevinpt.github.io/opbasm/rst/packages.html#synchronizing>`_ -- Clock domain synchronizing components
+    `synchronizing <http://kevinpt.github.io/vhdl-extras/rst/packages.html#synchronizing>`_ -- Clock domain synchronizing components
 
-    `timing_ops <http://kevinpt.github.io/opbasm/rst/packages.html#timing-ops>`_ -- Conversions for time, frequency, and clock cycles
+    `timing_ops <http://kevinpt.github.io/vhdl-extras/rst/packages.html#timing-ops>`_ -- Conversions for time, frequency, and clock cycles
 
 * Error handling
 
-    `crc_ops <http://kevinpt.github.io/opbasm/rst/packages.html#crc-ops>`_ -- Compute CRCs
+    `crc_ops <http://kevinpt.github.io/vhdl-extras/rst/packages.html#crc-ops>`_ -- Compute CRCs
 
-    `hamming_edac <http://kevinpt.github.io/opbasm/rst/packages.html#hamming-edac>`_ -- Generalized Hamming error correction encoding and decoding
+    `hamming_edac <http://kevinpt.github.io/vhdl-extras/rst/packages.html#hamming-edac>`_ -- Generalized Hamming error correction encoding and decoding
 
-    `parity_ops <http://kevinpt.github.io/opbasm/rst/packages.html#parity-ops>`_ -- Basic parity operations
+    `parity_ops <http://kevinpt.github.io/vhdl-extras/rst/packages.html#parity-ops>`_ -- Basic parity operations
 
-    `secded_edac <http://kevinpt.github.io/opbasm/rst/packages.html#secded-edac>`_ -- Hamming extension with double-error detection
+    `secded_edac <http://kevinpt.github.io/vhdl-extras/rst/packages.html#secded-edac>`_ -- Hamming extension with double-error detection
 
 * Encoding
 
-    `bcd_conversion <http://kevinpt.github.io/opbasm/rst/packages.html#bcd-conversion>`_ -- Encode and decode packed Binary Coded Decimal
+    `bcd_conversion <http://kevinpt.github.io/vhdl-extras/rst/packages.html#bcd-conversion>`_ -- Encode and decode packed Binary Coded Decimal
 
-    `gray_code <http://kevinpt.github.io/opbasm/rst/packages.html#gray-code>`_ -- Encode and decode Gray code
+    `gray_code <http://kevinpt.github.io/vhdl-extras/rst/packages.html#gray-code>`_ -- Encode and decode Gray code
 
-    `muxing <http://kevinpt.github.io/opbasm/rst/packages.html#muxing>`_ -- Decoder and muxing operations
+    `muxing <http://kevinpt.github.io/vhdl-extras/rst/packages.html#muxing>`_ -- Decoder and muxing operations
 
 * Memories
 
-    `fifos <http://kevinpt.github.io/opbasm/rst/packages.html#fifos>`_ -- General purpose FIFOs
+    `fifos <http://kevinpt.github.io/vhdl-extras/rst/packages.html#fifos>`_ -- General purpose FIFOs
 
-    `memory <http://kevinpt.github.io/opbasm/rst/packages.html#memory>`_ -- Synthesizable memories
+    `memory <http://kevinpt.github.io/vhdl-extras/rst/packages.html#memory>`_ -- Synthesizable memories
 
-    `reg_file <http://kevinpt.github.io/opbasm/rst/packages.html#reg-file>`_ -- General purpose register file
+    `reg_file <http://kevinpt.github.io/vhdl-extras/rst/packages.html#reg-file>`_ -- General purpose register file
 
 * Randomization
 
-    `lcar_ops <http://kevinpt.github.io/opbasm/rst/packages.html#lcar-ops>`_ -- Linear Cellular Automata
+    `lcar_ops <http://kevinpt.github.io/vhdl-extras/rst/packages.html#lcar-ops>`_ -- Linear Cellular Automata
 
-    `lfsr_ops <http://kevinpt.github.io/opbasm/rst/packages.html#lfsr-ops>`_ -- Linear Feedback Shift Registers
+    `lfsr_ops <http://kevinpt.github.io/vhdl-extras/rst/packages.html#lfsr-ops>`_ -- Linear Feedback Shift Registers
 
-    `random <http://kevinpt.github.io/opbasm/rst/packages.html#random>`_ -- Simulation-only random number generation
+    `random <http://kevinpt.github.io/vhdl-extras/rst/packages.html#random>`_ -- Simulation-only random number generation
 
 * String and character handling
 
-    `characters_handling <http://kevinpt.github.io/opbasm/rst/packages.html#characters-handling>`_ -- Character class identification and case conversions
+    `characters_handling <http://kevinpt.github.io/vhdl-extras/rst/packages.html#characters-handling>`_ -- Character class identification and case conversions
 
-    `strings_fixed <http://kevinpt.github.io/opbasm/rst/packages.html#strings-fixed>`_ -- Operations on fixed length strings
+    `strings_fixed <http://kevinpt.github.io/vhdl-extras/rst/packages.html#strings-fixed>`_ -- Operations on fixed length strings
 
-    `strings_maps <http://kevinpt.github.io/opbasm/rst/packages.html#strings-maps>`_ -- Mapping character sets
+    `strings_maps <http://kevinpt.github.io/vhdl-extras/rst/packages.html#strings-maps>`_ -- Mapping character sets
 
-    `strings_unbounded <http://kevinpt.github.io/opbasm/rst/packages.html#strings-unbounded>`_ -- Operations on unbounded strings
+    `strings_unbounded <http://kevinpt.github.io/vhdl-extras/rst/packages.html#strings-unbounded>`_ -- Operations on unbounded strings
 
 * Miscellaneous
 
-    `binaryio <http://kevinpt.github.io/opbasm/rst/packages.html#binaryio>`_ -- Binary file I/O
+    `binaryio <http://kevinpt.github.io/vhdl-extras/rst/packages.html#binaryio>`_ -- Binary file I/O
 
-    `text_buffering <http://kevinpt.github.io/opbasm/rst/packages.html#text-buffering>`_ -- Store text files in internal buffers
+    `text_buffering <http://kevinpt.github.io/vhdl-extras/rst/packages.html#text-buffering>`_ -- Store text files in internal buffers
 
-    `ddfs <http://kevinpt.github.io/opbasm/rst/packages.html#ddfs>`_ -- Direct Digital Frequency Synthesizer
+    `ddfs <http://kevinpt.github.io/vhdl-extras/rst/packages.html#ddfs>`_ -- Direct Digital Frequency Synthesizer
 
-    `glitch_filtering <http://kevinpt.github.io/opbasm/rst/packages.html#glitch-filtering>`_ -- Clean up noisy inputs
+    `glitch_filtering <http://kevinpt.github.io/vhdl-extras/rst/packages.html#glitch-filtering>`_ -- Clean up noisy inputs
 
 
 Licensing
