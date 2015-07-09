@@ -1,0 +1,55 @@
+body {
+    font-size: medium;
+    background-color: white;
+    color: #000;
+    margin: 0;
+    padding: 0 1.1em 0 0;
+}
+
+div.document {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 0 auto;
+    padding: 0 0em 0 1em;
+}
+
+pre, tt, code {
+    font-size: small;
+}
+
+div.body h1,
+div.body h2,
+div.body h3,
+div.body h4 {
+    font-family: "Kreon", "goudy old style", "minion pro", "bell mt", Georgia, "Hiragino Mincho Pro", serif;
+}
+
+div.body h1,
+div.body h2 {
+    font-weight: bold;
+}
+
+div.sphinxsidebar p,
+div.sphinxsidebar h1,
+div.sphinxsidebar h2,
+div.sphinxsidebar h3,
+div.sphinxsidebar h4 {
+    font-family: "Kreon", "goudy old style", "minion pro", "bell mt", Georgia, "Hiragino Mincho Pro", serif;
+}
+
+table.docutils {
+    border: 1px solid #888;
+    -moz-box-shadow: 2px 2px 4px #eee;
+    -webkit-box-shadow: 2px 2px 4px #eee;
+    box-shadow: 2px 2px 4px #eee;
+    margin-bottom: 2em;
+}
+
+table.docutils td, table.docutils th {
+    border-style: none;
+    padding: 0.25em 0.7em;
+}
+
+table.docutils th {
+  background-color: #dddde8;
+}
