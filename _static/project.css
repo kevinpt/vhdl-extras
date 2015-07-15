@@ -38,7 +38,10 @@ div.sphinxsidebar h4 {
 }
 
 table.docutils {
-    border: 1px solid #888;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+    border-top: 2px solid #92a6c4;
+    border-bottom: 4px solid #92a6c4;
     -moz-box-shadow: 2px 2px 4px #eee;
     -webkit-box-shadow: 2px 2px 4px #eee;
     box-shadow: 2px 2px 4px #eee;
@@ -51,5 +54,9 @@ table.docutils td, table.docutils th {
 }
 
 table.docutils th {
-  background-color: #dddde8;
+  border-bottom: 1px solid #92a6c4;
+}
+
+pre {
+  background: #fff4eb;
 }
