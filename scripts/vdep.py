@@ -16,6 +16,7 @@ from color import error
 class FileInfo(object):
     def __init__(self, fname):
         self.name = fname
+        self.lib = os.path.split(os.path.dirname(fname))[1]
 
         self.packages = []
         self.pkg_body_defs = []
@@ -24,6 +25,7 @@ class FileInfo(object):
 
     use_re = re.compile('^ *use +(.+);')
     pkg_re = re.compile('^ *package +(.+) +is')
+    generic_pkg_re = re.compile('^ *package.*is +new +(.+)')
 
     def parse(self):
         uses = []
@@ -41,6 +43,11 @@ class FileInfo(object):
                         #m.group(1).split('.')[:2]
                         uses.append(m.group(1).split('.')[:2])
 
+                    # Find generic package instances
+                    m = self.generic_pkg_re.match(line)
+                    if m:
+                        uses.append(m.group(1).split('.')[:2])
+
                     m = self.pkg_re.match(line)
                     if m:
                         fields = m.group(1).split()
@@ -48,13 +55,14 @@ class FileInfo(object):
                             pkg_body_defs.append(fields[1])
                         else:
                             #print('## pkg:', fields[0])
-                            pkg_defs.append(fields[0])
+                            pkg_defs.append(self.lib + '.' + fields[0])
         except IOError:
             pass
 
         self.uses = uses
         self.packages = pkg_defs
         self.pkg_body_defs = pkg_body_defs
+
 
 
 
@@ -66,14 +74,14 @@ def find_dependencies(dep_infos):
         for p in fi.packages:
             all_packages[p] = fi.name
 
-    #print('all packages:', all_packages)
     for fi in dep_infos:
         for u in fi.uses:
             if u[0] in std_libs:
                 continue
 
-            if u[1] in all_packages:
-                dep_name = all_packages[u[1]]
+            lib_name = u[0] + '.' + u[1]
+            if lib_name in all_packages:
+                dep_name = all_packages[lib_name]
                 if dep_name != fi.name:
                     fi.depends.add(dep_name)
             else:
