@@ -1,0 +1,706 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>timing_ops &mdash; VHDL-extras 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="prev" title="text_buffering" href="text_buffering.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="timing-ops">
+<h1>timing_ops<a class="headerlink" href="#timing-ops" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/timing_ops.vhdl">extras/timing_ops.vhdl</a></p>
+<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/timing_ops_xilinx.vhdl">extras/timing_ops_xilinx.vhdl</a></p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="sizing.html"><em>sizing</em></a></p>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>This is a package of functions to perform calculations on time
+and convert between different representations. The clock_gen procedures
+can be used to create a clock signal for simulation.</p>
+<p>A new physical type <tt class="docutils literal"><span class="pre">frequency</span></tt> is introduced and conversions between time,
+frequency, and real (time and frequency) are provided. Functions to
+convert from time in these three forms to integer <tt class="docutils literal"><span class="pre">clock_cycles</span></tt> are also
+included. The conversion from time to real uses an integer intermediate
+representation of time. It is designed to compensate for tools that use
+64-bit time and 32-bit integers but only 31-bits of precision will be
+maintained in such cases.</p>
+<p>For all conversion functions, real values of time are expressed in units
+of seconds and real frequencies are in 1/sec. e.g. 1 ns = 1.0e-9,
+1 MHz = 1.0e6.</p>
+<p>User defined physical types are limited to the range of <tt class="docutils literal"><span class="pre">integer</span></tt>. On 32-bit
+platforms <tt class="docutils literal"><span class="pre">frequency'high</span></tt> = (2**31)-1 Hz = 2.14 GHz. Real numbers must be
+used to represent higher frequencies.</p>
+<p>The <tt class="docutils literal"><span class="pre">to_clock_cycles</span></tt> functions can introduce rounding errors and produce a
+result that is different from what would be expected assuming infinite
+precision. The magnitude of any errors will depend on how close the
+converted time is to the clock period. To assist in controlling the
+errors, a <tt class="docutils literal"><span class="pre">rounding_style</span></tt> parameter is available on all forms of
+<tt class="docutils literal"><span class="pre">to_clock_cycles</span></tt> that use real as an intermediate type for the calculation.
+It is set by default to round up toward infinity in anticipation that
+these functions will most often be used to compute the minium number of
+cycles for a delay. You can override this behavior to either round down or
+maintain normal round to nearest for the conversion from <tt class="docutils literal"><span class="pre">real</span></tt> to
+<tt class="docutils literal"><span class="pre">clock_cycles</span></tt>.</p>
+<p>To help detect the effect of rounding errors the <tt class="docutils literal"><span class="pre">time_duration</span></tt> and
+<tt class="docutils literal"><span class="pre">report_time_precision</span></tt> routines can be used in simulation to indicate
+deviation from the requested time span.</p>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">library</span> <span class="nn">extras</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.sizing.bit_size</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.timing_ops.all</span><span class="p">;</span>
+
+  <span class="k">constant</span> <span class="n">SYS_CLOCK_FREQ</span> <span class="o">:</span> <span class="n">frequency</span> <span class="o">:=</span> <span class="mi">50</span> <span class="n">MHz</span><span class="p">;</span>
+  <span class="k">constant</span> <span class="n">COUNT_1US</span> <span class="o">:</span> <span class="n">clock_cycles</span>
+    <span class="o">:=</span> <span class="n">to_clock_cycles</span><span class="p">(</span><span class="mi">1</span> <span class="n">us</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">);</span>
+  <span class="k">signal</span>   <span class="n">counter</span>   <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">bit_size</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="p">...</span>
+  <span class="n">counter</span> <span class="o">&lt;=</span> <span class="n">to_unsigned</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">,</span> <span class="n">counter</span><span class="na">&#39;length</span><span class="p">);</span> <span class="c1">-- initialize counter</span>
+  <span class="n">report_time_precision</span><span class="p">(</span><span class="s">&quot;COUNT_1US&quot;</span><span class="p">,</span> <span class="n">COUNT_1US</span><span class="p">,</span> <span class="mi">1</span> <span class="n">us</span><span class="p">,</span>
+    <span class="n">time_duration</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">));</span>
+
+<span class="n">The</span> <span class="n">value</span> <span class="k">of</span> <span class="n">the</span> <span class="s">&quot;COUNT_1US&quot;</span> <span class="k">constant</span> <span class="n">will</span> <span class="n">change</span> <span class="k">to</span> <span class="n">reflect</span> <span class="n">any</span> <span class="n">change</span> <span class="k">in</span>
+<span class="n">the</span> <span class="n">system</span> <span class="n">clock</span> <span class="n">frequency</span> <span class="k">and</span> <span class="n">the</span> <span class="n">size</span> <span class="k">of</span> <span class="n">the</span> <span class="k">signal</span> <span class="s">&quot;counter&quot;</span> <span class="n">will</span> <span class="n">now</span>
+<span class="n">automatically</span> <span class="n">adapt</span> <span class="k">to</span> <span class="n">guarantee</span> <span class="n">it</span> <span class="n">can</span> <span class="n">represent</span> <span class="n">the</span> <span class="n">count</span> <span class="k">for</span> <span class="mi">1</span> <span class="n">us</span><span class="p">.</span>
+
+<span class="n">The</span> <span class="n">clock_gen</span> <span class="k">procedure</span> <span class="n">can</span> <span class="n">be</span> <span class="n">called</span> <span class="n">from</span> <span class="n">a</span> <span class="k">process</span> <span class="k">to</span> <span class="k">generate</span> <span class="n">a</span> <span class="n">clock</span>
+<span class="k">in</span> <span class="n">simulation</span> <span class="k">with</span> <span class="n">the</span> <span class="n">requested</span> <span class="n">frequency</span> <span class="k">or</span> <span class="n">period</span> <span class="k">and</span> <span class="n">an</span> <span class="n">optional</span> <span class="n">duty</span>
+<span class="n">cycle</span> <span class="n">specification</span><span class="o">:</span>
+
+  <span class="n">sys_clock_gen</span><span class="o">:</span> <span class="k">process</span>
+  <span class="k">begin</span>
+    <span class="n">clock_gen</span><span class="p">(</span><span class="n">sys_clock</span><span class="p">,</span> <span class="n">stop_clock</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">);</span>
+    <span class="k">wait</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<span class="target" id="package-timing_ops"></span></div>
+</div>
+<div class="section" id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="timing_ops.frequency">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">frequency</tt><a class="headerlink" href="#timing_ops.frequency" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="timing_ops.time_rounding">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">time_rounding</tt><a class="headerlink" href="#timing_ops.time_rounding" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="subtypes">
+<h2>Subtypes<a class="headerlink" href="#subtypes" title="Permalink to this headline">¶</a></h2>
+<dl class="subtype">
+<dt id="timing_ops.clock_cycles">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">clock_cycles</tt><a class="headerlink" href="#timing_ops.clock_cycles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="subtype">
+<dt id="timing_ops.duty_cycle">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">duty_cycle</tt><a class="headerlink" href="#timing_ops.duty_cycle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="subprograms">
+<h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="timing_ops.to_real[time return real]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_real</tt> <big>(</big><em>Tval : time</em><big>)</big> &rarr; real<a class="headerlink" href="#timing_ops.to_real[time return real]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Tval</strong> (<em>time</em>) &#8211; Time to convert</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Time converted to a real in units of seconds.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Get the current simulation time resolution.
+Convert time to real time.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_time[real return time]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_time</tt> <big>(</big><em>Rval : real</em><big>)</big> &rarr; time<a class="headerlink" href="#timing_ops.to_time[real return time]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Rval</strong> (<em>real</em>) &#8211; Time to convert</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Real converted to time.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Convert real time to time.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_period[frequency return delay_length]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_period</tt> <big>(</big><em>Freq : frequency</em><big>)</big> &rarr; delay_length<a class="headerlink" href="#timing_ops.to_period[frequency return delay_length]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Freq</strong> (<em>frequency</em>) &#8211; Frequency to convert</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Inverse of the frequency.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Convert frequency to period.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_period[real return delay_length]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_period</tt> <big>(</big><em>Freq : real</em><big>)</big> &rarr; delay_length<a class="headerlink" href="#timing_ops.to_period[real return delay_length]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Freq</strong> (<em>real</em>) &#8211; Frequency to convert</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Inverse of the frequency.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Convert real frequency to period.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_real[frequency return real]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_real</tt> <big>(</big><em>Freq : frequency</em><big>)</big> &rarr; real<a class="headerlink" href="#timing_ops.to_real[frequency return real]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Freq</strong> (<em>frequency</em>) &#8211; Frequency to convert</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Real frequency.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Convert frequency to real frequency.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_frequency[delay_length return frequency]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_frequency</tt> <big>(</big><em>Period : delay_length</em><big>)</big> &rarr; frequency<a class="headerlink" href="#timing_ops.to_frequency[delay_length return frequency]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Period</strong> (<em>delay_length</em>) &#8211; Period to convert</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Inverse of the period.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Convert period to frequency.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_frequency[real return frequency]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_frequency</tt> <big>(</big><em>Period : real</em><big>)</big> &rarr; frequency<a class="headerlink" href="#timing_ops.to_frequency[real return frequency]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Period</strong> (<em>real</em>) &#8211; Period to convert</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Inverse of the period.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Convert real period to frequency.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_clock_cycles[delay_length,frequency,time_rounding return clock_cycles]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : delay_length</em>; <em>Clock_freq : frequency</em>; <em>round_style : time_rounding</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[delay_length,frequency,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Secs</strong> (<em>delay_length</em>) &#8211; Time to convert to cycles</li>
+<li><strong>Clock_freq</strong> (<em>frequency</em>) &#8211; Frequency of the clock</li>
+<li><strong>round_style</strong> (<em>time_rounding</em>) &#8211; Optional rounding mode</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Time converted into integral cycles.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compute clock cycles for the specified number of seconds using a clock
+frequency as the time base.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_clock_cycles[delay_length,real,time_rounding return clock_cycles]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : delay_length</em>; <em>Clock_freq : real</em>; <em>round_style : time_rounding</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[delay_length,real,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Secs</strong> (<em>delay_length</em>) &#8211; Time to convert to cycles</li>
+<li><strong>Clock_freq</strong> (<em>real</em>) &#8211; Frequency of the clock</li>
+<li><strong>round_style</strong> (<em>time_rounding</em>) &#8211; Optional rounding mode</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Time converted into integral cycles.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compute clock cycles for the specified number of seconds using a real clock
+frequency as the time base.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_clock_cycles[real,real,time_rounding return clock_cycles]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : real</em>; <em>Clock_freq : real</em>; <em>round_style : time_rounding</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[real,real,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Secs</strong> (<em>real</em>) &#8211; Time to convert to cycles</li>
+<li><strong>Clock_freq</strong> (<em>real</em>) &#8211; Frequency of the clock</li>
+<li><strong>round_style</strong> (<em>time_rounding</em>) &#8211; Optional rounding mode</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Time converted into integral cycles.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compute clock cycles for the specified number of real seconds using a real clock
+frequency as the time base.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_clock_cycles[real,frequency,time_rounding return clock_cycles]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : real</em>; <em>Clock_freq : frequency</em>; <em>round_style : time_rounding</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[real,frequency,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Secs</strong> (<em>real</em>) &#8211; Time to convert to cycles</li>
+<li><strong>Clock_freq</strong> (<em>frequency</em>) &#8211; Frequency of the clock</li>
+<li><strong>round_style</strong> (<em>time_rounding</em>) &#8211; Optional rounding mode</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Time converted into integral cycles.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compute clock cycles for the specified number of real seconds using a clock
+frequency as the time base.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_clock_cycles[delay_length,delay_length return clock_cycles]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : delay_length</em>; <em>Clock_period : delay_length</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[delay_length,delay_length return clock_cycles]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Secs</strong> (<em>delay_length</em>) &#8211; Time to convert to cycles</li>
+<li><strong>Clock_period</strong> (<em>delay_length</em>) &#8211; Period of the clock</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Time converted into integral cycles.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compute clock cycles for the specified number of seconds using a clock
+period as the time base.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.to_clock_cycles[real,delay_length,time_rounding return clock_cycles]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : real</em>; <em>Clock_period : delay_length</em>; <em>round_style : time_rounding</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[real,delay_length,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Secs</strong> (<em>real</em>) &#8211; Time to convert to cycles</li>
+<li><strong>Clock_period</strong> (<em>delay_length</em>) &#8211; Period of the clock</li>
+<li><strong>round_style</strong> (<em>time_rounding</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Time converted into integral cycles.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compute clock cycles for the specified number of real seconds using a clock
+period as the time base.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.time_duration[clock_cycles,real return delay_length]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">time_duration</tt> <big>(</big><em>Cycles : clock_cycles</em>; <em>Clock_freq : real</em><big>)</big> &rarr; delay_length<a class="headerlink" href="#timing_ops.time_duration[clock_cycles,real return delay_length]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Cycles</strong> (<em>clock_cycles</em>) &#8211; Number of cycles to convert</li>
+<li><strong>Clock_freq</strong> (<em>real</em>) &#8211; Frequency of the clock</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Cycles converted into time.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Calculate the time span represented by a number of clock cycles.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.time_duration[clock_cycles,delay_length return delay_length]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">time_duration</tt> <big>(</big><em>Cycles : clock_cycles</em>; <em>Clock_period : delay_length</em><big>)</big> &rarr; delay_length<a class="headerlink" href="#timing_ops.time_duration[clock_cycles,delay_length return delay_length]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Cycles</strong> (<em>clock_cycles</em>) &#8211; Number of cycles to convert</li>
+<li><strong>Clock_period</strong> (<em>delay_length</em>) &#8211; Period of the clock</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Cycles converted into time.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Calculate the time span represented by a number of clock cycles.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="timing_ops.time_duration[clock_cycles,real return real]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">time_duration</tt> <big>(</big><em>Cycles : clock_cycles</em>; <em>Clock_freq : real</em><big>)</big> &rarr; real<a class="headerlink" href="#timing_ops.time_duration[clock_cycles,real return real]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Cycles</strong> (<em>clock_cycles</em>) &#8211; Number of cycles to convert</li>
+<li><strong>Clock_freq</strong> (<em>real</em>) &#8211; Frequency of the clock</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Cycles converted into real time.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Calculate the real time span represented by a number of clock cycles.</p>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="timing_ops.report_time_precision[string,clock_cycles,real,real]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">report_time_precision</tt> <big>(</big><em>Identifier : in string</em>; <em>Cycles : in clock_cycles</em>; <em>Requested_secs : in real</em>; <em>Actual_secs : in real</em><big>)</big><a class="headerlink" href="#timing_ops.report_time_precision[string,clock_cycles,real,real]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Identifier</strong> (<em>in string</em>) &#8211; User specified name included in report</li>
+<li><strong>Cycles</strong> (<em>in clock_cycles</em>) &#8211; Output of to_clock_cycles()</li>
+<li><strong>Requested_secs</strong> (<em>in real</em>) &#8211; Input passed to to_clock_cycles()</li>
+<li><strong>Actual_secs</strong> (<em>in real</em>) &#8211; Output from time_duration()</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Report statement for checking difference between requested time value
+and the output of to_clock_cycles().</p>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="timing_ops.report_time_precision[string,clock_cycles,time,time]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">report_time_precision</tt> <big>(</big><em>Identifier : in string</em>; <em>Cycles : in clock_cycles</em>; <em>Requested_secs : in time</em>; <em>Actual_secs : in time</em><big>)</big><a class="headerlink" href="#timing_ops.report_time_precision[string,clock_cycles,time,time]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Identifier</strong> (<em>in string</em>) &#8211; User specified name included in report</li>
+<li><strong>Cycles</strong> (<em>in clock_cycles</em>) &#8211; Output of to_clock_cycles()</li>
+<li><strong>Requested_secs</strong> (<em>in time</em>) &#8211; Input passed to to_clock_cycles()</li>
+<li><strong>Actual_secs</strong> (<em>in time</em>) &#8211; Output from time_duration()</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Report statement for checking difference between requested time value
+and the output of to_clock_cycles().</p>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="timing_ops.clock_gen[std_ulogic,boolean,frequency,duty_cycle]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">clock_gen</tt> <big>(</big><em>Clock : out std_ulogic</em>; <em>Stop_clock : in boolean</em>; <em>Clock_freq : in frequency</em>; <em>Duty : in duty_cycle</em><big>)</big><a class="headerlink" href="#timing_ops.clock_gen[std_ulogic,boolean,frequency,duty_cycle]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>out std_ulogic</em>) &#8211; Generated clock signal</li>
+<li><strong>Stop_clock</strong> (<em>in boolean</em>) &#8211; Control signal that exits procedure when true</li>
+<li><strong>Clock_freq</strong> (<em>in frequency</em>) &#8211; Frequency of the generated clock</li>
+<li><strong>Duty</strong> (<em>in duty_cycle</em>) &#8211; Optional duty cycle of the generated clock (0.0 to 1.0)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generate clock waveform for simulation only.</p>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="timing_ops.clock_gen[std_ulogic,boolean,delay_length,duty_cycle]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">clock_gen</tt> <big>(</big><em>Clock : out std_ulogic</em>; <em>Stop_clock : in boolean</em>; <em>Clock_period : in delay_length</em>; <em>Duty : in duty_cycle</em><big>)</big><a class="headerlink" href="#timing_ops.clock_gen[std_ulogic,boolean,delay_length,duty_cycle]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>out std_ulogic</em>) &#8211; Generated clock signal</li>
+<li><strong>Stop_clock</strong> (<em>in boolean</em>) &#8211; Control signal that exits procedure when true</li>
+<li><strong>Clock_period</strong> (<em>in delay_length</em>) &#8211; Period of the generated clock</li>
+<li><strong>Duty</strong> (<em>in duty_cycle</em>) &#8211; Optional duty cycle of the generated clock (0.0 to 1.0)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generate clock waveform for simulation only.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+
+
+
+<p class="blurb">Flexible VHDL library</p>
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="text_buffering.html" title="previous chapter">text_buffering</a></li>
+  </ul></li>
+</ul>
+</div>
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">timing_ops</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#types">Types</a></li>
+<li><a class="reference internal" href="#subtypes">Subtypes</a></li>
+<li><a class="reference internal" href="#subprograms">Subprograms</a></li>
+</ul>
+</li>
+</ul>
+<h3>Other projects</h3>
+
+<div id="proj_list">
+<p>
+<a href="http://kevinpt.github.io/opbasm/">Opbasm</a><br>
+<a href="http://kevinpt.github.io/ripyl/">Ripyl</a><br>
+<a href="http://code.google.com/p/vertcl">Vertcl</a><br>
+
+<a href="http://kevinpt.github.io/lecroy-colorizer/">Lecroy-colorizer</a>
+</p>
+</div>
+
+<script>
+$(function() { // Retrieve list of repositories from Github and dynamically insert them into sidebar
+
+if(!window.sessionStorage || !JSON) { return; } // Punt on crusty browsers (looking at you IE10)
+
+function JSONP( url, callback ) {
+	var id = ( 'jsonp' + Math.random() * new Date() ).replace('.', '');
+	var script = document.createElement('script');
+	script.src = url.replace( 'callback=?', 'callback=' + id );
+	document.body.appendChild( script );
+	window[ id ] = function( data ) {
+		if (callback) {
+			callback( data );
+		}
+	};
+}
+
+function insert_projects(projects) {
+    var links = [];
+    var cur_proj = "VHDL-extras".toLowerCase();
+    $.each(projects, function(key, value) {
+      if(key != cur_proj) {
+        var title = key.replace(/^./, function(match) {return match.toUpperCase()}); // Capitalize first char
+        links.push("<a href='"+ value +"'>" + title + "</a>");
+      }
+    });
+    
+    $("#proj_list").html("<p>"+ links.join("<br>") +"</p>");
+}
+
+var now = new Date().getTime();
+if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) { // Use cached values (5 min. expiry)
+  insert_projects(JSON.parse(sessionStorage.KTprojects));
+} else { // Retrieve current projects
+  JSONP("https://api.github.com/users/kevinpt/repos?type=owner&callback=?", function(response) {
+    var projects = {};
+    $.each(response.data, function(index, value) {
+      projects[value.name] = value.homepage;
+    });
+    
+    insert_projects(projects);
+    
+    // Store data in session cache
+    sessionStorage.KTprojects = JSON.stringify(projects);
+    var now = new Date().getTime();
+    sessionStorage.KTcacheTime = now;
+  });  
+}
+
+});
+</script>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2015, Kevin Thibedeau.
+      
+      |
+      <a href="../../_sources/rst/modules/timing_ops.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+
+
+  </body>
+</html>

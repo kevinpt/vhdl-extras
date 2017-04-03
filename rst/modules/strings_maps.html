@@ -1,0 +1,431 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>strings_maps &mdash; VHDL-extras 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="next" title="strings_fixed_constants" href="strings_maps_constants.html" />
+    <link rel="prev" title="strings_fixed" href="strings_fixed.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="strings-maps">
+<h1>strings_maps<a class="headerlink" href="#strings-maps" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_maps.vhdl">extras/strings_maps.vhdl</a></p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>FIXME</p>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>FIXME</p>
+<span class="target" id="package-strings_maps"></span></div>
+<div class="section" id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="strings_maps.character_set">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">character_set</tt><a class="headerlink" href="#strings_maps.character_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="strings_maps.character_range">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">character_range</tt><a class="headerlink" href="#strings_maps.character_range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="strings_maps.character_ranges">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">character_ranges</tt><a class="headerlink" href="#strings_maps.character_ranges" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="strings_maps.character_mapping">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">character_mapping</tt><a class="headerlink" href="#strings_maps.character_mapping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="subtypes">
+<h2>Subtypes<a class="headerlink" href="#subtypes" title="Permalink to this headline">¶</a></h2>
+<dl class="subtype">
+<dt id="strings_maps.character_sequence">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">character_sequence</tt><a class="headerlink" href="#strings_maps.character_sequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="subprograms">
+<h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="strings_maps.to_set[character_ranges return character_set]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>ranges : character_ranges</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character_ranges return character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ranges</strong> (<em>character_ranges</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conversion between character sets and ranges</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.to_set[character_range return character_set]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>span : character_range</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character_range return character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>span</strong> (<em>character_range</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.to_ranges[character_set return character_ranges]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_ranges</tt> <big>(</big><em>set : character_set</em><big>)</big> &rarr; character_ranges<a class="headerlink" href="#strings_maps.to_ranges[character_set return character_ranges]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>set</strong> (<em>character_set</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.is_in[character,character_set return boolean]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">is_in</tt> <big>(</big><em>element : character</em>; <em>set : character_set</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_maps.is_in[character,character_set return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>element</strong> (<em>character</em>) &#8211; </li>
+<li><strong>set</strong> (<em>character_set</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Test for membership in a character set</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.is_subset[character_set,character_set return boolean]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">is_subset</tt> <big>(</big><em>elements : character_set</em>; <em>set : character_set</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_maps.is_subset[character_set,character_set return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>elements</strong> (<em>character_set</em>) &#8211; </li>
+<li><strong>set</strong> (<em>character_set</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.to_set[character_sequence return character_set]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>sequence : character_sequence</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character_sequence return character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sequence</strong> (<em>character_sequence</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conversion between character sets and sequences</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.to_set[character return character_set]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>singleton : character</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character return character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>singleton</strong> (<em>character</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.to_sequence[character_set return character_sequence]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_sequence</tt> <big>(</big><em>set : character_set</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#strings_maps.to_sequence[character_set return character_sequence]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>set</strong> (<em>character_set</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.value[character_mapping,character return character]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">value</tt> <big>(</big><em>cmap : character_mapping</em>; <em>element : character</em><big>)</big> &rarr; character<a class="headerlink" href="#strings_maps.value[character_mapping,character return character]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cmap</strong> (<em>character_mapping</em>) &#8211; </li>
+<li><strong>element</strong> (<em>character</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Look up the mapping for a character</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.to_mapping[character_sequence,character_sequence return character_mapping]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_mapping</tt> <big>(</big><em>from : character_sequence</em>; <em>to_seq : character_sequence</em><big>)</big> &rarr; character_mapping<a class="headerlink" href="#strings_maps.to_mapping[character_sequence,character_sequence return character_mapping]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>from</strong> (<em>character_sequence</em>) &#8211; </li>
+<li><strong>to_seq</strong> (<em>character_sequence</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Create a mapping from two sequences</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.to_domain[character_mapping return character_sequence]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_domain</tt> <big>(</big><em>cmap : character_mapping</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#strings_maps.to_domain[character_mapping return character_sequence]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cmap</strong> (<em>character_mapping</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Return the from sequence for a mapping</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.to_range[character_mapping return character_sequence]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_range</tt> <big>(</big><em>cmap : character_mapping</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#strings_maps.to_range[character_mapping return character_sequence]" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cmap</strong> (<em>character_mapping</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Return the to_seq sequence for a mapping</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+
+
+
+<p class="blurb">Flexible VHDL library</p>
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="strings_fixed.html" title="previous chapter">strings_fixed</a></li>
+      <li>Next: <a href="strings_maps_constants.html" title="next chapter">strings_fixed_constants</a></li>
+  </ul></li>
+</ul>
+</div>
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">strings_maps</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#types">Types</a></li>
+<li><a class="reference internal" href="#subtypes">Subtypes</a></li>
+<li><a class="reference internal" href="#subprograms">Subprograms</a></li>
+</ul>
+</li>
+</ul>
+<h3>Other projects</h3>
+
+<div id="proj_list">
+<p>
+<a href="http://kevinpt.github.io/opbasm/">Opbasm</a><br>
+<a href="http://kevinpt.github.io/ripyl/">Ripyl</a><br>
+<a href="http://code.google.com/p/vertcl">Vertcl</a><br>
+
+<a href="http://kevinpt.github.io/lecroy-colorizer/">Lecroy-colorizer</a>
+</p>
+</div>
+
+<script>
+$(function() { // Retrieve list of repositories from Github and dynamically insert them into sidebar
+
+if(!window.sessionStorage || !JSON) { return; } // Punt on crusty browsers (looking at you IE10)
+
+function JSONP( url, callback ) {
+	var id = ( 'jsonp' + Math.random() * new Date() ).replace('.', '');
+	var script = document.createElement('script');
+	script.src = url.replace( 'callback=?', 'callback=' + id );
+	document.body.appendChild( script );
+	window[ id ] = function( data ) {
+		if (callback) {
+			callback( data );
+		}
+	};
+}
+
+function insert_projects(projects) {
+    var links = [];
+    var cur_proj = "VHDL-extras".toLowerCase();
+    $.each(projects, function(key, value) {
+      if(key != cur_proj) {
+        var title = key.replace(/^./, function(match) {return match.toUpperCase()}); // Capitalize first char
+        links.push("<a href='"+ value +"'>" + title + "</a>");
+      }
+    });
+    
+    $("#proj_list").html("<p>"+ links.join("<br>") +"</p>");
+}
+
+var now = new Date().getTime();
+if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) { // Use cached values (5 min. expiry)
+  insert_projects(JSON.parse(sessionStorage.KTprojects));
+} else { // Retrieve current projects
+  JSONP("https://api.github.com/users/kevinpt/repos?type=owner&callback=?", function(response) {
+    var projects = {};
+    $.each(response.data, function(index, value) {
+      projects[value.name] = value.homepage;
+    });
+    
+    insert_projects(projects);
+    
+    // Store data in session cache
+    sessionStorage.KTprojects = JSON.stringify(projects);
+    var now = new Date().getTime();
+    sessionStorage.KTcacheTime = now;
+  });  
+}
+
+});
+</script>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2015, Kevin Thibedeau.
+      
+      |
+      <a href="../../_sources/rst/modules/strings_maps.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+
+
+  </body>
+</html>
