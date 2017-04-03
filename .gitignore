@@ -5,3 +5,5 @@ opbasm.egg-info/
 build/
 dist/
 _build
+test/test-output
+modelsim.ini

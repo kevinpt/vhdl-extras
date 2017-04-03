@@ -1,0 +1,4 @@
+This was included
+~~~~~~~~~~~~~~~~~
+
+from rst

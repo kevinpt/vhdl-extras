@@ -12,19 +12,18 @@ wide array of applications.
 
 .. _pipelining:
 
-pipelining
-~~~~~~~~~~
+:doc:`pipelining <modules/pipelining>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`pipelining.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/pipelining.vhdl>`_
+.. image:: ../image/sym/pipelining-pipeline_u.svg
 
 Configurable pipeline registers for use with automated retiming during synthesis. This provides a variable length chain of registers that can be placed after a section of combinational logic. When your synthesis tool is configured to enable retiming, these registers will be dispersed throughout the combinational logic to reduce the worst case delay. You can tweak the pipeline stages with a simple change in a generic to tune your results.
 
 .. _sizing:
 
-sizing
-~~~~~~
+:doc:`sizing <modules/sizing>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`sizing.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/sizing.vhdl>`_
 
 A set of functions for computing integer logarithms and for determining the size of binary numbers and encodings. Generalized functions for computing floor(log(n, b)) and ceil(log(n, b)) for any base b are provided as well as special purpose convenience functions like bit_size and encoding_size. See the :ref:`bcd_conversion` implementation for a practical example of computing integer logs in base-10 using this package.
 
@@ -39,10 +38,10 @@ A set of functions for computing integer logarithms and for determining the size
 
 .. _synchronizing:
 
-synchronizing
-~~~~~~~~~~~~~
+:doc:`synchronizing <modules/synchronizing>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`synchronizing.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/synchronizing.vhdl>`_
+.. image:: ../image/sym/synchronizing-handshake_synchronizer.svg
 
 Synchronizer entities for transferring signals between clock domains. There are three entities provided:
 
@@ -54,12 +53,8 @@ bit_synchronizer and reset_synchronizer have a configurable number of stages wit
 
 .. _timing_ops:
 
-timing_ops
-~~~~~~~~~~
-
-`timing_ops.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/timing_ops.vhdl>`_
-
-`timing_ops_xilinx.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/timing_ops_xilinx.vhdl>`_
+:doc:`timing_ops <modules/timing_ops>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions for conversions between time, frequency, and clock cycles. Also includes a flexible,
 simulation-only clock generation procedure. A variant of timing_ops is provided for use with Xilinx XST. It is stripped of the frequency physical type which XST cannot support. You can perform computations and conversions on time and frequency using real, integers, and physical types. This provides a powerful mechanism to generate synthesizable time related constants without manual precomputation.
@@ -96,10 +91,10 @@ Packages for performing error detection and correction.
 
 .. _crc_ops:
 
-crc_ops
-~~~~~~~
+:doc:`crc_ops <modules/crc_ops>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`crc_ops.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/crc_ops.vhdl>`_
+.. image:: ../image/sym/crc_ops-crc.svg
 
 This package provides a general purpose CRC implementation. It consists
 of a set of functions that can be used to iteratively process successive
@@ -164,37 +159,32 @@ Implementing a CRC without depending on an external generator tool is easy and f
 
 .. _hamming_edac:
 
-hamming_edac
-~~~~~~~~~~~~
-
-`hamming_edac.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/hamming_edac.vhdl>`_
+:doc:`hamming_edac <modules/hamming_edac>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A flexible implementation of the Hamming code for any data size of 4-bits or greater.
 
 .. _parity_ops:
 
-parity_ops
-~~~~~~~~~~
-
-`parity_ops.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/parity_ops.vhdl>`_
+:doc:`parity_ops <modules/parity_ops>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Basic parity operations.
 
 .. _secded_edac:
 
-secded_edac
-~~~~~~~~~~~
-
-`secded_edac.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/secded_edac.vhdl>`_
+:doc:`secded_edac <modules/secded_edac>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Single Error Correction, Double Error Detection implemented with extended Hamming code.
 
 .. _secded_codec:
 
-secded_codec
-~~~~~~~~~~~~
+:doc:`secded_codec <modules/secded_codec>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`secded_codec.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/secded_codec.vhdl>`_
+
+.. image:: ../image/sym/secded_codec-secded_codec.svg
 
 An entity providing a combined SECDED encoder and decoder with added error injection for system verification. Optional pipelining is provided.
 
@@ -205,10 +195,10 @@ Packages for encoding data into alternate forms.
 
 .. _bcd_conversion:
 
-bcd_conversion
-~~~~~~~~~~~~~~
+:doc:`bcd_conversion <modules/bcd_conversion>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`bcd_conversion.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/bcd_conversion.vhdl>`_
+.. image:: ../image/sym/bcd_conversion-binary_to_bcd.svg
 
 This package provides functions and components for performing conversion
 between binary and packed Binary Coded Decimal (BCD). The functions
@@ -230,10 +220,10 @@ result must be multiplied by 4 to get the length of a packed BCD array.
 
 .. _gray_code:
 
-gray_code
-~~~~~~~~~
+:doc:`gray_code <modules/gray_code>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`gray_code.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/gray_code.vhdl>`_
+.. image:: ../image/sym/gray_code-gray_counter.svg
 
 This package provides functions to convert between Gray code and binary. An example
 implementation of a Gray code counter is also included.
@@ -249,12 +239,8 @@ implementation of a Gray code counter is also included.
 
 .. _muxing:
 
-muxing
-~~~~~~
-
-`muxing.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/muxing.vhdl>`_
-
-`muxing_2008.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/muxing_2008.vhdl>`_
+:doc:`muxing <modules/muxing>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parameterized multiplexers, decoders, and demultiplexers. A VHDL-2008 variant is available that
 implements a fully generic multi-bit mux.
@@ -292,10 +278,10 @@ Packages with internal memories
 
 .. _fifos:
 
-fifos
-~~~~~
+:doc:`fifos <modules/fifos>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`fifos.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/fifos.vhdl>`_
+.. image:: ../image/sym/fifos-fifo.svg
 
 This package implements a set of generic FIFO components. There are three
 variants. All use the same basic interface for the read/write ports and
@@ -308,21 +294,19 @@ status flags. The FIFOs have the following differences:
 
 .. _memory:
 
-memory
-~~~~~~
+:doc:`memory <modules/memory>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`memory.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/memory.vhdl>`_
+.. image:: ../image/sym/memory-dual_port_ram.svg
 
 This package provides general purpose components for inferred dual-ported RAM and ROM.
 
 .. _reg_file:
 
-reg_file
-~~~~~~~~
+:doc:`reg_file <modules/reg_file>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`reg_file.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/reg_file.vhdl>`_
-
-`reg_file_2008.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/reg_file_2008.vhdl>`_
+.. image:: ../image/sym/reg_file-reg_file.svg
 
 This is an implementation of a general purpose register file. The VHDL-93 version must be manually customized to set the size of the registers internally. The VHDL-2008 version is fully generic by employing an unconstrained array of unconstrained arrays to implement the registers. In addition to simple read/write registers you can configure individual bits to act as self clearing strobes when written and to read back directly from internal signals rather than from the register contents.
 
@@ -334,31 +318,27 @@ structures for creating randomized output.
 
 .. _lcar_ops:
 
-lcar_ops
-~~~~~~~~
+:doc:`lcar_ops <modules/lcar_ops>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`lcar_ops.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/lcar_ops.vhdl>`_
+.. image:: ../image/sym/lcar_ops-wolfram_lcar.svg
 
 An implementation of the Wolfram Linear Cellular Automata. This is useful for generating pseudo-random numbers with low correlation between bits. Adaptable to any number of cells. Constants are provided for
 maximal length sequences of up to 100 bits.
 
 .. _lfsr_ops:
 
-lfsr_ops
-~~~~~~~~
+:doc:`lfsr_ops <modules/lfsr_ops>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`lfsr_ops.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/lfsr_ops.vhdl>`_
+.. image:: ../image/sym/lfsr_ops-fibonacci_lfsr.svg
 
 Various implementations of Galois and Fibonacci Linear Feedback Shift Registers. These adapt to any size register. Coefficients are provided for maximal length sequences up to 100 bits.
 
 .. _random:
 
-random
-~~~~~~
-
-`random.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/random.vhdl>`_
-
-`random_20xx.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/random_20xx.vhdl>`_
+:doc:`random <modules/random>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This package provides a general set of pseudo-random number functions.
 It is implemented as a wrapper around the ieee.math_real.uniform
@@ -384,10 +364,8 @@ from the Ada standard library.
 
 .. _characters_handling:
 
-characters_handling
-~~~~~~~~~~~~~~~~~~~
-
-`characters_handling.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/characters_handling.vhdl>`_
+:doc:`characters_handling <modules/characters_handling>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is a package of functions that replicate the behavior of the Ada
 standard library package ada.characters.handling. Included are functions
@@ -396,10 +374,8 @@ of characters and strings to upper and lower case.
 
 .. characters_latin_1:
 
-characters_latin_1
-~~~~~~~~~~~~~~~~~~
-
-`characters_latin_1.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/characters_latin_1.vhdl>`_
+:doc:`characters_latin_1 <modules/characters_latin_1>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This package provides Latin-1 character constants. These constants are
 adapted from the definitions in the Ada'95 ARM for the package
@@ -407,19 +383,15 @@ Ada.Characters.Latin_1.
 
 .. _strings:
 
-strings
-~~~~~~~
-
-`strings.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings.vhdl>`_
+:doc:`strings <modules/strings>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Shared types for the string packages.
 
 .. _strings_fixed:
 
-strings_fixed
-~~~~~~~~~~~~~
-
-`strings_fixed.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_fixed.vhdl>`_
+:doc:`strings_fixed <modules/strings_fixed>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This package provides a string library for operating on fixed length
 strings. This is a clone of the Ada'95 library Ada.Strings.Fixed. It is a
@@ -428,20 +400,16 @@ mapping functions omitted because of VHDL limitations.
 
 .. _strings_maps:
 
-strings_maps
-~~~~~~~~~~~~
-
-`strings_maps.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_maps.vhdl>`_
+:doc:`strings_maps <modules/strings_maps>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This package provides types and functions for manipulating character sets.
 It is a clone of the Ada'95 package Ada.Strings.Maps.
 
 .. _strings_maps_constants:
 
-strings_maps_constants
-~~~~~~~~~~~~~~~~~~~~~~
-
-`strings_maps_constants.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_maps_constants.vhdl>`_
+:doc:`strings_maps_constants <modules/strings_maps_constants>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Constants for various character sets from the range
 of Latin-1 and mappings for upper case, lower case, and basic (unaccented)
@@ -450,10 +418,8 @@ Ada.Strings.Maps.Constants.
 
 .. _strings_unbounded:
 
-strings_unbounded
-~~~~~~~~~~~~~~~~~
-
-`strings_unbounded.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_unbounded.vhdl>`_
+:doc:`strings_unbounded <modules/strings_unbounded>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This package provides a string library for operating on unbounded length
 strings. This is a clone of the Ada'95 library Ada.Strings.Unbounded. Due
@@ -473,20 +439,16 @@ Additional packages of useful functions.
 
 .. _binaryio:
 
-binaryio
-~~~~~~~~
-
-`binaryio.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/binaryio.vhdl>`_
+:doc:`binaryio <modules/binaryio>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Procedures for general binary file IO. Support is provided for reading and writing vectors of any size
 with big and little-endian byte order.
 
 .. _text_buffering:
 
-text_buffering
-~~~~~~~~~~~~~~
-
-`text_buffering.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/text_buffering.vhdl>`_
+:doc:`text_buffering <modules/text_buffering>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This package provides a facility for storing buffered text. It can be used
 to represent the contents of a text file as a linked list of dynamically
@@ -497,19 +459,19 @@ to procedures without having to maintain a separate file handle.
 
 .. _ddfs:
 
-ddfs
-~~~~
+:doc:`ddfs <modules/ddfs>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`ddfs.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/ddfs.vhdl>`_
+.. image:: ../image/sym/ddfs-ddfs.svg
 
 A set of functions for implementing Direct Digital Frequency Synthesizers.
 
 .. _glitch_filtering:
 
-glitch_filtering
-~~~~~~~~~~~~~~~~
+:doc:`glitch_filtering <modules/glitch_filtering>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`glitch_filtering.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/glitch_filtering.vhdl>`_
+.. image:: ../image/sym/glitch_filtering-glitch_filter.svg
 
 Glitch filter components that can be used to remove
 noise from digital input signals. This can be useful for debouncing
