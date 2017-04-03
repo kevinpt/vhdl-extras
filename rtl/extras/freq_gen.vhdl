@@ -57,12 +57,15 @@ package freq_gen_pkg is
       ITERATIONS   : positive
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic;
 
+      -- {{control|}}
       Load_phase : in std_ulogic;
       New_phase  : in unsigned;
 
+      -- {{}}
       Dyn_freq : in unsigned;
       Sin      : out signed(SIZE-1 downto 0);
       Cos      : out signed(SIZE-1 downto 0);
@@ -82,12 +85,15 @@ package freq_gen_pkg is
       ITERATIONS   : positive
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic;
 
+      -- {{control|}}
       Load_phase : in std_ulogic;
       New_phase  : in unsigned;
 
+      -- {{}}
       Dyn_freq : in unsigned;
       Sin      : out signed(SIZE-1 downto 0);
       Cos      : out signed(SIZE-1 downto 0);

@@ -125,14 +125,19 @@ package fifos is
       SYNC_READ          : boolean    := true
       );
     port (
+      -- {{clocks|}}
       Clock   : in std_ulogic;
       Reset   : in std_ulogic;
+      
+      -- {{data|Write port}}
       We      : in std_ulogic;
       Wr_data : in std_ulogic_vector;
 
+      -- {{Read port}}
       Re      : in  std_ulogic;
       Rd_data : out std_ulogic_vector;
 
+      -- {{Status}}
       Empty : out std_ulogic;
       Full  : out std_ulogic;
 
@@ -150,16 +155,19 @@ package fifos is
       SYNC_READ          : boolean    := true
       );
     port (
+      -- {{data|Write port}}
       Wr_clock : in std_ulogic;
       Wr_reset : in std_ulogic;
       We       : in std_ulogic;
       Wr_data  : in std_ulogic_vector;
 
+      -- {{Read port}}
       Rd_clock : in  std_ulogic;
       Rd_reset : in  std_ulogic;
       Re       : in  std_ulogic;
       Rd_data  : out std_ulogic_vector;
 
+      -- {{Status}}
       Empty : out std_ulogic;
       Full  : out std_ulogic;
 
@@ -178,6 +186,7 @@ package fifos is
       SYNC_READ          : boolean    := true
       );
     port (
+      -- {{data|Write port}}
       Wr_clock : in std_ulogic;
       Wr_reset : in std_ulogic;
       We       : in std_ulogic;
@@ -185,11 +194,13 @@ package fifos is
       Keep     : in std_ulogic;
       Discard  : in std_ulogic;
 
+      -- {{Read port}}
       Rd_clock : in  std_ulogic;
       Rd_reset : in  std_ulogic;
       Re       : in  std_ulogic;
       Rd_data  : out std_ulogic_vector;
 
+      -- {{Status}}
       Empty : out std_ulogic;
       Full  : out std_ulogic;
 

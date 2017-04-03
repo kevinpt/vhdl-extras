@@ -134,11 +134,14 @@ package cordic is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic;
 
+      -- {{control|}}
       Mode  : in cordic_mode;
 
+      -- {{data|}}
       X : in signed(SIZE-1 downto 0);
       Y : in signed(SIZE-1 downto 0);
       Z : in signed(SIZE-1 downto 0);
@@ -156,13 +159,16 @@ package cordic is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic;
 
+      -- {{control|}}
       Load : in std_ulogic;
       Done : out std_ulogic;
       Mode : in cordic_mode;
 
+      -- {{data|}}
       X : in signed(SIZE-1 downto 0);
       Y : in signed(SIZE-1 downto 0);
       Z : in signed(SIZE-1 downto 0);
@@ -181,11 +187,14 @@ package cordic is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic;
 
+      -- {{control|}}
       Mode  : in cordic_mode;
 
+      -- {{data|}}
       X : in signed(SIZE-1 downto 0);
       Y : in signed(SIZE-1 downto 0);
       Z : in signed(SIZE-1 downto 0);
@@ -205,11 +214,14 @@ package cordic is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic;
 
+      -- {{control|}}
       Angle : in signed(SIZE-1 downto 0); -- Angle in brads (2**SIZE brads = 2*pi radians)
 
+      -- {{data|}}
       Sin   : out signed(SIZE-1 downto 0);  -- Sine of Angle
       Cos   : out signed(SIZE-1 downto 0)   -- Cosine of Angle
     );
@@ -224,14 +236,17 @@ package cordic is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic;
 
+      -- {{control|}}
       Load : in std_ulogic;
       Done : out std_ulogic;
 
       Angle : in signed(SIZE-1 downto 0);
 
+      -- {{data|}}
       Sin : out signed(SIZE-1 downto 0);
       Cos : out signed(SIZE-1 downto 0)
     );

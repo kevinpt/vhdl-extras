@@ -80,8 +80,10 @@ package pipelining is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock   : in std_ulogic;
       Reset   : in std_ulogic;
+      -- {{data|}}
       Sig_in  : in std_ulogic;
       Sig_out : out std_ulogic
     );
@@ -95,8 +97,10 @@ package pipelining is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock   : in std_ulogic;
       Reset   : in std_ulogic;
+      -- {{data|}}
       Sig_in  : in std_ulogic_vector;
       Sig_out : out std_ulogic_vector
     );
@@ -110,8 +114,10 @@ package pipelining is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock   : in std_ulogic;
       Reset   : in std_ulogic;
+      -- {{data|}}
       Sig_in  : in std_logic_vector;
       Sig_out : out std_logic_vector
     );
@@ -125,8 +131,10 @@ package pipelining is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock   : in std_ulogic;
       Reset   : in std_ulogic;
+      -- {{data|}}
       Sig_in  : in unsigned;
       Sig_out : out unsigned
     );
@@ -140,8 +148,10 @@ package pipelining is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock   : in std_ulogic;
       Reset   : in std_ulogic;
+      -- {{data|}}
       Sig_in  : in signed;
       Sig_out : out signed
     );

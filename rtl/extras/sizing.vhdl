@@ -58,23 +58,55 @@
 --------------------------------------------------------------------
 
 package sizing is
-  --## Compute the integer result of the function floor(log(n)) where b is the base
+  --## Compute the integer result of the function floor(log(n)).
+  --#
+  --# Args:
+  --#   n - Number to take logarithm of
+  --#   b - Base for the logarithm
+  --# Returns:
+  --#   Approximate logarithm of n rounded down.
   function floor_log(n, b : positive) return natural;
 
-  --## Compute the integer result of the function ceil(log(n)) where b is the base
+  --## Compute the integer result of the function ceil(log(n)) where b is the base.
+  --#
+  --# Args:
+  --#   n - Number to take logarithm of
+  --#   b - Base for the logarithm
+  --# Returns:
+  --#   Approximate logarithm of n rounded up.
   function ceil_log(n, b : positive) return natural;
 
 
-  --## Compute the integer result of the function floor(log2(n))
+  --## Compute the integer result of the function floor(log2(n)).
+  --#
+  --# Args:
+  --#   n - Number to take logarithm of
+  --# Returns:
+  --#   Approximate base-2 logarithm of n rounded down.
   function floor_log2(n : positive) return natural;
 
-  --## Compute the integer result of the function ceil(log2(n))
+  --## Compute the integer result of the function ceil(log2(n)).
+  --#
+  --# Args:
+  --#   n - Number to take logarithm of
+  --# Returns:
+  --#   Approximate base-2 logarithm of n rounded up.
   function ceil_log2(n : positive) return natural;
 
-  --## Compute the total number of bits needed to represent a number in binary
+  --## Compute the total number of bits needed to represent a number in binary.
+  --#
+  --# Args:
+  --#   n - Number to compute size from
+  --# Returns:
+  --#   Number of bits.
   function bit_size(n : natural) return natural;
 
-  --## Compute the number of bits needed to encode n items
+  --## Compute the number of bits needed to encode n items.
+  --#
+  --# Args:
+  --#   n - Number to compute size from
+  --# Returns:
+  --#   Number of bits.
   function encoding_size(n : positive) return natural;
 
   -- synthesis translate_off
@@ -83,7 +115,12 @@ package sizing is
   -- synthesis translate_on
 
   --## Compute the total number of bits to represent a 2's complement signed
-  --#  integer in binary
+  --#  integer in binary.
+  --#
+  --# Args:
+  --#   n - Number to compute size from
+  --# Returns:
+  --#   Number of bits.
   function signed_size(n : integer) return natural;
 
 end package;
@@ -91,7 +128,7 @@ end package;
 
 package body sizing is
 
-  --## Compute the integer result of the function floor(log(n)) where b is the base
+  --## Compute the integer result of the function floor(log(n)) where b is the base.
   function floor_log(n, b : positive) return natural is
     variable log, residual : natural;
   begin
@@ -106,7 +143,7 @@ package body sizing is
     return log;
   end function;
 
-  --## Compute the integer result of the function ceil(log(n)) where b is the base
+  --## Compute the integer result of the function ceil(log(n)) where b is the base.
   function ceil_log(n, b : positive) return natural is
     variable log, residual : natural;
   begin
@@ -123,20 +160,20 @@ package body sizing is
   end function;
 
 
-  --## Compute the integer result of the function floor(log2(n))
+  --## Compute the integer result of the function floor(log2(n)).
   function floor_log2(n : positive) return natural is
   begin
     return floor_log(n, 2);
   end function;
 
-  --## Compute the integer result of the function ceil(log2(n))
+  --## Compute the integer result of the function ceil(log2(n)).
   function ceil_log2(n : positive) return natural is
   begin
     return ceil_log(n, 2);
   end function;
 
 
-  --## Compute the total number of bits needed to represent a number in binary
+  --## Compute the total number of bits needed to represent a number in binary.
   function bit_size(n : natural) return natural is
   begin
     if n = 0 then
@@ -147,7 +184,7 @@ package body sizing is
   end function;
 
 
-  --## Compute the number of bits needed to encode n items
+  --## Compute the number of bits needed to encode n items.
   function encoding_size(n : positive) return natural is
   begin
     if n = 1 then
@@ -159,7 +196,7 @@ package body sizing is
 
 
   --## Compute the total number of bits to represent a 2's complement signed
-  --#  integer in binary
+  --#  integer in binary.
   function signed_size(n : integer) return natural is
   begin
     if n = 0 then

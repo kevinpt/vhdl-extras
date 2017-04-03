@@ -96,9 +96,11 @@ package glitch_filtering is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic; -- Asynchronous reset
 
+      -- {{data|}}
       Noisy    : in std_ulogic; -- Noisy input signal
       Filtered : out std_ulogic -- Filtered output
     );
@@ -111,11 +113,14 @@ package glitch_filtering is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic; -- Asynchronous reset
 
+      -- {{control|}}
       Filter_cycles : in unsigned; -- Number of clock cycles to filter
 
+      -- {{data|}}
       Noisy    : in std_ulogic; -- Noisy input signal
       Filtered : out std_ulogic -- Filtered output
     );
@@ -130,11 +135,15 @@ package glitch_filtering is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic; -- Asynchronous reset
+      Foo   : inout std_logic;
 
+      -- {{data|}}
       Noisy    : in std_ulogic_vector; -- Noisy input signals
       Filtered : out std_ulogic_vector -- Filtered output
+      Bar : inout unsigned
     );
   end component;
 
@@ -145,11 +154,14 @@ package glitch_filtering is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic; -- Asynchronous reset
 
+      -- {{control|}}
       Filter_cycles : in unsigned; -- Number of clock cycles to filter
 
+      -- {{data|}}
       Noisy    : in std_ulogic_vector; -- Noisy input signals
       Filtered : out std_ulogic_vector -- Filtered output
     );

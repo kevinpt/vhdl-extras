@@ -168,11 +168,15 @@ package lfsr_ops is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock  : in std_ulogic;
       Reset  : in std_ulogic; -- Asynchronous reset
       Enable : in std_ulogic; -- Synchronous enable
 
+      -- {{control|}}
       Tap_map : in std_ulogic_vector; -- '1' for taps that receive feedback
+      
+      -- {{data|}}
       State   : out std_ulogic_vector -- The LFSR state register
     );
   end component;
@@ -186,11 +190,15 @@ package lfsr_ops is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock  : in std_ulogic;
       Reset  : in std_ulogic; -- Asynchronous reset
       Enable : in std_ulogic; -- Synchronous enable
 
+      -- {{control|}}
       Tap_map : in std_ulogic_vector; -- '1' for taps that receive feedback
+      
+      -- {{data|}}
       State   : out std_ulogic_vector -- The LFSR state register
     );
   end component;

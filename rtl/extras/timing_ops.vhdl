@@ -112,87 +112,198 @@ package timing_ops is
   end units;
   
   type time_rounding is (
-    round_nearest, -- normal floating point round to nearest integer
-    round_inf,     -- round up to +infinity
-    round_neginf   -- round down to -infinity
+    round_nearest, -- Normal floating point round to nearest integer
+    round_inf,     -- Round up to +infinity
+    round_neginf   -- Round down to -infinity
   );
 
+  -- Default rounding style
   constant TIME_ROUND_STYLE : time_rounding := round_nearest;
 
-  --## Get the current simulation time resolution
+  --## Get the current simulation time resolution.
   function resolution_limit return delay_length;
 
-  --## Convert time to real time
+  --## Convert time to real time.
+  --# Args:
+  --#   Tval - Time to convert
+  --# Returns:
+  --#   Time converted to a real in units of seconds.
   function to_real( Tval : time ) return real;
 
-  --## Convert real time to time
+  --## Convert real time to time.
+  --# Args:
+  --#   Rval - Time to convert
+  --# Returns:
+  --#   Real converted to time.
   function to_time( Rval : real ) return time;
 
-  --## Convert frequency to period
+  --## Convert frequency to period.
+  --# Args:
+  --#   Freq - Frequency to convert
+  --# Returns:
+  --#   Inverse of the frequency.
   function to_period( Freq : frequency ) return delay_length;
 
-  --## Convert real frequency to period
+  --## Convert real frequency to period.
+  --# Args:
+  --#   Freq - Frequency to convert
+  --# Returns:
+  --#   Inverse of the frequency.
   function to_period( Freq : real ) return delay_length;
 
 
-  --## Convert frequency to real frequency
+  --## Convert frequency to real frequency.
+  --# Args:
+  --#   Freq - Frequency to convert
+  --# Returns:
+  --#   Real frequency.
   function to_real( Freq : frequency ) return real;
 
 
-  --## Convert period to frequency
+  --## Convert period to frequency.
+  --# Args:
+  --#   Period - Period to convert
+  --# Returns:
+  --#   Inverse of the period.
   function to_frequency( Period : delay_length ) return frequency;
 
-  --## Convert real period to frequency
+  --## Convert real period to frequency.
+  --# Args:
+  --#   Period - Period to convert
+  --# Returns:
+  --#   Inverse of the period.
   function to_frequency( Period : real ) return frequency;
 
 
   --## Compute clock cycles for the specified number of seconds using a clock
-  --#  frequency as the time base
+  --#  frequency as the time base.
+  --# Args:
+  --#   Secs        - Time to convert to cycles
+  --#   Clock_freq  - Frequency of the clock
+  --#   round_style - Optional rounding mode
+  --# Returns:
+  --#   Time converted into integral cycles.
   function to_clock_cycles( Secs : delay_length; Clock_freq : frequency;
     round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles;
 
+  --## Compute clock cycles for the specified number of seconds using a real clock
+  --#  frequency as the time base.
+  --# Args:
+  --#   Secs        - Time to convert to cycles
+  --#   Clock_freq  - Frequency of the clock
+  --#   round_style - Optional rounding mode
+  --# Returns:
+  --#   Time converted into integral cycles.
   function to_clock_cycles( Secs : delay_length; Clock_freq : real;
     round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles;
 
+  --## Compute clock cycles for the specified number of real seconds using a real clock
+  --#  frequency as the time base.
+  --# Args:
+  --#   Secs        - Time to convert to cycles
+  --#   Clock_freq  - Frequency of the clock
+  --#   round_style - Optional rounding mode
+  --# Returns:
+  --#   Time converted into integral cycles.
   function to_clock_cycles( Secs : real; Clock_freq : real;
     round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles;
 
+  --## Compute clock cycles for the specified number of real seconds using a clock
+  --#  frequency as the time base.
+  --# Args:
+  --#   Secs        - Time to convert to cycles
+  --#   Clock_freq  - Frequency of the clock
+  --#   round_style - Optional rounding mode
+  --# Returns:
+  --#   Time converted into integral cycles.
   function to_clock_cycles( Secs : real; Clock_freq : frequency;
     round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles;
 
   --## Compute clock cycles for the specified number of seconds using a clock
-  --#  period as the time base
+  --#  period as the time base.
+  --# Args:
+  --#   Secs         - Time to convert to cycles
+  --#   Clock_period - Period of the clock
+  --# Returns:
+  --#   Time converted into integral cycles.
   function to_clock_cycles( Secs : delay_length; Clock_period : delay_length )
     return clock_cycles;
 
+  --## Compute clock cycles for the specified number of real seconds using a clock
+  --#  period as the time base.
+  --# Args:
+  --#   Secs         - Time to convert to cycles
+  --#   Clock_period - Period of the clock
+  --# Returns:
+  --#   Time converted into integral cycles.
   function to_clock_cycles( Secs : real; Clock_period : delay_length;
     round_style : time_rounding := TIME_ROUND_STYLE ) return clock_cycles;
 
-  --## Calculate the time span represented by a number of clock cycles
+  --## Calculate the time span represented by a number of clock cycles.
+  --# Args:
+  --#   Cycles     - Number of cycles to convert
+  --#   Clock_freq - Frequency of the clock
+  --# Returns:
+  --#   Cycles converted into time.
   function time_duration( Cycles : clock_cycles; Clock_freq : real )
     return delay_length;
 
+  --## Calculate the time span represented by a number of clock cycles.
+  --# Args:
+  --#   Cycles       - Number of cycles to convert
+  --#   Clock_period - Period of the clock
+  --# Returns:
+  --#   Cycles converted into time.
   function time_duration( Cycles : clock_cycles; Clock_period : delay_length )
     return delay_length;
 
+  --## Calculate the real time span represented by a number of clock cycles.
+  --# Args:
+  --#   Cycles     - Number of cycles to convert
+  --#   Clock_freq - Frequency of the clock
+  --# Returns:
+  --#   Cycles converted into real time.
   function time_duration( Cycles : clock_cycles; Clock_freq : real )
     return real;
 
   --## Report statement for checking difference between requested time value
-  --#  and the output of to_clock_cycles
+  --#  and the output of to_clock_cycles().
+  --# Args:
+  --#   Identifier     - User specified name included in report
+  --#   Cycles         - Output of to_clock_cycles()
+  --#   Requested_secs - Input passed to to_clock_cycles()
+  --#   Actual_secs    - Output from time_duration()
   procedure report_time_precision( Identifier : in string; Cycles : in clock_cycles;
     Requested_secs : in real; Actual_secs : in real );
 
+  --## Report statement for checking difference between requested time value
+  --#  and the output of to_clock_cycles().
+  --# Args:
+  --#   Identifier     - User specified name included in report
+  --#   Cycles         - Output of to_clock_cycles()
+  --#   Requested_secs - Input passed to to_clock_cycles()
+  --#   Actual_secs    - Output from time_duration()
   procedure report_time_precision( Identifier : in string; Cycles : in clock_cycles;
     Requested_secs : in time; Actual_secs : in time );
 
 
   subtype duty_cycle is real range 0.0 to 1.0;
 
-  --## Generate clock waveform for simulation only
+  --## Generate clock waveform for simulation only.
+  --# Args:
+  --#   Clock      - Generated clock signal
+  --#   Stop_clock - Control signal that exits procedure when true
+  --#   Clock_freq - Frequency of the generated clock
+  --#   Duty       - Optional duty cycle of the generated clock (0.0 to 1.0)
   procedure clock_gen( signal Clock : out std_ulogic; signal Stop_clock : in boolean;
     constant Clock_freq : in frequency; constant Duty : duty_cycle := 0.5 );
 
+  --## Generate clock waveform for simulation only.
+  --# Args:
+  --#   Clock        - Generated clock signal
+  --#   Stop_clock   - Control signal that exits procedure when true
+  --#   Clock_period - Period of the generated clock
+  --#   Duty         - Optional duty cycle of the generated clock (0.0 to 1.0)
   procedure clock_gen( signal Clock : out std_ulogic; signal Stop_clock : in boolean;
     constant Clock_period : in delay_length; constant Duty : duty_cycle := 0.5 );
 

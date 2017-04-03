@@ -87,9 +87,11 @@ package interrupt_ctl_pkg is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic;
 
+      -- {{control|}}
       Int_mask    : in std_ulogic_vector;  -- Set bits correspond to active interrupts
       Int_request : in std_ulogic_vector;  -- Controls used to activate new interrupts
       Pending     : out std_ulogic_vector; -- Set bits indicate which interrupts are pending

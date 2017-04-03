@@ -171,15 +171,18 @@ package ddfs_pkg is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic;
       
+      -- {{control|}}
       Enable     : in std_ulogic := '1';
       Load_phase : in std_ulogic;
       New_phase  : in unsigned;
 
       Increment : in unsigned;      -- Value controlling the synthesized frequency
 
+      -- {{}}
       Accumulator : out unsigned;   -- Internal accumulator value
       Synth_clock : out std_ulogic; -- Synthesized frequency
       Synth_pulse : out std_ulogic  -- Single cycle pulse for rising edge of synth_clock

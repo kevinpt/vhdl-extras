@@ -78,21 +78,23 @@ package secded_codec_pkg is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic; -- Asynchronous reset
 
+      -- {{control|}}
       Codec_mode   : in std_ulogic; -- '0' = encode, '1' = decode
       Insert_error : in std_ulogic_vector(1 downto 0);
 
-      -- encoding port
+      -- {{data|Encoding port}}
       Data         : in std_ulogic_vector(DATA_SIZE-1 downto 0);
       Encoded_data : out ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right);
 
-      -- decoding port
+      -- {{Decoding port}}
       Ecc_data     : in ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right);
       Decoded_data : out std_ulogic_vector(DATA_SIZE-1 downto 0);
 
-      -- error flags
+      -- {{Error flags}}
       Single_bit_error : out std_ulogic;
       Double_bit_error : out std_ulogic
     );

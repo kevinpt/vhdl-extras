@@ -80,11 +80,15 @@ package gray_code is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock  : in std_ulogic;
       Reset  : in std_ulogic; -- Asynchronous reset
+      
+      -- {{control|}}
       Load   : in std_ulogic; -- Synchronous load, active high
       Enable : in std_ulogic; -- Synchronous enable, active high
-
+      
+      -- {{data|}}
       Binary_load : in unsigned; -- Loadable binary value
       Binary : out unsigned;     -- Binary count
       Gray   : out unsigned      -- Gray code count

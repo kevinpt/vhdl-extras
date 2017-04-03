@@ -56,11 +56,13 @@ package memory is
       SYNC_READ : boolean := true
     );
     port (
+      -- {{data|Write port}}
       Wr_clock : in std_ulogic;
       We       : in std_ulogic; -- Write enable
       Wr_addr  : in natural range 0 to MEM_SIZE-1;
       Wr_data  : in std_ulogic_vector;
 
+      -- {{Read port}}
       Rd_clock : in std_ulogic;
       Re       : in std_ulogic; -- Read enable
       Rd_addr  : in natural range 0 to MEM_SIZE-1;
@@ -78,7 +80,10 @@ package memory is
       SYNC_READ : boolean := true
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
+      
+      -- {{data|}}
       Re    : in std_ulogic; -- Read enable
       Addr  : in natural range 0 to MEM_SIZE-1;
       Data  : out std_ulogic_vector

@@ -126,10 +126,11 @@ package crc_ops is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic;
 
-      -- CRC configuration parameters
+      -- {{control|CRC configuration}}
       Poly        : in std_ulogic_vector;
       Xor_in      : in std_ulogic_vector;
       Xor_out     : in std_ulogic_vector;
@@ -138,6 +139,7 @@ package crc_ops is
 
       Initialize : in std_ulogic;      -- Reset the CRC state
 
+      -- {{data|}}
       Enable   : in std_ulogic;        -- Indicates data is valid for next CRC update
       Data     : in std_ulogic_vector; -- New data (can be any width needed)
       Checksum : out std_ulogic_vector -- Computed CRC

@@ -63,12 +63,31 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 package lcar_ops is
-
-  --## Determine the next state of the LCAR defined by the Rule_map
+  
+  type foo is integer;
+  
+  subtype bar is natural;
+  
+  type baz is integer;
+  
+  --## Determine the next state of the LCAR defined by the Rule_map.
+  --#
+  --# Args:
+  --#   State    - Current state of the LCAR cells
+  --#   Rule_map - Rules for each cell; '1' -> 150, '0' -> 90
+  --#   Left_in  - Left side input to LCAR
+  --#   Right_in - Right side input to LCAR
+  --# Returns:
+  --#   Next iteration of the LCAR rules which becomes the new state
   function next_wolfram_lcar(State, Rule_map : std_ulogic_vector;
     Left_in, Right_in : std_ulogic := '0' ) return std_ulogic_vector;
 
-  --## Lookup a predefined rule set from the table  
+  --## Lookup a predefined rule set from the table.
+  --#
+  --# Args:
+  --#   Size - Number of LCAR cells
+  --# Returns:
+  --#   Predefined rule map
   function lcar_rule( Size : positive ) return std_ulogic_vector;
   
 
@@ -77,15 +96,19 @@ package lcar_ops is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock  : in std_ulogic;
-      Reset  : in std_ulogic; -- Asynchronous reset
-      Enable : in std_ulogic; -- Synchronous enable
+      Reset  : in std_ulogic; --# Asynchronous reset
+      Enable : in std_ulogic; --# Synchronous enable
+      
+      -- {{control|}}
+      Rule_map : in std_ulogic_vector; --# Rules for each cell '1' -> 150, '0' -> 90
 
-      Left_in  : in std_ulogic; -- Left side input to LCAR
-      Right_in : in std_ulogic; -- Right side input to LCAR
+      -- {{data|}}
+      Left_in  : in std_ulogic; --# Left side input to LCAR
+      Right_in : in std_ulogic; --# Right side input to LCAR
 
-      Rule_map : in std_ulogic_vector; -- Rules for each cell '1' -> 150, '0' -> 90
-      State    : out std_ulogic_vector -- The state of each cell
+      State    : out std_ulogic_vector --# The state of each cell
     );
   end component;
 
@@ -106,11 +129,12 @@ entity wolfram_lcar is
     Clock  : in std_ulogic;
     Reset  : in std_ulogic; -- Asynchronous reset
     Enable : in std_ulogic; -- Synchronous enable
+    
+    Rule_map : in std_ulogic_vector; -- Rules for each cell '1' -> 150, '0' -> 90
 
     Left_in  : in std_ulogic; -- Left side input to LCAR
     Right_in : in std_ulogic; -- Right side input to LCAR
-
-    Rule_map : in std_ulogic_vector; -- Rules for each cell '1' -> 150, '0' -> 90
+    
     State    : out std_ulogic_vector -- The state of each cell
   );
 end entity;

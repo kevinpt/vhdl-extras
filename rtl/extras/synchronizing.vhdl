@@ -51,9 +51,11 @@ package synchronizing is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock  : in std_ulogic;
       Reset  : in std_ulogic; -- Asynchronous reset
 
+      -- {{data|}}
       Bit_in : in std_ulogic; -- Unsynchronized signal
       Sync   : out std_ulogic -- Synchronized to Clock's domain
     );
@@ -66,9 +68,11 @@ package synchronizing is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic; -- Asynchronous reset
 
+      -- {{data|}}
       Sync_reset : out std_ulogic -- Synchronized reset
     );
   end component;
@@ -81,6 +85,7 @@ package synchronizing is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock_tx : in std_ulogic; -- Transmitting domain clock
       Reset_tx : in std_ulogic;
 
@@ -88,11 +93,13 @@ package synchronizing is
       Reset_rx : in std_ulogic;
 
 
+      -- {{data|Send port}}
       Tx_data   : in std_ulogic_vector; -- Data to send
       Send_data : in std_ulogic;  -- Control signal to send new data
       Sending   : out std_ulogic; -- Active while TX is in process
       Data_sent : out std_ulogic; -- Flag to indicate TX completion
 
+      -- {{Receive port}}
       Rx_data  : out std_ulogic_vector; -- Data received in clock_rx domain
       New_data : out std_ulogic   -- Flag to indicate new data
     );

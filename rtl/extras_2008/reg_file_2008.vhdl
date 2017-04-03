@@ -150,18 +150,22 @@ package reg_file_pkg is
       REGISTER_INPUTS    : boolean := true  -- Register the input ports when true
       );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic;
 
+      -- {{control|}}
       Clear : in std_ulogic;            -- Initialize all registers to '0'
 
       -- Addressable external control port
+      -- {{data|Addressed port}}
       Reg_sel : in  unsigned;           -- Register address for write and read 
       We      : in  std_ulogic;         -- Write to selected register
       Wr_data : in  reg_word;           -- Write port
       Rd_data : out reg_word;           -- Read port
 
       -- Internal file contents
+      -- {{Registers}}
       Registers   : out reg_array;  -- Register file contents
       Direct_read : in  reg_array;  -- Read-only signals direct from external logic
       Reg_written : out std_ulogic_vector  -- Status flags indicating when each register is written

@@ -72,12 +72,15 @@ package bcd_conversion is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic; -- Asynchronous reset
 
+      -- {{control|}}
       Convert : in std_ulogic;  -- Start conversion when high
       Done    : out std_ulogic; -- Indicates completed conversion
 
+      -- {{data|}}
       Binary : in unsigned; -- Binary data to convert
       BCD    : out unsigned -- Converted output. Retained until next conversion
     );
@@ -88,12 +91,15 @@ package bcd_conversion is
       RESET_ACTIVE_LEVEL : std_ulogic := '1'
     );
     port (
+      -- {{clocks|}}
       Clock : in std_ulogic;
       Reset : in std_ulogic; -- Asynchronous reset
 
+      -- {{control|}}
       Convert : in std_ulogic;  -- Start conversion when high
       Done    : out std_ulogic; -- Indicates completed conversion
 
+      -- {{data|}}
       BCD    : in unsigned; -- BCD data to convert
       Binary : out unsigned -- Converted output. Retained until next conversion
     );
