@@ -10,7 +10,7 @@
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="https://kevinpt.github.io/opbasm/_static/project.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/project.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -25,26 +25,15 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link href='http://fonts.googleapis.com/css?family=Kreon:400,300,700' rel='stylesheet' type='text/css'>
-
+    <link rel="top" title="VHDL-extras 1.0 documentation" href="../index.html" />
+    <link rel="next" title="bcd_conversion" href="modules/bcd_conversion.html" />
+    <link rel="prev" title="VHDL-extras library documentation" href="../index.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
   </head>
-  <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../index.html" title="VHDL-extras library documentation"
-             accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">VHDL-extras 1.0 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -59,13 +48,11 @@
 <p>These packages provide core functionality that is of general use in a
 wide array of applications.</p>
 <div class="section" id="pipelining">
-<span id="id1"></span><h3>pipelining<a class="headerlink" href="#pipelining" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/pipelining.vhdl">pipelining.vhdl</a></p>
-<p>Configurable pipeline registers for use with automated retiming during synthesis. This provides a variable length chain of registers that can be placed after a section of combinational logic. When your synthesis tool is configured to enable retiming, these registers will be dispersed throughout the combinational logic to reduce the worst case delay. You can tweak the pipeline stages with a simple change in a generic to tune your results.</p>
+<span id="id1"></span><h3><a class="reference internal" href="modules/pipelining.html"><em>pipelining</em></a><a class="headerlink" href="#pipelining" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/pipelining-pipeline_u1.svg" /><p>Configurable pipeline registers for use with automated retiming during synthesis. This provides a variable length chain of registers that can be placed after a section of combinational logic. When your synthesis tool is configured to enable retiming, these registers will be dispersed throughout the combinational logic to reduce the worst case delay. You can tweak the pipeline stages with a simple change in a generic to tune your results.</p>
 </div>
 <div class="section" id="sizing">
-<span id="id2"></span><h3>sizing<a class="headerlink" href="#sizing" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/sizing.vhdl">sizing.vhdl</a></p>
+<span id="id2"></span><h3><a class="reference internal" href="modules/sizing.html"><em>sizing</em></a><a class="headerlink" href="#sizing" title="Permalink to this headline">¶</a></h3>
 <p>A set of functions for computing integer logarithms and for determining the size of binary numbers and encodings. Generalized functions for computing floor(log(n, b)) and ceil(log(n, b)) for any base b are provided as well as special purpose convenience functions like bit_size and encoding_size. See the <a class="reference internal" href="#bcd-conversion"><em>bcd_conversion</em></a> implementation for a practical example of computing integer logs in base-10 using this package.</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">constant</span> <span class="n">MAX_COUNT</span>  <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">1000</span><span class="p">;</span>
 <span class="k">constant</span> <span class="n">COUNT_SIZE</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="n">bit_size</span><span class="p">(</span><span class="n">MAX_COUNT</span><span class="p">);</span>
@@ -77,9 +64,8 @@ wide array of applications.</p>
 </div>
 </div>
 <div class="section" id="synchronizing">
-<span id="id3"></span><h3>synchronizing<a class="headerlink" href="#synchronizing" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/synchronizing.vhdl">synchronizing.vhdl</a></p>
-<p>Synchronizer entities for transferring signals between clock domains. There are three entities provided:</p>
+<span id="id3"></span><h3><a class="reference internal" href="modules/synchronizing.html"><em>synchronizing</em></a><a class="headerlink" href="#synchronizing" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/synchronizing-handshake_synchronizer1.svg" /><p>Synchronizer entities for transferring signals between clock domains. There are three entities provided:</p>
 <ul class="simple">
 <li>bit_synchronizer &#8211; Suitable for synchronizing individual bit-wide signals</li>
 <li>reset_synchronizer &#8211; A special synchronizer for generating asyncronous resets that are synchronously released</li>
@@ -88,9 +74,7 @@ wide array of applications.</p>
 <p>bit_synchronizer and reset_synchronizer have a configurable number of stages with a default of 2.</p>
 </div>
 <div class="section" id="timing-ops">
-<span id="id4"></span><h3>timing_ops<a class="headerlink" href="#timing-ops" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/timing_ops.vhdl">timing_ops.vhdl</a></p>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/timing_ops_xilinx.vhdl">timing_ops_xilinx.vhdl</a></p>
+<span id="id4"></span><h3><a class="reference internal" href="modules/timing_ops.html"><em>timing_ops</em></a><a class="headerlink" href="#timing-ops" title="Permalink to this headline">¶</a></h3>
 <p>Functions for conversions between time, frequency, and clock cycles. Also includes a flexible,
 simulation-only clock generation procedure. A variant of timing_ops is provided for use with Xilinx XST. It is stripped of the frequency physical type which XST cannot support. You can perform computations and conversions on time and frequency using real, integers, and physical types. This provides a powerful mechanism to generate synthesizable time related constants without manual precomputation.</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">library</span> <span class="nn">extras</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.sizing.bit_size</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.timing_ops.all</span><span class="p">;</span>
@@ -123,9 +107,8 @@ simulation-only clock generation procedure. A variant of timing_ops is provided 
 <h2>Error handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
 <p>Packages for performing error detection and correction.</p>
 <div class="section" id="crc-ops">
-<span id="id5"></span><h3>crc_ops<a class="headerlink" href="#crc-ops" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/crc_ops.vhdl">crc_ops.vhdl</a></p>
-<p>This package provides a general purpose CRC implementation. It consists
+<span id="id5"></span><h3><a class="reference internal" href="modules/crc_ops.html"><em>crc_ops</em></a><a class="headerlink" href="#crc-ops" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/crc_ops-crc.svg" /><p>This package provides a general purpose CRC implementation. It consists
 of a set of functions that can be used to iteratively process successive
 data vectors as well an an entity that combines the functions into a
 easily instantiated form. The CRC can be readily specified using the Rocksoft
@@ -151,9 +134,9 @@ all data has been passed through the CRC it is completed with a call to <cite>en
 produce the final CRC value.</p>
 <p>Implementing a CRC without depending on an external generator tool is easy and flexible:</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="c1">-- CRC-16-USB</span>
-<span class="k">constant</span> <span class="n">poly</span>        <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="n">X</span><span class="s">&quot;8005&quot;</span><span class="p">;</span>
-<span class="k">constant</span> <span class="n">xor_in</span>      <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="n">X</span><span class="s">&quot;FFFF&quot;</span><span class="p">;</span>
-<span class="k">constant</span> <span class="n">xor_out</span>     <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="n">X</span><span class="s">&quot;FFFF&quot;</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">poly</span>        <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="mh">X&quot;8005&quot;</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">xor_in</span>      <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="mh">X&quot;FFFF&quot;</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">xor_out</span>     <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="mh">X&quot;FFFF&quot;</span><span class="p">;</span>
 <span class="k">constant</span> <span class="n">reflect_in</span>  <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">;</span>
 <span class="k">constant</span> <span class="n">reflect_out</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">;</span>
 
@@ -184,33 +167,28 @@ produce the final CRC value.</p>
 </div>
 </div>
 <div class="section" id="hamming-edac">
-<span id="id6"></span><h3>hamming_edac<a class="headerlink" href="#hamming-edac" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/hamming_edac.vhdl">hamming_edac.vhdl</a></p>
+<span id="id6"></span><h3><a class="reference internal" href="modules/hamming_edac.html"><em>hamming_edac</em></a><a class="headerlink" href="#hamming-edac" title="Permalink to this headline">¶</a></h3>
 <p>A flexible implementation of the Hamming code for any data size of 4-bits or greater.</p>
 </div>
 <div class="section" id="parity-ops">
-<span id="id7"></span><h3>parity_ops<a class="headerlink" href="#parity-ops" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/parity_ops.vhdl">parity_ops.vhdl</a></p>
+<span id="id7"></span><h3><a class="reference internal" href="modules/parity_ops.html"><em>parity_ops</em></a><a class="headerlink" href="#parity-ops" title="Permalink to this headline">¶</a></h3>
 <p>Basic parity operations.</p>
 </div>
 <div class="section" id="secded-edac">
-<span id="id8"></span><h3>secded_edac<a class="headerlink" href="#secded-edac" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/secded_edac.vhdl">secded_edac.vhdl</a></p>
+<span id="id8"></span><h3><a class="reference internal" href="modules/secded_edac.html"><em>secded_edac</em></a><a class="headerlink" href="#secded-edac" title="Permalink to this headline">¶</a></h3>
 <p>Single Error Correction, Double Error Detection implemented with extended Hamming code.</p>
 </div>
 <div class="section" id="secded-codec">
-<span id="id9"></span><h3>secded_codec<a class="headerlink" href="#secded-codec" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/secded_codec.vhdl">secded_codec.vhdl</a></p>
-<p>An entity providing a combined SECDED encoder and decoder with added error injection for system verification. Optional pipelining is provided.</p>
+<span id="id9"></span><h3><a class="reference internal" href="modules/secded_codec.html"><em>secded_codec</em></a><a class="headerlink" href="#secded-codec" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/secded_codec-secded_codec.svg" /><p>An entity providing a combined SECDED encoder and decoder with added error injection for system verification. Optional pipelining is provided.</p>
 </div>
 </div>
 <div class="section" id="encoding">
 <h2>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h2>
 <p>Packages for encoding data into alternate forms.</p>
 <div class="section" id="bcd-conversion">
-<span id="id10"></span><h3>bcd_conversion<a class="headerlink" href="#bcd-conversion" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/bcd_conversion.vhdl">bcd_conversion.vhdl</a></p>
-<p>This package provides functions and components for performing conversion
+<span id="id10"></span><h3><a class="reference internal" href="modules/bcd_conversion.html"><em>bcd_conversion</em></a><a class="headerlink" href="#bcd-conversion" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/bcd_conversion-binary_to_bcd.svg" /><p>This package provides functions and components for performing conversion
 between binary and packed Binary Coded Decimal (BCD). The functions
 to_bcd and to_binary can be used to create synthesizable combinational
 logic for performing a conversion. In synthesized code they are best used
@@ -228,22 +206,19 @@ result must be multiplied by 4 to get the length of a packed BCD array.</p>
 </div>
 </div>
 <div class="section" id="gray-code">
-<span id="id11"></span><h3>gray_code<a class="headerlink" href="#gray-code" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/gray_code.vhdl">gray_code.vhdl</a></p>
-<p>This package provides functions to convert between Gray code and binary. An example
+<span id="id11"></span><h3><a class="reference internal" href="modules/gray_code.html"><em>gray_code</em></a><a class="headerlink" href="#gray-code" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/gray_code-gray_counter.svg" /><p>This package provides functions to convert between Gray code and binary. An example
 implementation of a Gray code counter is also included.</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">bin</span><span class="p">,</span> <span class="n">gray</span><span class="p">,</span> <span class="n">bin2</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
 <span class="p">...</span>
-<span class="n">bin</span>  <span class="o">&lt;=</span> <span class="n">X</span><span class="s">&quot;C5&quot;</span><span class="p">;</span>
+<span class="n">bin</span>  <span class="o">&lt;=</span> <span class="mh">X&quot;C5&quot;</span><span class="p">;</span>
 <span class="n">gray</span> <span class="o">&lt;=</span> <span class="n">to_gray</span><span class="p">(</span><span class="n">bin</span><span class="p">);</span>
 <span class="n">bin2</span> <span class="o">&lt;=</span> <span class="n">to_binary</span><span class="p">(</span><span class="n">gray</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="muxing">
-<span id="id12"></span><h3>muxing<a class="headerlink" href="#muxing" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/muxing.vhdl">muxing.vhdl</a></p>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/muxing_2008.vhdl">muxing_2008.vhdl</a></p>
+<span id="id12"></span><h3><a class="reference internal" href="modules/muxing.html"><em>muxing</em></a><a class="headerlink" href="#muxing" title="Permalink to this headline">¶</a></h3>
 <p>Parameterized multiplexers, decoders, and demultiplexers. A VHDL-2008 variant is available that
 implements a fully generic multi-bit mux.</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">sel</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
@@ -276,9 +251,8 @@ implements a fully generic multi-bit mux.</p>
 <h2>Memories<a class="headerlink" href="#memories" title="Permalink to this headline">¶</a></h2>
 <p>Packages with internal memories</p>
 <div class="section" id="fifos">
-<span id="id13"></span><h3>fifos<a class="headerlink" href="#fifos" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/fifos.vhdl">fifos.vhdl</a></p>
-<p>This package implements a set of generic FIFO components. There are three
+<span id="id13"></span><h3><a class="reference internal" href="modules/fifos.html"><em>fifos</em></a><a class="headerlink" href="#fifos" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/fifos-fifo.svg" /><p>This package implements a set of generic FIFO components. There are three
 variants. All use the same basic interface for the read/write ports and
 status flags. The FIFOs have the following differences:</p>
 <ul class="simple">
@@ -288,15 +262,12 @@ status flags. The FIFOs have the following differences:</p>
 </ul>
 </div>
 <div class="section" id="memory">
-<span id="id14"></span><h3>memory<a class="headerlink" href="#memory" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/memory.vhdl">memory.vhdl</a></p>
-<p>This package provides general purpose components for inferred dual-ported RAM and ROM.</p>
+<span id="id14"></span><h3><a class="reference internal" href="modules/memory.html"><em>memory</em></a><a class="headerlink" href="#memory" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/memory-dual_port_ram.svg" /><p>This package provides general purpose components for inferred dual-ported RAM and ROM.</p>
 </div>
 <div class="section" id="reg-file">
-<span id="id15"></span><h3>reg_file<a class="headerlink" href="#reg-file" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/reg_file.vhdl">reg_file.vhdl</a></p>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/reg_file_2008.vhdl">reg_file_2008.vhdl</a></p>
-<p>This is an implementation of a general purpose register file. The VHDL-93 version must be manually customized to set the size of the registers internally. The VHDL-2008 version is fully generic by employing an unconstrained array of unconstrained arrays to implement the registers. In addition to simple read/write registers you can configure individual bits to act as self clearing strobes when written and to read back directly from internal signals rather than from the register contents.</p>
+<span id="id15"></span><h3><a class="reference internal" href="modules/reg_file.html"><em>reg_file</em></a><a class="headerlink" href="#reg-file" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/reg_file-reg_file.svg" /><p>This is an implementation of a general purpose register file. The VHDL-93 version must be manually customized to set the size of the registers internally. The VHDL-2008 version is fully generic by employing an unconstrained array of unconstrained arrays to implement the registers. In addition to simple read/write registers you can configure individual bits to act as self clearing strobes when written and to read back directly from internal signals rather than from the register contents.</p>
 </div>
 </div>
 <div class="section" id="randomization">
@@ -304,20 +275,16 @@ status flags. The FIFOs have the following differences:</p>
 <p>These packages provide linear feedback shift registers and related
 structures for creating randomized output.</p>
 <div class="section" id="lcar-ops">
-<span id="id16"></span><h3>lcar_ops<a class="headerlink" href="#lcar-ops" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/lcar_ops.vhdl">lcar_ops.vhdl</a></p>
-<p>An implementation of the Wolfram Linear Cellular Automata. This is useful for generating pseudo-random numbers with low correlation between bits. Adaptable to any number of cells. Constants are provided for
+<span id="id16"></span><h3><a class="reference internal" href="modules/lcar_ops.html"><em>lcar_ops</em></a><a class="headerlink" href="#lcar-ops" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/lcar_ops-wolfram_lcar1.svg" /><p>An implementation of the Wolfram Linear Cellular Automata. This is useful for generating pseudo-random numbers with low correlation between bits. Adaptable to any number of cells. Constants are provided for
 maximal length sequences of up to 100 bits.</p>
 </div>
 <div class="section" id="lfsr-ops">
-<span id="id17"></span><h3>lfsr_ops<a class="headerlink" href="#lfsr-ops" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/lfsr_ops.vhdl">lfsr_ops.vhdl</a></p>
-<p>Various implementations of Galois and Fibonacci Linear Feedback Shift Registers. These adapt to any size register. Coefficients are provided for maximal length sequences up to 100 bits.</p>
+<span id="id17"></span><h3><a class="reference internal" href="modules/lfsr_ops.html"><em>lfsr_ops</em></a><a class="headerlink" href="#lfsr-ops" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/lfsr_ops-fibonacci_lfsr.svg" /><p>Various implementations of Galois and Fibonacci Linear Feedback Shift Registers. These adapt to any size register. Coefficients are provided for maximal length sequences up to 100 bits.</p>
 </div>
 <div class="section" id="random">
-<span id="id18"></span><h3>random<a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/random.vhdl">random.vhdl</a></p>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/random_20xx.vhdl">random_20xx.vhdl</a></p>
+<span id="id18"></span><h3><a class="reference internal" href="modules/random.html"><em>random</em></a><a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h3>
 <p>This package provides a general set of pseudo-random number functions.
 It is implemented as a wrapper around the ieee.math_real.uniform
 procedure and is only suitable for simulation not synthesis. See the
@@ -338,50 +305,43 @@ in both implementations.</p>
 <p>A set of packages that provide string and character operations adapted
 from the Ada standard library.</p>
 <div class="section" id="characters-handling">
-<span id="id19"></span><h3>characters_handling<a class="headerlink" href="#characters-handling" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/characters_handling.vhdl">characters_handling.vhdl</a></p>
+<span id="id19"></span><h3><a class="reference internal" href="modules/characters_handling.html"><em>characters_handling</em></a><a class="headerlink" href="#characters-handling" title="Permalink to this headline">¶</a></h3>
 <p>This is a package of functions that replicate the behavior of the Ada
 standard library package ada.characters.handling. Included are functions
 to test for different character classifications and perform conversion
 of characters and strings to upper and lower case.</p>
 </div>
 <div class="section" id="characters-latin-1">
-<h3>characters_latin_1<a class="headerlink" href="#characters-latin-1" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/characters_latin_1.vhdl">characters_latin_1.vhdl</a></p>
+<h3><a class="reference internal" href="modules/characters_latin_1.html"><em>characters_latin_1</em></a><a class="headerlink" href="#characters-latin-1" title="Permalink to this headline">¶</a></h3>
 <p>This package provides Latin-1 character constants. These constants are
 adapted from the definitions in the Ada&#8216;95 ARM for the package
 Ada.Characters.Latin_1.</p>
 </div>
 <div class="section" id="strings">
-<span id="id20"></span><h3>strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings.vhdl">strings.vhdl</a></p>
+<span id="id20"></span><h3><a class="reference internal" href="modules/strings.html"><em>strings</em></a><a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
 <p>Shared types for the string packages.</p>
 </div>
 <div class="section" id="strings-fixed">
-<span id="id21"></span><h3>strings_fixed<a class="headerlink" href="#strings-fixed" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_fixed.vhdl">strings_fixed.vhdl</a></p>
+<span id="id21"></span><h3><a class="reference internal" href="modules/strings_fixed.html"><em>strings_fixed</em></a><a class="headerlink" href="#strings-fixed" title="Permalink to this headline">¶</a></h3>
 <p>This package provides a string library for operating on fixed length
 strings. This is a clone of the Ada&#8216;95 library Ada.Strings.Fixed. It is a
 nearly complete implementation with only the procedures taking character
 mapping functions omitted because of VHDL limitations.</p>
 </div>
 <div class="section" id="strings-maps">
-<span id="id22"></span><h3>strings_maps<a class="headerlink" href="#strings-maps" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_maps.vhdl">strings_maps.vhdl</a></p>
+<span id="id22"></span><h3><a class="reference internal" href="modules/strings_maps.html"><em>strings_maps</em></a><a class="headerlink" href="#strings-maps" title="Permalink to this headline">¶</a></h3>
 <p>This package provides types and functions for manipulating character sets.
 It is a clone of the Ada&#8216;95 package Ada.Strings.Maps.</p>
 </div>
 <div class="section" id="strings-maps-constants">
-<span id="id23"></span><h3>strings_maps_constants<a class="headerlink" href="#strings-maps-constants" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_maps_constants.vhdl">strings_maps_constants.vhdl</a></p>
+<span id="id23"></span><h3><a class="reference internal" href="modules/strings_maps_constants.html"><em>strings_maps_constants</em></a><a class="headerlink" href="#strings-maps-constants" title="Permalink to this headline">¶</a></h3>
 <p>Constants for various character sets from the range
 of Latin-1 and mappings for upper case, lower case, and basic (unaccented)
 characters. It is a clone of the Ada&#8216;95 package
 Ada.Strings.Maps.Constants.</p>
 </div>
 <div class="section" id="strings-unbounded">
-<span id="id24"></span><h3>strings_unbounded<a class="headerlink" href="#strings-unbounded" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_unbounded.vhdl">strings_unbounded.vhdl</a></p>
+<span id="id24"></span><h3><a class="reference internal" href="modules/strings_unbounded.html"><em>strings_unbounded</em></a><a class="headerlink" href="#strings-unbounded" title="Permalink to this headline">¶</a></h3>
 <p>This package provides a string library for operating on unbounded length
 strings. This is a clone of the Ada&#8216;95 library Ada.Strings.Unbounded. Due
 to the VHDL restriction on using access types as function parameters only
@@ -397,14 +357,12 @@ to simplify duplication of an existing unbounded string.</p>
 <h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
 <p>Additional packages of useful functions.</p>
 <div class="section" id="binaryio">
-<span id="id25"></span><h3>binaryio<a class="headerlink" href="#binaryio" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/binaryio.vhdl">binaryio.vhdl</a></p>
+<span id="id25"></span><h3><a class="reference internal" href="modules/binaryio.html"><em>binaryio</em></a><a class="headerlink" href="#binaryio" title="Permalink to this headline">¶</a></h3>
 <p>Procedures for general binary file IO. Support is provided for reading and writing vectors of any size
 with big and little-endian byte order.</p>
 </div>
 <div class="section" id="text-buffering">
-<span id="id26"></span><h3>text_buffering<a class="headerlink" href="#text-buffering" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/text_buffering.vhdl">text_buffering.vhdl</a></p>
+<span id="id26"></span><h3><a class="reference internal" href="modules/text_buffering.html"><em>text_buffering</em></a><a class="headerlink" href="#text-buffering" title="Permalink to this headline">¶</a></h3>
 <p>This package provides a facility for storing buffered text. It can be used
 to represent the contents of a text file as a linked list of dynamically
 allocated strings for each line. A text file can be read into a buffer and
@@ -412,14 +370,12 @@ the resulting data structure can be incorporated into records passable
 to procedures without having to maintain a separate file handle.</p>
 </div>
 <div class="section" id="ddfs">
-<span id="id27"></span><h3>ddfs<a class="headerlink" href="#ddfs" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/ddfs.vhdl">ddfs.vhdl</a></p>
-<p>A set of functions for implementing Direct Digital Frequency Synthesizers.</p>
+<span id="id27"></span><h3><a class="reference internal" href="modules/ddfs.html"><em>ddfs</em></a><a class="headerlink" href="#ddfs" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/ddfs-ddfs.svg" /><p>A set of functions for implementing Direct Digital Frequency Synthesizers.</p>
 </div>
 <div class="section" id="glitch-filtering">
-<span id="id28"></span><h3>glitch_filtering<a class="headerlink" href="#glitch-filtering" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/glitch_filtering.vhdl">glitch_filtering.vhdl</a></p>
-<p>Glitch filter components that can be used to remove
+<span id="id28"></span><h3><a class="reference internal" href="modules/glitch_filtering.html"><em>glitch_filtering</em></a><a class="headerlink" href="#glitch-filtering" title="Permalink to this headline">¶</a></h3>
+<img src="../_images/glitch_filtering-glitch_filter.svg" /><p>Glitch filter components that can be used to remove
 noise from digital input signals. This can be useful for debouncing
 switches directly connected to a device. The glitch_filter component works
 with a single std_ulogic signal while array_glitch_filter provides
@@ -452,61 +408,66 @@ flip-flops and can be directly tied to input pads.</p>
 </p>
 
 
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../index.html"
-                        title="previous chapter">VHDL-extras library documentation</a></p>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">VHDL-extras library documentation</a></li>
+      <li>Next: <a href="modules/bcd_conversion.html" title="next chapter">bcd_conversion</a></li>
+  </ul></li>
+</ul>
+</div>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">VHDL-extras packages</a><ul>
 <li><a class="reference internal" href="#core-packages">Core Packages</a><ul>
-<li><a class="reference internal" href="#pipelining">pipelining</a></li>
-<li><a class="reference internal" href="#sizing">sizing</a></li>
-<li><a class="reference internal" href="#synchronizing">synchronizing</a></li>
-<li><a class="reference internal" href="#timing-ops">timing_ops</a></li>
+<li><a class="reference internal" href="#pipelining"><tt class="docutils literal"><span class="pre">pipelining</span></tt></a></li>
+<li><a class="reference internal" href="#sizing"><tt class="docutils literal"><span class="pre">sizing</span></tt></a></li>
+<li><a class="reference internal" href="#synchronizing"><tt class="docutils literal"><span class="pre">synchronizing</span></tt></a></li>
+<li><a class="reference internal" href="#timing-ops"><tt class="docutils literal"><span class="pre">timing_ops</span></tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#error-handling">Error handling</a><ul>
-<li><a class="reference internal" href="#crc-ops">crc_ops</a></li>
-<li><a class="reference internal" href="#hamming-edac">hamming_edac</a></li>
-<li><a class="reference internal" href="#parity-ops">parity_ops</a></li>
-<li><a class="reference internal" href="#secded-edac">secded_edac</a></li>
-<li><a class="reference internal" href="#secded-codec">secded_codec</a></li>
+<li><a class="reference internal" href="#crc-ops"><tt class="docutils literal"><span class="pre">crc_ops</span></tt></a></li>
+<li><a class="reference internal" href="#hamming-edac"><tt class="docutils literal"><span class="pre">hamming_edac</span></tt></a></li>
+<li><a class="reference internal" href="#parity-ops"><tt class="docutils literal"><span class="pre">parity_ops</span></tt></a></li>
+<li><a class="reference internal" href="#secded-edac"><tt class="docutils literal"><span class="pre">secded_edac</span></tt></a></li>
+<li><a class="reference internal" href="#secded-codec"><tt class="docutils literal"><span class="pre">secded_codec</span></tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#encoding">Encoding</a><ul>
-<li><a class="reference internal" href="#bcd-conversion">bcd_conversion</a></li>
-<li><a class="reference internal" href="#gray-code">gray_code</a></li>
-<li><a class="reference internal" href="#muxing">muxing</a></li>
+<li><a class="reference internal" href="#bcd-conversion"><tt class="docutils literal"><span class="pre">bcd_conversion</span></tt></a></li>
+<li><a class="reference internal" href="#gray-code"><tt class="docutils literal"><span class="pre">gray_code</span></tt></a></li>
+<li><a class="reference internal" href="#muxing"><tt class="docutils literal"><span class="pre">muxing</span></tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#memories">Memories</a><ul>
-<li><a class="reference internal" href="#fifos">fifos</a></li>
-<li><a class="reference internal" href="#memory">memory</a></li>
-<li><a class="reference internal" href="#reg-file">reg_file</a></li>
+<li><a class="reference internal" href="#fifos"><tt class="docutils literal"><span class="pre">fifos</span></tt></a></li>
+<li><a class="reference internal" href="#memory"><tt class="docutils literal"><span class="pre">memory</span></tt></a></li>
+<li><a class="reference internal" href="#reg-file"><tt class="docutils literal"><span class="pre">reg_file</span></tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#randomization">Randomization</a><ul>
-<li><a class="reference internal" href="#lcar-ops">lcar_ops</a></li>
-<li><a class="reference internal" href="#lfsr-ops">lfsr_ops</a></li>
-<li><a class="reference internal" href="#random">random</a></li>
+<li><a class="reference internal" href="#lcar-ops"><tt class="docutils literal"><span class="pre">lcar_ops</span></tt></a></li>
+<li><a class="reference internal" href="#lfsr-ops"><tt class="docutils literal"><span class="pre">lfsr_ops</span></tt></a></li>
+<li><a class="reference internal" href="#random"><tt class="docutils literal"><span class="pre">random</span></tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#string-and-character-handling">String and character handling</a><ul>
-<li><a class="reference internal" href="#characters-handling">characters_handling</a></li>
-<li><a class="reference internal" href="#characters-latin-1">characters_latin_1</a></li>
-<li><a class="reference internal" href="#strings">strings</a></li>
-<li><a class="reference internal" href="#strings-fixed">strings_fixed</a></li>
-<li><a class="reference internal" href="#strings-maps">strings_maps</a></li>
-<li><a class="reference internal" href="#strings-maps-constants">strings_maps_constants</a></li>
-<li><a class="reference internal" href="#strings-unbounded">strings_unbounded</a></li>
+<li><a class="reference internal" href="#characters-handling"><tt class="docutils literal"><span class="pre">characters_handling</span></tt></a></li>
+<li><a class="reference internal" href="#characters-latin-1"><tt class="docutils literal"><span class="pre">characters_latin_1</span></tt></a></li>
+<li><a class="reference internal" href="#strings"><tt class="docutils literal"><span class="pre">strings</span></tt></a></li>
+<li><a class="reference internal" href="#strings-fixed"><tt class="docutils literal"><span class="pre">strings_fixed</span></tt></a></li>
+<li><a class="reference internal" href="#strings-maps"><tt class="docutils literal"><span class="pre">strings_maps</span></tt></a></li>
+<li><a class="reference internal" href="#strings-maps-constants"><tt class="docutils literal"><span class="pre">strings_maps_constants</span></tt></a></li>
+<li><a class="reference internal" href="#strings-unbounded"><tt class="docutils literal"><span class="pre">strings_unbounded</span></tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
-<li><a class="reference internal" href="#binaryio">binaryio</a></li>
-<li><a class="reference internal" href="#text-buffering">text_buffering</a></li>
-<li><a class="reference internal" href="#ddfs">ddfs</a></li>
-<li><a class="reference internal" href="#glitch-filtering">glitch_filtering</a></li>
+<li><a class="reference internal" href="#binaryio"><tt class="docutils literal"><span class="pre">binaryio</span></tt></a></li>
+<li><a class="reference internal" href="#text-buffering"><tt class="docutils literal"><span class="pre">text_buffering</span></tt></a></li>
+<li><a class="reference internal" href="#ddfs"><tt class="docutils literal"><span class="pre">ddfs</span></tt></a></li>
+<li><a class="reference internal" href="#glitch-filtering"><tt class="docutils literal"><span class="pre">glitch_filtering</span></tt></a></li>
 </ul>
 </li>
 </ul>
@@ -598,23 +559,13 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
       
       |
       <a href="../_sources/rst/packages.txt"
-          rel="nofollow">Page source</a></li>
+          rel="nofollow">Page source</a>
     </div>
 
     
 
     
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-49656006-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
 
   </body>
 </html>

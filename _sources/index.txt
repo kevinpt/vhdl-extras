@@ -216,8 +216,10 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
+   :glob:
 
    rst/packages
+   rst/modules/*
 
 Indices and tables
 ==================
