@@ -1,14 +1,19 @@
-.. Generated from ../rtl/extras/text_buffering.vhdl on 2017-04-02 22:57:53.160039
+.. Generated from ../rtl/extras/text_buffering.vhdl on 2017-04-20 23:04:37.264877
 .. vhdl:package:: text_buffering
+
 
 Types
 -----
 
+
 .. vhdl:type:: buffer_line_acc
+
 
 .. vhdl:type:: buffer_line
 
+
 .. vhdl:type:: text_buffer
+
 
 Subprograms
 -----------

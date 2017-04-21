@@ -1,29 +1,37 @@
-.. Generated from ../rtl/extras/parity_ops.vhdl on 2017-04-02 22:57:52.880070
+.. Generated from ../rtl/extras/parity_ops.vhdl on 2017-04-20 23:04:36.919037
 .. vhdl:package:: parity_ops
+
 
 Types
 -----
 
+
 .. vhdl:type:: parity_kind
+
+  Identify the type of parity
 
 Subprograms
 -----------
 
 
-.. vhdl:function:: function parity(ptype : parity_kind; val : std_ulogic_vector) return std_ulogic;
+.. vhdl:function:: function parity(Ptype : parity_kind; Val : std_ulogic_vector) return std_ulogic;
 
-  :param ptype: 
-  :type ptype: parity_kind
-  :param val: 
-  :type val: std_ulogic_vector
+  :param Ptype: Type of parity; odd or even
+  :type Ptype: parity_kind
+  :param Val: Value to generate parity for
+  :type Val: std_ulogic_vector
+  :returns:   Parity bit for Val.
 
+  Compute parity.
 
-.. vhdl:function:: function check_parity(ptype : parity_kind; val : std_ulogic_vector; parity_bit : std_ulogic) return boolean;
+.. vhdl:function:: function check_parity(Ptype : parity_kind; Val : std_ulogic_vector; Parity_bit : std_ulogic) return boolean;
 
-  :param ptype: 
-  :type ptype: parity_kind
-  :param val: 
-  :type val: std_ulogic_vector
-  :param parity_bit: 
-  :type parity_bit: std_ulogic
+  :param Ptype: Type of parity; odd or even
+  :type Ptype: parity_kind
+  :param Val: Value to test parity for
+  :type Val: std_ulogic_vector
+  :param Parity_bit: Parity bit to check
+  :type Parity_bit: std_ulogic
+  :returns:   true if Parity_bit is correct.
 
+  Check parity for an error.

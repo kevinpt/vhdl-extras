@@ -1,10 +1,13 @@
-.. Generated from ../rtl/extras/strings_unbounded.vhdl on 2017-04-02 22:57:53.006381
+.. Generated from ../rtl/extras/strings_unbounded.vhdl on 2017-04-20 23:04:37.069300
 .. vhdl:package:: strings_unbounded
+
 
 Subtypes
 --------
 
+
 .. vhdl:subtype:: unbounded_string
+
 
 Subprograms
 -----------

@@ -1,17 +1,23 @@
-.. Generated from ../rtl/extras/timing_ops_xilinx.vhdl on 2017-04-02 22:57:53.072075
+.. Generated from ../rtl/extras/timing_ops_xilinx.vhdl on 2017-04-20 23:04:37.147598
 .. vhdl:package:: timing_ops
+
 
 Types
 -----
 
+
 .. vhdl:type:: time_rounding
+
 
 Subtypes
 --------
 
+
 .. vhdl:subtype:: clock_cycles
 
+
 .. vhdl:subtype:: duty_cycle
+
 
 Subprograms
 -----------

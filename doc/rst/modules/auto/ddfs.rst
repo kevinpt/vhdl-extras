@@ -1,5 +1,61 @@
-.. Generated from ../rtl/extras/ddfs.vhdl on 2017-04-02 22:57:53.083365
+.. Generated from ../rtl/extras/ddfs.vhdl on 2017-04-20 23:04:37.161144
 .. vhdl:package:: ddfs_pkg
+
+
+Components
+----------
+
+
+ddfs
+~~~~
+
+.. symbolator::
+
+  component ddfs is
+  generic (
+    RESET_ACTIVE_LEVEL : std_ulogic
+  );
+  port (
+    Clock : in std_ulogic;
+    Reset : in std_ulogic;
+    Enable : in std_ulogic;
+    Load_phase : in std_ulogic;
+    New_phase : in unsigned;
+    Increment : in unsigned;
+    Accumulator : out unsigned;
+    Synth_clock : out std_ulogic;
+    Synth_pulse : out std_ulogic
+  );
+  end component;
+
+|
+
+
+|
+
+
+.. vhdl:entity:: ddfs
+
+  :generic RESET_ACTIVE_LEVEL: 
+  :gtype RESET_ACTIVE_LEVEL: std_ulogic
+  :port Clock: 
+  :ptype Clock: in std_ulogic
+  :port Reset: 
+  :ptype Reset: in std_ulogic
+  :port Enable: 
+  :ptype Enable: in std_ulogic
+  :port Load_phase: 
+  :ptype Load_phase: in std_ulogic
+  :port New_phase: 
+  :ptype New_phase: in unsigned
+  :port Increment: 
+  :ptype Increment: in unsigned
+  :port Accumulator: 
+  :ptype Accumulator: out unsigned
+  :port Synth_clock: 
+  :ptype Synth_clock: out std_ulogic
+  :port Synth_pulse: 
+  :ptype Synth_pulse: out std_ulogic
 
 Subprograms
 -----------

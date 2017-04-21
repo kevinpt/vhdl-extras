@@ -1,21 +1,29 @@
-.. Generated from ../rtl/extras/strings_maps.vhdl on 2017-04-02 22:57:53.150584
+.. Generated from ../rtl/extras/strings_maps.vhdl on 2017-04-20 23:04:37.244390
 .. vhdl:package:: strings_maps
+
 
 Types
 -----
 
+
 .. vhdl:type:: character_set
+
 
 .. vhdl:type:: character_range
 
+
 .. vhdl:type:: character_ranges
 
+
 .. vhdl:type:: character_mapping
+
 
 Subtypes
 --------
 
+
 .. vhdl:subtype:: character_sequence
+
 
 Subprograms
 -----------

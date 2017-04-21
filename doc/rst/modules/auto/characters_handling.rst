@@ -1,5 +1,6 @@
-.. Generated from ../rtl/extras/characters_handling.vhdl on 2017-04-02 22:57:53.169129
+.. Generated from ../rtl/extras/characters_handling.vhdl on 2017-04-20 23:04:37.275806
 .. vhdl:package:: characters_handling
+
 
 Subprograms
 -----------

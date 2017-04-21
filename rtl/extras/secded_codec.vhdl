@@ -73,30 +73,30 @@ package secded_codec_pkg is
 
   component secded_codec is
     generic (
-      DATA_SIZE : positive;
-      PIPELINE_STAGES : natural := 0;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      DATA_SIZE : positive;                  --# Size of the ``Data`` input
+      PIPELINE_STAGES : natural := 0;        --# Number of pipeline stages appended to end
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic; -- Asynchronous reset
+      --# {{clocks|}}
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
-      -- {{control|}}
-      Codec_mode   : in std_ulogic; -- '0' = encode, '1' = decode
-      Insert_error : in std_ulogic_vector(1 downto 0);
+      --# {{control|}}
+      Codec_mode   : in std_ulogic; --# OPerating mode: '0' = encode, '1' = decode
+      Insert_error : in std_ulogic_vector(1 downto 0); --# Error injection
 
-      -- {{data|Encoding port}}
-      Data         : in std_ulogic_vector(DATA_SIZE-1 downto 0);
-      Encoded_data : out ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right);
+      --# {{data|Encoding port}}
+      Data         : in std_ulogic_vector(DATA_SIZE-1 downto 0); --# Data to encode
+      Encoded_data : out ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right); --# Data message with  SECDED parity
 
-      -- {{Decoding port}}
-      Ecc_data     : in ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right);
-      Decoded_data : out std_ulogic_vector(DATA_SIZE-1 downto 0);
+      --# {{Decoding port}}
+      Ecc_data     : in ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right); --# Received data
+      Decoded_data : out std_ulogic_vector(DATA_SIZE-1 downto 0); --# Received data with errors corrected
 
-      -- {{Error flags}}
-      Single_bit_error : out std_ulogic;
-      Double_bit_error : out std_ulogic
+      --# {{Error flags}}
+      Single_bit_error : out std_ulogic; --# '1' when a single-bit error is detected (automatically corrected)
+      Double_bit_error : out std_ulogic  --# '1' when a double-bit error is detected
     );
   end component;
 

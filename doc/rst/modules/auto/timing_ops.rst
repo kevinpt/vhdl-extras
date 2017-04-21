@@ -1,19 +1,27 @@
-.. Generated from ../rtl/extras/timing_ops.vhdl on 2017-04-02 22:57:53.061909
+.. Generated from ../rtl/extras/timing_ops.vhdl on 2017-04-20 23:04:37.135270
 .. vhdl:package:: timing_ops
+
 
 Types
 -----
 
+
 .. vhdl:type:: frequency
 
+  Frequency physical type.
+
 .. vhdl:type:: time_rounding
+
 
 Subtypes
 --------
 
+
 .. vhdl:subtype:: clock_cycles
 
+
 .. vhdl:subtype:: duty_cycle
+
 
 Subprograms
 -----------

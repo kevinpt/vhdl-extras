@@ -65,33 +65,68 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 package gray_code is
-  --## Convert binary to Gray code
+  --## Convert binary to Gray code.
+  --# Args:
+  --#  Binary: Binary value
+  --# Returns:
+  --#  Gray-coded vector.
   function to_gray( Binary : std_ulogic_vector ) return std_ulogic_vector;
+  
+  --## Convert binary to Gray code.
+  --# Args:
+  --#  Binary: Binary value
+  --# Returns:
+  --#  Gray-coded vector.
   function to_gray( Binary : std_logic_vector )  return std_logic_vector;
+  
+  --## Convert binary to Gray code.
+  --# Args:
+  --#  Binary: Binary value
+  --# Returns:
+  --#  Gray-coded vector.
   function to_gray( Binary : unsigned ) return unsigned;
 
-  --## Convert Gray code to binary
+  --## Convert Gray code to binary.
+  --# Args:
+  --#  Binary: Gray-coded value
+  --# Returns:
+  --#  Decoded binary value.
   function to_binary( Gray : std_ulogic_vector ) return std_ulogic_vector;
+  
+  --## Convert Gray code to binary.
+  --# Args:
+  --#  Binary: Gray-coded value
+  --# Returns:
+  --#  Decoded binary value.
   function to_binary( Gray : std_logic_vector )  return std_logic_vector;
+  
+  --## Convert Gray code to binary.
+  --# Args:
+  --#  Binary: Gray-coded value
+  --# Returns:
+  --#  Decoded binary value.
   function to_binary( Gray : unsigned ) return unsigned;
 
+  --## An example Gray code counter implementation. This counter maintains an
+  --#  internal binary register and converts its output to Gray code stored in a
+  --#  separate register.
   component gray_counter is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock  : in std_ulogic;
-      Reset  : in std_ulogic; -- Asynchronous reset
+      --# {{clocks|}}
+      Clock  : in std_ulogic; --# System clock
+      Reset  : in std_ulogic; --# Asynchronous reset
       
-      -- {{control|}}
-      Load   : in std_ulogic; -- Synchronous load, active high
-      Enable : in std_ulogic; -- Synchronous enable, active high
+      --# {{control|}}
+      Load   : in std_ulogic; --# Synchronous load, active high
+      Enable : in std_ulogic; --# Synchronous enable, active high
       
-      -- {{data|}}
-      Binary_load : in unsigned; -- Loadable binary value
-      Binary : out unsigned;     -- Binary count
-      Gray   : out unsigned      -- Gray code count
+      --# {{data|}}
+      Binary_load : in unsigned; --# Loadable binary value
+      Binary : out unsigned;     --# Binary count
+      Gray   : out unsigned      --# Gray code count
     );
   end component;
 

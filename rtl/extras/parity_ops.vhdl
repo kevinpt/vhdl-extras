@@ -43,35 +43,49 @@ use ieee.numeric_std.all;
 
 package parity_ops is
 
+  --## Identify the type of parity
   type parity_kind is ( even, odd );
 
-  function parity( ptype : parity_kind; val : std_ulogic_vector ) return std_ulogic;
+  --## Compute parity.
+  --# Args:
+  --#   Ptype: Type of parity; odd or even
+  --#   Val: Value to generate parity for
+  --# Returns:
+  --#   Parity bit for Val.
+  function parity( Ptype : parity_kind; Val : std_ulogic_vector ) return std_ulogic;
 
-  function check_parity( ptype : parity_kind; val : std_ulogic_vector;
-    parity_bit : std_ulogic ) return boolean;
+  --## Check parity for an error.
+  --# Args:
+  --#   Ptype: Type of parity; odd or even
+  --#   Val: Value to test parity for
+  --#   Parity_bit: Parity bit to check
+  --# Returns:
+  --#   true if Parity_bit is correct.
+  function check_parity( Ptype : parity_kind; Val : std_ulogic_vector;
+    Parity_bit : std_ulogic ) return boolean;
 
 end package;
 
 package body parity_ops is
 
   --## Calculate parity
-  function parity( ptype : parity_kind; val : std_ulogic_vector) return std_ulogic is
+  function parity( Ptype : parity_kind; Val : std_ulogic_vector) return std_ulogic is
     variable xr : std_ulogic;
 
-    function xor_reduce( val : std_ulogic_vector ) return std_ulogic is
+    function xor_reduce( Val : std_ulogic_vector ) return std_ulogic is
       variable result : std_ulogic := '0';
     begin
-      for i in val'range loop
-        result := result xor val(i);
+      for i in Val'range loop
+        result := result xor Val(i);
       end loop;
 
       return result;
     end function;
 
   begin
-    xr := xor_reduce(val);
+    xr := xor_reduce(Val);
 
-    if ptype = even then
+    if Ptype = even then
       return xr;
     else -- odd
       return not xr;
@@ -80,10 +94,10 @@ package body parity_ops is
 
 
   --## Verify parity. Returns true when parity matches, false for a mismatch.
-  function check_parity( ptype : parity_kind; val : std_ulogic_vector;
-    parity_bit : std_ulogic ) return boolean is
+  function check_parity( Ptype : parity_kind; Val : std_ulogic_vector;
+    Parity_bit : std_ulogic ) return boolean is
   begin
-    return parity(ptype, val) = parity_bit;
+    return parity(Ptype, Val) = Parity_bit;
   end function;
 
 end package body;

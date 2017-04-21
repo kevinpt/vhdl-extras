@@ -72,88 +72,88 @@ use ieee.numeric_std.all;
 
 package pipelining is
 
-  --## Pipeline registers for std_ulogic and std_logic
+  --## Pipeline registers for std_ulogic and std_logic.
   component pipeline_ul is
     generic (
-      PIPELINE_STAGES : positive;
-      ATTR_REG_BALANCING : string := "backward";
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
+      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction (Xilinx only)
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock   : in std_ulogic;
-      Reset   : in std_ulogic;
-      -- {{data|}}
-      Sig_in  : in std_ulogic;
-      Sig_out : out std_ulogic
+      --# {{clocks|}}
+      Clock   : in std_ulogic; --# System clock
+      Reset   : in std_ulogic; --# Asynchronous reset
+      --# {{data|}}
+      Sig_in  : in std_ulogic; --# Signal from block to be pipelined
+      Sig_out : out std_ulogic --# Pipelined result
     );
   end component;
 
-  --## Pipeline registers for std_ulogic_vector
+  --## Pipeline registers for std_ulogic_vector.
   component pipeline_sulv is
     generic (
-      PIPELINE_STAGES : positive;
-      ATTR_REG_BALANCING : string := "backward";
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
+      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction (Xilinx only)
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock   : in std_ulogic;
-      Reset   : in std_ulogic;
-      -- {{data|}}
-      Sig_in  : in std_ulogic_vector;
-      Sig_out : out std_ulogic_vector
+      --# {{clocks|}}
+      Clock   : in std_ulogic; --# System clock
+      Reset   : in std_ulogic; --# Asynchronous reset
+      --# {{data|}}
+      Sig_in  : in std_ulogic_vector; --# Signal from block to be pipelined
+      Sig_out : out std_ulogic_vector --# Pipelined result
     );
   end component;
 
-  --## Pipeline registers for std_logic_vector
+  --## Pipeline registers for std_logic_vector.
   component pipeline_slv is
     generic (
-      PIPELINE_STAGES : positive;
-      ATTR_REG_BALANCING : string := "backward";
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
+      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction (Xilinx only)
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock   : in std_ulogic;
-      Reset   : in std_ulogic;
-      -- {{data|}}
-      Sig_in  : in std_logic_vector;
-      Sig_out : out std_logic_vector
+      --# {{clocks|}}
+      Clock   : in std_ulogic; --# System clock
+      Reset   : in std_ulogic; --# Asynchronous reset
+      --# {{data|}}
+      Sig_in  : in std_logic_vector; --# Signal from block to be pipelined
+      Sig_out : out std_logic_vector --# Pipelined result
     );
   end component;
 
-  --## Pipeline registers for unsigned
+  --## Pipeline registers for unsigned.
   component pipeline_u is
     generic (
-      PIPELINE_STAGES : positive;
-      ATTR_REG_BALANCING : string := "backward";
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
+      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction (Xilinx only)
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock   : in std_ulogic;
+      --# {{clocks|}}
+      Clock   : in std_ulogic; --# System clock
       Reset   : in std_ulogic;
-      -- {{data|}}
-      Sig_in  : in unsigned;
-      Sig_out : out unsigned
+      --# {{data|}}
+      Sig_in  : in unsigned; --# Signal from block to be pipelined
+      Sig_out : out unsigned --# Pipelined result
     );
   end component;
 
-  --## Pipeline registers for signed
+  --## Pipeline registers for signed.
   component pipeline_s is
     generic (
-      PIPELINE_STAGES : positive;
-      ATTR_REG_BALANCING : string := "backward";
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
+      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction (Xilinx only)
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock   : in std_ulogic;
-      Reset   : in std_ulogic;
-      -- {{data|}}
-      Sig_in  : in signed;
-      Sig_out : out signed
+      --# {{clocks|}}
+      Clock   : in std_ulogic; --# System clock
+      Reset   : in std_ulogic; --# Asynchronous reset
+      --# {{data|}}
+      Sig_in  : in signed; --# Signal from block to be pipelined
+      Sig_out : out signed --# Pipelined result
     );
   end component;
 

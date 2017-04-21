@@ -61,8 +61,8 @@ package sizing is
   --## Compute the integer result of the function floor(log(n)).
   --#
   --# Args:
-  --#   n - Number to take logarithm of
-  --#   b - Base for the logarithm
+  --#   n: Number to take logarithm of
+  --#   b: Base for the logarithm
   --# Returns:
   --#   Approximate logarithm of n rounded down.
   function floor_log(n, b : positive) return natural;
@@ -70,8 +70,8 @@ package sizing is
   --## Compute the integer result of the function ceil(log(n)) where b is the base.
   --#
   --# Args:
-  --#   n - Number to take logarithm of
-  --#   b - Base for the logarithm
+  --#   n: Number to take logarithm of
+  --#   b: Base for the logarithm
   --# Returns:
   --#   Approximate logarithm of n rounded up.
   function ceil_log(n, b : positive) return natural;
@@ -80,7 +80,7 @@ package sizing is
   --## Compute the integer result of the function floor(log2(n)).
   --#
   --# Args:
-  --#   n - Number to take logarithm of
+  --#   n: Number to take logarithm of
   --# Returns:
   --#   Approximate base-2 logarithm of n rounded down.
   function floor_log2(n : positive) return natural;
@@ -88,7 +88,7 @@ package sizing is
   --## Compute the integer result of the function ceil(log2(n)).
   --#
   --# Args:
-  --#   n - Number to take logarithm of
+  --#   n: Number to take logarithm of
   --# Returns:
   --#   Approximate base-2 logarithm of n rounded up.
   function ceil_log2(n : positive) return natural;
@@ -96,7 +96,7 @@ package sizing is
   --## Compute the total number of bits needed to represent a number in binary.
   --#
   --# Args:
-  --#   n - Number to compute size from
+  --#   n: Number to compute size from
   --# Returns:
   --#   Number of bits.
   function bit_size(n : natural) return natural;
@@ -104,7 +104,7 @@ package sizing is
   --## Compute the number of bits needed to encode n items.
   --#
   --# Args:
-  --#   n - Number to compute size from
+  --#   n: Number to compute size from
   --# Returns:
   --#   Number of bits.
   function encoding_size(n : positive) return natural;
@@ -118,7 +118,7 @@ package sizing is
   --#  integer in binary.
   --#
   --# Args:
-  --#   n - Number to compute size from
+  --#   n: Number to compute size from
   --# Returns:
   --#   Number of bits.
   function signed_size(n : integer) return natural;

@@ -48,38 +48,5 @@ Synopsys DC Ultra
   Same as DC or use set_optimize_registers in conjunction with compile_ultra -retime
 
     
-Components
-----------
-
-pipeline_ul
-~~~~~~~~~~~
-
-.. image:: ../../image/sym/pipelining-pipeline_ul.svg
-
-
-pipeline_sulv
-~~~~~~~~~~~~~
-
-.. image:: ../../image/sym/pipelining-pipeline_sulv.svg
-
-
-pipeline_slv
-~~~~~~~~~~~~
-
-.. image:: ../../image/sym/pipelining-pipeline_slv.svg
-
-
-pipeline_u
-~~~~~~~~~~
-
-.. image:: ../../image/sym/pipelining-pipeline_u.svg
-
-
-pipeline_s
-~~~~~~~~~~
-
-.. image:: ../../image/sym/pipelining-pipeline_s.svg
-
-    
 .. include:: auto/pipelining.rst
 

@@ -1,12 +1,16 @@
-.. Generated from ../rtl/extras/binaryio.vhdl on 2017-04-02 22:57:52.885278
+.. Generated from ../rtl/extras/binaryio.vhdl on 2017-04-20 23:04:36.925277
 .. vhdl:package:: binaryio
+
 
 Types
 -----
 
+
 .. vhdl:type:: octet_file
 
+
 .. vhdl:type:: endianness
+
 
 Subprograms
 -----------

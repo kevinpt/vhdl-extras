@@ -1,5 +1,6 @@
-.. Generated from ../rtl/extras/random.vhdl on 2017-04-02 22:57:53.031587
+.. Generated from ../rtl/extras/random.vhdl on 2017-04-20 23:04:37.099854
 .. vhdl:package:: random
+
 
 Subprograms
 -----------

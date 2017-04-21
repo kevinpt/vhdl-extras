@@ -134,45 +134,164 @@ use ieee.numeric_std.all;
 
 package hamming_edac is
 
+  --## Representation of a message with data and parity segments.
   type ecc_vector is array( integer range <> ) of std_ulogic;
 
+  --## Range information for a message.
   type ecc_range is record
     left  : integer;
     right : integer;
   end record;
 
-  --## ecc_vector conversion and manipulation
+  --## Convert a plain vector into ecc_vector.
+  --# Args:
+  --#   Arg: Vector to convert
+  --#   Parity_size: Number of parity bits
+  --# Returns:
+  --#   Arg vector reindexed with a negative parity segment.
   function to_ecc_vec( Arg : std_ulogic_vector; Parity_size : natural := 0 ) return ecc_vector;
+
+  --## Convert an ecc_vector to a plain vector.
+  --# Args:
+  --#   Arg: Vector to convert
+  --# Returns:
+  --#   Vector reindexed with 0 as rightmost bit.
   function to_sulv( Arg : ecc_vector ) return std_ulogic_vector;
 
+  --## Extract data portion from encoded ecc_vector.
+  --# Args:
+  --#   Encoded_data: Vector to convert
+  --# Returns:
+  --#   Data portion of Encoded_data.
   function get_data( Encoded_data : ecc_vector ) return std_ulogic_vector;
+
+  --## Extract parity portion from encoded ecc_vector.
+  --# Args:
+  --#   Encoded_data: Vector to convert
+  --# Returns:
+  --#   Parity portion of Encoded_data.
   function get_parity( Encoded_data : ecc_vector ) return unsigned;
 
-  --## Functions to determine array sizes
+  --%% Functions to determine array sizes
+  
+  --## Determine the size of a message (data interleaved with parity) given
+  --#  the size of data to be protected.
+  --# Args:
+  --#   Data_size: Number of data bits
+  --# Returns:
+  --#   Message size.
   function hamming_message_size( Data_size : positive ) return positive;
+
+  --## Determine the number of parity bits for a given message size.
+  --# Args:
+  --#   Message_size: Number of bits in complete message
+  --# Returns:
+  --#   Parity size.
   function hamming_parity_size( Message_size : positive ) return positive;
+
+  --## Determine the number of data bits for a given message size.
+  --# Args:
+  --#   Message_size: Number of bits in complete message
+  --# Returns:
+  --#   Data size.
   function hamming_data_size( Message_size : positive ) return positive;
+
+  --## Return the left and right indices needed to declare an ecc_vector for the
+  --#  requested data size.
+  --# Args:
+  --#   Data_size: Number of data bits
+  --# Returns:
+  --#   Range with left and right.
   function hamming_indices( Data_size : positive ) return ecc_range;
 
-  --## "Internal" encoding functions used for resource sharing
+  --%% "Internal" encoding functions used for resource sharing
+
+  --## Combine separate data and parity bits into a message with
+  --#  interleaved parity.
+  --# Args:
+  --#   Data: Unencoded data
+  --#   Parity_bits: Parity
+  --# Returns:
+  --#   Message with interleaved parity.
   function hamming_interleave( Data : std_ulogic_vector; Parity_bits : unsigned )
     return std_ulogic_vector;
 
+  --## Reorder data and parity bits from an ecc_vector into a message with
+  --#  interleaved parity.
+  --# Args:
+  --#   Encoded_data: Unencoded data and parity
+  --# Returns:
+  --#   Message with interleaved parity.
   function hamming_interleave( Encoded_data : ecc_vector ) return std_ulogic_vector;
 
+  --## Generate Hamming parity bits from an interleaved message
+  --#  This is the core routine of the package that determines which bits of a
+  --#  message to XOR together. It is employed for both encoding and decoding
+  --#  When encoding, the message should have all zeroes interleaved for the
+  --#  parity bits. The result is the parity to be used by a decoder.
+  --#  When decoding, the previously generated parity bits are interleaved and
+  --#  the result is a syndrome that can be used for error detection and
+  --#  correction.
+  --# Args:
+  --#   Message: Interleaved message
+  --# Returns:
+  --#   Parity or syndrome.
   function hamming_parity( Message : std_ulogic_vector ) return unsigned;
 
-  --## Hamming Encode, decode, and error checking functions with and without
-  --#  use of shared logic.
+  --%% Hamming Encode, decode, and error checking functions with and without
+  --%  use of shared logic.
+  
+  --## Encode the supplied data into an ecc_vector using Hamming code for
+  --#  the parity. This version uses self contained logic.
+  --# Args:
+  --#   Data: Raw data
+  --# Returns:
+  --#   Encoded data with parity.
   function hamming_encode( Data : std_ulogic_vector ) return ecc_vector;
+  
+  --## Encode the supplied data into an ecc_vector using Hamming code for
+  --#  the parity. This version depends on external logic to generate the
+  --#  parity bits.
+  --# Args:
+  --#   Data: Raw data
+  --#   Parity_bits: Number of parity bits
+  --# Returns:
+  --#   Encoded data with parity.
   function hamming_encode( Data : std_ulogic_vector; Parity_bits : unsigned )
     return ecc_vector;
 
+  --## Decode an ecc_vector into the plain data bits, potentially correcting
+  --#  a single-bit error if a bit has flipped. This version uses self
+  --#  contained logic.
+  --# Args:
+  --#   Encoded_data: Encoded (uninterleaved) message
+  --# Returns:
+  --#   Decoded data.
   function hamming_decode( Encoded_data : ecc_vector ) return std_ulogic_vector;
+  
+  --## Decode an interleaved message into the plain data bits, potentially
+  --#  correcting a single-bit error if a bit has flipped. This version depends
+  --#  on external logic to interleave the message and generate a syndrome.
+  --# Args:
+  --#   Message: Interleaved message
+  --# Returns:
+  --#   Decoded data.
   function hamming_decode( Message : std_ulogic_vector; Syndrome : unsigned )
     return std_ulogic_vector;
 
+  --## Test for a single-bit error in an ecc_vector. Returns true for an error.
+  --# Args:
+  --#   Encoded_data: Encoded (uninterleaved) message
+  --# Returns:
+  --#   true if message has a parity error.
   function hamming_has_error( Encoded_data : ecc_vector ) return boolean;
+  
+  --## Test for a single-bit error in an ecc_vector. Returns true for an error.
+  --#  This version depends on external logic to generate a syndrome.
+  --# Args:
+  --#   Syndrome: Syndrome generated by hamming_parity()
+  --# Returns:
+  --#   true if message has a parity error.
   function hamming_has_error( Syndrome : unsigned ) return boolean;
 
 end package;

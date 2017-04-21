@@ -7,18 +7,13 @@ parity_ops
 Dependencies
 ------------
 
-FIXME
+None
 
 Description
 -----------
 
-FIXME
+Functions for calculating and checking parity.
     
-Components
-----------
-
-.. image:: ../../image/sym/lcar_ops-wolfram_lcar.svg
-
     
 .. include:: auto/parity_ops.rst
 

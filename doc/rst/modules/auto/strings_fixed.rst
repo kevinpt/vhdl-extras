@@ -1,5 +1,6 @@
-.. Generated from ../rtl/extras/strings_fixed.vhdl on 2017-04-02 22:57:52.964493
+.. Generated from ../rtl/extras/strings_fixed.vhdl on 2017-04-20 23:04:37.020450
 .. vhdl:package:: strings_fixed
+
 
 Subprograms
 -----------

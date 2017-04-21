@@ -64,12 +64,6 @@ use ieee.std_logic_1164.all;
 
 package lcar_ops is
   
-  type foo is integer;
-  
-  subtype bar is natural;
-  
-  type baz is integer;
-  
   --## Determine the next state of the LCAR defined by the Rule_map.
   --#
   --# Args:

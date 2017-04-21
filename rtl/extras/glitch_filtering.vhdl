@@ -141,8 +141,8 @@ package glitch_filtering is
       Foo   : inout std_logic;
 
       -- {{data|}}
-      Noisy    : in std_ulogic_vector; -- Noisy input signals
-      Filtered : out std_ulogic_vector -- Filtered output
+      Noisy    : in std_ulogic_vector;  -- Noisy input signals
+      Filtered : out std_ulogic_vector; -- Filtered output
       Bar : inout unsigned
     );
   end component;

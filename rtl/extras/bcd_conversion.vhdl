@@ -59,49 +59,90 @@ use ieee.numeric_std.all;
 
 package bcd_conversion is
 
-  --## Calculate the number of decimal digits needed to represent a number n
+  --## Calculate the number of decimal digits needed to represent a number n.
+  --# Args:
+  --#   n: Value to calculate digits for
+  --# Returns:
+  --#   Decimal digits for n.
   function decimal_size(n : natural) return natural;
 
-  --## Conversion functions
+  --%% Conversion functions
+  
+  --## Convert binary number to BCD encoding
+  --#  This uses the double-dabble algorithm to perform the BCD conversion. It
+  --#  will operate with any size binary array and return a BCD array whose
+  --#  length is 4 times the value returned by the decimal_size function.
+  --# Args:
+  --#   Binary: Binary encoded value
+  --# Returns:
+  --#   BCD encoded result.
   function to_bcd(Binary : unsigned) return unsigned;
+
+  --## Convert a BCD number to binary encoding
+  --#  This uses the double-dabble algorithm in reverse. The length of the
+  --#  input must be a multiple of four. The returned binary array will be
+  --#  large enough to hold the maximum decimal value of the BCD input. Its
+  --#  length will be bit_size(10**(Bcd'length/4) - 1).
+  --# Args:
+  --#   Bcd: BCD encoded value
+  --# Returns:
+  --#   Binary encoded result.
   function to_binary(Bcd : unsigned) return unsigned;
 
-  --## Components that perform the conversions in synchronous steps
+  --%% Components that perform the conversions in synchronous steps
+
+  --# Convert a binary input to BCD encoding. A conversion by asserting ``Convert``.
+  --# The ``BCD`` output is valid when the ``Done`` signal goes high.
+  --#
+  --# This component will operate with any size binary array of 4 bits or larger
+  --# and produces a BCD array whose length is 4 times the value returned by the
+  --# :vhdl:func:`~bcd_conversion.decimal_size` function.
+  --# The conversion of an n-bit binary number will take n cycles to complete.
+  
   component binary_to_bcd is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic; -- Asynchronous reset
+      --# {{clocks|}}
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
-      -- {{control|}}
-      Convert : in std_ulogic;  -- Start conversion when high
-      Done    : out std_ulogic; -- Indicates completed conversion
+      --# {{control|}}
+      Convert : in std_ulogic;  --# Start conversion when high
+      Done    : out std_ulogic; --# Indicates completed conversion
 
-      -- {{data|}}
-      Binary : in unsigned; -- Binary data to convert
-      BCD    : out unsigned -- Converted output. Retained until next conversion
+      --# {{data|}}
+      Binary : in unsigned; --# Binary data to convert
+      BCD    : out unsigned --# Converted output. Retained until next conversion
     );
   end component;
+  
+  
+  --# Convert a BCD encoded input to binary. A conversion by asserting ``Convert``.
+  --# The ``Binary`` output is valid when the ``Done`` signal goes high.
+  --#
+  --# The length of the input must be a multiple of four. The binary array produced will be
+  --# large enough to hold the maximum decimal value of the BCD input. Its
+  --# length will be ``bit_size(10**(Bcd'length/4) - 1)``. The conversion of a BCD
+  --# number to an n-bit binary number will take n+3 cycles to complete.
 
   component bcd_to_binary is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic; -- Asynchronous reset
+      --# {{clocks|}}
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
-      -- {{control|}}
-      Convert : in std_ulogic;  -- Start conversion when high
-      Done    : out std_ulogic; -- Indicates completed conversion
+      --# {{control|}}
+      Convert : in std_ulogic;  --# Start conversion when high
+      Done    : out std_ulogic; --# Indicates completed conversion
 
-      -- {{data|}}
-      BCD    : in unsigned; -- BCD data to convert
-      Binary : out unsigned -- Converted output. Retained until next conversion
+      --# {{data|}}
+      BCD    : in unsigned; --# BCD data to convert
+      Binary : out unsigned --# Converted output. Retained until next conversion
     );
   end component;
 

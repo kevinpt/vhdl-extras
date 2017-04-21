@@ -37,6 +37,24 @@
 --# DESCRIPTION:
 --#  This package provides a number of synchronizer components for managing
 --#  data transmission between clock domains.
+--#
+--#  If you need to synchronize a vector of bits together you should use the
+--#  handshake_synchronizer component. If you generate an array of bit_synchronizer
+--#  components instead, there is a risk that some bits will take longer than
+--#  others and invalid values will appear at the outputs. This is particularly
+--#  problematic if the vector represents a numeric value. bit_synchronizer can
+--#  be used safely in an array only if you know the input signal comes from an
+--#  isochronous domain (same period, different phase).
+
+--# SYNTHESIS:
+--#  Vendor specific synthesis attributes have been included to help prevent
+--#  undesirable results. It is important to know that, ideally, synchronizing
+--#  flip-flops should be placed as close together as possible. It is also desirable
+--#  to have the first stage flip-flop incorporated into the input buffer to minimize
+--#  input delay. Because of this these components do not have attributes to guide
+--#  relative placement of flip-flops to make them contiguous. Instead you should
+--#  apply timing constraints to the components that will force the synthesizer into
+--#  using an optimal placement.
 --------------------------------------------------------------------
 
 library ieee;
@@ -44,64 +62,67 @@ use ieee.std_logic_1164.all;
 
 package synchronizing is
 
-  --## A basic synchronizer with a configurable number of stages
+  --## A basic synchronizer with a configurable number of stages.
+  --#  The ``Sync`` output is synchronized to the ``Clock`` domain.
   component bit_synchronizer is
     generic (
-      STAGES : natural := 2; -- number of flip-flops in the synchronizer
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      STAGES : natural := 2; --# Number of flip-flops in the synchronizer
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock  : in std_ulogic;
-      Reset  : in std_ulogic; -- Asynchronous reset
+      --# {{clocks|}}
+      Clock  : in std_ulogic; --# System clock
+      Reset  : in std_ulogic; --# Asynchronous reset
 
-      -- {{data|}}
-      Bit_in : in std_ulogic; -- Unsynchronized signal
-      Sync   : out std_ulogic -- Synchronized to Clock's domain
+      --# {{data|}}
+      Bit_in : in std_ulogic; --# Unsynchronized signal
+      Sync   : out std_ulogic --# Synchronized to Clock's domain
     );
   end component;
 
-  --## Synchronizer for generating a synchronized reset
+  --## Synchronizer for generating a synchronized reset.
+  --#  The deactivating edge transition for the ``Sync_reset`` output
+  --#  is synchronized to the ``Clock`` domain. Its activating edge remains asynchronous.
   component reset_synchronizer is
     generic (
-      STAGES : natural := 2;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      STAGES : natural := 2; --# Number of flip-flops in the synchronizer
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic; -- Asynchronous reset
+      --# {{clocks|}}
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
-      -- {{data|}}
-      Sync_reset : out std_ulogic -- Synchronized reset
+      --# {{data|}}
+      Sync_reset : out std_ulogic --# Synchronized reset
     );
   end component;
 
---## A handshaking synchronizer for sending an array between clock domains
+--## A handshaking synchronizer for sending an array between clock domains.
 --#  This uses the four-phase handshake protocol.
   component handshake_synchronizer is
     generic (
-      STAGES : natural := 2;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      STAGES : natural := 2; --# Number of flip-flops in the synchronizer
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock_tx : in std_ulogic; -- Transmitting domain clock
-      Reset_tx : in std_ulogic;
+      --# {{clocks|}}
+      Clock_tx : in std_ulogic; --# Transmitting domain clock
+      Reset_tx : in std_ulogic; --# Asynchronous reset for Clock_tx
 
-      Clock_rx : in std_ulogic; -- Receiving domain clock
-      Reset_rx : in std_ulogic;
+      Clock_rx : in std_ulogic; --# Receiving domain clock
+      Reset_rx : in std_ulogic; --# Asynchronous reset for Clock_rx
 
 
-      -- {{data|Send port}}
-      Tx_data   : in std_ulogic_vector; -- Data to send
-      Send_data : in std_ulogic;  -- Control signal to send new data
-      Sending   : out std_ulogic; -- Active while TX is in process
-      Data_sent : out std_ulogic; -- Flag to indicate TX completion
+      --# {{data|Send port}}
+      Tx_data   : in std_ulogic_vector; --# Data to send
+      Send_data : in std_ulogic;  --# Control signal to send new data
+      Sending   : out std_ulogic; --# Active while TX is in process
+      Data_sent : out std_ulogic; --# Flag to indicate TX completion
 
-      -- {{Receive port}}
-      Rx_data  : out std_ulogic_vector; -- Data received in clock_rx domain
-      New_data : out std_ulogic   -- Flag to indicate new data
+      --# {{Receive port}}
+      Rx_data  : out std_ulogic_vector; --# Data received in clock_rx domain
+      New_data : out std_ulogic   --# Flag to indicate new data
     );
   end component;
 
@@ -115,20 +136,30 @@ use ieee.std_logic_1164.all;
 --## A basic synchronizer with a configurable number of stages
 entity bit_synchronizer is
   generic (
-    STAGES : natural := 2; -- number of flip-flops in the synchronizer
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    STAGES : natural := 2; --# Number of flip-flops in the synchronizer
+    RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
   );
   port (
-    Clock  : in std_ulogic;
-    Reset  : in std_ulogic; -- Asynchronous reset
+    Clock  : in std_ulogic; --# System clock
+    Reset  : in std_ulogic; --# Asynchronous reset
 
-    Bit_in : in std_ulogic; -- Unsynchronized signal
-    Sync   : out std_ulogic -- Synchronized to Clock's domain
+    Bit_in : in std_ulogic; --# Unsynchronized signal
+    Sync   : out std_ulogic --# Synchronized to Clock's domain
   );
 end entity;
 
 architecture rtl of bit_synchronizer is
   signal sr : std_ulogic_vector(1 to STAGES);
+  
+  -- Xilinx synth attributes:
+  attribute SHREG_EXTRACT : string;
+  attribute ASYNC_REG     : string;
+  attribute RLOC          : string;
+  
+  -- Guard against SRL16 inference in case Reset is not being used
+  attribute SHREG_EXTRACT of sr : signal is "no";
+  attribute ASYNC_REG of sr     : signal is "TRUE";
+  
 begin
   reg: process(Clock, Reset) is
   begin
@@ -149,14 +180,14 @@ use ieee.std_logic_1164.all;
 --## Synchronizer for generating a synchronized reset
 entity reset_synchronizer is
   generic (
-    STAGES : natural := 2;
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    STAGES : natural := 2; --# Number of flip-flops in the synchronizer
+    RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
   );
   port (
-    Clock : in std_ulogic;
-    Reset : in std_ulogic; -- Asynchronous reset
+    Clock : in std_ulogic; --# System clock
+    Reset : in std_ulogic; --# Asynchronous reset
 
-    Sync_reset : out std_ulogic -- Synchronized reset
+    Sync_reset : out std_ulogic --# Synchronized reset
   );
 end entity;
 
@@ -187,24 +218,27 @@ use extras.synchronizing.bit_synchronizer;
 --#  This uses the four-phase handshake protocol.
 entity handshake_synchronizer is
   generic (
-    STAGES : natural := 2;
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    STAGES : natural := 2; --# Number of flip-flops in the synchronizer
+    RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
   );
   port (
-    Clock_tx : in std_ulogic; -- Transmitting domain clock
-    Reset_tx : in std_ulogic;
+    -- {{clocks|}}
+    Clock_tx : in std_ulogic; --# Transmitting domain clock
+    Reset_tx : in std_ulogic; --# Asynchronous reset for Clock_tx
 
-    Clock_rx : in std_ulogic; -- Receiving domain clock
-    Reset_rx : in std_ulogic;
+    Clock_rx : in std_ulogic; --# Receiving domain clock
+    Reset_rx : in std_ulogic; --# Asynchronous reset for Clock_rx
 
 
-    Tx_data   : in std_ulogic_vector; -- Data to send
-    Send_data : in std_ulogic;  -- Control signal to send new data
-    Sending   : out std_ulogic; -- Active while TX is in process
-    Data_sent : out std_ulogic; -- Flag to indicate TX completion
+    -- {{data|Send port}}
+    Tx_data   : in std_ulogic_vector; --# Data to send
+    Send_data : in std_ulogic;  --# Control signal to send new data
+    Sending   : out std_ulogic; --# Active while TX is in process
+    Data_sent : out std_ulogic; --# Flag to indicate TX completion
 
-    Rx_data  : out std_ulogic_vector; -- Data received in clock_rx domain
-    New_data : out std_ulogic   -- Flag to indicate new data
+    -- {{Receive port}}
+    Rx_data  : out std_ulogic_vector; --# Data received in clock_rx domain
+    New_data : out std_ulogic   --# Flag to indicate new data
   );
 end entity;
 

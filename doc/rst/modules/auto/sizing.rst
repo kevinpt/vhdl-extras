@@ -1,5 +1,6 @@
-.. Generated from ../rtl/extras/sizing.vhdl on 2017-04-02 22:57:53.026903
+.. Generated from ../rtl/extras/sizing.vhdl on 2017-04-20 23:04:37.094174
 .. vhdl:package:: sizing
+
 
 Subprograms
 -----------

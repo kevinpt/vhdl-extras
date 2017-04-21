@@ -110,39 +110,58 @@ use ieee.std_logic_1164.all;
 
 package crc_ops is
 
-  --## Initialize CRC state
+  --## Initialize CRC state.
+  --# Args:
+  --#   Xor_in: Apply XOR to initial '0' state
+  --# Returns:
+  --#   New state of CRC.
   function init_crc(Xor_in : bit_vector) return bit_vector;
 
-  --## Add new data to the CRC
+  --## Add new data to the CRC.
+  --# Args:
+  --#   Crc:        Current CRC state
+  --#   Poly:       Polynomial for the CRC
+  --#   Reflect_in: Reverse bits of Data when true
+  --#   Data:       Next data word to add to CRC
+  --# Returns:
+  --#   New state of CRC.
   function next_crc(Crc : bit_vector; Poly : bit_vector; Reflect_in : boolean;
     Data : bit_vector) return bit_vector;
 
-  --## Finalize the CRC
+  --## Finalize the CRC.
+  --# Args:
+  --#  Crc:         Current CRC state
+  --#  Reflect_out: Reverse bits of result wien true
+  --#  Xor_out:     Apply XOR to final state (inversion)
+  --# Returns:
+  --#  Final CRC value
   function end_crc(Crc : bit_vector; Reflect_out: boolean; Xor_out : bit_vector)
     return bit_vector;
 
+
+  --## Calculate a CRC sequentially.
   component crc is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic;
+      --# {{clocks|}}
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
-      -- {{control|CRC configuration}}
-      Poly        : in std_ulogic_vector;
-      Xor_in      : in std_ulogic_vector;
-      Xor_out     : in std_ulogic_vector;
-      Reflect_in  : in boolean;
-      Reflect_out : in boolean;
+      --# {{control|CRC configuration}}
+      Poly        : in std_ulogic_vector; --# Polynomial
+      Xor_in      : in std_ulogic_vector; --# Invert (XOR) initial state
+      Xor_out     : in std_ulogic_vector; --# Invert (XOR) final state
+      Reflect_in  : in boolean;           --# Swap input bit order
+      Reflect_out : in boolean;           --# Swap output bit order
 
-      Initialize : in std_ulogic;      -- Reset the CRC state
+      Initialize : in std_ulogic;      --# Reset the CRC state
 
-      -- {{data|}}
-      Enable   : in std_ulogic;        -- Indicates data is valid for next CRC update
-      Data     : in std_ulogic_vector; -- New data (can be any width needed)
-      Checksum : out std_ulogic_vector -- Computed CRC
+      --# {{data|}}
+      Enable   : in std_ulogic;        --# Indicates data is valid for next CRC update
+      Data     : in std_ulogic_vector; --# New data (can be any width needed)
+      Checksum : out std_ulogic_vector --# Computed CRC
     );
   end component;
 
@@ -168,7 +187,11 @@ package body crc_ops is
 -- PUBLIC:
 -- =======
 
-  --## Initialize CRC state
+  --## Initialize CRC state.
+  --# Args:
+  --#   Xor_in: Apply XOR to initial '0' state
+  --# Returns:
+  --#   New state of CRC.
   function init_crc(Xor_in : bit_vector) return bit_vector is
   begin
     return Xor_in;
