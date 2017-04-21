@@ -45,15 +45,156 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/crc_ops.vhdl">extras/crc_ops.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>None</p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package provides a general purpose CRC implementation. It consists
+of a set of functions that can be used to iteratively process successive
+data vectors as well an an entity that combines the functions into a
+synthesizable form. The CRC can be readily specified using the Rocksoft
+notation described in <a class="reference external" href="http://www.zlib.net/crc_v3.txt">&#8220;A Painless Guide to CRC Error Detection Algorithms&#8221;</a>,
+Williams 1993. A CRC specification consists of the following parameters:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>Poly</dt>
+<dd>The generator polynomial</dd>
+<dt>Xor_in</dt>
+<dd>The initialization vector &#8220;xored&#8221; with an all-&#8216;0&#8217;s shift register</dd>
+<dt>Xor_out</dt>
+<dd>A vector xored with the shift register to produce the final value</dd>
+<dt>Reflect_in</dt>
+<dd>Process data bits from left to right (false) or right to left (true)</dd>
+<dt>Reflect_out</dt>
+<dd>Determine bit order of final crc result</dd>
+</dl>
+</div></blockquote>
+<p>A CRC can be computed using a set of three functions <a class="reference internal" href="#crc_ops.init_crc[bit_vector return bit_vector]" title="crc_ops.init_crc[bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">init_crc()</span></tt></a>,
+<a class="reference internal" href="#crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]" title="crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">next_crc()</span></tt></a>, and <a class="reference internal" href="#crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]" title="crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">end_crc()</span></tt></a>.
+All functions are assigned to a common variable/signal that maintans the shift
+register state between succesive calls. After initialization with <tt class="docutils literal"><span class="pre">init_crc</span></tt>, data
+is processed by repeated calls to <tt class="docutils literal"><span class="pre">next_crc</span></tt>. The width of the data vector is
+unconstrained allowing you to process bits in chunks of any desired size. Using
+a 1-bit array for data is equivalent to a bit-serial CRC implementation. When
+all data has been passed through the CRC it is completed with a call to <tt class="docutils literal"><span class="pre">end_crc</span></tt> to
+produce the final CRC value.</p>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="c1">-- CRC-16-USB</span>
+<span class="k">constant</span> <span class="n">poly</span>        <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="mh">X&quot;8005&quot;</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">xor_in</span>      <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="mh">X&quot;FFFF&quot;</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">xor_out</span>     <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="mh">X&quot;FFFF&quot;</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">reflect_in</span>  <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">reflect_out</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">;</span>
+
+<span class="k">subtype</span> <span class="n">word</span> <span class="k">is</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">type</span> <span class="n">word_vec</span> <span class="k">is</span> <span class="k">array</span><span class="p">(</span> <span class="kt">natural</span> <span class="k">range</span> <span class="o">&lt;&gt;</span> <span class="p">)</span> <span class="k">of</span> <span class="n">word</span><span class="p">;</span>
+<span class="k">variable</span> <span class="n">data</span> <span class="o">:</span> <span class="n">word_vec</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">9</span><span class="p">);</span>
+<span class="k">variable</span> <span class="n">crc</span> <span class="o">:</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="n">poly</span><span class="na">&#39;range</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">crc</span> <span class="o">:=</span> <span class="n">init_crc</span><span class="p">(</span><span class="n">xor_in</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">data</span><span class="na">&#39;range</span> <span class="k">loop</span>
+  <span class="n">crc</span> <span class="o">:=</span> <span class="n">next_crc</span><span class="p">(</span><span class="n">crc</span><span class="p">,</span> <span class="n">poly</span><span class="p">,</span> <span class="n">reflect_in</span><span class="p">,</span> <span class="n">data</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+<span class="n">crc</span> <span class="o">:=</span> <span class="n">end_crc</span><span class="p">(</span><span class="n">crc</span><span class="p">,</span> <span class="n">reflect_out</span><span class="p">,</span> <span class="n">xor_out</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>A synthesizable component is provided to serve as a guide to using these
+functions in practical designs. The input data port has been left unconstrained
+to allow variable sized data to be fed into the CRC. Limiting its width to
+1-bit will result in a bit-serial implementation. The synthesized logic will be
+minimized if all of the CRC configuration parameters are constants.</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">nibble</span>   <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">-- Process 4-bits at a time</span>
+<span class="k">signal</span> <span class="n">checksum</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">crc_16</span><span class="o">:</span> <span class="n">crc</span>
+  <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">Clock</span> <span class="o">=&gt;</span> <span class="n">clock</span><span class="p">,</span>
+    <span class="n">Reset</span> <span class="o">=&gt;</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="c1">-- CRC configuration parameters</span>
+    <span class="n">Poly</span>        <span class="o">=&gt;</span> <span class="n">poly</span><span class="p">,</span>
+    <span class="n">Xor_in</span>      <span class="o">=&gt;</span> <span class="n">xor_in</span><span class="p">,</span>
+    <span class="n">Xor_out</span>     <span class="o">=&gt;</span> <span class="n">xor_out</span><span class="p">,</span>
+    <span class="n">Reflect_in</span>  <span class="o">=&gt;</span> <span class="n">reflect_in</span><span class="p">,</span>
+    <span class="n">Reflect_out</span> <span class="o">=&gt;</span> <span class="n">reflect_out</span><span class="p">,</span>
+
+    <span class="n">Initialize</span> <span class="o">=&gt;</span> <span class="n">crc_init</span><span class="p">,</span> <span class="c1">-- Resets CRC register with init_crc function</span>
+    <span class="n">Enable</span>     <span class="o">=&gt;</span> <span class="n">crc_en</span><span class="p">,</span>   <span class="c1">-- Process next nibble</span>
+
+    <span class="n">Data</span>     <span class="o">=&gt;</span> <span class="n">nibble</span><span class="p">,</span>
+    <span class="n">Checksum</span> <span class="o">=&gt;</span> <span class="n">checksum</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<span class="target" id="package-crc_ops"></span></div>
 </div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-crc_ops"></span></div>
+<div class="section" id="crc">
+<h3>crc<a class="headerlink" href="#crc" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-fd97509e62e0270167596f19f96276282ef4beb4.svg" type="image/svg+xml">
+            <p class="warning">component crc is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|CRC configuration}}
+  Poly : in std_ulogic_vector;
+  Xor_in : in std_ulogic_vector;
+  Xor_out : in std_ulogic_vector;
+  Reflect_in : in boolean;
+  Reflect_out : in boolean;
+  Initialize : in std_ulogic;
+  --# {{data|}}
+  Enable : in std_ulogic;
+  Data : in std_ulogic_vector;
+  Checksum : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Calculate a CRC sequentially.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="crc_ops.crc">
+<tt class="descclassname">crc_ops.</tt><tt class="descname">crc</tt><a class="headerlink" href="#crc_ops.crc" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Poly</strong> (<em>in std_ulogic_vector</em>) &#8211; Polynomial</li>
+<li><strong>Xor_in</strong> (<em>in std_ulogic_vector</em>) &#8211; Invert (XOR) initial state</li>
+<li><strong>Xor_out</strong> (<em>in std_ulogic_vector</em>) &#8211; Invert (XOR) final state</li>
+<li><strong>Reflect_in</strong> (<em>in boolean</em>) &#8211; Swap input bit order</li>
+<li><strong>Reflect_out</strong> (<em>in boolean</em>) &#8211; Swap output bit order</li>
+<li><strong>Initialize</strong> (<em>in std_ulogic</em>) &#8211; Reset the CRC state</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Indicates data is valid for next CRC update</li>
+<li><strong>Data</strong> (<em>in std_ulogic_vector</em>) &#8211; New data (can be any width needed)</li>
+<li><strong>Checksum</strong> (<em>out std_ulogic_vector</em>) &#8211; Computed CRC</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -63,14 +204,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Xor_in</strong> (<em>bit_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Xor_in</strong> (<em>bit_vector</em>) &#8211; Apply XOR to initial &#8216;0&#8217; state</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">New state of CRC.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Initialize CRC state</p>
+<p>Initialize CRC state.</p>
 </dd></dl>
 
 <dl class="function">
@@ -80,17 +224,20 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Crc</strong> (<em>bit_vector</em>) &#8211; </li>
-<li><strong>Poly</strong> (<em>bit_vector</em>) &#8211; </li>
-<li><strong>Reflect_in</strong> (<em>boolean</em>) &#8211; </li>
-<li><strong>Data</strong> (<em>bit_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Crc</strong> (<em>bit_vector</em>) &#8211; Current CRC state</li>
+<li><strong>Poly</strong> (<em>bit_vector</em>) &#8211; Polynomial for the CRC</li>
+<li><strong>Reflect_in</strong> (<em>boolean</em>) &#8211; Reverse bits of Data when true</li>
+<li><strong>Data</strong> (<em>bit_vector</em>) &#8211; Next data word to add to CRC</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">New state of CRC.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Add new data to the CRC</p>
+<p>Add new data to the CRC.</p>
 </dd></dl>
 
 <dl class="function">
@@ -100,16 +247,19 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Crc</strong> (<em>bit_vector</em>) &#8211; </li>
-<li><strong>Reflect_out</strong> (<em>boolean</em>) &#8211; </li>
-<li><strong>Xor_out</strong> (<em>bit_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Crc</strong> (<em>bit_vector</em>) &#8211; Current CRC state</li>
+<li><strong>Reflect_out</strong> (<em>boolean</em>) &#8211; Reverse bits of result wien true</li>
+<li><strong>Xor_out</strong> (<em>bit_vector</em>) &#8211; Apply XOR to final state (inversion)</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Final CRC value</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Finalize the CRC</p>
+<p>Finalize the CRC.</p>
 </dd></dl>
 
 </div>
@@ -151,8 +301,14 @@
   <ul>
 <li><a class="reference internal" href="#">crc_ops</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#components">Components</a><ul>
+<li><a class="reference internal" href="#crc">crc</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>
 </ul>
 </li>

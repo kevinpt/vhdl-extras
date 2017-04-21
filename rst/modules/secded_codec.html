@@ -45,15 +45,100 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/secded_codec.vhdl">extras/secded_codec.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<ul class="simple">
+<li><a class="reference internal" href="sizing.html"><em>sizing</em></a></li>
+<li><a class="reference internal" href="pipelining.html"><em>pipelining</em></a></li>
+<li><a class="reference internal" href="hamming_edac.html"><em>hamming_edac</em></a></li>
+<li><a class="reference internal" href="secded_edac.html"><em>secded_edac</em></a></li>
+<li><a class="reference internal" href="parity_ops.html"><em>parity_ops</em></a></li>
+</ul>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
-</div>
+<p>This package provides a component that implements SECDED EDAC as a
+single unified codec. The codec can switch between encoding and decoding
+on each clock cycle with a minimum latency of two clock cycles through the
+input and output registers. The SECDED logic is capable of correcting
+single-bit errors and detecting double-bit errors.</p>
+<p>Optional pipelining is available to reduce the maximum delay through the
+internal logic. To be effective, you must activate the retiming feature of
+the synthesis tool being used. See the notes in <a class="reference internal" href="pipelining.html"><em>pipelining</em></a> for more
+information on how to accomplish this. The pipelining is controlled with
+the <tt class="docutils literal"><span class="pre">PIPELINE_STAGES</span></tt> generic.</p>
+<p>To facilitate testing, the codec includes an error generator that can
+insert single-bit and double-bit errors into the encoded output. When
+active, successive bits are flipped on each clock cycle. This feature
+provides for the testing of error handling logic in the decoding process.</p>
+<span class="target" id="package-secded_codec_pkg"></span></div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-secded_codec_pkg"></span></div>
+<div class="section" id="id1">
+<h3>secded_codec<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-7de46ff3d69bc246b2f93cb58871a73bfe4ad44d.svg" type="image/svg+xml">
+            <p class="warning">component secded_codec is
+generic (
+  DATA_SIZE : positive;
+  PIPELINE_STAGES : natural;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Codec_mode : in std_ulogic;
+  Insert_error : in std_ulogic_vector(1 downto 0);
+  --# {{data|Encoding port}}
+  Data : in std_ulogic_vector(DATA_SIZE-1 downto 0);
+  Encoded_data : out ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right);
+  --# {{Decoding port}}
+  Ecc_data : in ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right);
+  Decoded_data : out std_ulogic_vector(DATA_SIZE-1 downto 0);
+  --# {{Error flags}}
+  Single_bit_error : out std_ulogic;
+  Double_bit_error : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="secded_codec_pkg.secded_codec">
+<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">secded_codec</tt><a class="headerlink" href="#secded_codec_pkg.secded_codec" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>DATA_SIZE</strong> (<em>positive</em>) &#8211; Size of the <tt class="docutils literal"><span class="pre">Data</span></tt> input</li>
+<li><strong>PIPELINE_STAGES</strong> (<em>natural</em>) &#8211; Number of pipeline stages appended to end</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Codec_mode</strong> (<em>in std_ulogic</em>) &#8211; OPerating mode: &#8216;0&#8217; = encode, &#8216;1&#8217; = decode</li>
+<li><strong>Insert_error</strong> (<em>in std_ulogic_vector(1 downto 0)</em>) &#8211; Error injection</li>
+<li><strong>Data</strong> (<em>in std_ulogic_vector(DATA_SIZE-1 downto 0)</em>) &#8211; Data to encode</li>
+<li><strong>Encoded_data</strong> (<em>out ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right)</em>) &#8211; Data message with  SECDED parity</li>
+<li><strong>Ecc_data</strong> (<em>in ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right)</em>) &#8211; Received data</li>
+<li><strong>Decoded_data</strong> (<em>out std_ulogic_vector(DATA_SIZE-1 downto 0)</em>) &#8211; Received data with errors corrected</li>
+<li><strong>Single_bit_error</strong> (<em>out std_ulogic</em>) &#8211; &#8216;1&#8217; when a single-bit error is detected (automatically corrected)</li>
+<li><strong>Double_bit_error</strong> (<em>out std_ulogic</em>) &#8211; &#8216;1&#8217; when a double-bit error is detected</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
 </div>
 
 
@@ -93,7 +178,10 @@
 <li><a class="reference internal" href="#">secded_codec</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#components">Components</a><ul>
+<li><a class="reference internal" href="#id1">secded_codec</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -45,15 +45,96 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/gray_code.vhdl">extras/bcd_conversion.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>None</p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package provides functions to convert between Gray code and binary.
+An example implementation of a Gray code counter is also included.</p>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="c1">-- Conversion functions</span>
+<span class="k">signal</span> <span class="n">bin</span><span class="p">,</span> <span class="n">gray</span><span class="p">,</span> <span class="n">bin2</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">bin</span>  <span class="o">&lt;=</span> <span class="mh">X&quot;C5&quot;</span><span class="p">;</span>
+<span class="n">gray</span> <span class="o">&lt;=</span> <span class="n">to_gray</span><span class="p">(</span><span class="n">bin</span><span class="p">);</span>
+<span class="n">bin2</span> <span class="o">&lt;=</span> <span class="n">to_binary</span><span class="p">(</span><span class="n">gray</span><span class="p">);</span>
+
+<span class="c1">-- Gray code counter</span>
+<span class="n">gc</span><span class="o">:</span> <span class="n">gray_counter</span>
+  <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">Clock</span>       <span class="o">=&gt;</span> <span class="n">clock</span><span class="p">,</span>
+    <span class="n">Reset</span>       <span class="o">=&gt;</span> <span class="n">reset</span><span class="p">,</span>
+    <span class="n">Load</span>        <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span> <span class="c1">-- Not using load feature</span>
+    <span class="n">Enable</span>      <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span> <span class="c1">-- Count continuously</span>
+    <span class="n">Binary_load</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">binary_count</span><span class="na">&#39;range</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">),</span> <span class="c1">-- Unused load port</span>
+    <span class="n">Binary</span>      <span class="o">=&gt;</span> <span class="n">binary_count</span><span class="p">,</span> <span class="c1">-- Internal binary count value</span>
+    <span class="n">Gray</span>        <span class="o">=&gt;</span> <span class="n">gray_count</span>    <span class="c1">-- Gray coded count</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<span class="target" id="package-gray_code"></span></div>
 </div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-gray_code"></span></div>
+<div class="section" id="gray-counter">
+<h3>gray_counter<a class="headerlink" href="#gray-counter" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-549fbdfde1e68feffd06cc35aadd07654a900245.svg" type="image/svg+xml">
+            <p class="warning">component gray_counter is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Load : in std_ulogic;
+  Enable : in std_ulogic;
+  --# {{data|}}
+  Binary_load : in unsigned;
+  Binary : out unsigned;
+  Gray : out unsigned
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>An example Gray code counter implementation. This counter maintains an
+internal binary register and converts its output to Gray code stored in a
+separate register.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="gray_code.gray_counter">
+<tt class="descclassname">gray_code.</tt><tt class="descname">gray_counter</tt><a class="headerlink" href="#gray_code.gray_counter" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Load</strong> (<em>in std_ulogic</em>) &#8211; Synchronous load, active high</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable, active high</li>
+<li><strong>Binary_load</strong> (<em>in unsigned</em>) &#8211; Loadable binary value</li>
+<li><strong>Binary</strong> (<em>out unsigned</em>) &#8211; Binary count</li>
+<li><strong>Gray</strong> (<em>out unsigned</em>) &#8211; Gray code count</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -63,14 +144,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Binary</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Binary</strong> (<em>std_ulogic_vector</em>) &#8211; Binary value</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Gray-coded vector.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Convert binary to Gray code</p>
+<p>Convert binary to Gray code.</p>
 </dd></dl>
 
 <dl class="function">
@@ -80,13 +164,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Binary</strong> (<em>std_logic_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Binary</strong> (<em>std_logic_vector</em>) &#8211; Binary value</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Gray-coded vector.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Convert binary to Gray code.</p>
 </dd></dl>
 
 <dl class="function">
@@ -96,13 +184,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Binary</strong> (<em>unsigned</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Binary</strong> (<em>unsigned</em>) &#8211; Binary value</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Gray-coded vector.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Convert binary to Gray code.</p>
 </dd></dl>
 
 <dl class="function">
@@ -112,14 +204,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>Gray</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
 </ul>
 </td>
 </tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Decoded binary value.</p>
+</td>
+</tr>
 </tbody>
 </table>
-<p>Convert Gray code to binary</p>
+<p>Convert Gray code to binary.</p>
 </dd></dl>
 
 <dl class="function">
@@ -129,13 +224,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>Gray</strong> (<em>std_logic_vector</em>) &#8211; </li>
 </ul>
 </td>
 </tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Decoded binary value.</p>
+</td>
+</tr>
 </tbody>
 </table>
+<p>Convert Gray code to binary.</p>
 </dd></dl>
 
 <dl class="function">
@@ -145,13 +244,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>Gray</strong> (<em>unsigned</em>) &#8211; </li>
 </ul>
 </td>
 </tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Decoded binary value.</p>
+</td>
+</tr>
 </tbody>
 </table>
+<p>Convert Gray code to binary.</p>
 </dd></dl>
 
 </div>
@@ -193,8 +296,14 @@
   <ul>
 <li><a class="reference internal" href="#">gray_code</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#components">Components</a><ul>
+<li><a class="reference internal" href="#gray-counter">gray_counter</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>
 </ul>
 </li>

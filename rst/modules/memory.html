@@ -62,6 +62,115 @@
 <dd></dd></dl>
 
 </div>
+<div class="section" id="id1">
+<h2>Components<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dual-port-ram">
+<h3>dual_port_ram<a class="headerlink" href="#dual-port-ram" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-a1bfe175350b0048db1fd7a64a1d8f1a8f608624.svg" type="image/svg+xml">
+            <p class="warning">component dual_port_ram is
+generic (
+  MEM_SIZE : positive;
+  SYNC_READ : boolean
+);
+port (
+  Wr_clock : in std_ulogic;
+  We : in std_ulogic;
+  Wr_addr : in natural;
+  Wr_data : in std_ulogic_vector;
+  Rd_clock : in std_ulogic;
+  Re : in std_ulogic;
+  Rd_addr : in natural;
+  Rd_data : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="memory.dual_port_ram">
+<tt class="descclassname">memory.</tt><tt class="descname">dual_port_ram</tt><a class="headerlink" href="#memory.dual_port_ram" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; </li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Wr_clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Wr_addr</strong> (<em>in natural</em>) &#8211; </li>
+<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Rd_clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Rd_addr</strong> (<em>in natural</em>) &#8211; </li>
+<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="rom">
+<h3>rom<a class="headerlink" href="#rom" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-f6ed71ff63402a1e7ae0aa42ee6d3c7333e41792.svg" type="image/svg+xml">
+            <p class="warning">component rom is
+generic (
+  ROM_FILE : string;
+  FORMAT : rom_format;
+  MEM_SIZE : positive;
+  SYNC_READ : boolean
+);
+port (
+  Clock : in std_ulogic;
+  Re : in std_ulogic;
+  Addr : in natural;
+  Data : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="memory.rom">
+<tt class="descclassname">memory.</tt><tt class="descname">rom</tt><a class="headerlink" href="#memory.rom" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>ROM_FILE</strong> (<em>string</em>) &#8211; </li>
+<li><strong>FORMAT</strong> (<em>rom_format</em>) &#8211; </li>
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; </li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Addr</strong> (<em>in natural</em>) &#8211; </li>
+<li><strong>Data</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
 </div>
 
 
@@ -103,6 +212,11 @@
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#components">Components</a></li>
 <li><a class="reference internal" href="#types">Types</a></li>
+<li><a class="reference internal" href="#id1">Components</a><ul>
+<li><a class="reference internal" href="#dual-port-ram">dual_port_ram</a></li>
+<li><a class="reference internal" href="#rom">rom</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

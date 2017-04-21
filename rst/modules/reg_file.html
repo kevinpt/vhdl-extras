@@ -71,6 +71,72 @@
 <dd></dd></dl>
 
 </div>
+<div class="section" id="id1">
+<h2>Components<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>reg_file<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-4ee59c300b72d659ca0ff9987c8b129b8212862b.svg" type="image/svg+xml">
+            <p class="warning">component reg_file is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic;
+  DIRECT_READ_BIT_MASK : reg_array;
+  STROBE_BIT_MASK : reg_array;
+  REGISTER_INPUTS : boolean
+);
+port (
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  Clear : in std_ulogic;
+  Reg_sel : in unsigned;
+  We : in std_ulogic;
+  Wr_data : in reg_word;
+  Rd_data : out reg_word;
+  Registers : out reg_array;
+  Direct_read : in reg_array;
+  Reg_written : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="reg_file_pkg.reg_file">
+<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_file</tt><a class="headerlink" href="#reg_file_pkg.reg_file" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+<li><strong>DIRECT_READ_BIT_MASK</strong> (<em>reg_array</em>) &#8211; </li>
+<li><strong>STROBE_BIT_MASK</strong> (<em>reg_array</em>) &#8211; </li>
+<li><strong>REGISTER_INPUTS</strong> (<em>boolean</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Clear</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Reg_sel</strong> (<em>in unsigned</em>) &#8211; </li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Wr_data</strong> (<em>in reg_word</em>) &#8211; </li>
+<li><strong>Rd_data</strong> (<em>out reg_word</em>) &#8211; </li>
+<li><strong>Registers</strong> (<em>out reg_array</em>) &#8211; </li>
+<li><strong>Direct_read</strong> (<em>in reg_array</em>) &#8211; </li>
+<li><strong>Reg_written</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
 </div>
 
 
@@ -113,6 +179,10 @@
 <li><a class="reference internal" href="#components">Components</a></li>
 <li><a class="reference internal" href="#types">Types</a></li>
 <li><a class="reference internal" href="#subtypes">Subtypes</a></li>
+<li><a class="reference internal" href="#id1">Components</a><ul>
+<li><a class="reference internal" href="#id2">reg_file</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -46,15 +46,30 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/muxing_2008.vhdl">extras_2008/muxing_2008.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>None</p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>A set of routines for creating parameterized multiplexers, decoders,
+and demultiplexers</p>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">sel</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">d</span><span class="p">,</span> <span class="n">data</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">2</span><span class="o">**</span><span class="n">sel</span><span class="na">&#39;length</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">d2</span>  <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">10</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">m</span>   <span class="o">:</span> <span class="kt">std_ulogic</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">d</span> <span class="o">&lt;=</span> <span class="n">decode</span><span class="p">(</span><span class="n">sel</span><span class="p">);</span>             <span class="c1">-- Full binary decode</span>
+<span class="n">d2</span> <span class="o">&lt;=</span> <span class="n">decode</span><span class="p">(</span><span class="n">sel</span><span class="p">,</span> <span class="n">d2</span><span class="na">&#39;length</span><span class="p">);</span> <span class="c1">-- Partial decode</span>
+
+<span class="n">m</span> <span class="o">&lt;=</span> <span class="n">mux</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">sel</span><span class="p">);</span>          <span class="c1">-- Mux with internal decoder</span>
+<span class="n">m</span> <span class="o">&lt;=</span> <span class="n">mux</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>            <span class="c1">-- Mux with external decoder</span>
+
+<span class="n">d2</span> <span class="o">&lt;=</span> <span class="n">demux</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">sel</span><span class="p">,</span> <span class="n">d2</span><span class="na">&#39;length</span><span class="p">);</span>
+</pre></div>
 </div>
-<div class="section" id="components">
-<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-muxing"></span></div>
+<span class="target" id="package-muxing"></span></div>
+</div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -64,14 +79,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Numeric value to decode (range 0 to 2**Sel&#8217;length-1)</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Decoded (one-hot) representation of Sel</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Decoder with variable sized output (power of 2)</p>
+<p>Decoder with variable sized output (power of 2).</p>
 </dd></dl>
 
 <dl class="function">
@@ -81,15 +99,18 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; </li>
-<li><strong>Size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Numeric value to decode (range 0 to Size-1)</li>
+<li><strong>Size</strong> (<em>positive</em>) &#8211; Number of bits in result (leftmost bits)</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Decoded (one-hot) representation of Sel</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Decoder with variable sized output (user specified)</p>
+<p>Decoder with variable sized output (user specified).</p>
 </dd></dl>
 
 <dl class="function">
@@ -99,15 +120,18 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) &#8211; Inputs to select from</li>
+<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Input to select</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Selected input.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Multiplexer with variable sized inputs</p>
+<p>Multiplexer with variable sized inputs.</p>
 </dd></dl>
 
 <dl class="function">
@@ -117,15 +141,18 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
-<li><strong>One_hot_sel</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) &#8211; Inputs to select from</li>
+<li><strong>One_hot_sel</strong> (<em>std_ulogic_vector</em>) &#8211; Input to select (generated by decode())</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Selected input.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Multiplexer with variable sized inputs using external decoder</p>
+<p>Multiplexer with variable sized inputs using external decoder.</p>
 </dd></dl>
 
 <dl class="function">
@@ -135,16 +162,19 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Input</strong> (<em>std_ulogic</em>) &#8211; </li>
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; </li>
-<li><strong>Size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Input</strong> (<em>std_ulogic</em>) &#8211; Bit to demultiplex</li>
+<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Position of Bit in result</li>
+<li><strong>Size</strong> (<em>positive</em>) &#8211; Length of the result</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Vector with selected bit connected to the Input.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Demultiplexer with variable sized inputs</p>
+<p>Demultiplexer with variable sized inputs.</p>
 </dd></dl>
 
 </div>
@@ -186,8 +216,10 @@
   <ul>
 <li><a class="reference internal" href="#">muxing</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>
 </ul>
 </li>

@@ -83,28 +83,27 @@ deviation from the requested time span.</p>
 <h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">library</span> <span class="nn">extras</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.sizing.bit_size</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.timing_ops.all</span><span class="p">;</span>
 
-  <span class="k">constant</span> <span class="n">SYS_CLOCK_FREQ</span> <span class="o">:</span> <span class="n">frequency</span> <span class="o">:=</span> <span class="mi">50</span> <span class="n">MHz</span><span class="p">;</span>
-  <span class="k">constant</span> <span class="n">COUNT_1US</span> <span class="o">:</span> <span class="n">clock_cycles</span>
-    <span class="o">:=</span> <span class="n">to_clock_cycles</span><span class="p">(</span><span class="mi">1</span> <span class="n">us</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">);</span>
-  <span class="k">signal</span>   <span class="n">counter</span>   <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">bit_size</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
-  <span class="p">...</span>
-  <span class="n">counter</span> <span class="o">&lt;=</span> <span class="n">to_unsigned</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">,</span> <span class="n">counter</span><span class="na">&#39;length</span><span class="p">);</span> <span class="c1">-- initialize counter</span>
-  <span class="n">report_time_precision</span><span class="p">(</span><span class="s">&quot;COUNT_1US&quot;</span><span class="p">,</span> <span class="n">COUNT_1US</span><span class="p">,</span> <span class="mi">1</span> <span class="n">us</span><span class="p">,</span>
-    <span class="n">time_duration</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">));</span>
-
-<span class="n">The</span> <span class="n">value</span> <span class="k">of</span> <span class="n">the</span> <span class="s">&quot;COUNT_1US&quot;</span> <span class="k">constant</span> <span class="n">will</span> <span class="n">change</span> <span class="k">to</span> <span class="n">reflect</span> <span class="n">any</span> <span class="n">change</span> <span class="k">in</span>
-<span class="n">the</span> <span class="n">system</span> <span class="n">clock</span> <span class="n">frequency</span> <span class="k">and</span> <span class="n">the</span> <span class="n">size</span> <span class="k">of</span> <span class="n">the</span> <span class="k">signal</span> <span class="s">&quot;counter&quot;</span> <span class="n">will</span> <span class="n">now</span>
-<span class="n">automatically</span> <span class="n">adapt</span> <span class="k">to</span> <span class="n">guarantee</span> <span class="n">it</span> <span class="n">can</span> <span class="n">represent</span> <span class="n">the</span> <span class="n">count</span> <span class="k">for</span> <span class="mi">1</span> <span class="n">us</span><span class="p">.</span>
-
-<span class="n">The</span> <span class="n">clock_gen</span> <span class="k">procedure</span> <span class="n">can</span> <span class="n">be</span> <span class="n">called</span> <span class="n">from</span> <span class="n">a</span> <span class="k">process</span> <span class="k">to</span> <span class="k">generate</span> <span class="n">a</span> <span class="n">clock</span>
-<span class="k">in</span> <span class="n">simulation</span> <span class="k">with</span> <span class="n">the</span> <span class="n">requested</span> <span class="n">frequency</span> <span class="k">or</span> <span class="n">period</span> <span class="k">and</span> <span class="n">an</span> <span class="n">optional</span> <span class="n">duty</span>
-<span class="n">cycle</span> <span class="n">specification</span><span class="o">:</span>
-
-  <span class="n">sys_clock_gen</span><span class="o">:</span> <span class="k">process</span>
-  <span class="k">begin</span>
-    <span class="n">clock_gen</span><span class="p">(</span><span class="n">sys_clock</span><span class="p">,</span> <span class="n">stop_clock</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">);</span>
-    <span class="k">wait</span><span class="p">;</span>
-  <span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">SYS_CLOCK_FREQ</span> <span class="o">:</span> <span class="n">frequency</span> <span class="o">:=</span> <span class="mi">50</span> <span class="n">MHz</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">COUNT_1US</span> <span class="o">:</span> <span class="n">clock_cycles</span>
+  <span class="o">:=</span> <span class="n">to_clock_cycles</span><span class="p">(</span><span class="mi">1</span> <span class="n">us</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">);</span>
+<span class="k">signal</span>   <span class="n">counter</span>   <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">bit_size</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">counter</span> <span class="o">&lt;=</span> <span class="n">to_unsigned</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">,</span> <span class="n">counter</span><span class="na">&#39;length</span><span class="p">);</span> <span class="c1">-- initialize counter</span>
+<span class="n">report_time_precision</span><span class="p">(</span><span class="s">&quot;COUNT_1US&quot;</span><span class="p">,</span> <span class="n">COUNT_1US</span><span class="p">,</span> <span class="mi">1</span> <span class="n">us</span><span class="p">,</span>
+  <span class="n">time_duration</span><span class="p">(</span><span class="n">COUNT_1US</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The value of the <tt class="docutils literal"><span class="pre">COUNT_1US</span></tt> constant will change to reflect any change in
+the system clock frequency and the size of the signal <tt class="docutils literal"><span class="pre">counter</span></tt> will now
+automatically adapt to guarantee it can represent the count for 1 us.</p>
+<p>The <tt class="docutils literal"><span class="pre">clock_gen</span></tt> procedure can be called from a process to generate a clock
+in simulation with the requested frequency or period and an optional duty
+cycle specification:</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="n">sys_clock_gen</span><span class="o">:</span> <span class="k">process</span>
+<span class="k">begin</span>
+  <span class="n">clock_gen</span><span class="p">(</span><span class="n">sys_clock</span><span class="p">,</span> <span class="n">stop_clock</span><span class="p">,</span> <span class="n">SYS_CLOCK_FREQ</span><span class="p">);</span>
+  <span class="k">wait</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">process</span><span class="p">;</span>
 </pre></div>
 </div>
 <span class="target" id="package-timing_ops"></span></div>
@@ -114,7 +113,8 @@ deviation from the requested time span.</p>
 <dl class="type">
 <dt id="timing_ops.frequency">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">frequency</tt><a class="headerlink" href="#timing_ops.frequency" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Frequency physical type.</p>
+</dd></dl>
 
 <dl class="type">
 <dt id="timing_ops.time_rounding">

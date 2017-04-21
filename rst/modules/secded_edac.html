@@ -45,26 +45,58 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/secded_edac.vhdl">extras/secded_edac.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<ul class="simple">
+<li><a class="reference internal" href="sizing.html"><em>sizing</em></a></li>
+<li><a class="reference internal" href="hamming_edac.html"><em>hamming_edac</em></a></li>
+<li><a class="reference internal" href="parity_ops.html"><em>parity_ops</em></a></li>
+</ul>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package implements Single Error Correction, Double Error Detection
+(SECDED) by extending the Hamming code with an extra overall parity bit.
+It is built on top of the functions implemented in <a class="reference internal" href="hamming_edac.html"><em>hamming_edac</em></a>.
+The <a class="reference internal" href="hamming_edac.html#hamming_edac.ecc_vector" title="hamming_edac.ecc_vector"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">ecc_vector</span></tt></a> is extended with an additional
+parity bit to the right of the Hamming parity as shown below.</p>
+<p>SECDED <tt class="docutils literal"><span class="pre">ecc_vector</span></tt> layout:</p>
+<div class="highlight-python"><div class="highlight"><pre>                           MSb            LSb
+[(data&#39;length - 1) &lt;-&gt; 0] [-1 &lt;-&gt; -(parity_size - 1)] [-parity_size]
+          data               Hamming parity          SECDED parity bit
+</pre></div>
 </div>
-<div class="section" id="components">
-<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-secded_edac"></span></div>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">word</span><span class="p">,</span> <span class="n">corrected_word</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">constant</span> <span class="n">WORD_MSG_SIZE</span> <span class="o">:</span> <span class="kt">positive</span> <span class="o">:=</span> <span class="n">secded_message_size</span><span class="p">(</span><span class="n">word</span><span class="na">&#39;length</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">secded_word</span> <span class="o">:</span>
+  <span class="n">ecc_vector</span><span class="p">(</span><span class="n">word</span><span class="na">&#39;high</span> <span class="k">downto</span> <span class="o">-</span><span class="n">secded_parity_size</span><span class="p">(</span><span class="n">WORD_MSG_SIZE</span><span class="p">));</span>
+<span class="p">...</span>
+<span class="n">secded_word</span> <span class="o">&lt;=</span> <span class="n">secded_encode</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+<span class="p">...</span> <span class="o">&lt;</span><span class="n">SEU</span> <span class="k">or</span> <span class="n">transmission</span> <span class="n">error</span> <span class="n">flips</span> <span class="n">a</span> <span class="kt">bit</span><span class="o">&gt;</span>
+<span class="n">corrected_word</span> <span class="o">&lt;=</span> <span class="n">secded_decode</span><span class="p">(</span><span class="n">hamming_word</span><span class="p">);</span>
+<span class="n">errors</span> <span class="o">:=</span> <span class="n">secded_has_errors</span><span class="p">(</span><span class="n">secded_word</span><span class="p">);</span>
+<span class="k">if</span> <span class="n">errors</span><span class="p">(</span><span class="n">single_bit</span><span class="p">)</span> <span class="k">or</span> <span class="n">errors</span><span class="p">(</span><span class="n">double_bit</span><span class="p">)</span> <span class="k">then</span> <span class="p">...</span> <span class="c1">-- check for error</span>
+</pre></div>
+</div>
+<p>As with <tt class="docutils literal"><span class="pre">hamming_edac</span></tt>, it is possible to share logic between the decoder
+and error checker and also between an encoder and decoder that don&#8217;t
+operate simultaneously. Refer to <a class="reference internal" href="hamming_edac.html"><em>hamming_edac</em></a> and <a class="reference internal" href="secded_codec.html"><em>secded_codec</em></a>
+for examples of this approach.</p>
+<span class="target" id="package-secded_edac"></span></div>
+</div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="secded_edac.secded_error_kind">
 <tt class="descclassname">secded_edac.</tt><tt class="descname">secded_error_kind</tt><a class="headerlink" href="#secded_edac.secded_error_kind" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Type of SECDED errors.</p>
+</dd></dl>
 
 <dl class="type">
 <dt id="secded_edac.secded_errors">
 <tt class="descclassname">secded_edac.</tt><tt class="descname">secded_errors</tt><a class="headerlink" href="#secded_edac.secded_errors" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Boolean bitfield for SECDED errors.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="subprograms">
@@ -76,14 +108,18 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Data_size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Data_size</strong> (<em>positive</em>) &#8211; Number of data bits</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Message size.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Functions to determine array sizes</p>
+<p>Determine the size of a message (data interleaved with parity) given
+the size of data to be protected.</p>
 </dd></dl>
 
 <dl class="function">
@@ -93,13 +129,18 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Data_size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Data_size</strong> (<em>positive</em>) &#8211; Number of data bits</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Range with left and right.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Return the left and right indices needed to declare an ecc_vector for the
+requested data size.</p>
 </dd></dl>
 
 <dl class="function">
@@ -109,13 +150,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Message_size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Message_size</strong> (<em>positive</em>) &#8211; Number of bits in complete message</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Parity size.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Determine the number of parity bits for a given message size.</p>
 </dd></dl>
 
 <dl class="function">
@@ -125,13 +170,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Message_size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Message_size</strong> (<em>positive</em>) &#8211; Number of bits in complete message</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Data size.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Determine the number of data bits for a given message size.</p>
 </dd></dl>
 
 <dl class="function">
@@ -141,15 +190,19 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Data</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Data</strong> (<em>std_ulogic_vector</em>) &#8211; Raw data</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Encoded data with parity.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>SECDED Encode, decode, and error checking functions with and without
-use of shared logic.</p>
+<p>Encode the supplied data into an ecc_vector using Hamming code for
+the parity and an additional overall parity for SECDED. This version
+uses self contained logic.</p>
 </dd></dl>
 
 <dl class="function">
@@ -159,14 +212,20 @@ use of shared logic.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Data</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
-<li><strong>Parity_bits</strong> (<em>unsigned</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Data</strong> (<em>std_ulogic_vector</em>) &#8211; Raw data</li>
+<li><strong>Parity_bits</strong> (<em>unsigned</em>) &#8211; Number of parity bits</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Encoded data with parity.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Encode the supplied data into an ecc_vector using Hamming code for
+the parity and an additional overall parity for SECDED. This version
+depends on external logic to generate the Hamming parity bits.</p>
 </dd></dl>
 
 <dl class="function">
@@ -176,13 +235,19 @@ use of shared logic.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; Encoded (uninterleaved) message</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Decoded data.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Decode an ecc_vector into the plain data bits, potentially correcting
+a single-bit error if a bit has flipped. This version uses self
+contained logic.</p>
 </dd></dl>
 
 <dl class="function">
@@ -192,13 +257,18 @@ use of shared logic.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; Encoded (uninterleaved) message</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if message has a single or double-bit error.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Test for a single-bit and double-bit errors in an ecc_vector. Returns
+true for each error type.</p>
 </dd></dl>
 
 <dl class="function">
@@ -208,14 +278,20 @@ use of shared logic.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; </li>
-<li><strong>Syndrome</strong> (<em>unsigned</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; Encoded (uninterleaved) message</li>
+<li><strong>Syndrome</strong> (<em>unsigned</em>) &#8211; Syndrome generated by hamming_parity()</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if message has a single or double-bit error.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Test for a single-bit and double-bit errors in an ecc_vector. Returns
+true for each error type. This version depends on external logic to
+generate a syndrome.</p>
 </dd></dl>
 
 </div>
@@ -257,8 +333,10 @@ use of shared logic.</p>
   <ul>
 <li><a class="reference internal" href="#">secded_edac</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#types">Types</a></li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>
 </ul>

@@ -57,28 +57,30 @@ Example usage
 
   library extras; use extras.sizing.bit_size; use extras.timing_ops.all;
 
-    constant SYS_CLOCK_FREQ : frequency := 50 MHz;
-    constant COUNT_1US : clock_cycles
-      := to_clock_cycles(1 us, SYS_CLOCK_FREQ);
-    signal   counter   : unsigned(bit_size(COUNT_1US)-1 downto 0);
-    ...
-    counter <= to_unsigned(COUNT_1US, counter'length); -- initialize counter
-    report_time_precision("COUNT_1US", COUNT_1US, 1 us,
-      time_duration(COUNT_1US, SYS_CLOCK_FREQ));
+  constant SYS_CLOCK_FREQ : frequency := 50 MHz;
+  constant COUNT_1US : clock_cycles
+    := to_clock_cycles(1 us, SYS_CLOCK_FREQ);
+  signal   counter   : unsigned(bit_size(COUNT_1US)-1 downto 0);
+  ...
+  counter <= to_unsigned(COUNT_1US, counter'length); -- initialize counter
+  report_time_precision("COUNT_1US", COUNT_1US, 1 us,
+    time_duration(COUNT_1US, SYS_CLOCK_FREQ));
 
-  The value of the "COUNT_1US" constant will change to reflect any change in
-  the system clock frequency and the size of the signal "counter" will now
-  automatically adapt to guarantee it can represent the count for 1 us.
+The value of the ``COUNT_1US`` constant will change to reflect any change in
+the system clock frequency and the size of the signal ``counter`` will now
+automatically adapt to guarantee it can represent the count for 1 us.
 
-  The clock_gen procedure can be called from a process to generate a clock
-  in simulation with the requested frequency or period and an optional duty
-  cycle specification:
+The ``clock_gen`` procedure can be called from a process to generate a clock
+in simulation with the requested frequency or period and an optional duty
+cycle specification:
 
-    sys_clock_gen: process
-    begin
-      clock_gen(sys_clock, stop_clock, SYS_CLOCK_FREQ);
-      wait;
-    end process;
+.. code-block:: vhdl
+
+  sys_clock_gen: process
+  begin
+    clock_gen(sys_clock, stop_clock, SYS_CLOCK_FREQ);
+    wait;
+  end process;
 
 
     

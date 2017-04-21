@@ -100,26 +100,59 @@ maximal length sequences.</p>
 </pre></div>
 </div>
 <span class="target" id="package-lcar_ops"></span></div>
-<div class="section" id="types">
-<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
-<dl class="type">
-<dt id="lcar_ops.foo">
-<tt class="descclassname">lcar_ops.</tt><tt class="descname">foo</tt><a class="headerlink" href="#lcar_ops.foo" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="type">
-<dt id="lcar_ops.baz">
-<tt class="descclassname">lcar_ops.</tt><tt class="descname">baz</tt><a class="headerlink" href="#lcar_ops.baz" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<div class="section" id="id1">
+<h2>Components<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="wolfram-lcar">
+<h3>wolfram_lcar<a class="headerlink" href="#wolfram-lcar" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-2a8c8c1e919470b5283fe682454ece949e67dd6f.svg" type="image/svg+xml">
+            <p class="warning">component wolfram_lcar is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  Enable : in std_ulogic;
+  Rule_map : in std_ulogic_vector;
+  Left_in : in std_ulogic;
+  Right_in : in std_ulogic;
+  State : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="lcar_ops.wolfram_lcar">
+<tt class="descclassname">lcar_ops.</tt><tt class="descname">wolfram_lcar</tt><a class="headerlink" href="#lcar_ops.wolfram_lcar" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
+<li><strong>Rule_map</strong> (<em>in std_ulogic_vector</em>) &#8211; Rules for each cell &#8216;1&#8217; -&gt; 150, &#8216;0&#8217; -&gt; 90</li>
+<li><strong>Left_in</strong> (<em>in std_ulogic</em>) &#8211; Left side input to LCAR</li>
+<li><strong>Right_in</strong> (<em>in std_ulogic</em>) &#8211; Right side input to LCAR</li>
+<li><strong>State</strong> (<em>out std_ulogic_vector</em>) &#8211; The state of each cell</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
-<div class="section" id="subtypes">
-<h2>Subtypes<a class="headerlink" href="#subtypes" title="Permalink to this headline">¶</a></h2>
-<dl class="subtype">
-<dt id="lcar_ops.bar">
-<tt class="descclassname">lcar_ops.</tt><tt class="descname">bar</tt><a class="headerlink" href="#lcar_ops.bar" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
@@ -131,10 +164,10 @@ maximal length sequences.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>State</strong> (<em>std_ulogic_vector</em>) &#8211; Current state of the LCAR cells</li>
-<li><strong>Rule_map</strong> (<em>std_ulogic_vector</em>) &#8211; Rules for each cell; &#8216;1&#8217; -&gt; 150, &#8216;0&#8217; -&gt; 90</li>
-<li><strong>Left_in</strong> (<em>std_ulogic</em>) &#8211; Left side input to LCAR</li>
-<li><strong>Right_in</strong> (<em>std_ulogic</em>) &#8211; Right side input to LCAR</li>
+<li><strong>State</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Rule_map</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Left_in</strong> (<em>std_ulogic</em>) &#8211; </li>
+<li><strong>Right_in</strong> (<em>std_ulogic</em>) &#8211; </li>
 </ul>
 </td>
 </tr>
@@ -154,7 +187,7 @@ maximal length sequences.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Size</strong> (<em>positive</em>) &#8211; Number of LCAR cells</li>
+<li><strong>Size</strong> (<em>positive</em>) &#8211; </li>
 </ul>
 </td>
 </tr>
@@ -261,11 +294,11 @@ maximal length sequences.</p>
 <p>This is an entity.</p>
 </dd></dl>
 
-<p>Module <a class="reference internal" href="#package-foobar" title="friuhiuh"><tt class="xref vhdl vhdl-pkg docutils literal"><span class="pre">foobar()</span></tt></a></p>
+<p>Module <a class="reference internal" href="#package-foobar" title="friuhiuh"><tt class="xref vhdl vhdl-pkg docutils literal"><span class="pre">foobar</span></tt></a></p>
 <p>Function <tt class="xref vhdl vhdl-func docutils literal"><span class="pre">foobar.foofunc()</span></tt></p>
 <p>Function2 <tt class="xref vhdl vhdl-func docutils literal"><span class="pre">xyz</span></tt></p>
 <p>Function <tt class="xref vhdl vhdl-func docutils literal"><span class="pre">foobar.barfunc()</span></tt></p>
-<p>Type <tt class="xref vhdl vhdl-type docutils literal"><span class="pre">myint()</span></tt></p>
+<p>Type <tt class="xref vhdl vhdl-type docutils literal"><span class="pre">myint</span></tt></p>
 <p>No sig <tt class="xref vhdl vhdl-func docutils literal"><span class="pre">foofunc()</span></tt></p>
 <p>Proc reference <tt class="xref vhdl vhdl-proc docutils literal"><span class="pre">bazproc()</span></tt></p>
 <p>End modules</p>
@@ -310,8 +343,10 @@ maximal length sequences.</p>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#components">Components</a></li>
-<li><a class="reference internal" href="#types">Types</a></li>
-<li><a class="reference internal" href="#subtypes">Subtypes</a></li>
+<li><a class="reference internal" href="#id1">Components</a><ul>
+<li><a class="reference internal" href="#wolfram-lcar">wolfram_lcar</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>
 <li><a class="reference internal" href="#package-foobar">Testing</a></li>
 </ul>

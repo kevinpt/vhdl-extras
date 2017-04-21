@@ -45,15 +45,151 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/bcd_conversion.vhdl">extras/bcd_conversion.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p><a class="reference internal" href="sizing.html"><em>sizing</em></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package provides functions and components for performing conversion
+between binary and packed Binary Coded Decimal (BCD). The functions
+<a class="reference internal" href="#bcd_conversion.to_bcd[unsigned return unsigned]" title="bcd_conversion.to_bcd[unsigned return unsigned]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">to_bcd()</span></tt></a> and <a class="reference internal" href="#bcd_conversion.to_binary[unsigned return unsigned]" title="bcd_conversion.to_binary[unsigned return unsigned]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">to_binary()</span></tt></a>
+can be used to create synthesizable combinational
+logic for performing a conversion. In synthesized code they are best used
+with shorter arrays comprising only a few digits. For larger numbers, the
+components <a class="reference internal" href="#bcd_conversion.binary_to_bcd" title="bcd_conversion.binary_to_bcd"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">binary_to_bcd</span></tt></a> and
+<a class="reference internal" href="#bcd_conversion.bcd_to_binary" title="bcd_conversion.bcd_to_binary"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">bcd_to_binary</span></tt></a> can be used to perform a
+conversion over multiple clock cycles. The utility function <a class="reference internal" href="#bcd_conversion.decimal_size[natural return natural]" title="bcd_conversion.decimal_size[natural return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">decimal_size()</span></tt></a>
+can be used to determine the number of decimal digits in a BCD array. Its
+result must be multiplied by 4 to get the length of a packed BCD array.</p>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">binary</span>  <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">constant</span> <span class="n">DSIZE</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="n">decimal_size</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">binary</span><span class="na">&#39;length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">bcd</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">DSIZE</span><span class="o">*</span><span class="mi">4</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">bcd</span> <span class="o">&lt;=</span> <span class="n">to_bcd</span><span class="p">(</span><span class="n">binary</span><span class="p">);</span>
+</pre></div>
+</div>
+<span class="target" id="package-bcd_conversion"></span></div>
 </div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-bcd_conversion"></span></div>
+<div class="section" id="binary-to-bcd">
+<h3>binary_to_bcd<a class="headerlink" href="#binary-to-bcd" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-91dabc72db1e87989bc20735f3bbceabedf0d56a.svg" type="image/svg+xml">
+            <p class="warning">component binary_to_bcd is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Convert : in std_ulogic;
+  Done : out std_ulogic;
+  --# {{data|}}
+  Binary : in unsigned;
+  BCD : out unsigned
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Convert a binary input to BCD encoding. A conversion by asserting <tt class="docutils literal"><span class="pre">Convert</span></tt>.
+The <tt class="docutils literal"><span class="pre">BCD</span></tt> output is valid when the <tt class="docutils literal"><span class="pre">Done</span></tt> signal goes high.</p>
+<p>This component will operate with any size binary array of 4 bits or larger
+and produces a BCD array whose length is 4 times the value returned by the
+<a class="reference internal" href="#bcd_conversion.decimal_size[natural return natural]" title="bcd_conversion.decimal_size[natural return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">decimal_size()</span></tt></a> function.
+The conversion of an n-bit binary number will take n cycles to complete.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="bcd_conversion.binary_to_bcd">
+<tt class="descclassname">bcd_conversion.</tt><tt class="descname">binary_to_bcd</tt><a class="headerlink" href="#bcd_conversion.binary_to_bcd" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Convert</strong> (<em>in std_ulogic</em>) &#8211; Start conversion when high</li>
+<li><strong>Done</strong> (<em>out std_ulogic</em>) &#8211; Indicates completed conversion</li>
+<li><strong>Binary</strong> (<em>in unsigned</em>) &#8211; Binary data to convert</li>
+<li><strong>BCD</strong> (<em>out unsigned</em>) &#8211; Converted output. Retained until next conversion</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="bcd-to-binary">
+<h3>bcd_to_binary<a class="headerlink" href="#bcd-to-binary" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-891da2cfb0cb3cde60dd30ba9db05f925a5dc732.svg" type="image/svg+xml">
+            <p class="warning">component bcd_to_binary is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Convert : in std_ulogic;
+  Done : out std_ulogic;
+  --# {{data|}}
+  BCD : in unsigned;
+  Binary : out unsigned
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Convert a BCD encoded input to binary. A conversion by asserting <tt class="docutils literal"><span class="pre">Convert</span></tt>.
+The <tt class="docutils literal"><span class="pre">Binary</span></tt> output is valid when the <tt class="docutils literal"><span class="pre">Done</span></tt> signal goes high.</p>
+<p>The length of the input must be a multiple of four. The binary array produced will be
+large enough to hold the maximum decimal value of the BCD input. Its
+length will be <tt class="docutils literal"><span class="pre">bit_size(10**(Bcd'length/4)</span> <span class="pre">-</span> <span class="pre">1)</span></tt>. The conversion of a BCD
+number to an n-bit binary number will take n+3 cycles to complete.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="bcd_conversion.bcd_to_binary">
+<tt class="descclassname">bcd_conversion.</tt><tt class="descname">bcd_to_binary</tt><a class="headerlink" href="#bcd_conversion.bcd_to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Convert</strong> (<em>in std_ulogic</em>) &#8211; Start conversion when high</li>
+<li><strong>Done</strong> (<em>out std_ulogic</em>) &#8211; Indicates completed conversion</li>
+<li><strong>BCD</strong> (<em>in unsigned</em>) &#8211; BCD data to convert</li>
+<li><strong>Binary</strong> (<em>out unsigned</em>) &#8211; Converted output. Retained until next conversion</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -63,14 +199,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>n</strong> (<em>natural</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>n</strong> (<em>natural</em>) &#8211; Value to calculate digits for</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Decimal digits for n.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Calculate the number of decimal digits needed to represent a number n</p>
+<p>Calculate the number of decimal digits needed to represent a number n.</p>
 </dd></dl>
 
 <dl class="function">
@@ -80,14 +219,20 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Binary</strong> (<em>unsigned</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Binary</strong> (<em>unsigned</em>) &#8211; Binary encoded value</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">BCD encoded result.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Conversion functions</p>
+<p>Convert binary number to BCD encoding
+This uses the double-dabble algorithm to perform the BCD conversion. It
+will operate with any size binary array and return a BCD array whose
+length is 4 times the value returned by the decimal_size function.</p>
 </dd></dl>
 
 <dl class="function">
@@ -97,13 +242,21 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Bcd</strong> (<em>unsigned</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Bcd</strong> (<em>unsigned</em>) &#8211; BCD encoded value</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Binary encoded result.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Convert a BCD number to binary encoding
+This uses the double-dabble algorithm in reverse. The length of the
+input must be a multiple of four. The returned binary array will be
+large enough to hold the maximum decimal value of the BCD input. Its
+length will be bit_size(10**(Bcd&#8217;length/4) - 1).</p>
 </dd></dl>
 
 </div>
@@ -145,8 +298,15 @@
   <ul>
 <li><a class="reference internal" href="#">bcd_conversion</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#components">Components</a><ul>
+<li><a class="reference internal" href="#binary-to-bcd">binary_to_bcd</a></li>
+<li><a class="reference internal" href="#bcd-to-binary">bcd_to_binary</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>
 </ul>
 </li>

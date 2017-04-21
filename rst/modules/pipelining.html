@@ -78,25 +78,270 @@ then set the strategy to &#8220;Performance without IOB packing&#8221;.</dd>
 <dt>Synopsys DC Ultra</dt>
 <dd>Same as DC or use set_optimize_registers in conjunction with compile_ultra -retime</dd>
 </dl>
-</div>
+<span class="target" id="package-pipelining"></span></div>
 </div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="pipeline-ul">
 <h3>pipeline_ul<a class="headerlink" href="#pipeline-ul" title="Permalink to this headline">¶</a></h3>
-<img src="../../_images/pipelining-pipeline_ul.svg" /></div>
+<object data="../../_images/symbol-26638352eeace3711717c7c839926e115ab17c82.svg" type="image/svg+xml">
+            <p class="warning">component pipeline_ul is
+generic (
+  PIPELINE_STAGES : positive;
+  ATTR_REG_BALANCING : string;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{data|}}
+  Sig_in : in std_ulogic;
+  Sig_out : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Pipeline registers for std_ulogic and std_logic.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="pipelining.pipeline_ul">
+<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_ul</tt><a class="headerlink" href="#pipelining.pipeline_ul" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) &#8211; Number of pipeline stages to insert</li>
+<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) &#8211; Control propagation direction (Xilinx only)</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Sig_in</strong> (<em>in std_ulogic</em>) &#8211; Signal from block to be pipelined</li>
+<li><strong>Sig_out</strong> (<em>out std_ulogic</em>) &#8211; Pipelined result</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="pipeline-sulv">
 <h3>pipeline_sulv<a class="headerlink" href="#pipeline-sulv" title="Permalink to this headline">¶</a></h3>
-<img src="../../_images/pipelining-pipeline_sulv.svg" /></div>
+<object data="../../_images/symbol-12d37160e811886e634da5782b12aaba66b996d4.svg" type="image/svg+xml">
+            <p class="warning">component pipeline_sulv is
+generic (
+  PIPELINE_STAGES : positive;
+  ATTR_REG_BALANCING : string;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{data|}}
+  Sig_in : in std_ulogic_vector;
+  Sig_out : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Pipeline registers for std_ulogic_vector.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="pipelining.pipeline_sulv">
+<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_sulv</tt><a class="headerlink" href="#pipelining.pipeline_sulv" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) &#8211; Number of pipeline stages to insert</li>
+<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) &#8211; Control propagation direction (Xilinx only)</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Sig_in</strong> (<em>in std_ulogic_vector</em>) &#8211; Signal from block to be pipelined</li>
+<li><strong>Sig_out</strong> (<em>out std_ulogic_vector</em>) &#8211; Pipelined result</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="pipeline-slv">
 <h3>pipeline_slv<a class="headerlink" href="#pipeline-slv" title="Permalink to this headline">¶</a></h3>
-<img src="../../_images/pipelining-pipeline_slv.svg" /></div>
+<object data="../../_images/symbol-58efb00f87daf62dec92a9c895a8595a660cc235.svg" type="image/svg+xml">
+            <p class="warning">component pipeline_slv is
+generic (
+  PIPELINE_STAGES : positive;
+  ATTR_REG_BALANCING : string;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{data|}}
+  Sig_in : in std_logic_vector;
+  Sig_out : out std_logic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Pipeline registers for std_logic_vector.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="pipelining.pipeline_slv">
+<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_slv</tt><a class="headerlink" href="#pipelining.pipeline_slv" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) &#8211; Number of pipeline stages to insert</li>
+<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) &#8211; Control propagation direction (Xilinx only)</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Sig_in</strong> (<em>in std_logic_vector</em>) &#8211; Signal from block to be pipelined</li>
+<li><strong>Sig_out</strong> (<em>out std_logic_vector</em>) &#8211; Pipelined result</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="pipeline-u">
 <h3>pipeline_u<a class="headerlink" href="#pipeline-u" title="Permalink to this headline">¶</a></h3>
-<img src="../../_images/pipelining-pipeline_u.svg" /></div>
+<object data="../../_images/symbol-26352db54f8cfe55159ab443b6f492378f99a1c3.svg" type="image/svg+xml">
+            <p class="warning">component pipeline_u is
+generic (
+  PIPELINE_STAGES : positive;
+  ATTR_REG_BALANCING : string;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{data|}}
+  Sig_in : in unsigned;
+  Sig_out : out unsigned
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Pipeline registers for unsigned.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="pipelining.pipeline_u">
+<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_u</tt><a class="headerlink" href="#pipelining.pipeline_u" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) &#8211; Number of pipeline stages to insert</li>
+<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) &#8211; Control propagation direction (Xilinx only)</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Sig_in</strong> (<em>in unsigned</em>) &#8211; Signal from block to be pipelined</li>
+<li><strong>Sig_out</strong> (<em>out unsigned</em>) &#8211; Pipelined result</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="pipeline-s">
 <h3>pipeline_s<a class="headerlink" href="#pipeline-s" title="Permalink to this headline">¶</a></h3>
-<img src="../../_images/pipelining-pipeline_s.svg" /><span class="target" id="package-pipelining"></span></div>
+<object data="../../_images/symbol-f5033ef8a36152c87f3e926e41c954e0bca6740f.svg" type="image/svg+xml">
+            <p class="warning">component pipeline_s is
+generic (
+  PIPELINE_STAGES : positive;
+  ATTR_REG_BALANCING : string;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{data|}}
+  Sig_in : in signed;
+  Sig_out : out signed
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Pipeline registers for signed.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="pipelining.pipeline_s">
+<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_s</tt><a class="headerlink" href="#pipelining.pipeline_s" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) &#8211; Number of pipeline stages to insert</li>
+<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) &#8211; Control propagation direction (Xilinx only)</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Sig_in</strong> (<em>in signed</em>) &#8211; Signal from block to be pipelined</li>
+<li><strong>Sig_out</strong> (<em>out signed</em>) &#8211; Pipelined result</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 </div>
 </div>
 

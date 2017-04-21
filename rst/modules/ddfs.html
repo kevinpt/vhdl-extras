@@ -54,6 +54,64 @@
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-ddfs_pkg"></span></div>
+<div class="section" id="id1">
+<h2>Components<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>ddfs<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-66de82f626f3c505e9d74c7839d10cd34038f4ae.svg" type="image/svg+xml">
+            <p class="warning">component ddfs is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  Enable : in std_ulogic;
+  Load_phase : in std_ulogic;
+  New_phase : in unsigned;
+  Increment : in unsigned;
+  Accumulator : out unsigned;
+  Synth_clock : out std_ulogic;
+  Synth_pulse : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="ddfs_pkg.ddfs">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs</tt><a class="headerlink" href="#ddfs_pkg.ddfs" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Load_phase</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>New_phase</strong> (<em>in unsigned</em>) &#8211; </li>
+<li><strong>Increment</strong> (<em>in unsigned</em>) &#8211; </li>
+<li><strong>Accumulator</strong> (<em>out unsigned</em>) &#8211; </li>
+<li><strong>Synth_clock</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Synth_pulse</strong> (<em>out std_ulogic</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -312,6 +370,10 @@
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#id1">Components</a><ul>
+<li><a class="reference internal" href="#id2">ddfs</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>
 </ul>
 </li>

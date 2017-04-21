@@ -67,6 +67,115 @@
 <dd></dd></dl>
 
 </div>
+<div class="section" id="id1">
+<h2>Components<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="galois-lfsr">
+<h3>galois_lfsr<a class="headerlink" href="#galois-lfsr" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-2837b24767142b888d485cf6504b450b3e6c95fe.svg" type="image/svg+xml">
+            <p class="warning">component galois_lfsr is
+generic (
+  INIT_ZERO : boolean;
+  FULL_CYCLE : boolean;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  Enable : in std_ulogic;
+  Tap_map : in std_ulogic_vector;
+  State : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Galois LFSR. With Maximal length coefficients it will cycle through
+(2**n)-1 states when FULL_CYCLE = false, 2**n when true.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="lfsr_ops.galois_lfsr">
+<tt class="descclassname">lfsr_ops.</tt><tt class="descname">galois_lfsr</tt><a class="headerlink" href="#lfsr_ops.galois_lfsr" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>INIT_ZERO</strong> (<em>boolean</em>) &#8211; </li>
+<li><strong>FULL_CYCLE</strong> (<em>boolean</em>) &#8211; </li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Tap_map</strong> (<em>in std_ulogic_vector</em>) &#8211; </li>
+<li><strong>State</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fibonacci-lfsr">
+<h3>fibonacci_lfsr<a class="headerlink" href="#fibonacci-lfsr" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-d70cb7fd89b9fa671a81ffdec032e1542546d526.svg" type="image/svg+xml">
+            <p class="warning">component fibonacci_lfsr is
+generic (
+  INIT_ZERO : boolean;
+  FULL_CYCLE : boolean;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  Enable : in std_ulogic;
+  Tap_map : in std_ulogic_vector;
+  State : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Fibonacci LFSR. With Maximal length coefficients it will cycle through
+(2**n)-1 states when FULL_CYCLE = false, 2**n states when true.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="lfsr_ops.fibonacci_lfsr">
+<tt class="descclassname">lfsr_ops.</tt><tt class="descname">fibonacci_lfsr</tt><a class="headerlink" href="#lfsr_ops.fibonacci_lfsr" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>INIT_ZERO</strong> (<em>boolean</em>) &#8211; </li>
+<li><strong>FULL_CYCLE</strong> (<em>boolean</em>) &#8211; </li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Tap_map</strong> (<em>in std_ulogic_vector</em>) &#8211; </li>
+<li><strong>State</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -186,6 +295,11 @@ of each coefficient.</p>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#components">Components</a></li>
 <li><a class="reference internal" href="#types">Types</a></li>
+<li><a class="reference internal" href="#id1">Components</a><ul>
+<li><a class="reference internal" href="#galois-lfsr">galois_lfsr</a></li>
+<li><a class="reference internal" href="#fibonacci-lfsr">fibonacci_lfsr</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>
 </ul>
 </li>

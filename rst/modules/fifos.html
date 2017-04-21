@@ -54,6 +54,216 @@
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-fifos"></span></div>
+<div class="section" id="id1">
+<h2>Components<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="simple-fifo">
+<h3>simple_fifo<a class="headerlink" href="#simple-fifo" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-cc0513b95b02e98005d8e71155e1a4e05f11caa1.svg" type="image/svg+xml">
+            <p class="warning">component simple_fifo is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic;
+  MEM_SIZE : positive;
+  SYNC_READ : boolean
+);
+port (
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  We : in std_ulogic;
+  Wr_data : in std_ulogic_vector;
+  Re : in std_ulogic;
+  Rd_data : out std_ulogic_vector;
+  Empty : out std_ulogic;
+  Full : out std_ulogic;
+  Almost_empty_thresh : in natural;
+  Almost_full_thresh : in natural;
+  Almost_empty : out std_ulogic;
+  Almost_full : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="fifos.simple_fifo">
+<tt class="descclassname">fifos.</tt><tt class="descname">simple_fifo</tt><a class="headerlink" href="#fifos.simple_fifo" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; </li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Empty</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Full</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Almost_empty_thresh</strong> (<em>in natural</em>) &#8211; </li>
+<li><strong>Almost_full_thresh</strong> (<em>in natural</em>) &#8211; </li>
+<li><strong>Almost_empty</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Almost_full</strong> (<em>out std_ulogic</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fifo">
+<h3>fifo<a class="headerlink" href="#fifo" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-3d5ce2d4629d44007a4f27a1f9ce20f1e425d152.svg" type="image/svg+xml">
+            <p class="warning">component fifo is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic;
+  MEM_SIZE : positive;
+  SYNC_READ : boolean
+);
+port (
+  Wr_clock : in std_ulogic;
+  Wr_reset : in std_ulogic;
+  We : in std_ulogic;
+  Wr_data : in std_ulogic_vector;
+  Rd_clock : in std_ulogic;
+  Rd_reset : in std_ulogic;
+  Re : in std_ulogic;
+  Rd_data : out std_ulogic_vector;
+  Empty : out std_ulogic;
+  Full : out std_ulogic;
+  Almost_empty_thresh : in natural;
+  Almost_full_thresh : in natural;
+  Almost_empty : out std_ulogic;
+  Almost_full : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="fifos.fifo">
+<tt class="descclassname">fifos.</tt><tt class="descname">fifo</tt><a class="headerlink" href="#fifos.fifo" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; </li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Wr_clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Wr_reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Rd_clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Rd_reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Empty</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Full</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Almost_empty_thresh</strong> (<em>in natural</em>) &#8211; </li>
+<li><strong>Almost_full_thresh</strong> (<em>in natural</em>) &#8211; </li>
+<li><strong>Almost_empty</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Almost_full</strong> (<em>out std_ulogic</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="packet-fifo">
+<h3>packet_fifo<a class="headerlink" href="#packet-fifo" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-89d16964f3105c0e3e4ddd4535e2b1d150fd558d.svg" type="image/svg+xml">
+            <p class="warning">component packet_fifo is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic;
+  MEM_SIZE : positive;
+  SYNC_READ : boolean
+);
+port (
+  Wr_clock : in std_ulogic;
+  Wr_reset : in std_ulogic;
+  We : in std_ulogic;
+  Wr_data : in std_ulogic_vector;
+  Keep : in std_ulogic;
+  Discard : in std_ulogic;
+  Rd_clock : in std_ulogic;
+  Rd_reset : in std_ulogic;
+  Re : in std_ulogic;
+  Rd_data : out std_ulogic_vector;
+  Empty : out std_ulogic;
+  Full : out std_ulogic;
+  Almost_empty_thresh : in natural;
+  Almost_full_thresh : in natural;
+  Almost_empty : out std_ulogic;
+  Almost_full : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="fifos.packet_fifo">
+<tt class="descclassname">fifos.</tt><tt class="descname">packet_fifo</tt><a class="headerlink" href="#fifos.packet_fifo" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; </li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Wr_clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Wr_reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Keep</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Discard</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Rd_clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Rd_reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Empty</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Full</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Almost_empty_thresh</strong> (<em>in natural</em>) &#8211; </li>
+<li><strong>Almost_full_thresh</strong> (<em>in natural</em>) &#8211; </li>
+<li><strong>Almost_empty</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Almost_full</strong> (<em>out std_ulogic</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
 </div>
 
 
@@ -94,6 +304,12 @@
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#id1">Components</a><ul>
+<li><a class="reference internal" href="#simple-fifo">simple_fifo</a></li>
+<li><a class="reference internal" href="#fifo">fifo</a></li>
+<li><a class="reference internal" href="#packet-fifo">packet_fifo</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

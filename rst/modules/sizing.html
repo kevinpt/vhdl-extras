@@ -51,13 +51,13 @@
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides functions used to compute integer approximations
 of logarithms. The primary use of these functions is to determine the
-size of arrays using the <a class="reference internal" href="#sizing.bit_size[natural return natural]" title="sizing.bit_size[natural return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">sizing.bit_size()</span></tt></a> and <a class="reference internal" href="#sizing.encoding_size[positive return natural]" title="sizing.encoding_size[positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">sizing.encoding_size()</span></tt></a> functions. When put to
+size of arrays using the <a class="reference internal" href="#sizing.bit_size[natural return natural]" title="sizing.bit_size[natural return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">bit_size()</span></tt></a> and <a class="reference internal" href="#sizing.encoding_size[positive return natural]" title="sizing.encoding_size[positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">encoding_size()</span></tt></a> functions. When put to
 maximal use it is possible to create designs that eliminate hardcoded
 ranges and automatically resize their signals and variables by changing a
 few key constants or generics.</p>
 <p>These functions can be used in most synthesizers to compute ranges for
-arrays. The core functionality is provided in the <a class="reference internal" href="#sizing.ceil_log[positive,positive return natural]" title="sizing.ceil_log[positive,positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">sizing.ceil_log()</span></tt></a> and
-<a class="reference internal" href="#sizing.floor_log[positive,positive return natural]" title="sizing.floor_log[positive,positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">sizing.floor_log()</span></tt></a> subprograms. These compute the logarithm in any integer base.
+arrays. The core functionality is provided in the <a class="reference internal" href="#sizing.ceil_log[positive,positive return natural]" title="sizing.ceil_log[positive,positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">ceil_log()</span></tt></a> and
+<a class="reference internal" href="#sizing.floor_log[positive,positive return natural]" title="sizing.floor_log[positive,positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">floor_log()</span></tt></a> subprograms. These compute the logarithm in any integer base.
 For convenenience, base-2 functions are also provided along with the array
 sizing functions.</p>
 <div class="section" id="example-usage">

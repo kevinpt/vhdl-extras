@@ -45,26 +45,127 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/hamming_edac.vhdl">extras/hamming_edac.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p><a class="reference internal" href="sizing.html"><em>sizing</em></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package provides functions that perform single-bit error detection
+and correction using Hamming code. Encoded data is represented in the
+<a class="reference internal" href="#hamming_edac.ecc_vector" title="hamming_edac.ecc_vector"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">ecc_vector</span></tt></a> type with the data preserved in normal sequence using array
+indices from data&#8217;length-1 downto 0. The Hamming parity bits p are
+represented in the encoded array as negative indices from -1 downto -p.
+The parity bits are sequenced with the most significant on the left (-1)
+and the least significant on the right (-p). This arrangement provides for
+easy removal of the parity bits by slicing the data portion out of the
+encoded array. These functions have no upper limit in the size of data
+they can handle. For practical reasons, these functions should not be used
+with less than four data bits.</p>
+<p>The layout of an <a class="reference internal" href="#hamming_edac.ecc_vector" title="hamming_edac.ecc_vector"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">ecc_vector</span></tt></a> is determined by its range. All objects of
+this type must use a descending range with a positive upper bound and a
+negative lower bound. Note that the conversion function
+<tt class="xref vhdl vhdl-func docutils literal"><span class="pre">to_ecc_vector()</span></tt> does
+not produce a result that meets this requirement so it should not be
+invoked directly as a parameter to a function expecting a proper
+<tt class="docutils literal"><span class="pre">ecc_vector</span></tt>.</p>
+<p>Hamming <tt class="docutils literal"><span class="pre">ecc_vector</span></tt> layout:</p>
+<div class="highlight-python"><div class="highlight"><pre>                           MSb         LSb
+[(data&#39;length - 1) &lt;-&gt; 0] [-1 &lt;-&gt; -parity_size]
+          data               Hamming parity
+</pre></div>
 </div>
-<div class="section" id="components">
-<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-hamming_edac"></span></div>
+<p>The output from <a class="reference internal" href="#hamming_edac.hamming_encode[std_ulogic_vector,unsigned return ecc_vector]" title="hamming_edac.hamming_encode[std_ulogic_vector,unsigned return ecc_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_encode()</span></tt></a> produces an <tt class="docutils literal"><span class="pre">ecc_vector</span></tt> with this layout.
+Depending on the hardware implementation it may be desirable to interleave
+the parity bits with the data to protect against certain failures that may
+go undetected when encoded data is distributed across multiple memory
+devices. Use <a class="reference internal" href="#hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]" title="hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_interleave()</span></tt></a> to perform this reordering of bits.</p>
+<div class="section" id="background">
+<h3>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h3>
+<p>The Hamming code is developed by interleaving the parity bits
+and data together such that the parity bits occupy the powers of 2 in the
+array indices. This interleaved array is known as the message. In
+decoding, the parity bits form a vector that represents an unsigned
+integer indicating the position of any erroneous bit in the message. The
+non-error condition is reserved as an all zeroes coding of the parity
+bits. This means that for <span class="math">\(p\)</span> parity bits, the message length <span class="math">\(m\)</span> can&#8217;t be
+longer than <span class="math">\((2^p)-1\)</span>. The number of data bits k is <span class="math">\(m - p\)</span>. Any particular
+Hamming code is referred to using the nomenclature <span class="math">\((m, k)\)</span> to identify the
+message and data sizes. Here are the maximum data sizes for the set of
+messages that are perfectly coded <span class="math">\((m = (2^p)-1)\)</span>:</p>
+<blockquote>
+<div>(3,1) (7,4) (15,11) (31,26) (63,57) (127,120) ...</div></blockquote>
+<p>Minimum message sizes for power of 2 data sizes:</p>
+<blockquote>
+<div>(5,2) (7,4) (12,8) (21,16) (38,32) (71,64) ...</div></blockquote>
+<p>When the data size <span class="math">\(k\)</span> is a power of 2 greater than or equal to 4, the
+minimum message size <span class="math">\(m = \lceil{\log_{2}k}\rceil + 1 + k\)</span>. For other values of <span class="math">\(k\)</span>
+greater than 4 this relation is a, possibly minimal, upper bound for the
+message size.</p>
+</div>
+<div class="section" id="synthesis">
+<h3>Synthesis<a class="headerlink" href="#synthesis" title="Permalink to this headline">¶</a></h3>
+<p>The XOR operations for the parity bits are iteratively
+generated and form long chains of gates. To achieve minimal delay you
+should ensure that your synthesizer rearranges these chains into minimal
+depth trees of XOR gates. The synthesized logic is purely combinational.
+In most cases registers should be added to remove glitches on the outputs.</p>
+</div>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">word</span><span class="p">,</span> <span class="n">corrected_word</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">constant</span> <span class="n">WORD_MSG_SIZE</span> <span class="o">:</span> <span class="kt">positive</span> <span class="o">:=</span> <span class="n">hamming_message_size</span><span class="p">(</span><span class="n">word</span><span class="na">&#39;length</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">hamming_word</span> <span class="o">:</span>
+  <span class="n">ecc_vector</span><span class="p">(</span><span class="n">word</span><span class="na">&#39;high</span> <span class="k">downto</span> <span class="o">-</span><span class="n">hamming_parity_size</span><span class="p">(</span><span class="n">WORD_MSG_SIZE</span><span class="p">));</span>
+<span class="p">...</span>
+<span class="n">hamming_word</span> <span class="o">&lt;=</span> <span class="n">hamming_encode</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+<span class="p">...</span> <span class="o">&lt;</span><span class="n">SEU</span> <span class="k">or</span> <span class="n">transmission</span> <span class="n">error</span> <span class="n">flips</span> <span class="n">a</span> <span class="kt">bit</span><span class="o">&gt;</span>
+<span class="n">corrected_word</span> <span class="o">&lt;=</span> <span class="n">hamming_decode</span><span class="p">(</span><span class="n">hamming_word</span><span class="p">);</span>
+<span class="k">if</span> <span class="n">hamming_has_error</span><span class="p">(</span><span class="n">hamming_word</span><span class="p">)</span> <span class="k">then</span> <span class="p">...</span> <span class="c1">-- check for error</span>
+</pre></div>
+</div>
+<p>Note that <a class="reference internal" href="#hamming_edac.hamming_decode[ecc_vector return std_ulogic_vector]" title="hamming_edac.hamming_decode[ecc_vector return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_decode()</span></tt></a> and
+<a class="reference internal" href="#hamming_edac.hamming_has_error[unsigned return boolean]" title="hamming_edac.hamming_has_error[unsigned return boolean]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_has_error()</span></tt></a> will synthesize with some
+common logic. Use the alternate versions in conjunction with
+<a class="reference internal" href="#hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]" title="hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_interleave()</span></tt></a> and
+<a class="reference internal" href="#hamming_edac.hamming_parity[std_ulogic_vector return unsigned]" title="hamming_edac.hamming_parity[std_ulogic_vector return unsigned]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_parity()</span></tt></a> to conserve logic when both are used:</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">variable</span> <span class="n">message</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="n">hamming_word</span><span class="na">&#39;length</span> <span class="k">downto</span> <span class="mi">1</span><span class="p">);</span>
+<span class="k">variable</span> <span class="n">syndrome</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="o">-</span><span class="n">hamming_word</span><span class="na">&#39;low</span> <span class="k">downto</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">message</span>  <span class="o">:=</span> <span class="n">hamming_interleave</span><span class="p">(</span><span class="n">hamming_word</span><span class="p">);</span>
+<span class="n">syndrome</span> <span class="o">:=</span> <span class="n">hamming_parity</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+<span class="n">corrected_word</span> <span class="o">&lt;=</span> <span class="n">hamming_decode</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">syndrome</span><span class="p">);</span>
+<span class="k">if</span> <span class="n">hamming_has_error</span><span class="p">(</span><span class="n">syndrome</span><span class="p">)</span> <span class="k">then</span> <span class="p">...</span> <span class="c1">-- check for error</span>
+</pre></div>
+</div>
+<p>Similary, it is possible to share logic between the encoder and decoder if
+they are co-located and not used simultaneously:</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">if</span> <span class="n">encoding</span> <span class="k">then</span>
+  <span class="n">txrx_data</span>   <span class="o">:=</span> <span class="n">word</span><span class="p">;</span>
+  <span class="n">txrx_parity</span> <span class="o">:=</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">);</span>
+<span class="k">else</span> <span class="c1">-- decoding</span>
+  <span class="n">txrx_data</span>   <span class="o">:=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">received_word</span><span class="p">);</span>
+  <span class="n">txrx_parity</span> <span class="o">:=</span> <span class="n">get_parity</span><span class="p">(</span><span class="n">received_word</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+<span class="n">message</span>        <span class="o">:=</span> <span class="n">hamming_interleave</span><span class="p">(</span><span class="n">txrx_data</span><span class="p">,</span> <span class="n">txrx_parity</span><span class="p">);</span>
+<span class="n">parity_bits</span>    <span class="o">:=</span> <span class="n">hamming_parity</span><span class="p">(</span><span class="n">message</span><span class="p">);</span> <span class="c1">-- also acts as the syndrome</span>
+<span class="n">hamming_word</span>   <span class="o">&lt;=</span> <span class="n">hamming_encode</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">parity_bits</span><span class="p">);</span>
+<span class="n">corrected_word</span> <span class="o">&lt;=</span> <span class="n">hamming_decode</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">parity_bits</span><span class="p">);</span>
+</pre></div>
+</div>
+<span class="target" id="package-hamming_edac"></span></div>
+</div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="hamming_edac.ecc_vector">
 <tt class="descclassname">hamming_edac.</tt><tt class="descname">ecc_vector</tt><a class="headerlink" href="#hamming_edac.ecc_vector" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Representation of a message with data and parity segments.</p>
+</dd></dl>
 
 <dl class="type">
 <dt id="hamming_edac.ecc_range">
 <tt class="descclassname">hamming_edac.</tt><tt class="descname">ecc_range</tt><a class="headerlink" href="#hamming_edac.ecc_range" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Range information for a message.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="subprograms">
@@ -76,15 +177,18 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Arg</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
-<li><strong>Parity_size</strong> (<em>natural</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Arg</strong> (<em>std_ulogic_vector</em>) &#8211; Vector to convert</li>
+<li><strong>Parity_size</strong> (<em>natural</em>) &#8211; Number of parity bits</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Arg vector reindexed with a negative parity segment.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>ecc_vector conversion and manipulation</p>
+<p>Convert a plain vector into ecc_vector.</p>
 </dd></dl>
 
 <dl class="function">
@@ -94,13 +198,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Arg</strong> (<em>ecc_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Arg</strong> (<em>ecc_vector</em>) &#8211; Vector to convert</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Vector reindexed with 0 as rightmost bit.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Convert an ecc_vector to a plain vector.</p>
 </dd></dl>
 
 <dl class="function">
@@ -110,13 +218,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; Vector to convert</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Data portion of Encoded_data.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Extract data portion from encoded ecc_vector.</p>
 </dd></dl>
 
 <dl class="function">
@@ -126,13 +238,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; Vector to convert</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Parity portion of Encoded_data.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Extract parity portion from encoded ecc_vector.</p>
 </dd></dl>
 
 <dl class="function">
@@ -142,14 +258,18 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Data_size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Data_size</strong> (<em>positive</em>) &#8211; Number of data bits</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Message size.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Functions to determine array sizes</p>
+<p>Determine the size of a message (data interleaved with parity) given
+the size of data to be protected.</p>
 </dd></dl>
 
 <dl class="function">
@@ -159,13 +279,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Message_size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Message_size</strong> (<em>positive</em>) &#8211; Number of bits in complete message</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Parity size.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Determine the number of parity bits for a given message size.</p>
 </dd></dl>
 
 <dl class="function">
@@ -175,13 +299,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Message_size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Message_size</strong> (<em>positive</em>) &#8211; Number of bits in complete message</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Data size.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Determine the number of data bits for a given message size.</p>
 </dd></dl>
 
 <dl class="function">
@@ -191,13 +319,18 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Data_size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Data_size</strong> (<em>positive</em>) &#8211; Number of data bits</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Range with left and right.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Return the left and right indices needed to declare an ecc_vector for the
+requested data size.</p>
 </dd></dl>
 
 <dl class="function">
@@ -207,15 +340,19 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Data</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
-<li><strong>Parity_bits</strong> (<em>unsigned</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Data</strong> (<em>std_ulogic_vector</em>) &#8211; Unencoded data</li>
+<li><strong>Parity_bits</strong> (<em>unsigned</em>) &#8211; Parity</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Message with interleaved parity.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>&#8220;Internal&#8221; encoding functions used for resource sharing</p>
+<p>Combine separate data and parity bits into a message with
+interleaved parity.</p>
 </dd></dl>
 
 <dl class="function">
@@ -225,13 +362,18 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; Unencoded data and parity</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Message with interleaved parity.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Reorder data and parity bits from an ecc_vector into a message with
+interleaved parity.</p>
 </dd></dl>
 
 <dl class="function">
@@ -241,13 +383,24 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Message</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Message</strong> (<em>std_ulogic_vector</em>) &#8211; Interleaved message</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Parity or syndrome.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Generate Hamming parity bits from an interleaved message
+This is the core routine of the package that determines which bits of a
+message to XOR together. It is employed for both encoding and decoding
+When encoding, the message should have all zeroes interleaved for the
+parity bits. The result is the parity to be used by a decoder.
+When decoding, the previously generated parity bits are interleaved and
+the result is a syndrome that can be used for error detection and
+correction.</p>
 </dd></dl>
 
 <dl class="function">
@@ -257,15 +410,18 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Data</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Data</strong> (<em>std_ulogic_vector</em>) &#8211; Raw data</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Encoded data with parity.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Hamming Encode, decode, and error checking functions with and without
-use of shared logic.</p>
+<p>Encode the supplied data into an ecc_vector using Hamming code for
+the parity. This version uses self contained logic.</p>
 </dd></dl>
 
 <dl class="function">
@@ -275,14 +431,20 @@ use of shared logic.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Data</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
-<li><strong>Parity_bits</strong> (<em>unsigned</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Data</strong> (<em>std_ulogic_vector</em>) &#8211; Raw data</li>
+<li><strong>Parity_bits</strong> (<em>unsigned</em>) &#8211; Number of parity bits</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Encoded data with parity.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Encode the supplied data into an ecc_vector using Hamming code for
+the parity. This version depends on external logic to generate the
+parity bits.</p>
 </dd></dl>
 
 <dl class="function">
@@ -292,13 +454,19 @@ use of shared logic.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; Encoded (uninterleaved) message</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Decoded data.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Decode an ecc_vector into the plain data bits, potentially correcting
+a single-bit error if a bit has flipped. This version uses self
+contained logic.</p>
 </dd></dl>
 
 <dl class="function">
@@ -308,14 +476,20 @@ use of shared logic.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Message</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Message</strong> (<em>std_ulogic_vector</em>) &#8211; Interleaved message</li>
 <li><strong>Syndrome</strong> (<em>unsigned</em>) &#8211; </li>
 </ul>
 </td>
 </tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Decoded data.</p>
+</td>
+</tr>
 </tbody>
 </table>
+<p>Decode an interleaved message into the plain data bits, potentially
+correcting a single-bit error if a bit has flipped. This version depends
+on external logic to interleave the message and generate a syndrome.</p>
 </dd></dl>
 
 <dl class="function">
@@ -325,13 +499,17 @@ use of shared logic.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Encoded_data</strong> (<em>ecc_vector</em>) &#8211; Encoded (uninterleaved) message</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if message has a parity error.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Test for a single-bit error in an ecc_vector. Returns true for an error.</p>
 </dd></dl>
 
 <dl class="function">
@@ -341,13 +519,18 @@ use of shared logic.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Syndrome</strong> (<em>unsigned</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Syndrome</strong> (<em>unsigned</em>) &#8211; Syndrome generated by hamming_parity()</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if message has a parity error.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Test for a single-bit error in an ecc_vector. Returns true for an error.
+This version depends on external logic to generate a syndrome.</p>
 </dd></dl>
 
 </div>
@@ -389,8 +572,12 @@ use of shared logic.</p>
   <ul>
 <li><a class="reference internal" href="#">hamming_edac</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#background">Background</a></li>
+<li><a class="reference internal" href="#synthesis">Synthesis</a></li>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#types">Types</a></li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>
 </ul>

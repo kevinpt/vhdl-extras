@@ -45,58 +45,64 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/parity_ops.vhdl">extras/parity_ops.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>None</p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
-</div>
-<div class="section" id="components">
-<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-parity_ops"></span></div>
+<p>Functions for calculating and checking parity.</p>
+<span class="target" id="package-parity_ops"></span></div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="parity_ops.parity_kind">
 <tt class="descclassname">parity_ops.</tt><tt class="descname">parity_kind</tt><a class="headerlink" href="#parity_ops.parity_kind" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Identify the type of parity</p>
+</dd></dl>
 
 </div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="parity_ops.parity[parity_kind,std_ulogic_vector return std_ulogic]">
-<tt class="descclassname">parity_ops.</tt><tt class="descname">parity</tt> <big>(</big><em>ptype : parity_kind</em>; <em>val : std_ulogic_vector</em><big>)</big> &rarr; std_ulogic<a class="headerlink" href="#parity_ops.parity[parity_kind,std_ulogic_vector return std_ulogic]" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">parity_ops.</tt><tt class="descname">parity</tt> <big>(</big><em>Ptype : parity_kind</em>; <em>Val : std_ulogic_vector</em><big>)</big> &rarr; std_ulogic<a class="headerlink" href="#parity_ops.parity[parity_kind,std_ulogic_vector return std_ulogic]" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ptype</strong> (<em>parity_kind</em>) &#8211; </li>
-<li><strong>val</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ptype</strong> (<em>parity_kind</em>) &#8211; Type of parity; odd or even</li>
+<li><strong>Val</strong> (<em>std_ulogic_vector</em>) &#8211; Value to generate parity for</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Parity bit for Val.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Compute parity.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="parity_ops.check_parity[parity_kind,std_ulogic_vector,std_ulogic return boolean]">
-<tt class="descclassname">parity_ops.</tt><tt class="descname">check_parity</tt> <big>(</big><em>ptype : parity_kind</em>; <em>val : std_ulogic_vector</em>; <em>parity_bit : std_ulogic</em><big>)</big> &rarr; boolean<a class="headerlink" href="#parity_ops.check_parity[parity_kind,std_ulogic_vector,std_ulogic return boolean]" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">parity_ops.</tt><tt class="descname">check_parity</tt> <big>(</big><em>Ptype : parity_kind</em>; <em>Val : std_ulogic_vector</em>; <em>Parity_bit : std_ulogic</em><big>)</big> &rarr; boolean<a class="headerlink" href="#parity_ops.check_parity[parity_kind,std_ulogic_vector,std_ulogic return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ptype</strong> (<em>parity_kind</em>) &#8211; </li>
-<li><strong>val</strong> (<em>std_ulogic_vector</em>) &#8211; </li>
-<li><strong>parity_bit</strong> (<em>std_ulogic</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ptype</strong> (<em>parity_kind</em>) &#8211; Type of parity; odd or even</li>
+<li><strong>Val</strong> (<em>std_ulogic_vector</em>) &#8211; Value to test parity for</li>
+<li><strong>Parity_bit</strong> (<em>std_ulogic</em>) &#8211; Parity bit to check</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if Parity_bit is correct.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Check parity for an error.</p>
 </dd></dl>
 
 </div>
@@ -139,7 +145,6 @@
 <li><a class="reference internal" href="#">parity_ops</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
 <li><a class="reference internal" href="#types">Types</a></li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>
 </ul>
