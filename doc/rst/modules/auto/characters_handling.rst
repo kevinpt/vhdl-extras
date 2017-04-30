@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/characters_handling.vhdl on 2017-04-20 23:04:37.275806
+.. Generated from ../rtl/extras/characters_handling.vhdl on 2017-04-30 17:19:09.478411
 .. vhdl:package:: characters_handling
 
 
@@ -6,100 +6,162 @@ Subprograms
 -----------
 
 
-.. vhdl:function:: function Is_Alphanumeric(ch : character) return boolean;
+.. vhdl:function:: function Is_Alphanumeric(Ch : character) return boolean;
 
-  :param ch: 
-  :type ch: character
-
-  Character class tests
-
-.. vhdl:function:: function Is_Letter(ch : character) return boolean;
-
-  :param ch: 
-  :type ch: character
+  Alphanumeric character test.
 
 
-.. vhdl:function:: function Is_Control(ch : character) return boolean;
-
-  :param ch: 
-  :type ch: character
-
-
-.. vhdl:function:: function Is_Digit(ch : character) return boolean;
-
-  :param ch: 
-  :type ch: character
+  :param Ch: Character to test
+  :type Ch: character
+  :returns:  true if alphanumeric character.
 
 
-.. vhdl:function:: function Is_Hexadecimal_Digit(ch : character) return boolean;
+.. vhdl:function:: function Is_Letter(Ch : character) return boolean;
 
-  :param ch: 
-  :type ch: character
-
-
-.. vhdl:function:: function Is_Basic(ch : character) return boolean;
-
-  :param ch: 
-  :type ch: character
+  Letter character test.
 
 
-.. vhdl:function:: function Is_Graphic(ch : character) return boolean;
-
-  :param ch: 
-  :type ch: character
-
-
-.. vhdl:function:: function Is_Lower(ch : character) return boolean;
-
-  :param ch: 
-  :type ch: character
+  :param Ch: Character to test
+  :type Ch: character
+  :returns:  true if letter character.
 
 
-.. vhdl:function:: function Is_Upper(ch : character) return boolean;
+.. vhdl:function:: function Is_Control(Ch : character) return boolean;
 
-  :param ch: 
-  :type ch: character
-
-
-.. vhdl:function:: function Is_Special(ch : character) return boolean;
-
-  :param ch: 
-  :type ch: character
+  Control character test.
 
 
-.. vhdl:function:: function To_Lower(ch : character) return character;
-
-  :param ch: 
-  :type ch: character
-
-  Case conversions
-
-.. vhdl:function:: function To_Lower(source : string) return string;
-
-  :param source: 
-  :type source: string
+  :param Ch: Character to test
+  :type Ch: character
+  :returns:  true if control character.
 
 
-.. vhdl:function:: function To_Upper(ch : character) return character;
+.. vhdl:function:: function Is_Digit(Ch : character) return boolean;
 
-  :param ch: 
-  :type ch: character
-
-
-.. vhdl:function:: function To_Upper(source : string) return string;
-
-  :param source: 
-  :type source: string
+  Digit character test.
 
 
-.. vhdl:function:: function To_Basic(ch : character) return character;
+  :param Ch: Character to test
+  :type Ch: character
+  :returns:  true if digit character.
 
-  :param ch: 
-  :type ch: character
+
+.. vhdl:function:: function Is_Hexadecimal_Digit(Ch : character) return boolean;
+
+  Hexadecimal digit character test.
 
 
-.. vhdl:function:: function To_Basic(source : string) return string;
+  :param Ch: Character to test
+  :type Ch: character
+  :returns:  true if hexadecimal character.
 
-  :param source: 
-  :type source: string
+
+.. vhdl:function:: function Is_Basic(Ch : character) return boolean;
+
+  Basic character test.
+
+
+  :param Ch: Character to test
+  :type Ch: character
+  :returns:  true if basic character.
+
+
+.. vhdl:function:: function Is_Graphic(Ch : character) return boolean;
+
+  Graphic character test.
+
+
+  :param Ch: Character to test
+  :type Ch: character
+  :returns:  true if graphic character.
+
+
+.. vhdl:function:: function Is_Lower(Ch : character) return boolean;
+
+  Lower-case character test.
+
+
+  :param Ch: Character to test
+  :type Ch: character
+  :returns:  true if lower-case character.
+
+
+.. vhdl:function:: function Is_Upper(Ch : character) return boolean;
+
+  Upper-case character test.
+
+
+  :param Ch: Character to test
+  :type Ch: character
+  :returns:  true if upper-case character.
+
+
+.. vhdl:function:: function Is_Special(Ch : character) return boolean;
+
+  Special character test.
+
+
+  :param Ch: Character to test
+  :type Ch: character
+  :returns:  true if special character.
+
+
+.. vhdl:function:: function To_Lower(Ch : character) return character;
+
+  Convert a character to lower-case.
+
+
+  :param Ch: Character to convert
+  :type Ch: character
+  :returns:  Converted character.
+
+
+.. vhdl:function:: function To_Lower(Source : string) return string;
+
+  Convert a string to lower-case.
+
+
+  :param Source: String to convert
+  :type Source: string
+  :returns:  Converted string.
+
+
+.. vhdl:function:: function To_Upper(Ch : character) return character;
+
+  Convert a character to upper-case.
+
+
+  :param Ch: Character to convert
+  :type Ch: character
+  :returns:  Converted character.
+
+
+.. vhdl:function:: function To_Upper(Source : string) return string;
+
+  Convert a string to upper-case.
+
+
+  :param Source: String to convert
+  :type Source: string
+  :returns:  Converted string.
+
+
+.. vhdl:function:: function To_Basic(Ch : character) return character;
+
+  Convert a character to its basic (unaccented) form.
+
+
+  :param Ch: Character to convert
+  :type Ch: character
+  :returns:  Converted character.
+
+
+.. vhdl:function:: function To_Basic(Source : string) return string;
+
+  Convert a string to its basic (unaccented) form.
+
+
+  :param Source: String to convert
+  :type Source: string
+  :returns:  Converted string.
 

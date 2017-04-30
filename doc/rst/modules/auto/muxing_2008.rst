@@ -1,5 +1,5 @@
-.. Generated from ../rtl/extras/muxing.vhdl on 2017-04-30 17:19:09.656390
-.. vhdl:package:: muxing
+.. Generated from ../rtl/extras_2008/muxing_2008.vhdl on 2017-04-25 22:17:58.623052
+.. vhdl:package:: extras_2008.muxing
 
 
 Subprograms
@@ -64,4 +64,17 @@ Subprograms
   :param Size: Length of the result 
   :type Size: positive
   :returns:  Vector with selected bit connected to the Input.
+
+
+.. vhdl:function:: function mux(Inputs : sulv_array; Sel : unsigned) return std_ulogic_vector;
+
+  VHDL-2008 extension #############
+  Multiplexer with variable sized, multi-bit inputs.
+
+
+  :param Inputs: Inputs to select from
+  :type Inputs: sulv_array
+  :param Sel: Input to select
+  :type Sel: unsigned
+  :returns:  Selected input.
 

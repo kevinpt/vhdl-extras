@@ -67,38 +67,38 @@ package lcar_ops is
   --## Determine the next state of the LCAR defined by the Rule_map.
   --#
   --# Args:
-  --#   State    - Current state of the LCAR cells
-  --#   Rule_map - Rules for each cell; '1' -> 150, '0' -> 90
-  --#   Left_in  - Left side input to LCAR
-  --#   Right_in - Right side input to LCAR
+  --#   State    : Current state of the LCAR cells
+  --#   Rule_map : Rules for each cell; '1' -> 150, '0' -> 90
+  --#   Left_in  : Left side input to LCAR
+  --#   Right_in : Right side input to LCAR
   --# Returns:
   --#   Next iteration of the LCAR rules which becomes the new state
   function next_wolfram_lcar(State, Rule_map : std_ulogic_vector;
     Left_in, Right_in : std_ulogic := '0' ) return std_ulogic_vector;
 
   --## Lookup a predefined rule set from the table.
-  --#
   --# Args:
-  --#   Size - Number of LCAR cells
+  --#   Size: Number of LCAR cells
   --# Returns:
-  --#   Predefined rule map
+  --#   Rule map for a maximal length sequence.
   function lcar_rule( Size : positive ) return std_ulogic_vector;
   
 
+  --# General purpose implementation of a rule 150/90 LCAR.
   component wolfram_lcar is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock  : in std_ulogic;
+      --# {{clocks|}}
+      Clock  : in std_ulogic; --# System clock
       Reset  : in std_ulogic; --# Asynchronous reset
       Enable : in std_ulogic; --# Synchronous enable
       
-      -- {{control|}}
+      --# {{control|}}
       Rule_map : in std_ulogic_vector; --# Rules for each cell '1' -> 150, '0' -> 90
 
-      -- {{data|}}
+      --# {{data|}}
       Left_in  : in std_ulogic; --# Left side input to LCAR
       Right_in : in std_ulogic; --# Right side input to LCAR
 
@@ -332,7 +332,11 @@ package body lcar_ops is
   );
 
 
-  --## Lookup a predefined rule set from the table
+  --## Lookup a predefined rule set from the table.
+  --# Args:
+  --#   Size - Number of LCAR cells
+  --# Returns:
+  --#   Rule map for a maximal length sequence.
   function lcar_rule( Size : positive ) return std_ulogic_vector is
     variable result : std_ulogic_vector(1 to Size);
   begin

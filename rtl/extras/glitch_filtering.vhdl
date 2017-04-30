@@ -92,17 +92,17 @@ package glitch_filtering is
   --#  This version filters a single signal of std_ulogic
   component glitch_filter is
     generic (
-      FILTER_CYCLES : positive; -- Number of clock cycles to filter
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      FILTER_CYCLES : positive; --# Number of clock cycles to filter
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic; -- Asynchronous reset
+      --# {{clocks|}}
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
-      -- {{data|}}
-      Noisy    : in std_ulogic; -- Noisy input signal
-      Filtered : out std_ulogic -- Filtered output
+      --# {{data|}}
+      Noisy    : in std_ulogic; --# Noisy input signal
+      Filtered : out std_ulogic --# Filtered output
     );
   end component;
 
@@ -110,19 +110,19 @@ package glitch_filtering is
   --#  This version filters a single signal of std_ulogic  component dynamic_glitch_filter is
   component dynamic_glitch_filter is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic; -- Asynchronous reset
+      --# {{clocks|}}
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
-      -- {{control|}}
-      Filter_cycles : in unsigned; -- Number of clock cycles to filter
+      --# {{control|}}
+      Filter_cycles : in unsigned; --# Number of clock cycles to filter
 
-      -- {{data|}}
-      Noisy    : in std_ulogic; -- Noisy input signal
-      Filtered : out std_ulogic -- Filtered output
+      --# {{data|}}
+      Noisy    : in std_ulogic; --# Noisy input signal
+      Filtered : out std_ulogic --# Filtered output
     );
   end component;
 
@@ -131,19 +131,17 @@ package glitch_filtering is
   --#  This version filters an array of std_ulogic
   component array_glitch_filter is
     generic (
-      FILTER_CYCLES : positive; -- Number of clock cycles to filter
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      FILTER_CYCLES : positive; --# Number of clock cycles to filter
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic; -- Asynchronous reset
-      Foo   : inout std_logic;
+      --# {{clocks|}}
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
-      -- {{data|}}
-      Noisy    : in std_ulogic_vector;  -- Noisy input signals
-      Filtered : out std_ulogic_vector; -- Filtered output
-      Bar : inout unsigned
+      --# {{data|}}
+      Noisy    : in std_ulogic_vector;  --# Noisy input signals
+      Filtered : out std_ulogic_vector  --# Filtered output
     );
   end component;
 
@@ -151,19 +149,19 @@ package glitch_filtering is
   --#  This version filters an array of std_ulogic
   component dynamic_array_glitch_filter is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic; -- Asynchronous reset
+      --# {{clocks|}}
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
-      -- {{control|}}
-      Filter_cycles : in unsigned; -- Number of clock cycles to filter
+      --# {{control|}}
+      Filter_cycles : in unsigned; --# Number of clock cycles to filter
 
-      -- {{data|}}
-      Noisy    : in std_ulogic_vector; -- Noisy input signals
-      Filtered : out std_ulogic_vector -- Filtered output
+      --# {{data|}}
+      Noisy    : in std_ulogic_vector; --# Noisy input signals
+      Filtered : out std_ulogic_vector --# Filtered output
     );
   end component;
 
@@ -176,7 +174,7 @@ use ieee.std_logic_1164.all;
 entity glitch_filter is
   generic (
     FILTER_CYCLES : positive; -- Number of clock cycles to filter
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
   );
   port (
     Clock : in std_ulogic;

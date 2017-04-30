@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/strings.vhdl on 2017-04-20 23:04:37.436484
+.. Generated from ../rtl/extras/strings.vhdl on 2017-04-30 17:19:09.665018
 .. vhdl:package:: strings
 
 

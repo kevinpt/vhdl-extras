@@ -92,6 +92,8 @@ graphviz_output_format = 'svg'
 
 symbolator_cmd_args = ['-t']
 
+mathjax_path = 'http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'
+
 # -- Options for HTML output ---------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for

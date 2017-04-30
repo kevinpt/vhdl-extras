@@ -8,14 +8,13 @@ strings_maps
 Dependencies
 ------------
 
-FIXME
+None
 
 Description
 -----------
 
-FIXME
-    
-
+This package provides types and functions for manipulating character sets.
+It is a clone of the Ada'95 package ``Ada.Strings.Maps``.
     
 .. include:: auto/strings_maps.rst
 

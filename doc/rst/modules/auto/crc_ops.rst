@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/crc_ops.vhdl on 2017-04-20 23:04:37.421784
+.. Generated from ../rtl/extras/crc_ops.vhdl on 2017-04-30 17:19:09.648181
 .. vhdl:package:: crc_ops
 
 
@@ -35,12 +35,11 @@ crc
 
 |
 
-Calculate a CRC sequentially.
-
-|
-
 
 .. vhdl:entity:: crc
+
+  Calculate a CRC sequentially.
+
 
   :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
@@ -73,13 +72,18 @@ Subprograms
 
 .. vhdl:function:: function init_crc(Xor_in : bit_vector) return bit_vector;
 
+  Initialize CRC state.
+
+
   :param Xor_in: Apply XOR to initial '0' state
   :type Xor_in: bit_vector
   :returns:   New state of CRC.
 
-  Initialize CRC state.
 
 .. vhdl:function:: function next_crc(Crc : bit_vector; Poly : bit_vector; Reflect_in : boolean; Data : bit_vector) return bit_vector;
+
+  Add new data to the CRC.
+
 
   :param Crc: Current CRC state
   :type Crc: bit_vector
@@ -91,9 +95,11 @@ Subprograms
   :type Data: bit_vector
   :returns:   New state of CRC.
 
-  Add new data to the CRC.
 
 .. vhdl:function:: function end_crc(Crc : bit_vector; Reflect_out : boolean; Xor_out : bit_vector) return bit_vector;
+
+  Finalize the CRC.
+
 
   :param Crc: Current CRC state
   :type Crc: bit_vector
@@ -103,4 +109,3 @@ Subprograms
   :type Xor_out: bit_vector
   :returns:  Final CRC value
 
-  Finalize the CRC.

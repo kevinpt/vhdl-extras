@@ -54,106 +54,207 @@ use extras.strings.all;
 use extras.strings_maps.all;
 
 package strings_unbounded is
-  -- create a subtype of the textio line type to form a coupling between libraries
+  --## Create a subtype of the textio line type to form a coupling between libraries
   subtype unbounded_string is line;
 
-  --## Convert a string to unbounded_string
+  --## Convert a string to unbounded_string.
+  --# Args:
+  --#  source: String to convert into unbounded_string
+  --# Returns:
+  --#  A converted string.
   function to_unbounded_string( source : string )  return unbounded_string;
 
-  --## Allocate a string of length
+  --## Allocate a string of length.
+  --# Args:
+  --#  length: Length of the new string
+  --# Returns:
+  --#  A new string of the requested length.
   function to_unbounded_string( length : natural ) return unbounded_string;
 
-  --## Copy a unbounded_string to the string dest
+  --## Copy a unbounded_string to the string dest.
+  --# Args:
+  --#  source: String to copy
+  --#  dest: Copy destination
   procedure to_string( variable source : in unbounded_string; dest : out string );
 
-  --## Create an empty unbounded_string
+  --## Create an empty unbounded_string.
+  --# Args:
+  --#  source: String to initialize
   procedure initialize( source : inout unbounded_string );
 
-  --## Free allocated memory for source
+  --## Free allocated memory for source.
+  --# Args:
+  --#  source: Deallocate an unbounded_string
   procedure free( source : inout unbounded_string );
 
-  --## Return the length of a unbounded_string
+  --## Return the length of a unbounded_string.
+  --# Args:
+  --#  source: String to check length of
+  --#  len: Length of the string
   procedure length( variable source : in unbounded_string; len : out natural );
 
-  --## Copy at most max characters from source to the unallocated dest
+  --## Copy at most max characters from source to the unallocated dest.
+  --# Args:
+  --#  source: String to copy
+  --#  dest:   Destination of copy
+  --#  max:    Maximum number of characters to copy
   procedure copy( variable source : in unbounded_string; dest : inout unbounded_string;
     max : in integer := -1 );
 
-  --## Copy at most max characters from source to the unallocated dest
+  --## Copy at most max characters from source to the unallocated dest.
+  --# Args:
+  --#  source: String to copy
+  --#  dest:   Destination of copy
+  --#  max:    Maximum number of characters to copy
   procedure copy( source : in string; dest : inout unbounded_string; max : in integer := -1 );
 
-  --## Append unbounded_string new_item to source
+  --## Append unbounded_string new_item to source.
+  --# Args:
+  --#  source:   String to append onto
+  --#  new_item: String to append
   procedure append( source : inout unbounded_string; variable new_item : in unbounded_string );
 
-  --## Append string new_item to source
+  --## Append string new_item to source.
+  --# Args:
+  --#  source:   String to append onto
+  --#  new_item: String to append
   procedure append( source : inout unbounded_string; new_item : in string );
 
-  --## Append character new_item to source
+  --## Append character new_item to source.
+  --# Args:
+  --#  source:   String to append onto
+  --#  new_item: Character to append
   procedure append( source : inout unbounded_string; new_item : in character );
 
-  --## Lookup the character in source at index
+  --## Lookup the character in source at index.
+  --# Args:
+  --#  source: String to index into
+  --#  index:  Position of element to retrieve
+  --#  el:     Character at index position
   procedure element( variable source : in unbounded_string; index : in positive; el : out character );
 
-  --## Replace the character in source at index with by
+  --## Replace the character in source at index with by.
+  --# Args:
+  --#  source: String to modify
+  --#  index:  Position of element to modify
+  --#  by:     New character to place in index position
   procedure replace_element( source : inout unbounded_string; index : in positive; by : in character );
 
-  --## Extract a slice from source
+  --## Extract a slice from source.
+  --# Args:
+  --#  source: String to slice
+  --#  low:    Start index of slice (inclusive)
+  --#  high:   End index of slice (inclusive)
+  --#  result: Sliced string
   procedure slice( variable source : in unbounded_string; low : in positive; high : in positive;
     result : inout unbounded_string );
 
-  --## Test if left is identical to right
+  --## Test if left is identical to right.
+  --# Args:
+  --#  left:   Left string
+  --#  right:  Right string
+  --#  result: true when strings are identical.
   procedure eq( variable left : in unbounded_string; variable right : in unbounded_string;
     result : out boolean );
 
-  --## Test if left is identical to right
+  --## Test if left is identical to right.
+  --# Args:
+  --#  left:   Left string
+  --#  right:  Right string
+  --#  result: true when strings are identical.
   procedure eq( variable left : in unbounded_string; right : in string; result : out boolean );
 
 
   -- Procedures derived from equivalents in strings_fixed:
   -- =====================================================
 
-  --## Count the occurances of pattern in source
+  --## Count the occurrences of pattern in source.
+  --# Args:
+  --#  source:  String to count patterns in
+  --#  pattern: Pattern to count in source string
+  --#  val:     Number or times pattern occurs in the source string.
   procedure count( variable source : in unbounded_string; pattern : in string;
     val : out natural );
 
   --## Delete a slice from source. If from is greater than through, source is
   --#  unmodified.
+  --# Args:
+  --#  source:  String to delete a slice from
+  --#  from:    Start index (inclusive)
+  --#  through: End index (inclusive)
   procedure delete( source : inout unbounded_string; from : in positive;
     through : in natural );
 
-  --## Return the indices of a slice of source that satisfys the membership
+  --## Return the indices of a slice of source that satisfies the membership
   --#  selection for the character set.
+  --# Args:
+  --#  source: String to search for the token
+  --#  set:    Character set for the token
+  --#  test:   Check for characters inside or outside the set
+  --#  first:  Start index of the token
+  --#  last:   End index of the token or 0 if not found
   procedure find_token( variable source : in unbounded_string; set : in character_set; test : in membership;
     first : out positive; last : out natural );
 
-  --## Return the first count characters from source
+  --## Return the first count characters from source.
+  --# Args:
+  --#  source: String to slice head from
+  --#  count:  Number of characters to take from the start of source
+  --#  pad:    Characters to pad with if source length is less than count
   procedure head( source : inout unbounded_string; count : in natural;
     pad : in character := ' ');
 
-  --## Insert the string new_item before the selected index in source
+  --## Insert the string new_item before the selected index in source.
+  --# Args:
+  --#  source:   String to insert into
+  --#  before:   Index position for insertion
+  --#  new_item: String to insert
   procedure insert( source : inout unbounded_string; before : in positive;
     new_item : in string );
 
-  --## Overwrite new_item into source starting at the selected position
+  --## Overwrite new_item into source starting at the selected position.
+  --# Args:
+  --#  source:   String to overwrite
+  --#  position: Index position for overwrite
+  --#  new_item: String to write into source
   procedure overwrite( source : inout unbounded_string; position : in positive;
     new_item : in string );
 
-  --## Replace a slice of the source string with the contents of by
+  --## Replace a slice of the source string with the contents of by.
+  --# Args:
+  --#  source: String to replace
+  --#  low:    Start of the slice (inclusive)
+  --#  high:   End of the slice (inclusive)
+  --#  by:     String to insert into slice position
   procedure replace_slice( source : inout unbounded_string; low : in positive; high : in natural;
     by : in string );
 
-  --## Return the last count characters from source
+  --## Return the last count characters from source.
+  --# Args:
+  --#  source: String to slice tail from
+  --#  count:  Number of characters to take from the end of source
+  --#  pad:    Characters to pad with if source length is less than count
   procedure tail( source : inout unbounded_string; count : in natural;
     pad : in character := ' ' );
 
-  --## Convert a source string with the provided character mapping
+  --## Convert a source string with the provided character mapping.
+  --# Args:
+  --#  source:  String to translate
+  --#  mapping: Mapping to apply
   procedure translate( source : inout unbounded_string; mapping : in character_mapping );
 
-  --## Remove space characters from leading, trailing, or both ends of source
+  --## Remove space characters from leading, trailing, or both ends of source.
+  --# Args:
+  --#  source: String to trim
+  --#  side:   Which end to trim
   procedure trim( source : inout unbounded_string; side : in trim_end );
 
-  --## Remove all leading characters in left and trailing characters in left
-  --#  from source
+  --## Remove all leading characters in left and trailing characters in right
+  --#  from source.
+  --# Args:
+  --#  source:  String to trim
+  --#  left:    Index position for start trim
+  --#  right:   Index position for end trim
   procedure trim( source : inout unbounded_string; left : in character_set; right : in character_set);
 
 end package;

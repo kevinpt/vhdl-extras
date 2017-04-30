@@ -69,36 +69,63 @@
 --------------------------------------------------------------------
 
 package random is
-  --## Seed the PRNG with a number s
-  procedure seed(s : in positive);
+  --## Seed the PRNG with a number.
+  --# Args:
+  --#  S:  Seed value
+  procedure seed(S : in positive);
 
   --## Seed the PRNG with s1 and s2. This offers more
   --#  random initialization than the one argument version
   --#  of seed.
-  procedure seed(s1, s2 : in positive);
+  --# Args:
+  --#  S1:  Seed value 1
+  --#  S2:  Seed value 2
+  procedure seed(S1, S2 : in positive);
 
-  --## Genrate a random real
+  --## Generate a random real.
+  --# Returns:
+  --#  Random value.
   impure function random return real;
 
-  --## Generate a random natural
+  --## Generate a random natural.
+  --# Returns:
+  --#  Random value.
   impure function random return natural;
 
-  --## Generate a random boolean
+  --## Generate a random boolean.
+  --# Returns:
+  --#  Random value.
   impure function random return boolean;
 
-  --## Generate a random character
+  --## Generate a random character.
+  --# Returns:
+  --#  Random value.
   impure function random return character;
 
-  --## Generate a random bit_vector of size bits
-  impure function random(size : positive) return bit_vector;
+  --## Generate a random bit_vector of size bits.
+  --# Args:
+  --#  Size: Length of the random result
+  --# Returns:
+  --#  Random value.
+  impure function random(Size : positive) return bit_vector;
 
-  --## Generate a random integer between min and max inclusive
-  --#  Note that the span max - min must be less than integer'high.
-  impure function randint(min, max : integer) return integer;
+  --## Generate a random integer between Min and Max inclusive.
+  --#  Note that the span Max - Min must be less than integer'high.
+  --# Args:
+  --#  Min: Minimum value
+  --#  Max: Maximum value
+  --# Returns:
+  --#  Random value between Min and Max.
+  impure function randint(Min, Max : integer) return integer;
 
-  --## Generate a random time between min and max inclusive
-  --#  Note that the span max - min must be less than time'high.
-  impure function randtime(min, max : time) return time;
+  --## Generate a random time between Min and Max inclusive.
+  --#  Note that the span Max - Min must be less than time'high.
+  --# Args:
+  --#  Min: Minimum value
+  --#  Max: Maximum value
+  --# Returns:
+  --#  Random value between Min and Max.
+  impure function randtime(Min, Max : time) return time;
 end package;
 
 

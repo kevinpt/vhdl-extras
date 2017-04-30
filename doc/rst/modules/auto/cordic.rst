@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/cordic.vhdl on 2017-04-20 23:04:37.052225
+.. Generated from ../rtl/extras/cordic.vhdl on 2017-04-30 17:19:09.215621
 .. vhdl:package:: cordic
 
 
@@ -43,10 +43,9 @@ cordic_pipelined
 |
 
 
-|
-
-
 .. vhdl:entity:: cordic_pipelined
+
+
 
   :generic SIZE: 
   :gtype SIZE: positive
@@ -105,10 +104,9 @@ cordic_sequential
 |
 
 
-|
-
-
 .. vhdl:entity:: cordic_sequential
+
+
 
   :generic SIZE: 
   :gtype SIZE: positive
@@ -170,10 +168,9 @@ cordic_flex_pipelined
 |
 
 
-|
-
-
 .. vhdl:entity:: cordic_flex_pipelined
+
+
 
   :generic SIZE: 
   :gtype SIZE: positive
@@ -230,10 +227,9 @@ sincos_pipelined
 |
 
 
-|
-
-
 .. vhdl:entity:: sincos_pipelined
+
+
 
   :generic SIZE: 
   :gtype SIZE: positive
@@ -286,10 +282,9 @@ sincos_sequential
 |
 
 
-|
-
-
 .. vhdl:entity:: sincos_sequential
+
+
 
   :generic SIZE: 
   :gtype SIZE: positive
@@ -322,66 +317,76 @@ Subprograms
 
 .. vhdl:function:: function cordic_gain(iterations : positive) return real;
 
+
+
   :param iterations: 
   :type iterations: positive
 
 
-.. vhdl:procedure:: procedure adjust_angle(x : in signed; y : in signed; z : in signed; xa : out signed; ya : out signed; za : out signed);
+.. vhdl:procedure:: procedure adjust_angle(x : None; y : None; z : in signed; xa : None; ya : None; za : out signed);
+
+
 
   :param x: 
-  :type x: in signed
+  :type x: None None
   :param y: 
-  :type y: in signed
+  :type y: None None
   :param z: 
   :type z: in signed
   :param xa: 
-  :type xa: out signed
+  :type xa: None None
   :param ya: 
-  :type ya: out signed
+  :type ya: None None
   :param za: 
   :type za: out signed
 
 
-.. vhdl:procedure:: procedure rotate(iterations : in integer; x : in signed; y : in signed; z : in signed; xr : out signed; yr : out signed; zr : out signed);
+.. vhdl:procedure:: procedure rotate(iterations : in integer; x : None; y : None; z : in signed; xr : None; yr : None; zr : out signed);
+
+
 
   :param iterations: 
   :type iterations: in integer
   :param x: 
-  :type x: in signed
+  :type x: None None
   :param y: 
-  :type y: in signed
+  :type y: None None
   :param z: 
   :type z: in signed
   :param xr: 
-  :type xr: out signed
+  :type xr: None None
   :param yr: 
-  :type yr: out signed
+  :type yr: None None
   :param zr: 
   :type zr: out signed
 
 
-.. vhdl:procedure:: procedure vector(iterations : in integer; x : in signed; y : in signed; z : in signed; xr : out signed; yr : out signed; zr : out signed);
+.. vhdl:procedure:: procedure vector(iterations : in integer; x : None; y : None; z : in signed; xr : None; yr : None; zr : out signed);
+
+
 
   :param iterations: 
   :type iterations: in integer
   :param x: 
-  :type x: in signed
+  :type x: None None
   :param y: 
-  :type y: in signed
+  :type y: None None
   :param z: 
   :type z: in signed
   :param xr: 
-  :type xr: out signed
+  :type xr: None None
   :param yr: 
-  :type yr: out signed
+  :type yr: None None
   :param zr: 
   :type zr: out signed
 
 
-.. vhdl:function:: function effective_fractional_bits(iterations : positive; frac_bits : positive) return real;
+.. vhdl:function:: function effective_fractional_bits(iterations : None; frac_bits : positive) return real;
+
+
 
   :param iterations: 
-  :type iterations: positive
+  :type iterations: None
   :param frac_bits: 
   :type frac_bits: positive
 

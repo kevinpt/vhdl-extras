@@ -50,43 +50,45 @@ use ieee.std_logic_1164.all;
 
 package memory is
 
+  --# A dual-ported RAM supporting writes and reads from separate clock domains.
   component dual_port_ram is
     generic (
-      MEM_SIZE  : positive;
-      SYNC_READ : boolean := true
+      MEM_SIZE  : positive;       --# Number or words in memory
+      SYNC_READ : boolean := true --# Register outputs of read port memory
     );
     port (
-      -- {{data|Write port}}
-      Wr_clock : in std_ulogic;
-      We       : in std_ulogic; -- Write enable
-      Wr_addr  : in natural range 0 to MEM_SIZE-1;
-      Wr_data  : in std_ulogic_vector;
+      --# {{data|Write port}}
+      Wr_clock : in std_ulogic; --# Write port clock
+      We       : in std_ulogic; --# Write enable
+      Wr_addr  : in natural range 0 to MEM_SIZE-1; --# Write port address
+      Wr_data  : in std_ulogic_vector; --# Write port data
 
-      -- {{Read port}}
-      Rd_clock : in std_ulogic;
-      Re       : in std_ulogic; -- Read enable
-      Rd_addr  : in natural range 0 to MEM_SIZE-1;
-      Rd_data  : out std_ulogic_vector
+      --# {{Read port}}
+      Rd_clock : in std_ulogic; --# Read port clock
+      Re       : in std_ulogic; --# Read enable
+      Rd_addr  : in natural range 0 to MEM_SIZE-1; --# Read port address
+      Rd_data  : out std_ulogic_vector --# Read port data
     );
   end component;
 
   type rom_format is (BINARY_TEXT, HEX_TEXT);
 
+  --# A synthesizable ROM using a file to specify the contents.
   component rom is
     generic (
-      ROM_FILE  : string;
-      FORMAT    : rom_format;
-      MEM_SIZE  : positive;
-      SYNC_READ : boolean := true
+      ROM_FILE  : string;         --# Name of file with ROM data
+      FORMAT    : rom_format;     --# File encoding
+      MEM_SIZE  : positive;       --# Number or words in memory
+      SYNC_READ : boolean := true --# Register outputs of read port memory
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
+      --# {{clocks|}}
+      Clock : in std_ulogic; --# System clock
       
-      -- {{data|}}
-      Re    : in std_ulogic; -- Read enable
-      Addr  : in natural range 0 to MEM_SIZE-1;
-      Data  : out std_ulogic_vector
+      --# {{data|}}
+      Re    : in std_ulogic; --# Read enable
+      Addr  : in natural range 0 to MEM_SIZE-1; --# Read address
+      Data  : out std_ulogic_vector --# Data at current address
     );
   end component;
 

@@ -48,109 +48,265 @@ use extras.strings_maps_constants.all;
 
 package strings_fixed is
 
-  --## Move source to target
+  --## Move source to target.
+  --# Args:
+  --#  source:  String to move
+  --#  target:  Destingation string
+  --#  drop:    Truncation mode
+  --#  justify: Alignment mode
+  --#  pad :    Padding character for target when longer than source
   procedure move( source : in string; target : out string; drop : in truncation := error;
     justify : in alignment := left; pad : in character := ' ' );
 
   --## Find the index of the first occurance of pattern in source from the
-  --#  beginning or end
+  --#  beginning or end.
+  --# Args:
+  --#  source:  String to search
+  --#  pattern: Search pattern
+  --#  going:   Search direction
+  --#  mapping: Optional mapping applied to source string
+  --# Returns:
+  --#  Index position of pattern or 0 if not found.
   function index( source : string; pattern : string; going : direction := forward;
     mapping : character_mapping := identity ) return natural;
 
-  --## Find the index of first occurance of a character from set in source
+  --## Find the index of first occurance of a character from set in source.
+  --# Args:
+  --#  source: String to search
+  --#  set:    Character set to search for
+  --#  test:   Check for characters inside or outside the set
+  --#  going:  Search direction
+  --# Returns:
+  --#  Index position of first matching character or 0 if not found.
   function index( source : string; set : character_set; test : membership := inside;
     going : direction := forward ) return natural;
 
-  --## Find the index of the first non-space character in source
+  --## Find the index of the first non-space character in source.
+  --# Args:
+  --#  source: String to search
+  --#  going:  Search direction
+  --# Returns:
+  --#  Index position of first non-space character or 0 if none found.
   function index_non_blank( source : string; going : direction := forward ) return natural;
 
-  --## Count the occurrences of pattern in source
+  --## Count the occurrences of pattern in source.
+  --# Args:
+  --#  source:  String to count patterns in
+  --#  pattern: Pattern to count in source string
+  --# Returns:
+  --#  Number or times pattern occurs in the source string.
   function count( source : string; pattern : string;
     mapping : character_mapping := identity ) return natural;
 
-  --## Count the occurrences of characters from set in source
+  --## Count the occurrences of characters from set in source.
+  --# Args:
+  --#  source: String to count characters in
+  --#  set:    Character set to count
+  --# Returns:
+  --#  Number of times a character from set occurs in the source string.
   function count( source : string; set : character_set ) return natural;
 
   --## Return the indices of a slice of source that satisfies the membership
   --#  selection for the character set.
+  --# Args:
+  --#  source: String to search for the token
+  --#  set:    Character set for the token
+  --#  test:   Check for characters inside or outside the set
+  --#  first:  Start index of the token
+  --#  last:   End index of the token or 0 if not found
   procedure find_token( source : in string; set : in character_set; test : in membership;
     first : out positive; last : out natural );
 
-  --## Convert a source string with the provided character mapping
+  --## Convert a source string with the provided character mapping.
+  --# Args:
+  --#  source:  String to translate
+  --#  mapping: Mapping to apply
+  --# Returns:
+  --#  New string with applied mapping.
   function translate( source : string; mapping : character_mapping ) return string;
 
-  --## Convert a source string with the provided character mapping
+  --## Convert a source string with the provided character mapping.
+  --# Args:
+  --#  source:  String to translate
+  --#  mapping: Mapping to apply
   procedure translate( source : inout string; mapping : in character_mapping );
 
-  --## Replace a slice of the source string with the contents of by
+  --## Replace a slice of the source string with the contents of by.
+  --# Args:
+  --#  source: String to replace
+  --#  low:    Start of the slice (inclusive)
+  --#  high:   End of the slice (inclusive)
+  --#  by:     String to insert into slice position
+  --# Returns:
+  --#  New string with replaced slice.
   function replace_slice( source : string; low : positive; high : natural; by : string )
     return string;
 
-  --## Replace a slice of the source string with the contents of by
+  --## Replace a slice of the source string with the contents of by.
+  --# Args:
+  --#  source:  String to replace
+  --#  low:     Start of the slice (inclusive)
+  --#  high:    End of the slice (inclusive)
+  --#  by:      String to insert into slice position
+  --#  drop:    Truncation mode
+  --#  justify: Alignment mode
+  --#  pad :    Padding character when result is shorter than original string
   procedure replace_slice( source : inout string; low : in positive; high : in natural;
     by : in string; drop : in truncation := error ; justify : in alignment := left;
     pad : in character := ' ' );
 
-  --## Insert the string new_item before the selected index in source
+  --## Insert the string new_item before the selected index in source.
+  --# Args:
+  --#  source:   String to insert into
+  --#  before:   Index position for insertion
+  --#  new_item: String to insert
+  --# Returns:
+  --#  Source string with new_item inserted.  
   function insert(source : string; before : positive; new_item : string ) return string;
 
-  --## Insert the string new_item before the selected index in source
+  --## Insert the string new_item before the selected index in source.
+  --# Args:
+  --#  source:   String to insert into
+  --#  before:   Index position for insertion
+  --#  new_item: String to insert
+  --#  drop:     Truncation mode
   procedure insert( source : inout string; before : in positive; new_item : in string;
     drop : in truncation := error );
 
-  --## Overwrite new_item into source starting at the selected position
+  --## Overwrite new_item into source starting at the selected position.
+  --# Args:
+  --#  source:   String to overwrite
+  --#  position: Index position for overwrite
+  --#  new_item: String to write into source
+  --# Returns:
+  --#  New string with overwritten item.
   function overwrite( source : string; position : positive; new_item : string ) return string;
 
-  --## Overwrite new_item into source starting at the selected position
+  --## Overwrite new_item into source starting at the selected position.
+  --# Args:
+  --#  source:   String to overwrite
+  --#  position: Index position for overwrite
+  --#  new_item: String to write into source
+  --#  drop:     Truncation mode
   procedure overwrite( source : inout string; position : in positive; new_item : in string;
     drop : in truncation := right);
 
   --## Delete a slice from source. If from is greater than through, source is
   --#  unmodified.
+  --# Args:
+  --#  source:  String to delete a slice from
+  --#  from:    Start index (inclusive)
+  --#  through: End index (inclusive)
+  --# Returns:
+  --#  New string with a slice deleted.
   function delete( source : string; from : positive; through : natural ) return string;
 
   --## Delete a slice from source. If from is greater than through, source is
   --#  unmodified.
+  --# Args:
+  --#  source:  String to delete a slice from
+  --#  from:    Start index (inclusive)
+  --#  through: End index (inclusive)
+  --#  justify: Position of shortened result in string
+  --#  pad:     Character to use as padding for shortened string
   procedure delete( source : inout string; from : in positive; through : in natural;
     justify : in alignment := left; pad : in character := ' ');
 
-  --## Remove space characters from leading, trailing, or both ends of source
+  --## Remove space characters from leading, trailing, or both ends of source.
+  --# Args:
+  --#  source: String to trim
+  --#  side:   Which end to trim
+  --# Returns:
+  --#  Source string with space trimmed.
   function trim( source : string; side : trim_end ) return string;
 
-  --## Remove space characters from leading, trailing, or both ends of source
+  --## Remove space characters from leading, trailing, or both ends of source.
+  --# Args:
+  --#  source:  String to trim
+  --#  side:    Which end to trim
+  --#  justify: Position of shortened result in string
+  --#  pad:     Character to use as padding for shortened string
   procedure trim( source : inout string; side : in trim_end; justify : in alignment := left;
     pad : in character := ' ' );
 
   --## Remove all leading characters in left and trailing characters in right
-  --#  from source
+  --#  from source.
+  --# Args:
+  --#  source:  String to trim
+  --#  left:    Index position for start trim
+  --#  right:   Index position for end trim
+  --# Returns:
+  --#  Source string with ends trimmed.
   function trim( source : string; left : character_set; right : character_set ) return string;
 
   --## Remove all leading characters in left and trailing characters in right
-  --#  from source
+  --#  from source.
+  --# Args:
+  --#  source:  String to trim
+  --#  left:    Index position for start trim
+  --#  right:   Index position for end trim
+  --#  justify: Position of shortened result in string
+  --#  pad:     Character to use as padding for shortened string
   procedure trim( source : inout string; left : in character_set; right : in character_set;
     justify : in alignment := extras.strings.left; pad : in character := ' ' );
 
-  --## Return the first count characters from source
+  --## Return the first count characters from source.
+  --# Args:
+  --#  source: String to slice from
+  --#  count:  Number of characters to take from the start of source
+  --#  pad:    Characters to pad with if source length is less than count
+  --# Returns:
+  --#  A string of length count.
   function head( source : string; count : natural; pad : character := ' ' ) return string;
 
-  --## Return the first count characters from source
+  --## Return the first count characters from source.
+  --# Args:
+  --#  source:  String to slice from
+  --#  count:   Number of characters to take from the start of source
+  --#  justify: Position of shortened result in string  
+  --#  pad:     Characters to pad with if source length is less than count
   procedure head( source : inout string; count : in natural; justify : in alignment := left;
     pad : in character := ' ');
 
-  --## Return the last count characters from source
+  --## Return the last count characters from source.
+  --# Args:
+  --#  source: String to slice from
+  --#  count:  Number of characters to take from the end of source
+  --#  pad:    Characters to pad with if source length is less than count
+  --# Returns:
+  --#  A string of length count.
   function tail( source : string; count : natural; pad : character := ' ' ) return string;
 
-  --## Return the last count characters from source
+  --## Return the last count characters from source.
+  --# Args:
+  --#  source:  String to slice from
+  --#  count:   Number of characters to take from the end of source
+  --#  justify: Position of shortened result in string
+  --#  pad:     Characters to pad with if source length is less than count
   procedure tail( source : inout string; count : in natural; justify : in alignment := left;
     pad : in character := ' ' );
 
-  --## Replicate a character left number of times
+  --## Replicate a character left number of times.
+  --# Args:
+  --#  left:  Number of times to repeat the right operand
+  --#  right: Character to repeat in string
+  --# Returns:
+  --#  String with repeated character.
   function "*" ( left : natural; right : character ) return string;
 
-  --## Replicate a string left number of times
+  --## Replicate a string left number of times.
+  --# Args:
+  --#  left:  Number of times to repeat the right operand
+  --#  right: String to repeat in result string
+  --# Returns:
+  --#  String with repeated substring.
   function "*" ( left : natural; right : string ) return string;
 
-  --## Compute hash value of a string
+  --## Compute hash value of a string.
+  --# Args:
+  --#  key: String to be hashed
+  --# Returns:
+  --#  Hash value.
   function hash( key : string ) return natural;
 
 end package;

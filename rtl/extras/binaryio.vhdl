@@ -35,7 +35,7 @@
 --# DEPENDENCIES: none
 --#
 --# DESCRIPTION:
---#  This package provided procedures to perform general purpose binary I/O on
+--#  This package provides procedures to perform general purpose binary I/O on
 --#  files. The number of bytes read or written is controlled by the width of
 --#  array passed to the procedures. An endianness parameter determines the byte
 --#  order. These procedures do not handle packed binary data. Reading and
@@ -44,7 +44,7 @@
 --#  when writing padded signed arrays.
 --#
 --# EXAMPLE USAGE:
---#  file fh : octet_file open read_mode is "foo.bin" ;
+--#  file fh : octet_file open read_mode is "foo.bin";
 --#  signal uword : unsigned(15 downto 0);
 --#  signal sword : signed(19 downto 0);
 --#  ...
@@ -67,13 +67,34 @@ package binaryio is
   -- big-endian    = most significant octet first  : 4321, 321, etc.
   type endianness is ( little_endian, big_endian );
 
-  --## Binary read and write procedures 
+  --%% Binary read and write procedures 
+  
+  --## Read binary data into an unsigned vector.
+  --# Args:
+  --#  Fh:          File handle
+  --#  Octet_order: Endianness of the octets
+  --#  Word:        Data read from the file
   procedure read( file Fh : octet_file; Octet_order : endianness; Word : out unsigned );
 
+  --## Read binary data into a signed vector.
+  --# Args:
+  --#  Fh:          File handle
+  --#  Octet_order: Endianness of the octets
+  --#  Word:        Data read from the file
   procedure read( file Fh : octet_file; Octet_order : endianness; Word : out signed );
 
+  --## Write an unsigned vector to a file.
+  --# Args:
+  --#  Fh:          File handle
+  --#  Octet_order: Endianness of the octets
+  --#  Word:        Data to write into the file
   procedure write( file Fh : octet_file; Octet_order : endianness; Word : unsigned );
 
+  --## Write a signed vector to a file.
+  --# Args:
+  --#  Fh:          File handle
+  --#  Octet_order: Endianness of the octets
+  --#  Word:        Data to write into the file
   procedure write( file Fh : octet_file; Octet_order : endianness; Word : signed );
 
 end package;

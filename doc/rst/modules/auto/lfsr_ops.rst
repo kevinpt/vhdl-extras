@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/lfsr_ops.vhdl on 2017-04-20 23:04:37.233455
+.. Generated from ../rtl/extras/lfsr_ops.vhdl on 2017-04-30 17:19:09.427787
 .. vhdl:package:: lfsr_ops
 
 
@@ -28,39 +28,41 @@ galois_lfsr
     RESET_ACTIVE_LEVEL : std_ulogic
   );
   port (
+    --# {{clocks|}}
     Clock : in std_ulogic;
     Reset : in std_ulogic;
     Enable : in std_ulogic;
+    --# {{control|}}
     Tap_map : in std_ulogic_vector;
+    --# {{data|}}
     State : out std_ulogic_vector
   );
   end component;
 
 |
 
-Galois LFSR. With Maximal length coefficients it will cycle through
-(2**n)-1 states when FULL_CYCLE = false, 2**n when true.
-
-|
-
 
 .. vhdl:entity:: galois_lfsr
 
-  :generic INIT_ZERO: 
+  Galois LFSR. With Maximal length coefficients it will cycle through
+  (2**n)-1 states when FULL_CYCLE = false, 2**n when true.
+
+
+  :generic INIT_ZERO:  Initialize register to zeroes when true
   :gtype INIT_ZERO: boolean
-  :generic FULL_CYCLE: 
+  :generic FULL_CYCLE:  Implement a full 2**n cycle
   :gtype FULL_CYCLE: boolean
-  :generic RESET_ACTIVE_LEVEL: 
+  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock: 
+  :port Clock:  System clock
   :ptype Clock: in std_ulogic
-  :port Reset: 
+  :port Reset:  Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Enable: 
+  :port Enable:  Synchronous enable
   :ptype Enable: in std_ulogic
-  :port Tap_map: 
+  :port Tap_map:  '1' for taps that receive feedback
   :ptype Tap_map: in std_ulogic_vector
-  :port State: 
+  :port State:  The LFSR state register
   :ptype State: out std_ulogic_vector
 
 fibonacci_lfsr
@@ -75,84 +77,100 @@ fibonacci_lfsr
     RESET_ACTIVE_LEVEL : std_ulogic
   );
   port (
+    --# {{clocks|}}
     Clock : in std_ulogic;
     Reset : in std_ulogic;
     Enable : in std_ulogic;
+    --# {{control|}}
     Tap_map : in std_ulogic_vector;
+    --# {{data|}}
     State : out std_ulogic_vector
   );
   end component;
 
 |
 
-Fibonacci LFSR. With Maximal length coefficients it will cycle through
-(2**n)-1 states when FULL_CYCLE = false, 2**n states when true.
-
-|
-
 
 .. vhdl:entity:: fibonacci_lfsr
 
-  :generic INIT_ZERO: 
+  Fibonacci LFSR. With Maximal length coefficients it will cycle through
+  (2**n)-1 states when FULL_CYCLE = false, 2**n states when true.
+
+
+  :generic INIT_ZERO:  Initialize register to zeroes when true
   :gtype INIT_ZERO: boolean
-  :generic FULL_CYCLE: 
+  :generic FULL_CYCLE:  Implement a full 2**n cycle
   :gtype FULL_CYCLE: boolean
-  :generic RESET_ACTIVE_LEVEL: 
+  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock: 
+  :port Clock:  System clock
   :ptype Clock: in std_ulogic
-  :port Reset: 
+  :port Reset:  Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Enable: 
+  :port Enable:  Synchronous enable
   :ptype Enable: in std_ulogic
-  :port Tap_map: 
+  :port Tap_map:  '1' for taps that receive feedback
   :ptype Tap_map: in std_ulogic_vector
-  :port State: 
+  :port State:  The LFSR state register
   :ptype State: out std_ulogic_vector
 
 Subprograms
 -----------
 
 
-.. vhdl:function:: function to_tap_map(C : lfsr_coefficients; Map_length : positive; Reverse : boolean) return std_ulogic_vector;
+.. vhdl:function:: function to_tap_map(C : lfsr_coefficients; Map_length : positive; Reverse : boolean := false) return std_ulogic_vector;
 
-  :param C: 
-  :type C: lfsr_coefficients
-  :param Map_length: 
-  :type Map_length: positive
-  :param Reverse: 
-  :type Reverse: boolean
-
-  Convert a coefficient list to an expanded vector with a '1' in the place
+  Convert a coefficient list to an expanded vector with a '1' in the place.
   of each coefficient.
+
+
+  :param C: Coefficient definition list
+  :type C: lfsr_coefficients
+  :param Map_length: Size of the coefficient vector
+  :type Map_length: positive
+  :param Reverse: Reverse order of coefficients
+  :type Reverse: boolean
+  :returns:  Vector of coefficients.
+
 
 .. vhdl:function:: function lfsr_taps(Size : positive) return std_ulogic_vector;
 
-  :param Size: 
+  Lookup a predefined tap coefficients from the table.
+
+
+  :param Size: Size of the coefficient vector
   :type Size: positive
+  :returns:  Vector of coefficients.
 
-  Lookup a predefined tap coefficients from the table
 
-.. vhdl:function:: function next_galois_lfsr(State : std_ulogic_vector; Tap_map : std_ulogic_vector; Kind : lfsr_kind; Full_cycle : boolean) return std_ulogic_vector;
+.. vhdl:function:: function next_galois_lfsr(State : std_ulogic_vector; Tap_map : std_ulogic_vector; Kind : lfsr_kind := normal; Full_cycle : boolean := false) return std_ulogic_vector;
 
-  :param State: 
+  Iterate the next state in a Galois LFSR.
+
+
+  :param State: Current state of the LFSR
   :type State: std_ulogic_vector
-  :param Tap_map: 
+  :param Tap_map: Coefficient vector
   :type Tap_map: std_ulogic_vector
-  :param Kind: 
+  :param Kind: Normal or inverted. Normal initializes with all ones.
   :type Kind: lfsr_kind
-  :param Full_cycle: 
+  :param Full_cycle: Generate a full 2**n cycle when true
   :type Full_cycle: boolean
+  :returns:  New state for the LFSR.
 
 
-.. vhdl:function:: function next_fibonacci_lfsr(State : std_ulogic_vector; Tap_map : std_ulogic_vector; Kind : lfsr_kind; Full_cycle : boolean) return std_ulogic_vector;
+.. vhdl:function:: function next_fibonacci_lfsr(State : std_ulogic_vector; Tap_map : std_ulogic_vector; Kind : lfsr_kind := normal; Full_cycle : boolean := false) return std_ulogic_vector;
 
-  :param State: 
+  Iterate the next state in a Fibonacci LFSR.
+
+
+  :param State: Current state of the LFSR
   :type State: std_ulogic_vector
-  :param Tap_map: 
+  :param Tap_map: Coefficient vector
   :type Tap_map: std_ulogic_vector
-  :param Kind: 
+  :param Kind: Normal or inverted. Normal initializes with all ones.
   :type Kind: lfsr_kind
-  :param Full_cycle: 
+  :param Full_cycle: Generate a full 2**n cycle when true
   :type Full_cycle: boolean
+  :returns:  New state for the LFSR.
 

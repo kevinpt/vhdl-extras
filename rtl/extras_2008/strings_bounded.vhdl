@@ -40,8 +40,8 @@
 --#  is a nearly complete implementation with only the procedures taking
 --#  character mapping functions omitted because of VHDL limitations.
 --#  This package requires support for VHDL-2008 package generics. The
---#  maximum size of a bounded string is established by instantating a new
---#  mackage with the MAX generic set to the desired size.
+--#  maximum size of a bounded string is established by instantiating a new
+--#  package with the MAX generic set to the desired size.
 --#
 --# EXAMPLE USAGE:
 --#  library extras_2008;
@@ -74,214 +74,568 @@ package strings_bounded is
     data   : string(1 to MAX);
   end record;
 
-  --## Return the length of a bounded_string
+  --## Return the length of a bounded_string.
+  --# Args:
+  --#  source: String to check length of
+  --# Returns:
+  --#  Length of the string.
   function length( source : bounded_string ) return length_range;
 
-  --## Convert a string to bounded_string
+  --## Convert a string to bounded_string.
+  --# Args:
+  --#  source: String to convert
+  --#  drop:   Truncation behavior for longer strings
+  --# Returns:
+  --#  Converted string.
   function to_bounded_string( source : string; drop : truncation := error ) return bounded_string;
 
-  --## Convert a bounded_string to string
+  --## Convert a bounded_string to string.
+  --# Args:
+  --#  source: String to convert
+  --# Returns:
+  --#  Bounded string converted to a plain string.
   function to_string( source : bounded_string ) return string;
 
-  --## Append a bounded_string
+  --## Append two bounded_strings.
+  --# Args:
+  --#  l: Left string
+  --#  r: Right string
+  --#  drop: Truncation behavior for longer strings
+  --# Returns:
+  --#  String with l and r concatenated.
   function append( l, r : bounded_string; drop : truncation := error ) return bounded_string;
 
-  --## Append a string
+  --## Append a string to a bounded_string.
+  --# Args:
+  --#  l: Left string
+  --#  r: Right string
+  --#  drop: Truncation behavior for longer strings
+  --# Returns:
+  --#  String with l and r concatenated.
   function append( l : bounded_string; r : string; drop : truncation := error )
     return bounded_string;
 
-  --## Append a bounded_string to a string
+  --## Append a bounded_string to a string.
+  --# Args:
+  --#  l: Left string
+  --#  r: Right string
+  --#  drop: Truncation behavior for longer strings
+  --# Returns:
+  --#  String with l and r concatenated.
   function append( l : string; r : bounded_string; drop : truncation := error )
     return bounded_string;
 
-  --## Append a character
+  --## Append a character to a bounded_string.
+  --# Args:
+  --#  l: Left string
+  --#  r: Right character
+  --#  drop: Truncation behavior for longer strings
+  --# Returns:
+  --#  String with l and r concatenated.
   function append( l : bounded_string; r : character; drop : truncation := error )
     return bounded_string;
 
-  --## Append a bounded_string to a character
+  --## Append a bounded_string to a character.
+  --# Args:
+  --#  l: Left character
+  --#  r: Right string
+  --#  drop: Truncation behavior for longer strings
+  --# Returns:
+  --#  String with l and r concatenated.
   function append( l : character; r : bounded_string; drop : truncation := error )
     return bounded_string;
 
-  --## Append a bounded_string
+  --## Append a bounded_string.
+  --# Args:
+  --#  source:   String to append onto
+  --#  new_item: String to append
+  --#  drop:     Truncation behavior for longer strings
   procedure append( source : inout bounded_string; new_item : in bounded_string;
     drop : in truncation := error );
 
-  --## Append a string
+  --## Append a string.
+  --# Args:
+  --#  source:   String to append onto
+  --#  new_item: String to append
+  --#  drop:     Truncation behavior for longer strings
   procedure append( source : inout bounded_string; new_item : in string;
     drop : in truncation := error );
 
-  --## Append a character
+  --## Append a character.
+  --# Args:
+  --#  source:   String to append onto
+  --#  new_item: Character to append
+  --#  drop:     Truncation behavior for longer strings
   procedure append( source : inout bounded_string; new_item : in character;
     drop : in truncation := error );
 
 
+  --## Concatenate two strings.
+  --# Args:
+  --#  l: Left string
+  --#  r: Right string
+  --# Returns:
+  --#  String with l and r concatenated.
   function "&"( l, r : bounded_string ) return bounded_string;
 
+  --## Concatenate a string to a bounded_string.
+  --# Args:
+  --#  l: Left string
+  --#  r: Right string
+  --# Returns:
+  --#  String with l and r concatenated.
   function "&"( l : bounded_string; r : string ) return bounded_string;
 
+  --## Concatenate a bounded_string to a string.
+  --# Args:
+  --#  l: Left string
+  --#  r: Right string
+  --# Returns:
+  --#  String with l and r concatenated.
   function "&"( l : string; r : bounded_string ) return bounded_string;
 
+  --## Concatenate a character to a string.
+  --# Args:
+  --#  l: Left string
+  --#  r: Right character
+  --# Returns:
+  --#  String with l and r concatenated.
   function "&"( l : bounded_string; r : character ) return bounded_string;
 
+  --## Concatenate a string to a character.
+  --# Args:
+  --#  l: Left character
+  --#  r: Right string
+  --# Returns:
+  --#  String with l and r concatenated.
   function "&"( l : character; r : bounded_string ) return bounded_string;
 
-  --## Return the character at the index position
+  --## Return the character at the index position.
+  --# Args:
+  --#  source: String to index into
+  --#  index:  Position of the character in the string
+  --# Returns:
+  --#  Character at the index position.
   function element( source : bounded_string; index : positive ) return character;
 
-  --## Replace the character at the index position
+  --## Replace the character at the index position.
+  --# Args:
+  --#  source: String to have element replaced
+  --#  index:  Index position to insert new character
+  --#  by:     Character to place in the string
   procedure replace_element( source : inout bounded_string; index : in positive;
     by : in character );
 
-  --## Return a sliced range of a bounded_string from low to high inclusive
+  --## Return a sliced range of a bounded_string.
+  --# Args:
+  --#  source: String to slice
+  --#  low:    low index of slice (inclusive)
+  --#  high:   high index of slice (inclusive)
+  --# Returns:
+  --#  Substring of source from low to high.
   function slice( source : bounded_string; low : positive; high : natural ) return string;
 
+  --## Test two bounded strings for equality.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l and r are equal.
   function "="( l, r : bounded_string ) return boolean;
 
+  --## Test a bounded_string and plain string for equality.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l and r are equal.
   function "="( l : bounded_string; r : string ) return boolean;
 
+  --## Test a plain string and a bounded_string for equality.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l and r are equal.
   function "="( l : string; r : bounded_string ) return boolean;
 
-
+  --## Test two bounded_strings for one lexicographically before the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l lexicographically proceeds r.
   function "<"( l, r : bounded_string ) return boolean;
 
+  --## Test a bounded_string and a plain string for one lexicographically before the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l lexicographically proceeds r.
   function "<"( l : bounded_string; r : string ) return boolean;
 
+  --## Test a plain string and a bounded_string for one lexicographically before the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l lexicographically proceeds r.
   function "<"( l : string; r : bounded_string ) return boolean;
 
-
+  --## Test two bounded_strings for equality or one lexicographically before the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l and r are equal or l lexicographically proceeds r.
   function "<="( l, r : bounded_string ) return boolean;
 
+  --## Test a bounded_string and a plain string for equality or one lexicographically before the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l and r are equal or l lexicographically proceeds r.
   function "<="( l : bounded_string; r : string ) return boolean;
 
+  --## Test a plain string and a bounded_string for equality or one lexicographically before the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l and r are equal or l lexicographically proceeds r.
   function "<="( l : string; r : bounded_string ) return boolean;
 
-
+  --## Test two bounded_strings for one lexicographically after the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l lexicographically follows r.
   function ">"( l, r : bounded_string ) return boolean;
 
+  --## Test a bounded_string and a plain string for one lexicographically after the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l lexicographically follows r.
   function ">"( l : bounded_string; r : string ) return boolean;
 
+  --## Test a plain string and a bounded_string for one lexicographically after the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l lexicographically follows r.
   function ">"( l : string; r : bounded_string ) return boolean;
 
-
+  --## Test two bounded_strings for equality or one lexicographically after the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l and r are equal or l lexicographically follows r.
   function ">="( l, r : bounded_string ) return boolean;
 
+  --## Test a bounded_string and a plain string for equality or one lexicographically after the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l and r are equal or l lexicographically follows r.
   function ">="( l : bounded_string; r : string ) return boolean;
 
+  --## Test a plain string and a bounded_string for equality or one lexicographically after the other.
+  --# Args:
+  --#  l: First string to compare
+  --#  r: Second string to compare
+  --# Returns:
+  --#  true when l and r are equal or l lexicographically follows r.
   function ">="( l : string; r : bounded_string ) return boolean;
 
 
   --## Find the index of the first occurance of pattern in source from the
-  --#  beginning or end
+  --#  beginning or end.
+  --# Args:
+  --#  source:  String to index into
+  --#  pattern: Pattern to search for
+  --#  going:   Search direction
+  --#  mapping: Optional character mapping applied before the search
+  --# Returns:
+  --#  Index position of pattern or 0 if not found.
   function index( source : bounded_string; pattern : string; going : direction := forward;
     mapping : character_mapping := IDENTITY ) return natural;
 
-  --## Find the index of first occurance of a character from set in source
+  --## Find the index of first occurance of a character from set in source.
+  --# Args:
+  --#  source: String to search
+  --#  set:    Character set to search for
+  --#  test:   Check for characters inside or outside the set
+  --#  going:  Search direction
+  --# Returns:
+  --#  Index position of first matching character or 0 if not found.
   function index( source : bounded_string; set : character_set; test : membership := inside;
     going : direction := forward ) return natural;
 
-  --## Find the index of the first non-space character in source
+  --## Find the index of the first non-space character in source.
+  --# Args:
+  --#  source: String to search
+  --#  going:  Search direction
+  --# Returns:
+  --#  Index position of first non-space character or 0 if none found.
   function index_non_blank( source : bounded_string; going : direction := forward ) return natural;
 
-  --## Count the occurrences of pattern in source
+  --## Count the occurrences of pattern in source.
+  --# Args:
+  --#  source:  String to count patterns in
+  --#  pattern: Pattern to count in source string
+  --# Returns:
+  --#  Number or times pattern occurs in the source string.
   function count( source : bounded_string; pattern : string; mapping : character_mapping := IDENTITY )
     return natural;
 
-  --## Count the occurrences of characters from set in source
+  --## Count the occurrences of characters from set in source.
+  --# Args:
+  --#  source: String to count characters in
+  --#  set:    Character set to count
+  --# Returns:
+  --#  Number of times a character from set occurs in the source string.
   function count( source : bounded_string; set : character_set ) return natural;
 
-  --## Return the indices of a slice of source that satisfys the membership
+  --## Return the indices of a slice of source that satisfies the membership
   --#  selection for the character set.
+  --# Args:
+  --#  source: String to search for the token
+  --#  set:    Character set for the token
+  --#  test:   Check for characters inside or outside the set
+  --#  first:  Start index of the token
+  --#  last:   End index of the token or 0 if not found
   procedure find_token( source : in bounded_string; set : in character_set;
     test : in membership; first : out positive; last : out natural );
 
-  --## Convert a source string with the provided character mapping
+  --## Convert a source string with the provided character mapping.
+  --# Args:
+  --#  source:  String to translate
+  --#  mapping: Mapping to apply
+  --# Returns:
+  --#  New string with applied mapping.
   function translate( source : bounded_string; mapping : character_mapping ) return bounded_string;
 
-  --## Convert a source string with the provided character mapping
+  --## Convert a source string with the provided character mapping.
+  --# Args:
+  --#  source:  String to translate
+  --#  mapping: Mapping to apply
   procedure translate( source : inout bounded_string; mapping : in character_mapping );
 
-  --## Replace a slice of the source string with the contents of by
+  --## Replace a slice of the source string with the contents of by.
+  --# Args:
+  --#  source: String to replace
+  --#  low:    Start of the slice (inclusive)
+  --#  high:   End of the slice (inclusive)
+  --#  by:     String to insert into slice position
+  --# Returns:
+  --#  New string with replaced slice.
   function replace_slice( source : bounded_string; low : positive; high : natural;
     by : string; drop : truncation := error ) return bounded_string;
 
-  --## Replace a slice of the source string with the contents of by
+  --## Replace a slice of the source string with the contents of by.
+  --# Args:
+  --#  source:  String to replace
+  --#  low:     Start of the slice (inclusive)
+  --#  high:    End of the slice (inclusive)
+  --#  by:      String to insert into slice position
+  --#  drop:    Truncation mode
+  --#  justify: Alignment mode
+  --#  pad :    Padding character when result is shorter than original string
   procedure replace_slice( source : inout bounded_string; low : in positive; high : in natural;
     by : in string; drop : in truncation := error );
 
-  --## Insert the string new_item before the selected index in source
+  --## Insert the string new_item before the selected index in source.
+  --# Args:
+  --#  source:   String to insert into
+  --#  before:   Index position for insertion
+  --#  new_item: String to insert
+  --# Returns:
+  --#  Source string with new_item inserted.  
   function insert( source : bounded_string; before : positive; new_item : string;
     drop : truncation := error ) return bounded_string;
 
-  --## Insert the string new_item before the selected index in source
+  --## Insert the string new_item before the selected index in source.
+  --# Args:
+  --#  source:   String to insert into
+  --#  before:   Index position for insertion
+  --#  new_item: String to insert
+  --#  drop:     Truncation mode
   procedure insert( source : inout bounded_string; before : in positive; new_item : in string;
     drop : in truncation := error );
 
-  --## Overwrite new_item into source starting at the selected position
+  --## Overwrite new_item into source starting at the selected position.
+  --# Args:
+  --#  source:   String to overwrite
+  --#  position: Index position for overwrite
+  --#  new_item: String to write into source
+  --# Returns:
+  --#  New string with overwritten item.
   function overwrite( source : bounded_string; position : positive; new_item : string;
     drop : truncation := error ) return bounded_string;
 
-  --## Overwrite new_item into source starting at the selected position
+  --## Overwrite new_item into source starting at the selected position.
+  --# Args:
+  --#  source:   String to overwrite
+  --#  position: Index position for overwrite
+  --#  new_item: String to write into source
+  --#  drop:     Truncation mode
   procedure overwrite( source : inout bounded_string; position : in positive; new_item : in string;
     drop : in truncation := error );
 
   --## Delete a slice from source. If from is greater than through, source is
   --#  unmodified.
+  --# Args:
+  --#  source:  String to delete a slice from
+  --#  from:    Start index (inclusive)
+  --#  through: End index (inclusive)
+  --# Returns:
+  --#  New string with a slice deleted.
   function delete( source : bounded_string; from : positive; through : natural )
     return bounded_string;
 
   --## Delete a slice from source. If from is greater than through, source is
   --#  unmodified.
+  --# Args:
+  --#  source:  String to delete a slice from
+  --#  from:    Start index (inclusive)
+  --#  through: End index (inclusive)
+  --#  justify: Position of shortened result in string
+  --#  pad:     Character to use as padding for shortened string
   procedure delete( source : inout bounded_string; from : in positive; through : in natural );
 
-  --## Remove space characters from leading, trailing, or both ends of source
+  --## Remove space characters from leading, trailing, or both ends of source.
+  --# Args:
+  --#  source: String to trim
+  --#  side:   Which end to trim
+  --# Returns:
+  --#  Source string with space trimmed.
   function trim( source : bounded_string; side : trim_end ) return bounded_string;
 
-  --## Remove space characters from leading, trailing, or both ends of source
+  --## Remove space characters from leading, trailing, or both ends of source.
+  --# Args:
+  --#  source:  String to trim
+  --#  side:    Which end to trim
   procedure trim( source : inout bounded_string; side : in trim_end );
 
   --## Remove all leading characters in left and trailing characters in right
-  --#  from source
+  --#  from source.
+  --# Args:
+  --#  source:  String to trim
+  --#  left:    Index position for start trim
+  --#  right:   Index position for end trim
+  --# Returns:
+  --#  Source string with ends trimmed.
   function trim( source : bounded_string; left : character_set; right : character_set )
     return bounded_string;
 
   --## Remove all leading characters in left and trailing characters in right
-  --#  from source
+  --#  from source.
+  --# Args:
+  --#  source:  String to trim
+  --#  left:    Index position for start trim
+  --#  right:   Index position for end trim
   procedure trim( source : inout bounded_string; left : in character_set; right : in character_set );
 
-  --## Return the first count characters from source
+  --## Return the first count characters from source.
+  --# Args:
+  --#  source: String to slice from
+  --#  count:  Number of characters to take from the start of source
+  --#  pad:    Characters to pad with if source length is less than count
+  --#  drop:   Truncation behavior
+  --# Returns:
+  --#  A string of length count.
   function head( source : bounded_string; count : natural; pad : character := ' ';
     drop : truncation := error ) return bounded_string;
 
-  --## Return the first count characters from source
+  --## Return the first count characters from source.
+  --# Args:
+  --#  source:  String to slice from
+  --#  count:   Number of characters to take from the start of source
+  --#  pad:     Characters to pad with if source length is less than count
+  --#  drop:    Truncation behavior
   procedure head( source : inout bounded_string; count : in natural; pad : in character := ' ';
     drop : in truncation := error );
 
-  --## Return the last count characters from source
+  --## Return the last count characters from source.
+  --# Args:
+  --#  source: String to slice from
+  --#  count:  Number of characters to take from the end of source
+  --#  pad:    Characters to pad with if source length is less than count
+  --#  drop:   Truncation behavior
+  --# Returns:
+  --#  A string of length count.
   function tail( source : bounded_string; count : natural; pad : character := ' ';
     drop : truncation := error ) return bounded_string;
 
-  --## Return the last count characters from source
+  --## Return the last count characters from source.
+  --# Args:
+  --#  source:  String to slice from
+  --#  count:   Number of characters to take from the end of source
+  --#  pad:     Characters to pad with if source length is less than count
+  --#  drop:    Truncation behavior
   procedure tail( source : inout bounded_string; count : in natural; pad : in character := ' ';
     drop : in truncation := error );
 
-  --## Replicate a character left number of times
+  --## Replicate a character left number of times.
+  --# Args:
+  --#  left:  Number of times to repeat the right operand
+  --#  right: Character to repeat in string
+  --# Returns:
+  --#  String with repeated character.
   function "*"( l : natural; r : character ) return bounded_string;
 
-  --## Replicate a string left number of times
+  --## Replicate a string left number of times.
+  --# Args:
+  --#  left:  Number of times to repeat the right operand
+  --#  right: String to repeat in result string
+  --# Returns:
+  --#  String with repeated substring.
+
   function "*"( l : natural; r : string ) return bounded_string;
 
-  --## Replicate a bounded_string left number of times
+  --## Replicate a bounded_string left number of times.
+  --# Args:
+  --#  left:  Number of times to repeat the right operand
+  --#  right: String to repeat in result string
+  --# Returns:
+  --#  String with repeated substring.
   function "*"( l : natural; r : bounded_string ) return bounded_string;
 
-  --## Replicate a character count number of times
+  --## Replicate a character count number of times.
+  --# Args:
+  --#  count: Number of times to repeat the item operand
+  --#  item:  Character to repeat in string
+  --#  drop:  Truncation behavior
+  --# Returns:
+  --#  String with repeated character.
   function replicate( count : natural; item : character; drop : truncation := error )
     return bounded_string;
 
-  --## Replicate a string count number of times
+  --## Replicate a string count number of times.
+  --# Args:
+  --#  count: Number of times to repeat the item operand
+  --#  item:  String to repeat in result string
+  --#  drop:  Truncation behavior
+  --# Returns:
+  --#  String with repeated substring.
   function replicate( count : natural; item : string; drop : truncation := error )
     return bounded_string;
 
-  --## Replicate a bounded_string count number of times
+  --## Replicate a bounded_string count number of times.
+  --# Args:
+  --#  count: Number of times to repeat the item operand
+  --#  item:  String to repeat in result string
+  --#  drop:  Truncation behavior
+  --# Returns:
+  --#  String with repeated substring.
   function replicate( count : natural; item : bounded_string; drop : truncation := error )
     return bounded_string;
 

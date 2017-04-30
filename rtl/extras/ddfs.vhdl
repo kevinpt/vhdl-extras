@@ -131,61 +131,156 @@ use extras.sizing.bit_size;
 
 package ddfs_pkg is
 
-  function ddfs_size(sys_freq : real; target_freq : real;
-    tolerance : real) return natural;
+  --## Compute the necessary size of a DDFS accumulator based on system and
+  --#  target frequencies with a specified tolerance. The DDFS accumulator
+  --#  must be at least as large as the result to achieve the requested tolerance.
+  --# Args:
+  --#  Sys_freq:    Clock frequency of the system
+  --#  Target_freq: Desired frequency to generate
+  --#  Tolerance:   Error tolerance
+  --# Returns:
+  --#  Number of bits needed to generate the target frequency within the allowed tolerance.
+  function ddfs_size(Sys_freq : real; Target_freq : real;
+    Tolerance : real) return natural;
 
-  function ddfs_tolerance(sys_freq : real; target_freq : real; size : natural)
+  --## Compute the effective frequency tolerance for a specific size and target
+  --#  frequency.
+  --# Args:
+  --#  Sys_freq:    Clock frequency of the system
+  --#  Target_freq: Desired frequency to generate
+  --#  Size:        Size of the DDFS counter
+  --# Returns:
+  --#  Tolerance for the target frequency with a Size counter.
+  function ddfs_tolerance(Sys_freq : real; Target_freq : real; Size : natural)
     return real;
 
-  function ddfs_increment(sys_freq : real; target_freq : real;
-    size : natural) return natural;
+  --## Compute the natural increment value needed to generate a target frequency.
+  --# Args:
+  --#  Sys_freq:    Clock frequency of the system
+  --#  Target_freq: Desired frequency to generate
+  --#  Size:        Size of the DDFS counter
+  --# Returns:
+  --#  Increment value needed to generate the target frequency.
+  function ddfs_increment(Sys_freq : real; Target_freq : real;
+    Size : natural) return natural;
 
-  function ddfs_increment(sys_freq : real; target_freq : real;
-    size : natural) return unsigned;
+  --## Compute the unsigned increment value needed to generate a target frequency.
+  --# Args:
+  --#  Sys_freq:    Clock frequency of the system
+  --#  Target_freq: Desired frequency to generate
+  --#  Size:        Size of the DDFS counter
+  --# Returns:
+  --#  Increment value needed to generate the target frequency.
+  function ddfs_increment(Sys_freq : real; Target_freq : real;
+    Size : natural) return unsigned;
 
+  --## Find the minimum number of fraction bits needed to meet
+  --#  the tolerance requirement for a dynamic DDFS. The target
+  --#  frequency should be the lowest frequency to ensure proper
+  --#  results.
+  --# Args:
+  --#  Sys_freq:    Clock frequency of the system
+  --#  Target_freq: Lowest desired frequency to generate
+  --#  Size:        Size of the DDFS counter
+  --#  Tolerance:   Error tolerance
+  --# Returns:
+  --#  Increment value needed to generate the target frequency.
+  function min_fraction_bits(Sys_freq : real; Target_freq : real;
+    Size : natural; Tolerance : real) return natural;
 
-  function min_fraction_bits(sys_freq : real; target_freq : real;
-    size : natural; tolerance : real) return natural;
+  --## Compute the factor used to generate dynamic increment values.
+  --# Args:
+  --#  The result is a fixed point integer.
+  --#  Sys_freq:      Clock frequency of the system
+  --#  Size:          Size of the DDFS counter
+  --#  Fraction_bits: Number of fraction bits
+  --# Returns:
+  --#  Dynamic increment factor passed into ddfs_dynamic_inc().
+  function ddfs_dynamic_factor(Sys_freq : real; Size : natural;
+    Fraction_bits : natural) return natural;
 
-  function ddfs_dynamic_factor(sys_freq : real; size : natural;
-    fraction_bits : natural) return natural;
+  --## This procedure computes dynamic increment values by multiplying
+  --#  the result of a previous call to ddfs_dynamic_factor by the
+  --#  integer target frequency. The result is an integer value with
+  --#  fractional bits removed.
+  --#  This can be synthesized by invocation within a synchronous
+  --#  process.
+  --# Args:
+  --#  Dynamic_factor: Dynamic factor constant
+  --#  Fraction_bits:  Fraction bits for the dynamic DDFS
+  --#  Target_freq:    Desired frequency to generate
+  --#  Increment:      Increment value needed to generate the target frequency.
+  procedure ddfs_dynamic_inc(Dynamic_factor : in natural; Fraction_bits : in natural;
+    signal Target_freq : in unsigned; signal increment : out unsigned);
 
-  procedure ddfs_dynamic_inc(dynamic_factor : in natural; fraction_bits : in natural;
-    signal target_freq : in unsigned; signal increment : out unsigned);
+  --## Compute the actual synthesized frequency for the specified accumulator
+  --#  size.
+  --# Args:
+  --#  Sys_freq:    Clock frequency of the system
+  --#  Target_freq: Desired frequency to generate
+  --#  Size:        Size of the DDFS counter
+  --# Returns:
+  --#  Frequency generated with the provided parameters.
+  function ddfs_frequency(Sys_freq : real; Target_freq : real;
+    Size : natural) return real;
 
+  --## Compute the error between the requested output frequency and the actual
+  --#  output frequency.
+  --# Args:
+  --#  Sys_freq:    Clock frequency of the system
+  --#  Target_freq: Desired frequency to generate
+  --#  Size:        Size of the DDFS counter
+  --# Returns:
+  --#  Ratio of generated frequency to target frequency.
+  function ddfs_error(Sys_freq : real; Target_freq : real;
+    Size : natural) return real;
 
-  function ddfs_frequency(sys_freq : real; target_freq : real;
-    size : natural) return real;
+  --## Resize a vector representing a fractional value with the binary point
+  --#  preceeding the MSB.
+  --# Args:
+  --#  Phase: Phase angle in range 0.0 to 1.0.
+  --#  Size:  Number of bits in the result
+  --# Returns:
+  --#  Resized vector containing phase fraction
+  function resize_fractional(Phase : unsigned; Size : positive) return unsigned;
 
-  function ddfs_error(sys_freq : real; target_freq : real;
-    size : natural) return real;
+  --## Convert angle in radians to a fractional phase value.
+  --# Args:
+  --#  Radians: Angle to convert
+  --#  Size:    Number of bits in the result
+  --# Returns:
+  --#  Fraction phase in range 0.0 to 1.0.
+  function radians_to_phase(Radians : real; Size : positive) return unsigned;
+  
+  --## Convert angle in degrees to a fractional phase value.
+  --# Args:
+  --#  Radians: Angle to convert
+  --#  Size:    Number of bits in the result
+  --# Returns:
+  --#  Fraction phase in range 0.0 to 1.0.
+  function degrees_to_phase(Degrees : real; Size : positive) return unsigned;
 
-
-  function resize_fractional(phase : unsigned; size : positive) return unsigned;
-
-  function radians_to_phase(radians : real; size : positive) return unsigned;
-  function degrees_to_phase(degrees : real; size : positive) return unsigned;
-
+  --## Synthesize a frequency using a DDFS.
   component ddfs is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic;
+      --# {{clocks|}}
+      Clock : in std_ulogic;             --# System clock
+      Reset : in std_ulogic;             --# Asynchronous reset
       
-      -- {{control|}}
-      Enable     : in std_ulogic := '1';
-      Load_phase : in std_ulogic;
-      New_phase  : in unsigned;
+      --# {{control|}}
+      Enable     : in std_ulogic := '1'; --# Enable the DDFS counter
+      Load_phase : in std_ulogic;        --# Load a new phase angle
+      New_phase  : in unsigned;          --# Phase angle to load
 
-      Increment : in unsigned;      -- Value controlling the synthesized frequency
+      Increment : in unsigned;      --# Value controlling the synthesized frequency
 
-      -- {{}}
-      Accumulator : out unsigned;   -- Internal accumulator value
-      Synth_clock : out std_ulogic; -- Synthesized frequency
-      Synth_pulse : out std_ulogic  -- Single cycle pulse for rising edge of synth_clock
+      --# {{data|}}
+      Accumulator : out unsigned;   --# Internal accumulator value
+      Synth_clock : out std_ulogic; --# Synthesized frequency
+      Synth_pulse : out std_ulogic  --# Single cycle pulse for rising edge of synth_clock
     );
   end component;
 
@@ -378,14 +473,17 @@ package body ddfs_pkg is
        / target_freq - 1.0);
   end function;
 
-
+  --## Resize a vector representing a fractional value with the binary point
+  --#  preceeding the MSB.
   function resize_fractional(phase : unsigned; size : positive) return unsigned is
     alias p: unsigned(phase'length-1 downto 0) is phase;
     variable result : unsigned(size-1 downto 0) := (others => '0');
   begin
     if size <= p'length then
+      -- Slice off upper bits
       result := p(p'high downto p'high-(size-1));
     else
+      -- Left justify phase in result
       result(result'high downto result'high - p'length + 1) := p;
     end if;
 

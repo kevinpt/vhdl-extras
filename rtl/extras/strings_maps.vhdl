@@ -50,40 +50,114 @@ package strings_maps is
 
   type character_ranges is array( positive range <> ) of character_range;
 
-  --## Conversion between character sets and ranges
+  --%% Conversion between character sets and ranges
+  
+  --## Convert ranges to a character set
+  --# Args:
+  --#  ranges: List of character ranges in the set
+  --# Returns:
+  --#  A character set with the requested ranges.
   function to_set( ranges : character_ranges ) return character_set;
+
+  --## Convert range to a character set
+  --# Args:
+  --#  span: Range to build into character set
+  --# Returns:
+  --#  A character set with the requested range.
   function to_set( span : character_range ) return character_set;
+  
+  --## Convert a character set into a list of ranges
+  --# Args:
+  --#  set: Character set to extract ranges from
+  --# Returns:
+  --#  All contiguous ranges in the set.
   function to_ranges( set : character_set ) return character_ranges;
 
   -- Operators
   -- The operators "=", "not", "and", "or", and "xor" are implicit
 
+  --## Difference between to character sets
+  --# Args:
+  --#  left: Set to subtract from
+  --#  right: Set to subtract from left
+  --# Returns:
+  --#  All characters in left not in right.
   function "-" ( left, right : character_set ) return character_set;
 
-  --## Test for membership in a character set
+  --%% Test for membership in a character set
+  
+  --## Test if a character is part of a character set
+  --# Args:
+  --#  element: Character to test for
+  --#  set:     Character set to test membership in
+  --# Returns:
+  --#  true if element is in the set.
   function is_in( element : character; set : character_set ) return boolean;
+
+  --## Test if a character set is a subset of a larget set
+  --# Args:
+  --#  elements: Character set to test for
+  --#  set:     Character set to test membership in
+  --# Returns:
+  --#  true if elements are in the set.
   function is_subset( elements : character_set; set : character_set ) return boolean;
   alias "<=" is is_subset[character_set, character_set return boolean];
 
   subtype character_sequence is string;
 
-  --## Conversion between character sets and sequences
+  --%% Conversion between character sets and sequences
+  
+  --## Convert a character sequence into a set.
+  --# Args:
+  --#  sequence: String of characters to build into a set
+  --# Returns:
+  --#  A character set with all unique characters from sequence.
   function to_set( sequence : character_sequence ) return character_set;
+  
+  --## Convert a character into a set.
+  --# Args:
+  --#  singleton: Character to include in the set
+  --# Returns:
+  --#  A character set with one single character as its member.
   function to_set( singleton : character ) return character_set;
+
+  --## Convert a character set into a sequence string
+  --# Args:
+  --#  set: Character set to convert
+  --# Returns:
+  --#  A sequence string with each character from the set.
   function to_sequence( set : character_set ) return character_sequence;
 
   type character_mapping is array(character) of character;
 
-  --## Look up the mapping for a character
+  --## Look up the mapping for a character.
+  --# Args:
+  --#  cmap:    Map associating Latin-1 characters with a substitute
+  --#  element: Character to lookup in the map
+  --# Returns:
+  --#  The mapped value of the element character.
   function value( cmap : character_mapping; element : character ) return character;
   
-  --## Create a mapping from two sequences
+  --## Create a mapping from two sequences.
+  --# Args:
+  --#  from:   Sequence string to use for map indices
+  --#  to_seq: Sequence string to use from map values
+  --# Returns:
+  --#  A new map to convert characters in the from sequence into the to_seq.
   function to_mapping( from, to_seq : character_sequence ) return character_mapping;
 
-  --## Return the from sequence for a mapping
+  --## Return the from sequence for a mapping.
+  --# Args:
+  --#  cmap: Character map to extract domain from
+  --# Returns:
+  --#  The characters used to map from.
   function to_domain( cmap : character_mapping ) return character_sequence;
 
-  --## Return the to_seq sequence for a mapping
+  --## Return the to_seq sequence for a mapping.
+  --# Args:
+  --#  cmap: Character map to extract range from
+  --# Returns:
+  --#  The characters used to map into.
   function to_range( cmap : character_mapping ) return character_sequence;
 
 end package;

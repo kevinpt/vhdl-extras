@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/freq_gen.vhdl on 2017-04-20 23:04:36.936968
+.. Generated from ../rtl/extras/freq_gen.vhdl on 2017-04-30 17:19:09.077851
 .. vhdl:package:: freq_gen_pkg
 
 
@@ -37,10 +37,9 @@ freq_gen
 |
 
 
-|
-
-
 .. vhdl:entity:: freq_gen
+
+
 
   :generic SYS_FREQ: 
   :gtype SYS_FREQ: real
@@ -106,10 +105,9 @@ freq_gen_pipelined
 |
 
 
-|
-
-
 .. vhdl:entity:: freq_gen_pipelined
+
+
 
   :generic SYS_FREQ: 
   :gtype SYS_FREQ: real

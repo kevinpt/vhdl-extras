@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/fifos.vhdl on 2017-04-20 23:04:36.993671
+.. Generated from ../rtl/extras/fifos.vhdl on 2017-04-30 17:19:09.145105
 .. vhdl:package:: fifos
 
 
@@ -18,12 +18,16 @@ simple_fifo
     SYNC_READ : boolean
   );
   port (
+    --# {{clocks|}}
     Clock : in std_ulogic;
     Reset : in std_ulogic;
+    --# {{data|Write port}}
     We : in std_ulogic;
     Wr_data : in std_ulogic_vector;
+    --# {{Read port}}
     Re : in std_ulogic;
     Rd_data : out std_ulogic_vector;
+    --# {{Status}}
     Empty : out std_ulogic;
     Full : out std_ulogic;
     Almost_empty_thresh : in natural;
@@ -36,40 +40,40 @@ simple_fifo
 |
 
 
-|
-
-
 .. vhdl:entity:: simple_fifo
 
-  :generic RESET_ACTIVE_LEVEL: 
+  Basic FIFO implementatioin for use on a single clock domain.
+
+
+  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :generic MEM_SIZE: 
+  :generic MEM_SIZE:  Number or words in FIFO
   :gtype MEM_SIZE: positive
-  :generic SYNC_READ: 
+  :generic SYNC_READ:  Register outputs of read port memory
   :gtype SYNC_READ: boolean
-  :port Clock: 
+  :port Clock:  System clock
   :ptype Clock: in std_ulogic
-  :port Reset: 
+  :port Reset:  Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port We: 
+  :port We:  Write enable
   :ptype We: in std_ulogic
-  :port Wr_data: 
+  :port Wr_data:  Write data into FIFO
   :ptype Wr_data: in std_ulogic_vector
-  :port Re: 
+  :port Re:  Read enable
   :ptype Re: in std_ulogic
-  :port Rd_data: 
+  :port Rd_data:  Read data from FIFO
   :ptype Rd_data: out std_ulogic_vector
-  :port Empty: 
+  :port Empty:  Empty flag
   :ptype Empty: out std_ulogic
-  :port Full: 
+  :port Full:  Full flag
   :ptype Full: out std_ulogic
-  :port Almost_empty_thresh: 
+  :port Almost_empty_thresh:  Capacity level when almost empty
   :ptype Almost_empty_thresh: in natural
-  :port Almost_full_thresh: 
+  :port Almost_full_thresh:  Capacity level when almost full
   :ptype Almost_full_thresh: in natural
-  :port Almost_empty: 
+  :port Almost_empty:  Almost empty flag 
   :ptype Almost_empty: out std_ulogic
-  :port Almost_full: 
+  :port Almost_full:  Almost full flag
   :ptype Almost_full: out std_ulogic
 
 fifo
@@ -84,14 +88,17 @@ fifo
     SYNC_READ : boolean
   );
   port (
+    --# {{data|Write port}}
     Wr_clock : in std_ulogic;
     Wr_reset : in std_ulogic;
     We : in std_ulogic;
     Wr_data : in std_ulogic_vector;
+    --# {{Read port}}
     Rd_clock : in std_ulogic;
     Rd_reset : in std_ulogic;
     Re : in std_ulogic;
     Rd_data : out std_ulogic_vector;
+    --# {{Status}}
     Empty : out std_ulogic;
     Full : out std_ulogic;
     Almost_empty_thresh : in natural;
@@ -104,44 +111,44 @@ fifo
 |
 
 
-|
-
-
 .. vhdl:entity:: fifo
 
-  :generic RESET_ACTIVE_LEVEL: 
+  General purpose FIFO best used to transfer data across clock domains.
+
+
+  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :generic MEM_SIZE: 
+  :generic MEM_SIZE:  Number or words in FIFO
   :gtype MEM_SIZE: positive
-  :generic SYNC_READ: 
+  :generic SYNC_READ:  Register outputs of read port memory
   :gtype SYNC_READ: boolean
-  :port Wr_clock: 
+  :port Wr_clock:  Write port clock
   :ptype Wr_clock: in std_ulogic
-  :port Wr_reset: 
+  :port Wr_reset:  Asynchronous write port reset
   :ptype Wr_reset: in std_ulogic
-  :port We: 
+  :port We:  Write enable
   :ptype We: in std_ulogic
-  :port Wr_data: 
+  :port Wr_data:  Write data into FIFO
   :ptype Wr_data: in std_ulogic_vector
-  :port Rd_clock: 
+  :port Rd_clock:  Read port clock
   :ptype Rd_clock: in std_ulogic
-  :port Rd_reset: 
+  :port Rd_reset:  Asynchronous read port reset
   :ptype Rd_reset: in std_ulogic
-  :port Re: 
+  :port Re:  Read enable
   :ptype Re: in std_ulogic
-  :port Rd_data: 
+  :port Rd_data:  Read data from FIFO
   :ptype Rd_data: out std_ulogic_vector
-  :port Empty: 
+  :port Empty:  Empty flag
   :ptype Empty: out std_ulogic
-  :port Full: 
+  :port Full:  Full flag
   :ptype Full: out std_ulogic
-  :port Almost_empty_thresh: 
+  :port Almost_empty_thresh:  Capacity level when almost empty
   :ptype Almost_empty_thresh: in natural
-  :port Almost_full_thresh: 
+  :port Almost_full_thresh:  Capacity level when almost full
   :ptype Almost_full_thresh: in natural
-  :port Almost_empty: 
+  :port Almost_empty:  Almost empty flag 
   :ptype Almost_empty: out std_ulogic
-  :port Almost_full: 
+  :port Almost_full:  Almost full flag
   :ptype Almost_full: out std_ulogic
 
 packet_fifo
@@ -156,16 +163,19 @@ packet_fifo
     SYNC_READ : boolean
   );
   port (
+    --# {{data|Write port}}
     Wr_clock : in std_ulogic;
     Wr_reset : in std_ulogic;
     We : in std_ulogic;
     Wr_data : in std_ulogic_vector;
     Keep : in std_ulogic;
     Discard : in std_ulogic;
+    --# {{Read port}}
     Rd_clock : in std_ulogic;
     Rd_reset : in std_ulogic;
     Re : in std_ulogic;
     Rd_data : out std_ulogic_vector;
+    --# {{Status}}
     Empty : out std_ulogic;
     Full : out std_ulogic;
     Almost_empty_thresh : in natural;
@@ -178,46 +188,47 @@ packet_fifo
 |
 
 
-|
-
-
 .. vhdl:entity:: packet_fifo
 
-  :generic RESET_ACTIVE_LEVEL: 
+  This is a dual port FIFO with the ability to drop partially accumulated data. Ths permits
+  you to take in data that may be corrupted and drop it if a trailing checksum or CRC is not valid.
+
+
+  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :generic MEM_SIZE: 
+  :generic MEM_SIZE:  Number or words in FIFO
   :gtype MEM_SIZE: positive
-  :generic SYNC_READ: 
+  :generic SYNC_READ:  Register outputs of read port memory
   :gtype SYNC_READ: boolean
-  :port Wr_clock: 
+  :port Wr_clock:  Write port clock
   :ptype Wr_clock: in std_ulogic
-  :port Wr_reset: 
+  :port Wr_reset:  Asynchronous write port reset
   :ptype Wr_reset: in std_ulogic
-  :port We: 
+  :port We:  Write enable
   :ptype We: in std_ulogic
-  :port Wr_data: 
+  :port Wr_data:  Write data into FIFO
   :ptype Wr_data: in std_ulogic_vector
-  :port Keep: 
+  :port Keep:  Store current write packet
   :ptype Keep: in std_ulogic
-  :port Discard: 
+  :port Discard:  Drop current erite packet
   :ptype Discard: in std_ulogic
-  :port Rd_clock: 
+  :port Rd_clock:  Read port clock
   :ptype Rd_clock: in std_ulogic
-  :port Rd_reset: 
+  :port Rd_reset:  Asynchronous read port reset
   :ptype Rd_reset: in std_ulogic
-  :port Re: 
+  :port Re:  Read enable
   :ptype Re: in std_ulogic
-  :port Rd_data: 
+  :port Rd_data:  Read data from FIFO
   :ptype Rd_data: out std_ulogic_vector
-  :port Empty: 
+  :port Empty:  Empty flag
   :ptype Empty: out std_ulogic
-  :port Full: 
+  :port Full:  Full flag
   :ptype Full: out std_ulogic
-  :port Almost_empty_thresh: 
+  :port Almost_empty_thresh:  Capacity level when almost empty
   :ptype Almost_empty_thresh: in natural
-  :port Almost_full_thresh: 
+  :port Almost_full_thresh:  Capacity level when almost full
   :ptype Almost_full_thresh: in natural
-  :port Almost_empty: 
+  :port Almost_empty:  Almost empty flag 
   :ptype Almost_empty: out std_ulogic
-  :port Almost_full: 
+  :port Almost_full:  Almost full flag
   :ptype Almost_full: out std_ulogic

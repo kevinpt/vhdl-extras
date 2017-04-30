@@ -43,26 +43,122 @@
 
 package characters_handling is
 
-  --## Character class tests
-  function Is_Alphanumeric      ( ch : character ) return boolean;
-  function Is_Letter            ( ch : character ) return boolean;
-  function Is_Control           ( ch : character ) return boolean;
-  function Is_Digit             ( ch : character ) return boolean;
+  --%% Character class tests
+  
+  --## Alphanumeric character test.
+  --# Args:
+  --#  Ch: Character to test
+  --# Returns:
+  --#  true if alphanumeric character.
+  function Is_Alphanumeric      ( Ch : character ) return boolean;
+  
+  --## Letter character test.
+  --# Args:
+  --#  Ch: Character to test
+  --# Returns:
+  --#  true if letter character.
+  function Is_Letter            ( Ch : character ) return boolean;
+  
+  --## Control character test.
+  --# Args:
+  --#  Ch: Character to test
+  --# Returns:
+  --#  true if control character.
+  function Is_Control           ( Ch : character ) return boolean;
+  
+  --## Digit character test.
+  --# Args:
+  --#  Ch: Character to test
+  --# Returns:
+  --#  true if digit character.
+  function Is_Digit             ( Ch : character ) return boolean;
   alias Is_Decimal_Digit is Is_Digit[character return boolean];
-  function Is_Hexadecimal_Digit ( ch : character ) return boolean;
-  function Is_Basic             ( ch : character ) return boolean; -- unaccented
-  function Is_Graphic           ( ch : character ) return boolean;
-  function Is_Lower             ( ch : character ) return boolean;
-  function Is_Upper             ( ch : character ) return boolean;
-  function Is_Special           ( ch : character ) return boolean; -- punctuation
 
-  --## Case conversions
-  function To_Lower( ch : character ) return character;
-  function To_Lower( source : string ) return string;
-  function To_Upper( ch : character ) return character;
-  function To_Upper( source : string ) return string;
-  function To_Basic( ch : character ) return character;
-  function To_Basic( source : string ) return string;
+  --## Hexadecimal digit character test.
+  --# Args:
+  --#  Ch: Character to test
+  --# Returns:
+  --#  true if hexadecimal character.
+  function Is_Hexadecimal_Digit ( Ch : character ) return boolean;
+
+  --## Basic character test.
+  --# Args:
+  --#  Ch: Character to test
+  --# Returns:
+  --#  true if basic character.
+  function Is_Basic             ( Ch : character ) return boolean; -- unaccented
+
+  --## Graphic character test.
+  --# Args:
+  --#  Ch: Character to test
+  --# Returns:
+  --#  true if graphic character.
+  function Is_Graphic           ( Ch : character ) return boolean;
+
+  --## Lower-case character test.
+  --# Args:
+  --#  Ch: Character to test
+  --# Returns:
+  --#  true if lower-case character.
+  function Is_Lower             ( Ch : character ) return boolean;
+
+  --## Upper-case character test.
+  --# Args:
+  --#  Ch: Character to test
+  --# Returns:
+  --#  true if upper-case character.
+  function Is_Upper             ( Ch : character ) return boolean;
+
+  --## Special character test.
+  --# Args:
+  --#  Ch: Character to test
+  --# Returns:
+  --#  true if special character.
+  function Is_Special           ( Ch : character ) return boolean; -- punctuation
+
+  --%% Case conversions
+  
+  --## Convert a character to lower-case.
+  --# Args:
+  --#  Ch: Character to convert
+  --# Returns:
+  --#  Converted character.
+  function To_Lower( Ch : character ) return character;
+  
+  --## Convert a string to lower-case.
+  --# Args:
+  --#  Source: String to convert
+  --# Returns:
+  --#  Converted string.
+  function To_Lower( Source : string ) return string;
+
+  --## Convert a character to upper-case.
+  --# Args:
+  --#  Ch: Character to convert
+  --# Returns:
+  --#  Converted character.
+  function To_Upper( Ch : character ) return character;
+  
+  --## Convert a string to upper-case.
+  --# Args:
+  --#  Source: String to convert
+  --# Returns:
+  --#  Converted string.
+  function To_Upper( Source : string ) return string;
+  
+  --## Convert a character to its basic (unaccented) form.
+  --# Args:
+  --#  Ch: Character to convert
+  --# Returns:
+  --#  Converted character.
+  function To_Basic( Ch : character ) return character;
+  
+  --## Convert a string to its basic (unaccented) form.
+  --# Args:
+  --#  Source: String to convert
+  --# Returns:
+  --#  Converted string.
+  function To_Basic( Source : string ) return string;
 
 end package;
 
@@ -132,59 +228,59 @@ package body characters_handling is
      );
 
 
-  function Is_Alphanumeric( ch : character ) return boolean is
+  function Is_Alphanumeric( Ch : character ) return boolean is
   begin
     return (cclass_table(ch) and AN) /= (class_mask'range => '0');
   end function;
 
-  function Is_Letter( ch : character ) return boolean is
+  function Is_Letter( Ch : character ) return boolean is
   begin
     return (cclass_table(ch) and LE) /= (class_mask'range => '0');
   end function;
 
-  function Is_Control( ch : character ) return boolean is
+  function Is_Control( Ch : character ) return boolean is
   begin
     return (cclass_table(ch) and Cc) /= (class_mask'range => '0');
   end function;
 
-  function Is_Digit( ch : character ) return boolean is
+  function Is_Digit( Ch : character ) return boolean is
   begin
     return (cclass_table(ch) and Nd) /= (class_mask'range => '0');
   end function;
 
-  function Is_Hexadecimal_Digit( ch : character ) return boolean is
+  function Is_Hexadecimal_Digit( Ch : character ) return boolean is
   begin
     return (cclass_table(ch) and Nx) /= (class_mask'range => '0');
   end function;
 
-  function Is_Basic ( ch : character ) return boolean is
+  function Is_Basic ( Ch : character ) return boolean is
   begin
     return (cclass_table(ch) and Lb) /= (class_mask'range => '0');
   end function;
 
-  function Is_Graphic( ch : character ) return boolean is
+  function Is_Graphic( Ch : character ) return boolean is
   begin
     return (cclass_table(ch) and GR) /= (class_mask'range => '0');
   end function;
 
-  function Is_Lower( ch : character ) return boolean is
+  function Is_Lower( Ch : character ) return boolean is
   begin
     return (cclass_table(ch) and Ll) /= (class_mask'range => '0');
   end function;
 
-  function Is_Upper( ch : character ) return boolean is
+  function Is_Upper( Ch : character ) return boolean is
   begin
     return (cclass_table(ch) and Lu) /= (class_mask'range => '0');
   end function;
 
-  function Is_Special( ch : character ) return boolean is
+  function Is_Special( Ch : character ) return boolean is
   begin
     return (cclass_table(ch) and Zp) /= (class_mask'range => '0');
   end function;
 
 
   --## Lower case conversions
-  function To_Lower( ch : character ) return character is
+  function To_Lower( Ch : character ) return character is
   begin
     return LOWER_CASE_MAP(ch);
   end function;
@@ -201,7 +297,7 @@ package body characters_handling is
   end function;
 
   --## Upper case conversions
-  function To_Upper( ch : character ) return character is
+  function To_Upper( Ch : character ) return character is
   begin
     return UPPER_CASE_MAP(ch);
   end function;
@@ -218,7 +314,7 @@ package body characters_handling is
   end function;
 
   --## Basic (unaccented) conversions
-  function To_Basic( ch : character ) return character is
+  function To_Basic( Ch : character ) return character is
   begin
     return BASIC_MAP(ch);
   end function;

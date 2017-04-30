@@ -85,46 +85,81 @@ package text_buffering is
     lines        : natural;
   end record;
 
-  --## Load a text file object into a buffer
-  procedure load_buffer( file fh : text; buf : out text_buffer );
+  --## Load a text file object into a buffer.
+  --# Args:
+  --#  Fh:  File handle
+  --#  Buf: Buffer created from file contents
+  procedure load_buffer( file Fh : text; Buf : out text_buffer );
 
-  --## Load a file into a buffer
-  procedure load_buffer( fname : in string; buf : out text_buffer );
+  --## Load a file into a buffer.
+  --# Args:
+  --#  Fname: Name of text file to read
+  --#  Buf:   Buffer created from file contents
+  procedure load_buffer( Fname : in string; Buf : out text_buffer );
 
 
-  --## Append a text file object to an existing buffer
-  procedure append_file( file fh : text; buf : inout text_buffer );
+  --## Append a text file object to an existing buffer.
+  --# Args:
+  --#  Fh:  File handle
+  --#  Buf: Buffer to append onto
+  procedure append_file( file Fh : text; Buf : inout text_buffer );
 
-  --## Append a text file to an existing buffer
-  procedure append_file( fname : in string; buf : inout text_buffer );
+  --## Append a text file to an existing buffer.
+  --# Args:
+  --#  Fname: Name of text file to read
+  --#  Buf:   Buffer to append onto
+  procedure append_file( Fname : in string; Buf : inout text_buffer );
+
+
+  --## Append an unbounded string to a buffer.
+  --# Args:
+  --#  One_line: String to append
+  --#  Buf:      Buffer to append onto
+  procedure append( variable One_line : in unbounded_string; Buf : inout text_buffer );
 
 
   --## Append a string to a buffer
-  procedure append( variable one_line : in unbounded_string; buf : inout text_buffer );
+  --# Args:
+  --#  One_line: String to append
+  --#  Buf:      Buffer to append onto
+  procedure append( One_line : in string; Buf : inout text_buffer );
 
 
-  --## Append a string to a buffer
-  procedure append( one_line : in string; buf : inout text_buffer );
+  --## Write a buffer to a text file object.
+  --# Args:
+  --#  Fh:  File handle
+  --#  Buf: Buffer to write into the file
+  procedure write( file Fh : text; variable Buf : in text_buffer );
+
+  --## Write a buffer to a text file.
+  --# Args:
+  --#  Fname: Name of text file to write
+  --#  Buf:   Buffer to write into the file
+  procedure write( Fname : string; variable Buf : in text_buffer );
 
 
-  --## Write a buffer to a text file object
-  procedure write( file fh : text; variable buf : in text_buffer );
+  --## Retrieve the current line from a buffer.
+  --# Args:
+  --#  Buf: Buffer to get line from
+  --#  Tl:  Current line in the buffer
+  procedure nextline( Buf : inout text_buffer; Tl : inout unbounded_string );
 
-  --## Write a buffer to a text file
-  procedure write( fname : string; variable buf : in text_buffer );
+  --## Move to a specific line in the buffer.
+  --# Args:
+  --#  Buf: Buffer to seek into
+  --#  N:   Line number (zero based)
+  procedure setline( Buf : inout text_buffer; N : in positive );
 
-
-  --## Retrieve the current line from a buffer
-  procedure nextline( buf : inout text_buffer; tl : inout unbounded_string );
-
-  --## Move to a specific line in the buffer
-  procedure setline( buf : inout text_buffer; n : in positive );
-
-  --## Check if the end of the buffer has been reached
-  procedure endbuffer( variable buf : in text_buffer; at_end : out boolean );
+  --## Check if the end of the buffer has been reached.
+  --# Args:
+  --#  Buf:    Buffer to test
+  --#  At_end: true when the buffer line pointer is at the end
+  procedure endbuffer( variable Buf : in text_buffer; At_end : out boolean );
 
   --## Deallocate the buffer contents
-  procedure free( buf : inout text_buffer );
+  --# Args:
+  --#  Buf: Buffer to free
+  procedure free( Buf : inout text_buffer );
 
 end package;
 

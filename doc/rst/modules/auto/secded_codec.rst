@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/secded_codec.vhdl on 2017-04-20 23:04:37.118125
+.. Generated from ../rtl/extras/secded_codec.vhdl on 2017-04-30 17:19:09.293891
 .. vhdl:package:: secded_codec_pkg
 
 
@@ -39,10 +39,9 @@ secded_codec
 |
 
 
-|
-
-
 .. vhdl:entity:: secded_codec
+
+
 
   :generic DATA_SIZE:  Size of the ``Data`` input
   :gtype DATA_SIZE: positive

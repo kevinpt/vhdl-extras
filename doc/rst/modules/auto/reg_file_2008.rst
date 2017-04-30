@@ -1,19 +1,5 @@
-.. Generated from ../rtl/extras/reg_file.vhdl on 2017-04-30 17:19:09.053142
-.. vhdl:package:: reg_file_pkg
-
-
-Types
------
-
-
-.. vhdl:type:: reg_array
-
-
-Subtypes
---------
-
-
-.. vhdl:subtype:: reg_word
+.. Generated from ../rtl/extras_2008/reg_file_2008.vhdl on 2017-04-25 22:17:58.632829
+.. vhdl:package:: extras_2008.reg_file_pkg
 
 
 Components
@@ -25,7 +11,7 @@ reg_file
 
 .. symbolator::
 
-  component reg_file is
+  component extras_2008.reg_file is
   generic (
     RESET_ACTIVE_LEVEL : std_ulogic;
     DIRECT_READ_BIT_MASK : reg_array;
@@ -53,9 +39,10 @@ reg_file
 |
 
 
-.. vhdl:entity:: reg_file
+.. vhdl:entity:: extras_2008.reg_file
 
-  Flexible register file with support for strobed outputs.
+  Flexible register file with support for strobed outputs. This variant
+  uses VHDL-2008 syntax to
 
 
   :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
@@ -78,7 +65,7 @@ reg_file
   :ptype We: in std_ulogic
   :port Wr_data:  Write port
   :ptype Wr_data: in reg_word
-  :port Rd_data:  Read port
+  :port Rd_data:  Internal file contents
   :ptype Rd_data: out reg_word
   :port Registers:  Register file contents
   :ptype Registers: out reg_array

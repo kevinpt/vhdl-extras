@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/memory.vhdl on 2017-04-20 23:04:37.169090
+.. Generated from ../rtl/extras/memory.vhdl on 2017-04-30 17:19:09.352491
 .. vhdl:package:: memory
 
 
@@ -24,10 +24,12 @@ dual_port_ram
     SYNC_READ : boolean
   );
   port (
+    --# {{data|Write port}}
     Wr_clock : in std_ulogic;
     We : in std_ulogic;
     Wr_addr : in natural;
     Wr_data : in std_ulogic_vector;
+    --# {{Read port}}
     Rd_clock : in std_ulogic;
     Re : in std_ulogic;
     Rd_addr : in natural;
@@ -38,30 +40,30 @@ dual_port_ram
 |
 
 
-|
-
-
 .. vhdl:entity:: dual_port_ram
 
-  :generic MEM_SIZE: 
+  A dual-ported RAM supporting writes and reads from separate clock domains.
+
+
+  :generic MEM_SIZE:  Number or words in memory
   :gtype MEM_SIZE: positive
-  :generic SYNC_READ: 
+  :generic SYNC_READ:  Register outputs of read port memory
   :gtype SYNC_READ: boolean
-  :port Wr_clock: 
+  :port Wr_clock:  Write port clock
   :ptype Wr_clock: in std_ulogic
-  :port We: 
+  :port We:  Write enable
   :ptype We: in std_ulogic
-  :port Wr_addr: 
+  :port Wr_addr:  Write port address
   :ptype Wr_addr: in natural
-  :port Wr_data: 
+  :port Wr_data:  Write port data
   :ptype Wr_data: in std_ulogic_vector
-  :port Rd_clock: 
+  :port Rd_clock:  Read port clock
   :ptype Rd_clock: in std_ulogic
-  :port Re: 
+  :port Re:  Read enable
   :ptype Re: in std_ulogic
-  :port Rd_addr: 
+  :port Rd_addr:  Read port address
   :ptype Rd_addr: in natural
-  :port Rd_data: 
+  :port Rd_data:  Read port data
   :ptype Rd_data: out std_ulogic_vector
 
 rom
@@ -77,7 +79,9 @@ rom
     SYNC_READ : boolean
   );
   port (
+    --# {{clocks|}}
     Clock : in std_ulogic;
+    --# {{data|}}
     Re : in std_ulogic;
     Addr : in natural;
     Data : out std_ulogic_vector
@@ -87,24 +91,24 @@ rom
 |
 
 
-|
-
-
 .. vhdl:entity:: rom
 
-  :generic ROM_FILE: 
+  A synthesizable ROM using a file to specify the contents.
+
+
+  :generic ROM_FILE:  Name of file with ROM data
   :gtype ROM_FILE: string
-  :generic FORMAT: 
+  :generic FORMAT:  File encoding
   :gtype FORMAT: rom_format
-  :generic MEM_SIZE: 
+  :generic MEM_SIZE:  Number or words in memory
   :gtype MEM_SIZE: positive
-  :generic SYNC_READ: 
+  :generic SYNC_READ:  Register outputs of read port memory
   :gtype SYNC_READ: boolean
-  :port Clock: 
+  :port Clock:  System clock
   :ptype Clock: in std_ulogic
-  :port Re: 
+  :port Re:  Read enable
   :ptype Re: in std_ulogic
-  :port Addr: 
+  :port Addr:  Read address
   :ptype Addr: in natural
-  :port Data: 
+  :port Data:  Data at current address
   :ptype Data: out std_ulogic_vector

@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/text_buffering.vhdl on 2017-04-20 23:04:37.264877
+.. Generated from ../rtl/extras/text_buffering.vhdl on 2017-04-30 17:31:21.505298
 .. vhdl:package:: text_buffering
 
 
@@ -19,114 +19,132 @@ Subprograms
 -----------
 
 
-.. vhdl:procedure:: procedure load_buffer(file : in text; fh : in text; buf : out text_buffer);
+.. vhdl:procedure:: procedure load_buffer(Fh : text; Buf : out text_buffer);
 
-  :param file: 
-  :type file: in text
-  :param fh: 
-  :type fh: in text
-  :param buf: 
-  :type buf: out text_buffer
+  Load a text file object into a buffer.
 
-  Load a text file object into a buffer
 
-.. vhdl:procedure:: procedure load_buffer(fname : in string; buf : out text_buffer);
+  :param Fh: File handle
+  :type Fh: None text
+  :param Buf: Buffer created from file contents
+  :type Buf: out text_buffer
 
-  :param fname: 
-  :type fname: in string
-  :param buf: 
-  :type buf: out text_buffer
 
-  Load a file into a buffer
+.. vhdl:procedure:: procedure load_buffer(Fname : in string; Buf : out text_buffer);
 
-.. vhdl:procedure:: procedure append_file(file : in text; fh : in text; buf : inout text_buffer);
+  Load a file into a buffer.
 
-  :param file: 
-  :type file: in text
-  :param fh: 
-  :type fh: in text
-  :param buf: 
-  :type buf: inout text_buffer
 
-  Append a text file object to an existing buffer
+  :param Fname: Name of text file to read
+  :type Fname: in string
+  :param Buf: Buffer created from file contents
+  :type Buf: out text_buffer
 
-.. vhdl:procedure:: procedure append_file(fname : in string; buf : inout text_buffer);
 
-  :param fname: 
-  :type fname: in string
-  :param buf: 
-  :type buf: inout text_buffer
+.. vhdl:procedure:: procedure append_file(Fh : text; Buf : inout text_buffer);
 
-  Append a text file to an existing buffer
+  Append a text file object to an existing buffer.
 
-.. vhdl:procedure:: procedure append(one_line : in unbounded_string; buf : inout text_buffer);
 
-  :param one_line: 
-  :type one_line: in unbounded_string
-  :param buf: 
-  :type buf: inout text_buffer
+  :param Fh: File handle
+  :type Fh: None text
+  :param Buf: Buffer to append onto
+  :type Buf: inout text_buffer
+
+
+.. vhdl:procedure:: procedure append_file(Fname : in string; Buf : inout text_buffer);
+
+  Append a text file to an existing buffer.
+
+
+  :param Fname: Name of text file to read
+  :type Fname: in string
+  :param Buf: Buffer to append onto
+  :type Buf: inout text_buffer
+
+
+.. vhdl:procedure:: procedure append(One_line : in unbounded_string; Buf : inout text_buffer);
+
+  Append an unbounded string to a buffer.
+
+
+  :param One_line: String to append
+  :type One_line: in unbounded_string
+  :param Buf: Buffer to append onto
+  :type Buf: inout text_buffer
+
+
+.. vhdl:procedure:: procedure append(One_line : in string; Buf : inout text_buffer);
 
   Append a string to a buffer
 
-.. vhdl:procedure:: procedure append(one_line : in string; buf : inout text_buffer);
 
-  :param one_line: 
-  :type one_line: in string
-  :param buf: 
-  :type buf: inout text_buffer
+  :param One_line: String to append
+  :type One_line: in string
+  :param Buf: Buffer to append onto
+  :type Buf: inout text_buffer
 
-  Append a string to a buffer
 
-.. vhdl:procedure:: procedure write(file : in text; fh : in text; buf : in text_buffer);
+.. vhdl:procedure:: procedure write(Fh : text; Buf : in text_buffer);
 
-  :param file: 
-  :type file: in text
-  :param fh: 
-  :type fh: in text
-  :param buf: 
-  :type buf: in text_buffer
+  Write a buffer to a text file object.
 
-  Write a buffer to a text file object
 
-.. vhdl:procedure:: procedure write(fname : in string; buf : in text_buffer);
+  :param Fh: File handle
+  :type Fh: None text
+  :param Buf: Buffer to write into the file
+  :type Buf: in text_buffer
 
-  :param fname: 
-  :type fname: in string
-  :param buf: 
-  :type buf: in text_buffer
 
-  Write a buffer to a text file
+.. vhdl:procedure:: procedure write(Fname : string; Buf : in text_buffer);
 
-.. vhdl:procedure:: procedure nextline(buf : inout text_buffer; tl : inout unbounded_string);
+  Write a buffer to a text file.
 
-  :param buf: 
-  :type buf: inout text_buffer
-  :param tl: 
-  :type tl: inout unbounded_string
 
-  Retrieve the current line from a buffer
+  :param Fname: Name of text file to write
+  :type Fname: None string
+  :param Buf: Buffer to write into the file
+  :type Buf: in text_buffer
 
-.. vhdl:procedure:: procedure setline(buf : inout text_buffer; n : in positive);
 
-  :param buf: 
-  :type buf: inout text_buffer
-  :param n: 
-  :type n: in positive
+.. vhdl:procedure:: procedure nextline(Buf : inout text_buffer; Tl : inout unbounded_string);
 
-  Move to a specific line in the buffer
+  Retrieve the current line from a buffer.
 
-.. vhdl:procedure:: procedure endbuffer(buf : in text_buffer; at_end : out boolean);
 
-  :param buf: 
-  :type buf: in text_buffer
-  :param at_end: 
-  :type at_end: out boolean
+  :param Buf: Buffer to get line from
+  :type Buf: inout text_buffer
+  :param Tl: Current line in the buffer
+  :type Tl: inout unbounded_string
 
-  Check if the end of the buffer has been reached
 
-.. vhdl:procedure:: procedure free(buf : inout text_buffer);
+.. vhdl:procedure:: procedure setline(Buf : inout text_buffer; N : in positive);
 
-  :param buf: 
-  :type buf: inout text_buffer
+  Move to a specific line in the buffer.
+
+
+  :param Buf: Buffer to seek into
+  :type Buf: inout text_buffer
+  :param N: Line number (zero based)
+  :type N: in positive
+
+
+.. vhdl:procedure:: procedure endbuffer(Buf : in text_buffer; At_end : out boolean);
+
+  Check if the end of the buffer has been reached.
+
+
+  :param Buf: Buffer to test
+  :type Buf: in text_buffer
+  :param At_end: true when the buffer line pointer is at the end
+  :type At_end: out boolean
+
+
+.. vhdl:procedure:: procedure free(Buf : inout text_buffer);
 
   Deallocate the buffer contents
+
+
+  :param Buf: Buffer to free
+  :type Buf: inout text_buffer
+

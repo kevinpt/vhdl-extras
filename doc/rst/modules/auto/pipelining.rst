@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/pipelining.vhdl on 2017-04-20 23:04:37.215680
+.. Generated from ../rtl/extras/pipelining.vhdl on 2017-04-30 17:19:09.406524
 .. vhdl:package:: pipelining
 
 
@@ -29,12 +29,11 @@ pipeline_ul
 
 |
 
-Pipeline registers for std_ulogic and std_logic.
-
-|
-
 
 .. vhdl:entity:: pipeline_ul
+
+  Pipeline registers for std_ulogic and std_logic.
+
 
   :generic PIPELINE_STAGES:  Number of pipeline stages to insert
   :gtype PIPELINE_STAGES: positive
@@ -74,12 +73,11 @@ pipeline_sulv
 
 |
 
-Pipeline registers for std_ulogic_vector.
-
-|
-
 
 .. vhdl:entity:: pipeline_sulv
+
+  Pipeline registers for std_ulogic_vector.
+
 
   :generic PIPELINE_STAGES:  Number of pipeline stages to insert
   :gtype PIPELINE_STAGES: positive
@@ -119,12 +117,11 @@ pipeline_slv
 
 |
 
-Pipeline registers for std_logic_vector.
-
-|
-
 
 .. vhdl:entity:: pipeline_slv
+
+  Pipeline registers for std_logic_vector.
+
 
   :generic PIPELINE_STAGES:  Number of pipeline stages to insert
   :gtype PIPELINE_STAGES: positive
@@ -164,12 +161,11 @@ pipeline_u
 
 |
 
-Pipeline registers for unsigned.
-
-|
-
 
 .. vhdl:entity:: pipeline_u
+
+  Pipeline registers for unsigned.
+
 
   :generic PIPELINE_STAGES:  Number of pipeline stages to insert
   :gtype PIPELINE_STAGES: positive
@@ -209,12 +205,11 @@ pipeline_s
 
 |
 
-Pipeline registers for signed.
-
-|
-
 
 .. vhdl:entity:: pipeline_s
+
+  Pipeline registers for signed.
+
 
   :generic PIPELINE_STAGES:  Number of pipeline stages to insert
   :gtype PIPELINE_STAGES: positive

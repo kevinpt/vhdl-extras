@@ -118,96 +118,99 @@ use ieee.std_logic_1164.all;
 
 package fifos is
 
+  --# Basic FIFO implementatioin for use on a single clock domain.
   component simple_fifo is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1';
-      MEM_SIZE           : positive;
-      SYNC_READ          : boolean    := true
+      RESET_ACTIVE_LEVEL : std_ulogic := '1'; --# Asynch. reset control level
+      MEM_SIZE           : positive;          --# Number or words in FIFO
+      SYNC_READ          : boolean    := true --# Register outputs of read port memory
       );
     port (
-      -- {{clocks|}}
-      Clock   : in std_ulogic;
-      Reset   : in std_ulogic;
+      --# {{clocks|}}
+      Clock   : in std_ulogic;  --# System clock
+      Reset   : in std_ulogic;  --# Asynchronous reset
       
-      -- {{data|Write port}}
-      We      : in std_ulogic;
-      Wr_data : in std_ulogic_vector;
+      --# {{data|Write port}}
+      We      : in std_ulogic;  --# Write enable
+      Wr_data : in std_ulogic_vector; --# Write data into FIFO
 
-      -- {{Read port}}
-      Re      : in  std_ulogic;
-      Rd_data : out std_ulogic_vector;
+      --# {{Read port}}
+      Re      : in  std_ulogic;  --# Read enable
+      Rd_data : out std_ulogic_vector; --# Read data from FIFO
 
-      -- {{Status}}
-      Empty : out std_ulogic;
-      Full  : out std_ulogic;
+      --# {{Status}}
+      Empty : out std_ulogic;    --# Empty flag
+      Full  : out std_ulogic;    --# Full flag
 
-      Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1;
-      Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1;
-      Almost_empty        : out std_ulogic;
-      Almost_full         : out std_ulogic
+      Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1; --# Capacity level when almost empty
+      Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1; --# Capacity level when almost full
+      Almost_empty        : out std_ulogic; --# Almost empty flag 
+      Almost_full         : out std_ulogic  --# Almost full flag
       );
   end component;
 
+  --# General purpose FIFO best used to transfer data across clock domains.
   component fifo is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1';
-      MEM_SIZE           : positive;
-      SYNC_READ          : boolean    := true
+      RESET_ACTIVE_LEVEL : std_ulogic := '1'; --# Asynch. reset control level
+      MEM_SIZE           : positive;          --# Number or words in FIFO
+      SYNC_READ          : boolean    := true --# Register outputs of read port memory
       );
     port (
-      -- {{data|Write port}}
-      Wr_clock : in std_ulogic;
-      Wr_reset : in std_ulogic;
-      We       : in std_ulogic;
-      Wr_data  : in std_ulogic_vector;
+      --# {{data|Write port}}
+      Wr_clock : in std_ulogic;  --# Write port clock
+      Wr_reset : in std_ulogic;  --# Asynchronous write port reset
+      We       : in std_ulogic;  --# Write enable
+      Wr_data  : in std_ulogic_vector; --# Write data into FIFO
 
-      -- {{Read port}}
-      Rd_clock : in  std_ulogic;
-      Rd_reset : in  std_ulogic;
-      Re       : in  std_ulogic;
-      Rd_data  : out std_ulogic_vector;
+      --# {{Read port}}
+      Rd_clock : in  std_ulogic;  --# Read port clock
+      Rd_reset : in  std_ulogic;  --# Asynchronous read port reset
+      Re       : in  std_ulogic;  --# Read enable
+      Rd_data  : out std_ulogic_vector; --# Read data from FIFO
 
-      -- {{Status}}
-      Empty : out std_ulogic;
-      Full  : out std_ulogic;
+      --# {{Status}}
+      Empty : out std_ulogic;     --# Empty flag
+      Full  : out std_ulogic;     --# Full flag
 
-      Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1;
-      Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1;
-      Almost_empty        : out std_ulogic;
-      Almost_full         : out std_ulogic
+      Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1; --# Capacity level when almost empty
+      Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1; --# Capacity level when almost full
+      Almost_empty        : out std_ulogic; --# Almost empty flag 
+      Almost_full         : out std_ulogic  --# Almost full flag
       );
   end component;
 
-
+  --# This is a dual port FIFO with the ability to drop partially accumulated data. Ths permits
+  --# you to take in data that may be corrupted and drop it if a trailing checksum or CRC is not valid.
   component packet_fifo is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1';
-      MEM_SIZE           : positive;
-      SYNC_READ          : boolean    := true
+      RESET_ACTIVE_LEVEL : std_ulogic := '1'; --# Asynch. reset control level
+      MEM_SIZE           : positive;          --# Number or words in FIFO
+      SYNC_READ          : boolean    := true --# Register outputs of read port memory
       );
     port (
-      -- {{data|Write port}}
-      Wr_clock : in std_ulogic;
-      Wr_reset : in std_ulogic;
-      We       : in std_ulogic;
-      Wr_data  : in std_ulogic_vector;
-      Keep     : in std_ulogic;
-      Discard  : in std_ulogic;
+      --# {{data|Write port}}
+      Wr_clock : in std_ulogic;  --# Write port clock
+      Wr_reset : in std_ulogic;  --# Asynchronous write port reset
+      We       : in std_ulogic;  --# Write enable
+      Wr_data  : in std_ulogic_vector; --# Write data into FIFO
+      Keep     : in std_ulogic;  --# Store current write packet
+      Discard  : in std_ulogic;  --# Drop current erite packet
 
-      -- {{Read port}}
-      Rd_clock : in  std_ulogic;
-      Rd_reset : in  std_ulogic;
-      Re       : in  std_ulogic;
-      Rd_data  : out std_ulogic_vector;
+      --# {{Read port}}
+      Rd_clock : in  std_ulogic;  --# Read port clock
+      Rd_reset : in  std_ulogic;  --# Asynchronous read port reset
+      Re       : in  std_ulogic;  --# Read enable
+      Rd_data  : out std_ulogic_vector; --# Read data from FIFO
 
-      -- {{Status}}
-      Empty : out std_ulogic;
-      Full  : out std_ulogic;
+      --# {{Status}}
+      Empty : out std_ulogic;     --# Empty flag
+      Full  : out std_ulogic;     --# Full flag
 
-      Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1;
-      Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1;
-      Almost_empty        : out std_ulogic;
-      Almost_full         : out std_ulogic
+      Almost_empty_thresh : in  natural range 0 to MEM_SIZE-1 := 1; --# Capacity level when almost empty
+      Almost_full_thresh  : in  natural range 0 to MEM_SIZE-1 := 1; --# Capacity level when almost full
+      Almost_empty        : out std_ulogic; --# Almost empty flag 
+      Almost_full         : out std_ulogic  --# Almost full flag
       );
   end component;
 
@@ -229,7 +232,7 @@ entity simple_fifo is
   port (
     Clock   : in std_ulogic;
     Reset   : in std_ulogic;
-    We      : in std_ulogic;
+    We      : in std_ulogic;  --# Write enable
     Wr_data : in std_ulogic_vector;
 
     Re      : in  std_ulogic;

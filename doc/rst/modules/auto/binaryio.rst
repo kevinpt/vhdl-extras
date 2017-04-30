@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/binaryio.vhdl on 2017-04-20 23:04:36.925277
+.. Generated from ../rtl/extras/binaryio.vhdl on 2017-04-30 17:19:09.064585
 .. vhdl:package:: binaryio
 
 
@@ -16,51 +16,54 @@ Subprograms
 -----------
 
 
-.. vhdl:procedure:: procedure read(file : in octet_file; Fh : in octet_file; Octet_order : in endianness; Word : out unsigned);
+.. vhdl:procedure:: procedure read(Fh : octet_file; Octet_order : endianness; Word : out unsigned);
 
-  :param file: 
-  :type file: in octet_file
-  :param Fh: 
-  :type Fh: in octet_file
-  :param Octet_order: 
-  :type Octet_order: in endianness
-  :param Word: 
+  Read binary data into an unsigned vector.
+
+
+  :param Fh: File handle
+  :type Fh: None octet_file
+  :param Octet_order: Endianness of the octets
+  :type Octet_order: None endianness
+  :param Word: Data read from the file
   :type Word: out unsigned
 
-  Binary read and write procedures 
 
-.. vhdl:procedure:: procedure read(file : in octet_file; Fh : in octet_file; Octet_order : in endianness; Word : out signed);
+.. vhdl:procedure:: procedure read(Fh : octet_file; Octet_order : endianness; Word : out signed);
 
-  :param file: 
-  :type file: in octet_file
-  :param Fh: 
-  :type Fh: in octet_file
-  :param Octet_order: 
-  :type Octet_order: in endianness
-  :param Word: 
+  Read binary data into a signed vector.
+
+
+  :param Fh: File handle
+  :type Fh: None octet_file
+  :param Octet_order: Endianness of the octets
+  :type Octet_order: None endianness
+  :param Word: Data read from the file
   :type Word: out signed
 
 
-.. vhdl:procedure:: procedure write(file : in octet_file; Fh : in octet_file; Octet_order : in endianness; Word : in unsigned);
+.. vhdl:procedure:: procedure write(Fh : octet_file; Octet_order : endianness; Word : unsigned);
 
-  :param file: 
-  :type file: in octet_file
-  :param Fh: 
-  :type Fh: in octet_file
-  :param Octet_order: 
-  :type Octet_order: in endianness
-  :param Word: 
-  :type Word: in unsigned
+  Write an unsigned vector to a file.
 
 
-.. vhdl:procedure:: procedure write(file : in octet_file; Fh : in octet_file; Octet_order : in endianness; Word : in signed);
+  :param Fh: File handle
+  :type Fh: None octet_file
+  :param Octet_order: Endianness of the octets
+  :type Octet_order: None endianness
+  :param Word: Data to write into the file
+  :type Word: None unsigned
 
-  :param file: 
-  :type file: in octet_file
-  :param Fh: 
-  :type Fh: in octet_file
-  :param Octet_order: 
-  :type Octet_order: in endianness
-  :param Word: 
-  :type Word: in signed
+
+.. vhdl:procedure:: procedure write(Fh : octet_file; Octet_order : endianness; Word : signed);
+
+  Write a signed vector to a file.
+
+
+  :param Fh: File handle
+  :type Fh: None octet_file
+  :param Octet_order: Endianness of the octets
+  :type Octet_order: None endianness
+  :param Word: Data to write into the file
+  :type Word: None signed
 

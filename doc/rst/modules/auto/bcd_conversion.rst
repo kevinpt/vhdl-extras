@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/bcd_conversion.vhdl on 2017-04-20 23:04:37.370480
+.. Generated from ../rtl/extras/bcd_conversion.vhdl on 2017-04-30 17:19:09.589779
 .. vhdl:package:: bcd_conversion
 
 
@@ -30,18 +30,17 @@ binary_to_bcd
 
 |
 
-Convert a binary input to BCD encoding. A conversion by asserting ``Convert``.
-The ``BCD`` output is valid when the ``Done`` signal goes high.
-
-This component will operate with any size binary array of 4 bits or larger
-and produces a BCD array whose length is 4 times the value returned by the
-:vhdl:func:`~bcd_conversion.decimal_size` function.
-The conversion of an n-bit binary number will take n cycles to complete.
-
-|
-
 
 .. vhdl:entity:: binary_to_bcd
+
+  Convert a binary input to BCD encoding. A conversion by asserting ``Convert``.
+  The ``BCD`` output is valid when the ``Done`` signal goes high.
+  
+  This component will operate with any size binary array of 4 bits or larger
+  and produces a BCD array whose length is 4 times the value returned by the
+  :vhdl:func:`~bcd_conversion.decimal_size` function.
+  The conversion of an n-bit binary number will take n cycles to complete.
+
 
   :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
@@ -82,18 +81,17 @@ bcd_to_binary
 
 |
 
-Convert a BCD encoded input to binary. A conversion by asserting ``Convert``.
-The ``Binary`` output is valid when the ``Done`` signal goes high.
-
-The length of the input must be a multiple of four. The binary array produced will be
-large enough to hold the maximum decimal value of the BCD input. Its
-length will be ``bit_size(10**(Bcd'length/4) - 1)``. The conversion of a BCD
-number to an n-bit binary number will take n+3 cycles to complete.
-
-|
-
 
 .. vhdl:entity:: bcd_to_binary
+
+  Convert a BCD encoded input to binary. A conversion by asserting ``Convert``.
+  The ``Binary`` output is valid when the ``Done`` signal goes high.
+  
+  The length of the input must be a multiple of four. The binary array produced will be
+  large enough to hold the maximum decimal value of the BCD input. Its
+  length will be ``bit_size(10**(Bcd'length/4) - 1)``. The conversion of a BCD
+  number to an n-bit binary number will take n+3 cycles to complete.
+
 
   :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
@@ -116,31 +114,37 @@ Subprograms
 
 .. vhdl:function:: function decimal_size(n : natural) return natural;
 
+  Calculate the number of decimal digits needed to represent a number n.
+
+
   :param n: Value to calculate digits for
   :type n: natural
   :returns:   Decimal digits for n.
 
-  Calculate the number of decimal digits needed to represent a number n.
 
 .. vhdl:function:: function to_bcd(Binary : unsigned) return unsigned;
-
-  :param Binary: Binary encoded value
-  :type Binary: unsigned
-  :returns:   BCD encoded result.
 
   Convert binary number to BCD encoding
   This uses the double-dabble algorithm to perform the BCD conversion. It
   will operate with any size binary array and return a BCD array whose
   length is 4 times the value returned by the decimal_size function.
 
-.. vhdl:function:: function to_binary(Bcd : unsigned) return unsigned;
 
-  :param Bcd: BCD encoded value
-  :type Bcd: unsigned
-  :returns:   Binary encoded result.
+  :param Binary: Binary encoded value
+  :type Binary: unsigned
+  :returns:   BCD encoded result.
+
+
+.. vhdl:function:: function to_binary(Bcd : unsigned) return unsigned;
 
   Convert a BCD number to binary encoding
   This uses the double-dabble algorithm in reverse. The length of the
   input must be a multiple of four. The returned binary array will be
   large enough to hold the maximum decimal value of the BCD input. Its
   length will be bit_size(10**(Bcd'length/4) - 1).
+
+
+  :param Bcd: BCD encoded value
+  :type Bcd: unsigned
+  :returns:   Binary encoded result.
+

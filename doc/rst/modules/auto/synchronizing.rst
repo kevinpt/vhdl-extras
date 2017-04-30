@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/synchronizing.vhdl on 2017-04-20 23:04:37.200565
+.. Generated from ../rtl/extras/synchronizing.vhdl on 2017-04-30 17:19:09.388867
 .. vhdl:package:: synchronizing
 
 
@@ -28,13 +28,12 @@ bit_synchronizer
 
 |
 
-A basic synchronizer with a configurable number of stages.
-The ``Sync`` output is synchronized to the ``Clock`` domain.
-
-|
-
 
 .. vhdl:entity:: bit_synchronizer
+
+  A basic synchronizer with a configurable number of stages.
+  The ``Sync`` output is synchronized to the ``Clock`` domain.
+
 
   :generic STAGES:  Number of flip-flops in the synchronizer
   :gtype STAGES: natural
@@ -70,14 +69,13 @@ reset_synchronizer
 
 |
 
-Synchronizer for generating a synchronized reset.
-The deactivating edge transition for the ``Sync_reset`` output
-is synchronized to the ``Clock`` domain. Its activating edge remains asynchronous.
-
-|
-
 
 .. vhdl:entity:: reset_synchronizer
+
+  Synchronizer for generating a synchronized reset.
+  The deactivating edge transition for the ``Sync_reset`` output
+  is synchronized to the ``Clock`` domain. Its activating edge remains asynchronous.
+
 
   :generic STAGES:  Number of flip-flops in the synchronizer
   :gtype STAGES: natural
@@ -119,13 +117,12 @@ handshake_synchronizer
 
 |
 
-A handshaking synchronizer for sending an array between clock domains.
-This uses the four-phase handshake protocol.
-
-|
-
 
 .. vhdl:entity:: handshake_synchronizer
+
+  A handshaking synchronizer for sending an array between clock domains.
+  This uses the four-phase handshake protocol.
+
 
   :generic STAGES:  Number of flip-flops in the synchronizer
   :gtype STAGES: natural

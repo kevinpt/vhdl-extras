@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/random.vhdl on 2017-04-20 23:04:37.099854
+.. Generated from ../rtl/extras/random.vhdl on 2017-04-30 17:19:09.272337
 .. vhdl:package:: random
 
 
@@ -6,51 +6,92 @@ Subprograms
 -----------
 
 
-.. vhdl:procedure:: procedure seed(s : in positive);
+.. vhdl:procedure:: procedure seed(S : in positive);
 
-  :param s: 
-  :type s: in positive
+  Seed the PRNG with a number.
 
-  Seed the PRNG with a number s
 
-.. vhdl:procedure:: procedure seed(s1 : in positive; s2 : in positive);
+  :param S: Seed value
+  :type S: in positive
 
-  :param s1: 
-  :type s1: in positive
-  :param s2: 
-  :type s2: in positive
+
+.. vhdl:procedure:: procedure seed(S1 : None; S2 : in positive);
 
   Seed the PRNG with s1 and s2. This offers more
   random initialization than the one argument version
   of seed.
 
-.. vhdl:function:: function random(size : positive) return bit_vector;
 
-  :param size: 
-  :type size: positive
+  :param S1: Seed value 1
+  :type S1: None None
+  :param S2: Seed value 2
+  :type S2: in positive
 
-  Genrate a random real
-  Generate a random natural
-  Generate a random boolean
-  Generate a random character
-  Generate a random bit_vector of size bits
 
-.. vhdl:function:: function randint(min : integer; max : integer) return integer;
+.. vhdl:function:: function random return real;
 
-  :param min: 
-  :type min: integer
-  :param max: 
-  :type max: integer
+  Generate a random real.
 
-  Generate a random integer between min and max inclusive
-  Note that the span max - min must be less than integer'high.
 
-.. vhdl:function:: function randtime(min : time; max : time) return time;
+  :returns:  Random value.
 
-  :param min: 
-  :type min: time
-  :param max: 
-  :type max: time
 
-  Generate a random time between min and max inclusive
-  Note that the span max - min must be less than time'high.
+.. vhdl:function:: function random return natural;
+
+  Generate a random natural.
+
+
+  :returns:  Random value.
+
+
+.. vhdl:function:: function random return boolean;
+
+  Generate a random boolean.
+
+
+  :returns:  Random value.
+
+
+.. vhdl:function:: function random return character;
+
+  Generate a random character.
+
+
+  :returns:  Random value.
+
+
+.. vhdl:function:: function random(Size : positive) return bit_vector;
+
+  Generate a random bit_vector of size bits.
+
+
+  :param Size: Length of the random result
+  :type Size: positive
+  :returns:  Random value.
+
+
+.. vhdl:function:: function randint(Min : None; Max : integer) return integer;
+
+  Generate a random integer between Min and Max inclusive.
+  Note that the span Max - Min must be less than integer'high.
+
+
+  :param Min: Minimum value
+  :type Min: None
+  :param Max: Maximum value
+  :type Max: integer
+  :returns:  Random value between Min and Max.
+
+
+.. vhdl:function:: function randtime(Min : None; Max : time) return time;
+
+  Generate a random time between Min and Max inclusive.
+  Note that the span Max - Min must be less than time'high.
+
+
+  :param Min: Minimum value
+  :type Min: None
+  :param Max: Maximum value
+  :type Max: time
+  :returns:  Random value between Min and Max.
+

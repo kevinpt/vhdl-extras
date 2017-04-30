@@ -56,7 +56,7 @@ decoding, the parity bits form a vector that represents an unsigned
 integer indicating the position of any erroneous bit in the message. The
 non-error condition is reserved as an all zeroes coding of the parity
 bits. This means that for :math:`p` parity bits, the message length :math:`m` can't be
-longer than :math:`(2^p)-1`. The number of data bits k is :math:`m - p`. Any particular
+longer than :math:`(2^p)-1`. The number of data bits :math:`k` is :math:`m - p`. Any particular
 Hamming code is referred to using the nomenclature :math:`(m, k)` to identify the
 message and data sizes. Here are the maximum data sizes for the set of
 messages that are perfectly coded :math:`(m = (2^p)-1)`:

@@ -140,21 +140,47 @@ package lfsr_ops is
 
   type lfsr_coefficients is array(natural range <>) of natural;
 
-  --## Convert a coefficient list to an expanded vector with a '1' in the place
+  --## Convert a coefficient list to an expanded vector with a '1' in the place.
   --#  of each coefficient.
+  --# Args:
+  --#  C: Coefficient definition list
+  --#  Map_length: Size of the coefficient vector
+  --#  Reverse: Reverse order of coefficients
+  --# Returns:
+  --#  Vector of coefficients.
   function to_tap_map( C : lfsr_coefficients; Map_length : positive;
     Reverse : boolean := false ) return std_ulogic_vector;
 
-  --## Lookup a predefined tap coefficients from the table
+  --## Lookup a predefined tap coefficients from the table.
+  --# Args:
+  --#  Size: Size of the coefficient vector
+  --# Returns:
+  --#  Vector of coefficients.
   function lfsr_taps( Size : positive ) return std_ulogic_vector;
 
 
   type lfsr_kind is (normal, inverted);
 
+  --## Iterate the next state in a Galois LFSR.
+  --# Args:
+  --#  State: Current state of the LFSR
+  --#  Tap_map: Coefficient vector
+  --#  Kind: Normal or inverted. Normal initializes with all ones.
+  --#  Full_cycle: Generate a full 2**n cycle when true
+  --# Returns:
+  --#  New state for the LFSR.
   function next_galois_lfsr( State : std_ulogic_vector; Tap_map : std_ulogic_vector;
     constant Kind : lfsr_kind := normal; constant Full_cycle : boolean := false )
     return std_ulogic_vector;
 
+  --## Iterate the next state in a Fibonacci LFSR.
+  --# Args:
+  --#  State: Current state of the LFSR
+  --#  Tap_map: Coefficient vector
+  --#  Kind: Normal or inverted. Normal initializes with all ones.
+  --#  Full_cycle: Generate a full 2**n cycle when true
+  --# Returns:
+  --#  New state for the LFSR.
   function next_fibonacci_lfsr( State : std_ulogic_vector; Tap_map : std_ulogic_vector;
     constant Kind : lfsr_kind := normal; constant Full_cycle : boolean := false )
     return std_ulogic_vector;
@@ -163,21 +189,21 @@ package lfsr_ops is
   --#  (2**n)-1 states when FULL_CYCLE = false, 2**n when true.
   component galois_lfsr is
     generic (
-      INIT_ZERO  : boolean := false;
-      FULL_CYCLE : boolean := false;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      INIT_ZERO  : boolean := false;         --# Initialize register to zeroes when true
+      FULL_CYCLE : boolean := false;         --# Implement a full 2**n cycle
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock  : in std_ulogic;
-      Reset  : in std_ulogic; -- Asynchronous reset
-      Enable : in std_ulogic; -- Synchronous enable
+      --# {{clocks|}}
+      Clock  : in std_ulogic; --# System clock
+      Reset  : in std_ulogic; --# Asynchronous reset
+      Enable : in std_ulogic; --# Synchronous enable
 
-      -- {{control|}}
-      Tap_map : in std_ulogic_vector; -- '1' for taps that receive feedback
+      --# {{control|}}
+      Tap_map : in std_ulogic_vector; --# '1' for taps that receive feedback
       
-      -- {{data|}}
-      State   : out std_ulogic_vector -- The LFSR state register
+      --# {{data|}}
+      State   : out std_ulogic_vector --# The LFSR state register
     );
   end component;
 
@@ -185,21 +211,21 @@ package lfsr_ops is
   --#  (2**n)-1 states when FULL_CYCLE = false, 2**n states when true.
   component fibonacci_lfsr is
     generic (
-      INIT_ZERO  : boolean := false;
-      FULL_CYCLE : boolean := false;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      INIT_ZERO  : boolean := false;         --# Initialize register to zeroes when true
+      FULL_CYCLE : boolean := false;         --# Implement a full 2**n cycle
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock  : in std_ulogic;
-      Reset  : in std_ulogic; -- Asynchronous reset
-      Enable : in std_ulogic; -- Synchronous enable
+      --# {{clocks|}}
+      Clock  : in std_ulogic; --# System clock
+      Reset  : in std_ulogic; --# Asynchronous reset
+      Enable : in std_ulogic; --# Synchronous enable
 
-      -- {{control|}}
-      Tap_map : in std_ulogic_vector; -- '1' for taps that receive feedback
+      --# {{control|}}
+      Tap_map : in std_ulogic_vector; --# '1' for taps that receive feedback
       
-      -- {{data|}}
-      State   : out std_ulogic_vector -- The LFSR state register
+      --# {{data|}}
+      State   : out std_ulogic_vector --# The LFSR state register
     );
   end component;
 
