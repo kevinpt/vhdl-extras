@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="secded_codec" href="secded_codec.html" />
     <link rel="prev" title="random" href="random.html" />
@@ -46,15 +46,104 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/reg_file_2008.vhdl">extras_2008/reg_file_2008.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p><a class="reference internal" href="muxing.html"><em>muxing</em></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package provides a general purpose register file. This version is
+implemented in VHDL-93 syntax and the register width is fixed at 16-bits
+by default. This source must be modified to alter the size of the
+reg_word type if a register size other than 16-bits is needed. The
+implementation in <a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/reg_file_2008.vhdl">reg_file_2008</a> uses a generic package to avoid this if
+tool support for VHDL-2008 is available.</p>
+<p>The register file provides an addressable read write port for external
+access as well as a set of signals that allow simultaneous access to
+registers for internal logic. The register file has a number of special
+behaviors controlled by generics.</p>
+<p><tt class="docutils literal"><span class="pre">DIRECT_READ_BIT_MASK</span></tt> is an array of masks that establish which bits of each
+register are read directly from internal signals rather than registered
+bits. When set to &#8216;1&#8217; a bit is accessed from the <tt class="docutils literal"><span class="pre">Direct_read</span></tt> port input
+rather than the register file on a read operation. The masks permit mixing
+these bits with registered bits within the same register. Direct-read
+register bits can still be written but their contents can&#8217;t be read back.</p>
+<p><tt class="docutils literal"><span class="pre">STROBE_BIT_MASK</span></tt> is an array of masks that establish which bits of each
+register are considered &#8220;strobe&#8221; bits. Strobe bits are self clearing
+when a &#8216;1&#8217; is written to them. There is no effect when &#8216;0&#8217; is written. They
+are used to initiate control actions from a momentary pulsed signal.</p>
+<p>The <tt class="docutils literal"><span class="pre">REGISTER_INPUTS</span></tt> generic provides optional registration of the
+inputs on the external control port.</p>
+<div class="section" id="synthesis-note">
+<h3>Synthesis note<a class="headerlink" href="#synthesis-note" title="Permalink to this headline">¶</a></h3>
+<p>This component creates a wide decoder and mux for
+accessing the register file from the external control port. Large register
+files will see significant combinational delay from these elements and
+care should be taken when using this component in high speed designs.</p>
 </div>
-<div class="section" id="components">
-<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-reg_file_pkg"></span></div>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="c1">-- Create a register with 4 16-bit words:</span>
+<span class="c1">--    0: strobe bits in bit 0 &amp; 1</span>
+<span class="c1">--    1: normal</span>
+<span class="c1">--    2: normal</span>
+<span class="c1">--    3: direct read in bits 7-0</span>
+
+<span class="k">library</span> <span class="nn">extras</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.reg_file_pkg.all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">extras.sizing.bit_size</span><span class="p">;</span>
+
+<span class="k">constant</span> <span class="n">NUM_REGS</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="k">subtype</span> <span class="n">my_reg_array</span> <span class="k">is</span> <span class="n">reg_array</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="n">NUM_REGS</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">constant</span> <span class="n">STROBE_BIT_MASK</span> <span class="o">:</span> <span class="n">my_reg_array</span> <span class="o">:=</span> <span class="p">(</span>
+   <span class="mi">0</span>      <span class="o">=&gt;</span> <span class="mh">X&quot;0003&quot;</span><span class="p">,</span>
+   <span class="mi">1</span> <span class="k">to</span> <span class="mi">3</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span>
+ <span class="p">);</span>
+
+<span class="k">constant</span> <span class="n">DIRECT_READ_BIT_MASK</span> <span class="o">:</span> <span class="n">my_reg_array</span> <span class="o">:=</span> <span class="p">(</span>
+   <span class="mi">0</span><span class="o">|</span><span class="mi">1</span><span class="o">|</span><span class="mi">2</span>  <span class="o">=&gt;</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">),</span> <span class="c1">-- Alternate selection of elements with |</span>
+   <span class="mi">3</span>      <span class="o">=&gt;</span> <span class="mh">X&quot;00FF&quot;</span>
+ <span class="p">);</span>
+
+<span class="k">signal</span> <span class="n">reg_sel</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">bit_size</span><span class="p">(</span><span class="n">NUM_REGS</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">we</span>      <span class="o">:</span> <span class="kt">std_ulogic</span><span class="p">;</span>
+<span class="k">signal</span> <span class="n">wr_data</span><span class="p">,</span> <span class="n">rd_data</span> <span class="o">:</span> <span class="n">reg_word</span><span class="p">;</span>
+<span class="k">signal</span> <span class="n">registers</span><span class="p">,</span> <span class="n">direct_read</span> <span class="o">:</span> <span class="n">my_reg_array</span><span class="p">;</span>
+<span class="k">signal</span> <span class="n">reg_written</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="n">my_reg_array</span><span class="na">&#39;range</span><span class="p">);</span>
+<span class="p">...</span>
+
+<span class="n">rf</span> <span class="o">:</span> <span class="n">reg_file</span>
+ <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
+   <span class="n">DIRECT_READ_BIT_MASK</span> <span class="o">=&gt;</span> <span class="n">DIRECT_READ_BIT_MASK</span><span class="p">,</span>
+   <span class="n">STROBE_BIT_MASK</span>      <span class="o">=&gt;</span> <span class="n">STROBE_BIT_MASK</span>
+ <span class="p">)</span>
+ <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+   <span class="n">Clock</span> <span class="o">=&gt;</span> <span class="n">clock</span><span class="p">,</span>
+   <span class="n">Reset</span> <span class="o">=&gt;</span> <span class="n">reset</span><span class="p">,</span>
+
+   <span class="n">Clear</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span> <span class="c1">-- No need to clear the registers</span>
+
+   <span class="n">Reg_sel</span> <span class="o">=&gt;</span> <span class="n">reg_sel</span><span class="p">,</span>
+   <span class="n">We</span>      <span class="o">=&gt;</span> <span class="n">we</span><span class="p">,</span>
+   <span class="n">Wr_data</span> <span class="o">=&gt;</span> <span class="n">wr_data</span><span class="p">,</span>
+   <span class="n">Rd_data</span> <span class="o">=&gt;</span> <span class="n">rd_data</span><span class="p">,</span>
+
+   <span class="n">Registers</span>   <span class="o">=&gt;</span> <span class="n">registers</span><span class="p">,</span>
+   <span class="n">Direct_Read</span> <span class="o">=&gt;</span> <span class="n">direct_read</span><span class="p">,</span>
+   <span class="n">Reg_written</span> <span class="o">=&gt;</span> <span class="n">reg_written</span>
+ <span class="p">);</span>
+
+<span class="p">...</span>
+
+<span class="n">pulse_control</span> <span class="o">&lt;=</span> <span class="n">registers</span><span class="p">(</span><span class="mi">0</span><span class="p">)(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">-- Access strobe bit-0</span>
+
+<span class="c1">-- direct_read must be fully assigned (unused parts will optimize away</span>
+<span class="c1">-- in synthesis)</span>
+<span class="n">direct_read</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">));</span>
+<span class="n">direct_read</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">internal_byte</span><span class="p">;</span> <span class="c1">-- Connect internal signal</span>
+<span class="n">direct_read</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<span class="target" id="package-reg_file_pkg"></span></div>
+</div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
@@ -71,11 +160,11 @@
 <dd></dd></dl>
 
 </div>
+<div class="section" id="components">
+<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
-<h2>Components<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id2">
-<h3>reg_file<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-4ee59c300b72d659ca0ff9987c8b129b8212862b.svg" type="image/svg+xml">
+<h3>reg_file<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-0e715aeb151c2b5a97a18d94fb3a0efa85a6d339.svg" type="image/svg+xml">
             <p class="warning">component reg_file is
 generic (
   RESET_ACTIVE_LEVEL : std_ulogic;
@@ -84,13 +173,17 @@ generic (
   REGISTER_INPUTS : boolean
 );
 port (
+  --# {{clocks|}}
   Clock : in std_ulogic;
   Reset : in std_ulogic;
+  --# {{control|}}
   Clear : in std_ulogic;
+  --# {{data|Addressed port}}
   Reg_sel : in unsigned;
   We : in std_ulogic;
   Wr_data : in reg_word;
   Rd_data : out reg_word;
+  --# {{Registers}}
   Registers : out reg_array;
   Direct_read : in reg_array;
   Reg_written : out std_ulogic_vector
@@ -99,35 +192,33 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="reg_file_pkg.reg_file">
 <tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_file</tt><a class="headerlink" href="#reg_file_pkg.reg_file" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Flexible register file with support for strobed outputs.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
-<li><strong>DIRECT_READ_BIT_MASK</strong> (<em>reg_array</em>) &#8211; </li>
-<li><strong>STROBE_BIT_MASK</strong> (<em>reg_array</em>) &#8211; </li>
-<li><strong>REGISTER_INPUTS</strong> (<em>boolean</em>) &#8211; </li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>DIRECT_READ_BIT_MASK</strong> (<em>reg_array</em>) &#8211; Masks indicating which register bits are directly read</li>
+<li><strong>STROBE_BIT_MASK</strong> (<em>reg_array</em>) &#8211; Masks indicating which register bits clear themselves after a write of &#8216;1&#8217;</li>
+<li><strong>REGISTER_INPUTS</strong> (<em>boolean</em>) &#8211; Register the input ports when true</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Clear</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Reg_sel</strong> (<em>in unsigned</em>) &#8211; </li>
-<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Wr_data</strong> (<em>in reg_word</em>) &#8211; </li>
-<li><strong>Rd_data</strong> (<em>out reg_word</em>) &#8211; </li>
-<li><strong>Registers</strong> (<em>out reg_array</em>) &#8211; </li>
-<li><strong>Direct_read</strong> (<em>in reg_array</em>) &#8211; </li>
-<li><strong>Reg_written</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Clear</strong> (<em>in std_ulogic</em>) &#8211; Initialize all registers to &#8216;0&#8217;</li>
+<li><strong>Reg_sel</strong> (<em>in unsigned</em>) &#8211; Register address for write and read</li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; Write to selected register</li>
+<li><strong>Wr_data</strong> (<em>in reg_word</em>) &#8211; Write port</li>
+<li><strong>Rd_data</strong> (<em>out reg_word</em>) &#8211; Read port</li>
+<li><strong>Registers</strong> (<em>out reg_array</em>) &#8211; Register file contents</li>
+<li><strong>Direct_read</strong> (<em>in reg_array</em>) &#8211; Read-only signals direct from external logic</li>
+<li><strong>Reg_written</strong> (<em>out std_ulogic_vector</em>) &#8211; Status flags indicating when each register is written</li>
 </ul>
 </td>
 </tr>
@@ -175,12 +266,15 @@ end component;</p></object>
   <ul>
 <li><a class="reference internal" href="#">reg_file</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#synthesis-note">Synthesis note</a></li>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#types">Types</a></li>
 <li><a class="reference internal" href="#subtypes">Subtypes</a></li>
-<li><a class="reference internal" href="#id1">Components</a><ul>
-<li><a class="reference internal" href="#id2">reg_file</a></li>
+<li><a class="reference internal" href="#components">Components</a><ul>
+<li><a class="reference internal" href="#id1">reg_file</a></li>
 </ul>
 </li>
 </ul>

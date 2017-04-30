@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="text_buffering" href="text_buffering.html" />
     <link rel="prev" title="strings_unbounded" href="strings_unbounded.html" />
@@ -86,15 +86,12 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>A basic synchronizer with a configurable number of stages.
-The <tt class="docutils literal"><span class="pre">Sync</span></tt> output is synchronized to the <tt class="docutils literal"><span class="pre">Clock</span></tt> domain.</p>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="synchronizing.bit_synchronizer">
 <tt class="descclassname">synchronizing.</tt><tt class="descname">bit_synchronizer</tt><a class="headerlink" href="#synchronizing.bit_synchronizer" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>A basic synchronizer with a configurable number of stages.
+The <tt class="docutils literal"><span class="pre">Sync</span></tt> output is synchronized to the <tt class="docutils literal"><span class="pre">Clock</span></tt> domain.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -136,16 +133,13 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Synchronizer for generating a synchronized reset.
-The deactivating edge transition for the <tt class="docutils literal"><span class="pre">Sync_reset</span></tt> output
-is synchronized to the <tt class="docutils literal"><span class="pre">Clock</span></tt> domain. Its activating edge remains asynchronous.</p>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="synchronizing.reset_synchronizer">
 <tt class="descclassname">synchronizing.</tt><tt class="descname">reset_synchronizer</tt><a class="headerlink" href="#synchronizing.reset_synchronizer" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Synchronizer for generating a synchronized reset.
+The deactivating edge transition for the <tt class="docutils literal"><span class="pre">Sync_reset</span></tt> output
+is synchronized to the <tt class="docutils literal"><span class="pre">Clock</span></tt> domain. Its activating edge remains asynchronous.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -194,15 +188,12 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>A handshaking synchronizer for sending an array between clock domains.
-This uses the four-phase handshake protocol.</p>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="synchronizing.handshake_synchronizer">
 <tt class="descclassname">synchronizing.</tt><tt class="descname">handshake_synchronizer</tt><a class="headerlink" href="#synchronizing.handshake_synchronizer" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>A handshaking synchronizer for sending an array between clock domains.
+This uses the four-phase handshake protocol.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">

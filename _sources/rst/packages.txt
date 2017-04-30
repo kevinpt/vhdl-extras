@@ -394,7 +394,7 @@ Shared types for the string packages.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This package provides a string library for operating on fixed length
-strings. This is a clone of the Ada'95 library Ada.Strings.Fixed. It is a
+strings. This is a clone of the Ada'95 library ``Ada.Strings.Fixed``. It is a
 nearly complete implementation with only the procedures taking character
 mapping functions omitted because of VHDL limitations.
 
@@ -404,7 +404,7 @@ mapping functions omitted because of VHDL limitations.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This package provides types and functions for manipulating character sets.
-It is a clone of the Ada'95 package Ada.Strings.Maps.
+It is a clone of the Ada'95 package ``Ada.Strings.Maps``.
 
 .. _strings_maps_constants:
 
@@ -414,7 +414,7 @@ It is a clone of the Ada'95 package Ada.Strings.Maps.
 Constants for various character sets from the range
 of Latin-1 and mappings for upper case, lower case, and basic (unaccented)
 characters. It is a clone of the Ada'95 package
-Ada.Strings.Maps.Constants.
+``Ada.Strings.Maps.Constants``.
 
 .. _strings_unbounded:
 
@@ -422,7 +422,7 @@ Ada.Strings.Maps.Constants.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This package provides a string library for operating on unbounded length
-strings. This is a clone of the Ada'95 library Ada.Strings.Unbounded. Due
+strings. This is a clone of the Ada'95 library ``Ada.Strings.Unbounded``. Due
 to the VHDL restriction on using access types as function parameters only
 a limited subset of the Ada library is reproduced. The unbounded strings
 are represented by the subtype string_acc which is derived from line to
@@ -430,6 +430,14 @@ ease interoperability with std.textio. line and string_acc are of type
 access to string. Their contents are dynamically allocated. Because
 operators cannot be provided, a new set of "copy" procedures are included
 to simplify duplication of an existing unbounded string.
+
+.. _strings_bounded:
+
+:doc:`strings_bounded <modules/strings_bounded>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This package is a string library for bounded length strings. It is a clone of the Ada'95 library ``Ada.Strings.Bounded``.
+
 
 Miscellaneous
 -------------

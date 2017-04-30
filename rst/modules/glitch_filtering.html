@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="gray_code" href="gray_code.html" />
     <link rel="prev" title="fifos" href="fifos.html" />
@@ -45,28 +45,76 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/glitch_filtering.vhdl">extras/glitch_filtering.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p><a class="reference internal" href="sizing.html"><em>sizing</em></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package provides glitch filter components that can be used to remove
+noise from digital input signals. This can be useful for debouncing
+switches directly connected to a device.
+The <a class="reference internal" href="#glitch_filtering.glitch_filter" title="glitch_filtering.glitch_filter"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">glitch_filter</span></tt></a> component works
+with a single <tt class="docutils literal"><span class="pre">std_ulogic</span></tt> signal while
+<a class="reference internal" href="#glitch_filtering.array_glitch_filter" title="glitch_filtering.array_glitch_filter"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">array_glitch_filter</span></tt></a> provides
+filtering for a <tt class="docutils literal"><span class="pre">std_ulogic_vector</span></tt>. These components include synchronizing
+flip-flops and can be directly tied to input pads.</p>
+<p>It is assumed that the signal being recovered changes relatively slowly
+compared to the clock period. These filters come in two forms. One is
+controlled by a generic <tt class="docutils literal"><span class="pre">FILTER_CYCLES</span></tt> and the other, dynamic versions have
+a signal <tt class="docutils literal"><span class="pre">Filter_cycles</span></tt>. These controls indicate the number of clock cycles
+the input(s) must remain stable before the filtered output register(s) are
+updated. The filtered output will lag the inputs by <tt class="docutils literal"><span class="pre">Filter_cycles</span></tt> + 3 clock
+cycles. The dynamic versions can have their filter delay changed at any
+time if their <tt class="docutils literal"><span class="pre">Filter_cycles</span></tt> input is connected to a signal. The minimum
+pulse width that will pass through the filter will be <tt class="docutils literal"><span class="pre">Filter_cycles</span></tt> + 1
+clock cycles wide.</p>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">library</span> <span class="nn">extras</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">extras.glitch_filtering.all</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.timing_ops.all</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="k">constant</span> <span class="n">CLOCK_FREQ</span>    <span class="o">:</span> <span class="n">frequency</span>    <span class="o">:=</span> <span class="mi">100</span> <span class="n">MHz</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">FILTER_TIME</span>   <span class="o">:</span> <span class="kt">delay_length</span> <span class="o">:=</span> <span class="mi">200</span> <span class="n">ns</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">FILTER_CYCLES</span> <span class="o">:</span> <span class="n">clock_cycles</span> <span class="o">:=</span>
+  <span class="n">to_clock_cycles</span><span class="p">(</span><span class="n">FILTER_TIME</span><span class="p">,</span> <span class="n">CLOCK_FREQ</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">gf</span><span class="o">:</span> <span class="n">glitch_filter</span>
+  <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">FILTER_CYCLES</span> <span class="o">=&gt;</span> <span class="n">FILTER_CYCLES</span>
+  <span class="p">)</span> <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">Clock</span>    <span class="o">=&gt;</span> <span class="n">clock</span><span class="p">,</span>
+    <span class="n">Reset</span>    <span class="o">=&gt;</span> <span class="n">reset</span><span class="p">,</span>
+    <span class="n">Noisy</span>    <span class="o">=&gt;</span> <span class="n">noisy</span><span class="p">,</span>
+    <span class="n">Filtered</span> <span class="o">=&gt;</span> <span class="n">filtered</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p>Xilinx XST doesn&#8217;t support user defined physical types so the frequency
+type from timing_ops.vhdl can&#8217;t be used with that synthesizer. An alternate
+solution using XST-compatible <a class="reference internal" href="timing_ops.html"><em>timing_ops_xilinx.vhdl</em></a> follows:</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">constant</span> <span class="n">CLOCK_FREQ</span>    <span class="o">:</span> <span class="n">real</span>         <span class="o">:=</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span><span class="n">e6</span><span class="p">;</span> <span class="c1">-- Using real in place of frequency</span>
+<span class="k">constant</span> <span class="n">FILTER_TIME</span>   <span class="o">:</span> <span class="kt">delay_length</span> <span class="o">:=</span> <span class="mi">200</span> <span class="n">ns</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">FILTER_CYCLES</span> <span class="o">:</span> <span class="n">clock_cycles</span> <span class="o">:=</span>
+  <span class="n">to_clock_cycles</span><span class="p">(</span><span class="n">FILTER_TIME</span><span class="p">,</span> <span class="n">CLOCK_FREQ</span><span class="p">)</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+<span class="target" id="package-glitch_filtering"></span></div>
 </div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-glitch_filtering"></span></div>
-<div class="section" id="id1">
-<h2>Components<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="glitch-filter">
 <h3>glitch_filter<a class="headerlink" href="#glitch-filter" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-07d06ae93c37ea3716e4c8a90b1c1a3f0380d62c.svg" type="image/svg+xml">
+<object data="../../_images/symbol-1d923788bb28c1a5cfbaa3b4c67f81e09b1f4f02.svg" type="image/svg+xml">
             <p class="warning">component glitch_filter is
 generic (
   FILTER_CYCLES : positive;
   RESET_ACTIVE_LEVEL : std_ulogic
 );
 port (
+  --# {{clocks|}}
   Clock : in std_ulogic;
   Reset : in std_ulogic;
+  --# {{data|}}
   Noisy : in std_ulogic;
   Filtered : out std_ulogic
 );
@@ -74,29 +122,26 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Basic glitch filter with a constant filter delay
-This version filters a single signal of std_ulogic</p>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="glitch_filtering.glitch_filter">
 <tt class="descclassname">glitch_filtering.</tt><tt class="descname">glitch_filter</tt><a class="headerlink" href="#glitch_filtering.glitch_filter" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Basic glitch filter with a constant filter delay
+This version filters a single signal of std_ulogic</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>FILTER_CYCLES</strong> (<em>positive</em>) &#8211; </li>
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+<li><strong>FILTER_CYCLES</strong> (<em>positive</em>) &#8211; Number of clock cycles to filter</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Noisy</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Filtered</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Noisy</strong> (<em>in std_ulogic</em>) &#8211; Noisy input signal</li>
+<li><strong>Filtered</strong> (<em>out std_ulogic</em>) &#8211; Filtered output</li>
 </ul>
 </td>
 </tr>
@@ -107,15 +152,18 @@ This version filters a single signal of std_ulogic</p>
 </div>
 <div class="section" id="dynamic-glitch-filter">
 <h3>dynamic_glitch_filter<a class="headerlink" href="#dynamic-glitch-filter" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-8959918b3765faa1910b4b5b62a5c26d64e544ec.svg" type="image/svg+xml">
+<object data="../../_images/symbol-6c50c1e355eb9cfa2b2e3df3a9eb1eb34c6d503b.svg" type="image/svg+xml">
             <p class="warning">component dynamic_glitch_filter is
 generic (
   RESET_ACTIVE_LEVEL : std_ulogic
 );
 port (
+  --# {{clocks|}}
   Clock : in std_ulogic;
   Reset : in std_ulogic;
+  --# {{control|}}
   Filter_cycles : in unsigned;
+  --# {{data|}}
   Noisy : in std_ulogic;
   Filtered : out std_ulogic
 );
@@ -123,29 +171,26 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Glitch filter with a dynamically alterable filter delay
-This version filters a single signal of std_ulogic  component dynamic_glitch_filter is</p>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="glitch_filtering.dynamic_glitch_filter">
 <tt class="descclassname">glitch_filtering.</tt><tt class="descname">dynamic_glitch_filter</tt><a class="headerlink" href="#glitch_filtering.dynamic_glitch_filter" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Glitch filter with a dynamically alterable filter delay
+This version filters a single signal of std_ulogic  component dynamic_glitch_filter is</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Filter_cycles</strong> (<em>in unsigned</em>) &#8211; </li>
-<li><strong>Noisy</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Filtered</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Filter_cycles</strong> (<em>in unsigned</em>) &#8211; Number of clock cycles to filter</li>
+<li><strong>Noisy</strong> (<em>in std_ulogic</em>) &#8211; Noisy input signal</li>
+<li><strong>Filtered</strong> (<em>out std_ulogic</em>) &#8211; Filtered output</li>
 </ul>
 </td>
 </tr>
@@ -156,49 +201,44 @@ This version filters a single signal of std_ulogic  component dynamic_glitch_fil
 </div>
 <div class="section" id="array-glitch-filter">
 <h3>array_glitch_filter<a class="headerlink" href="#array-glitch-filter" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-34ee3d98b85e3de2704027bdee478fe242ca8727.svg" type="image/svg+xml">
+<object data="../../_images/symbol-9739522b610fa968bf8f84b491827991f9c16a84.svg" type="image/svg+xml">
             <p class="warning">component array_glitch_filter is
 generic (
   FILTER_CYCLES : positive;
   RESET_ACTIVE_LEVEL : std_ulogic
 );
 port (
+  --# {{clocks|}}
   Clock : in std_ulogic;
   Reset : in std_ulogic;
-  Foo : inout std_logic;
+  --# {{data|}}
   Noisy : in std_ulogic_vector;
-  Filtered : out std_ulogic_vector;
-  Bar : inout unsigned
+  Filtered : out std_ulogic_vector
 );
 end component;</p></object>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>Basic glitch filter with a constant filter delay
-This version filters an array of std_ulogic</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
 <dt id="glitch_filtering.array_glitch_filter">
 <tt class="descclassname">glitch_filtering.</tt><tt class="descname">array_glitch_filter</tt><a class="headerlink" href="#glitch_filtering.array_glitch_filter" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Basic glitch filter with a constant filter delay
+This version filters an array of std_ulogic</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>FILTER_CYCLES</strong> (<em>positive</em>) &#8211; </li>
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+<li><strong>FILTER_CYCLES</strong> (<em>positive</em>) &#8211; Number of clock cycles to filter</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Foo</strong> (<em>inout std_logic</em>) &#8211; </li>
-<li><strong>Noisy</strong> (<em>in std_ulogic_vector</em>) &#8211; </li>
-<li><strong>Filtered</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
-<li><strong>Bar</strong> (<em>inout unsigned</em>) &#8211; </li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Noisy</strong> (<em>in std_ulogic_vector</em>) &#8211; Noisy input signals</li>
+<li><strong>Filtered</strong> (<em>out std_ulogic_vector</em>) &#8211; Filtered output</li>
 </ul>
 </td>
 </tr>
@@ -209,15 +249,18 @@ This version filters an array of std_ulogic</p>
 </div>
 <div class="section" id="dynamic-array-glitch-filter">
 <h3>dynamic_array_glitch_filter<a class="headerlink" href="#dynamic-array-glitch-filter" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-54e982a353da17133a7450a0352a5feaa60a37a6.svg" type="image/svg+xml">
+<object data="../../_images/symbol-fce384ff4a64b742a9850f7e902490e4ae06be47.svg" type="image/svg+xml">
             <p class="warning">component dynamic_array_glitch_filter is
 generic (
   RESET_ACTIVE_LEVEL : std_ulogic
 );
 port (
+  --# {{clocks|}}
   Clock : in std_ulogic;
   Reset : in std_ulogic;
+  --# {{control|}}
   Filter_cycles : in unsigned;
+  --# {{data|}}
   Noisy : in std_ulogic_vector;
   Filtered : out std_ulogic_vector
 );
@@ -225,29 +268,26 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Glitch filter with a dynamically alterable filter delay
-This version filters an array of std_ulogic</p>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="glitch_filtering.dynamic_array_glitch_filter">
 <tt class="descclassname">glitch_filtering.</tt><tt class="descname">dynamic_array_glitch_filter</tt><a class="headerlink" href="#glitch_filtering.dynamic_array_glitch_filter" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Glitch filter with a dynamically alterable filter delay
+This version filters an array of std_ulogic</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Filter_cycles</strong> (<em>in unsigned</em>) &#8211; </li>
-<li><strong>Noisy</strong> (<em>in std_ulogic_vector</em>) &#8211; </li>
-<li><strong>Filtered</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Filter_cycles</strong> (<em>in unsigned</em>) &#8211; Number of clock cycles to filter</li>
+<li><strong>Noisy</strong> (<em>in std_ulogic_vector</em>) &#8211; Noisy input signals</li>
+<li><strong>Filtered</strong> (<em>out std_ulogic_vector</em>) &#8211; Filtered output</li>
 </ul>
 </td>
 </tr>
@@ -295,9 +335,11 @@ This version filters an array of std_ulogic</p>
   <ul>
 <li><a class="reference internal" href="#">glitch_filtering</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
-<li><a class="reference internal" href="#id1">Components</a><ul>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#components">Components</a><ul>
 <li><a class="reference internal" href="#glitch-filter">glitch_filter</a></li>
 <li><a class="reference internal" href="#dynamic-glitch-filter">dynamic_glitch_filter</a></li>
 <li><a class="reference internal" href="#array-glitch-filter">array_glitch_filter</a></li>

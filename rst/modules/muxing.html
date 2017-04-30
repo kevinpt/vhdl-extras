@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="parity_ops" href="parity_ops.html" />
     <link rel="prev" title="memory" href="memory.html" />
@@ -75,7 +75,8 @@ and demultiplexers</p>
 <dl class="function">
 <dt id="muxing.decode[unsigned return std_ulogic_vector]">
 <tt class="descclassname">muxing.</tt><tt class="descname">decode</tt> <big>(</big><em>Sel : unsigned</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#muxing.decode[unsigned return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Decoder with variable sized output (power of 2).</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -89,13 +90,13 @@ and demultiplexers</p>
 </tr>
 </tbody>
 </table>
-<p>Decoder with variable sized output (power of 2).</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="muxing.decode[unsigned,positive return std_ulogic_vector]">
 <tt class="descclassname">muxing.</tt><tt class="descname">decode</tt> <big>(</big><em>Sel : unsigned</em>; <em>Size : positive</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#muxing.decode[unsigned,positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Decoder with variable sized output (user specified).</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -110,13 +111,13 @@ and demultiplexers</p>
 </tr>
 </tbody>
 </table>
-<p>Decoder with variable sized output (user specified).</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="muxing.mux[std_ulogic_vector,unsigned return std_ulogic]">
 <tt class="descclassname">muxing.</tt><tt class="descname">mux</tt> <big>(</big><em>Inputs : std_ulogic_vector</em>; <em>Sel : unsigned</em><big>)</big> &rarr; std_ulogic<a class="headerlink" href="#muxing.mux[std_ulogic_vector,unsigned return std_ulogic]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Multiplexer with variable sized inputs.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -131,13 +132,13 @@ and demultiplexers</p>
 </tr>
 </tbody>
 </table>
-<p>Multiplexer with variable sized inputs.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="muxing.mux[std_ulogic_vector,std_ulogic_vector return std_ulogic]">
 <tt class="descclassname">muxing.</tt><tt class="descname">mux</tt> <big>(</big><em>Inputs : std_ulogic_vector</em>; <em>One_hot_sel : std_ulogic_vector</em><big>)</big> &rarr; std_ulogic<a class="headerlink" href="#muxing.mux[std_ulogic_vector,std_ulogic_vector return std_ulogic]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Multiplexer with variable sized inputs using external decoder.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -152,13 +153,13 @@ and demultiplexers</p>
 </tr>
 </tbody>
 </table>
-<p>Multiplexer with variable sized inputs using external decoder.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="muxing.demux[std_ulogic,unsigned,positive return std_ulogic_vector]">
 <tt class="descclassname">muxing.</tt><tt class="descname">demux</tt> <big>(</big><em>Input : std_ulogic</em>; <em>Sel : unsigned</em>; <em>Size : positive</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#muxing.demux[std_ulogic,unsigned,positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Demultiplexer with variable sized inputs.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -174,7 +175,6 @@ and demultiplexers</p>
 </tr>
 </tbody>
 </table>
-<p>Demultiplexer with variable sized inputs.</p>
 </dd></dl>
 
 </div>

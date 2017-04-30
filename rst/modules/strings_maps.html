@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="strings_fixed_constants" href="strings_maps_constants.html" />
     <link rel="prev" title="strings_fixed" href="strings_fixed.html" />
@@ -45,11 +45,12 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_maps.vhdl">extras/strings_maps.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>None</p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package provides types and functions for manipulating character sets.
+It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span class="pre">Ada.Strings.Maps</span></tt>.</p>
 <span class="target" id="package-strings_maps"></span></div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
@@ -87,30 +88,37 @@
 <dl class="function">
 <dt id="strings_maps.to_set[character_ranges return character_set]">
 <tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>ranges : character_ranges</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character_ranges return character_set]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert ranges to a character set</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ranges</strong> (<em>character_ranges</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ranges</strong> (<em>character_ranges</em>) &#8211; List of character ranges in the set</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A character set with the requested ranges.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Conversion between character sets and ranges</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_maps.to_set[character_range return character_set]">
 <tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>span : character_range</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character_range return character_set]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert range to a character set</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>span</strong> (<em>character_range</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>span</strong> (<em>character_range</em>) &#8211; Range to build into character set</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A character set with the requested range.</p>
 </td>
 </tr>
 </tbody>
@@ -120,13 +128,38 @@
 <dl class="function">
 <dt id="strings_maps.to_ranges[character_set return character_ranges]">
 <tt class="descclassname">strings_maps.</tt><tt class="descname">to_ranges</tt> <big>(</big><em>set : character_set</em><big>)</big> &rarr; character_ranges<a class="headerlink" href="#strings_maps.to_ranges[character_set return character_ranges]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert a character set into a list of ranges</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>set</strong> (<em>character_set</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>set</strong> (<em>character_set</em>) &#8211; Character set to extract ranges from</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">All contiguous ranges in the set.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_maps.&quot;-&quot;[None,character_set return character_set]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">&quot;-&quot;</tt> <big>(</big><em>left : None</em>; <em>right : character_set</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps."-"[None,character_set return character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Difference between to character sets</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>left</strong> (<em>None</em>) &#8211; Set to subtract from</li>
+<li><strong>right</strong> (<em>character_set</em>) &#8211; Set to subtract from left</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">All characters in left not in right.</p>
 </td>
 </tr>
 </tbody>
@@ -136,32 +169,39 @@
 <dl class="function">
 <dt id="strings_maps.is_in[character,character_set return boolean]">
 <tt class="descclassname">strings_maps.</tt><tt class="descname">is_in</tt> <big>(</big><em>element : character</em>; <em>set : character_set</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_maps.is_in[character,character_set return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Test if a character is part of a character set</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>element</strong> (<em>character</em>) &#8211; </li>
-<li><strong>set</strong> (<em>character_set</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> (<em>character</em>) &#8211; Character to test for</li>
+<li><strong>set</strong> (<em>character_set</em>) &#8211; Character set to test membership in</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if element is in the set.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Test for membership in a character set</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_maps.is_subset[character_set,character_set return boolean]">
 <tt class="descclassname">strings_maps.</tt><tt class="descname">is_subset</tt> <big>(</big><em>elements : character_set</em>; <em>set : character_set</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_maps.is_subset[character_set,character_set return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Test if a character set is a subset of a larget set</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>elements</strong> (<em>character_set</em>) &#8211; </li>
-<li><strong>set</strong> (<em>character_set</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>elements</strong> (<em>character_set</em>) &#8211; Character set to test for</li>
+<li><strong>set</strong> (<em>character_set</em>) &#8211; Character set to test membership in</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if elements are in the set.</p>
 </td>
 </tr>
 </tbody>
@@ -171,30 +211,37 @@
 <dl class="function">
 <dt id="strings_maps.to_set[character_sequence return character_set]">
 <tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>sequence : character_sequence</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character_sequence return character_set]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert a character sequence into a set.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sequence</strong> (<em>character_sequence</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sequence</strong> (<em>character_sequence</em>) &#8211; String of characters to build into a set</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A character set with all unique characters from sequence.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Conversion between character sets and sequences</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_maps.to_set[character return character_set]">
 <tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>singleton : character</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character return character_set]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert a character into a set.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>singleton</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>singleton</strong> (<em>character</em>) &#8211; Character to include in the set</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A character set with one single character as its member.</p>
 </td>
 </tr>
 </tbody>
@@ -204,13 +251,17 @@
 <dl class="function">
 <dt id="strings_maps.to_sequence[character_set return character_sequence]">
 <tt class="descclassname">strings_maps.</tt><tt class="descname">to_sequence</tt> <big>(</big><em>set : character_set</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#strings_maps.to_sequence[character_set return character_sequence]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert a character set into a sequence string</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>set</strong> (<em>character_set</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>set</strong> (<em>character_set</em>) &#8211; Character set to convert</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A sequence string with each character from the set.</p>
 </td>
 </tr>
 </tbody>
@@ -220,71 +271,83 @@
 <dl class="function">
 <dt id="strings_maps.value[character_mapping,character return character]">
 <tt class="descclassname">strings_maps.</tt><tt class="descname">value</tt> <big>(</big><em>cmap : character_mapping</em>; <em>element : character</em><big>)</big> &rarr; character<a class="headerlink" href="#strings_maps.value[character_mapping,character return character]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Look up the mapping for a character.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>cmap</strong> (<em>character_mapping</em>) &#8211; </li>
-<li><strong>element</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cmap</strong> (<em>character_mapping</em>) &#8211; Map associating Latin-1 characters with a substitute</li>
+<li><strong>element</strong> (<em>character</em>) &#8211; Character to lookup in the map</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The mapped value of the element character.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Look up the mapping for a character</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.to_mapping[character_sequence,character_sequence return character_mapping]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">to_mapping</tt> <big>(</big><em>from : character_sequence</em>; <em>to_seq : character_sequence</em><big>)</big> &rarr; character_mapping<a class="headerlink" href="#strings_maps.to_mapping[character_sequence,character_sequence return character_mapping]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dt id="strings_maps.to_mapping[None,character_sequence return character_mapping]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_mapping</tt> <big>(</big><em>from : None</em>; <em>to_seq : character_sequence</em><big>)</big> &rarr; character_mapping<a class="headerlink" href="#strings_maps.to_mapping[None,character_sequence return character_mapping]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a mapping from two sequences.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>from</strong> (<em>character_sequence</em>) &#8211; </li>
-<li><strong>to_seq</strong> (<em>character_sequence</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>from</strong> (<em>None</em>) &#8211; Sequence string to use for map indices</li>
+<li><strong>to_seq</strong> (<em>character_sequence</em>) &#8211; Sequence string to use from map values</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A new map to convert characters in the from sequence into the to_seq.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Create a mapping from two sequences</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_maps.to_domain[character_mapping return character_sequence]">
 <tt class="descclassname">strings_maps.</tt><tt class="descname">to_domain</tt> <big>(</big><em>cmap : character_mapping</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#strings_maps.to_domain[character_mapping return character_sequence]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Return the from sequence for a mapping.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>cmap</strong> (<em>character_mapping</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cmap</strong> (<em>character_mapping</em>) &#8211; Character map to extract domain from</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The characters used to map from.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Return the from sequence for a mapping</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_maps.to_range[character_mapping return character_sequence]">
 <tt class="descclassname">strings_maps.</tt><tt class="descname">to_range</tt> <big>(</big><em>cmap : character_mapping</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#strings_maps.to_range[character_mapping return character_sequence]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Return the to_seq sequence for a mapping.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>cmap</strong> (<em>character_mapping</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cmap</strong> (<em>character_mapping</em>) &#8211; Character map to extract range from</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The characters used to map into.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Return the to_seq sequence for a mapping</p>
 </dd></dl>
 
 </div>

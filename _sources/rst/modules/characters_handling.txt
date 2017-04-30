@@ -8,13 +8,16 @@ characters_handling
 Dependencies
 ------------
 
-FIXME
+:doc:`strings_maps_constants`
 
 Description
 -----------
 
-FIXME
-    
+This is a package of functions that replicate the behavior of the Ada
+standard library package ada.characters.handling. Included are functions
+to test for different character classifications and perform conversion
+of characters and strings to upper and lower case.
+  
     
 .. include:: auto/characters_handling.rst
 

@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="muxing" href="muxing.html" />
     <link rel="prev" title="lfsr_ops" href="lfsr_ops.html" />
@@ -45,15 +45,18 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/memory.vhdl">extras/memory.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>None</p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
-</div>
-<div class="section" id="components">
-<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-memory"></span></div>
+<p>This package provides general purpose components for inferred RAM and ROM.
+These memories share a <tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> generic which will optionally generate
+synchronous or asynchronous read ports for each instance. On Xilinx devices
+asynchronous read forces the synthesis of distributed RAM using LUTs rather
+than BRAMs. When <tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> is false the Read enable input is unused.</p>
+<p>The ROM component gets its contents using synthesizable file IO to read a
+list of binary or hex values.</p>
+<span class="target" id="package-memory"></span></div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
@@ -62,21 +65,23 @@
 <dd></dd></dl>
 
 </div>
-<div class="section" id="id1">
-<h2>Components<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="components">
+<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="dual-port-ram">
 <h3>dual_port_ram<a class="headerlink" href="#dual-port-ram" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-a1bfe175350b0048db1fd7a64a1d8f1a8f608624.svg" type="image/svg+xml">
+<object data="../../_images/symbol-08db660d46284d60c2c43327cb976c8c55c7f7bd.svg" type="image/svg+xml">
             <p class="warning">component dual_port_ram is
 generic (
   MEM_SIZE : positive;
   SYNC_READ : boolean
 );
 port (
+  --# {{data|Write port}}
   Wr_clock : in std_ulogic;
   We : in std_ulogic;
   Wr_addr : in natural;
   Wr_data : in std_ulogic_vector;
+  --# {{Read port}}
   Rd_clock : in std_ulogic;
   Re : in std_ulogic;
   Rd_addr : in natural;
@@ -86,31 +91,29 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="memory.dual_port_ram">
 <tt class="descclassname">memory.</tt><tt class="descname">dual_port_ram</tt><a class="headerlink" href="#memory.dual_port_ram" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>A dual-ported RAM supporting writes and reads from separate clock domains.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; </li>
-<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; </li>
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; Number or words in memory</li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; Register outputs of read port memory</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Wr_clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Wr_addr</strong> (<em>in natural</em>) &#8211; </li>
-<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) &#8211; </li>
-<li><strong>Rd_clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Rd_addr</strong> (<em>in natural</em>) &#8211; </li>
-<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Wr_clock</strong> (<em>in std_ulogic</em>) &#8211; Write port clock</li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; Write enable</li>
+<li><strong>Wr_addr</strong> (<em>in natural</em>) &#8211; Write port address</li>
+<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) &#8211; Write port data</li>
+<li><strong>Rd_clock</strong> (<em>in std_ulogic</em>) &#8211; Read port clock</li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; Read enable</li>
+<li><strong>Rd_addr</strong> (<em>in natural</em>) &#8211; Read port address</li>
+<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) &#8211; Read port data</li>
 </ul>
 </td>
 </tr>
@@ -121,7 +124,7 @@ end component;</p></object>
 </div>
 <div class="section" id="rom">
 <h3>rom<a class="headerlink" href="#rom" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-f6ed71ff63402a1e7ae0aa42ee6d3c7333e41792.svg" type="image/svg+xml">
+<object data="../../_images/symbol-5ad028d4b9155e896ac55ca7f862687df6c3af21.svg" type="image/svg+xml">
             <p class="warning">component rom is
 generic (
   ROM_FILE : string;
@@ -130,7 +133,9 @@ generic (
   SYNC_READ : boolean
 );
 port (
+  --# {{clocks|}}
   Clock : in std_ulogic;
+  --# {{data|}}
   Re : in std_ulogic;
   Addr : in natural;
   Data : out std_ulogic_vector
@@ -139,29 +144,27 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="memory.rom">
 <tt class="descclassname">memory.</tt><tt class="descname">rom</tt><a class="headerlink" href="#memory.rom" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>A synthesizable ROM using a file to specify the contents.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>ROM_FILE</strong> (<em>string</em>) &#8211; </li>
-<li><strong>FORMAT</strong> (<em>rom_format</em>) &#8211; </li>
-<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; </li>
-<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; </li>
+<li><strong>ROM_FILE</strong> (<em>string</em>) &#8211; Name of file with ROM data</li>
+<li><strong>FORMAT</strong> (<em>rom_format</em>) &#8211; File encoding</li>
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; Number or words in memory</li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; Register outputs of read port memory</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Addr</strong> (<em>in natural</em>) &#8211; </li>
-<li><strong>Data</strong> (<em>out std_ulogic_vector</em>) &#8211; </li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; Read enable</li>
+<li><strong>Addr</strong> (<em>in natural</em>) &#8211; Read address</li>
+<li><strong>Data</strong> (<em>out std_ulogic_vector</em>) &#8211; Data at current address</li>
 </ul>
 </td>
 </tr>
@@ -210,9 +213,8 @@ end component;</p></object>
 <li><a class="reference internal" href="#">memory</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
 <li><a class="reference internal" href="#types">Types</a></li>
-<li><a class="reference internal" href="#id1">Components</a><ul>
+<li><a class="reference internal" href="#components">Components</a><ul>
 <li><a class="reference internal" href="#dual-port-ram">dual_port_ram</a></li>
 <li><a class="reference internal" href="#rom">rom</a></li>
 </ul>

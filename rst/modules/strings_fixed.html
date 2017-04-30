@@ -24,10 +24,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="strings_maps" href="strings_maps.html" />
-    <link rel="prev" title="strings" href="strings.html" />
+    <link rel="prev" title="strings_bounded" href="strings_bounded.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -45,527 +45,617 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_fixed.vhdl">extras/strings_fixed.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p><a class="reference internal" href="strings.html"><em>strings</em></a>
+<a class="reference internal" href="strings_maps.html"><em>strings_maps</em></a>
+<a class="reference internal" href="strings_maps_constants.html"><em>strings_fixed_constants</em></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package provides a string library for operating on fixed length
+strings. This is a clone of the Ada&#8216;95 library <tt class="docutils literal"><span class="pre">Ada.Strings.Fixed</span></tt>. It is a
+nearly complete implementation with only the procedures taking character
+mapping functions omitted because of VHDL limitations.</p>
 <span class="target" id="package-strings_fixed"></span></div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="procedure">
 <dt id="strings_fixed.move[string,string,truncation,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">move</tt> <big>(</big><em>source : in string</em>; <em>target : out string</em>; <em>drop : in truncation</em>; <em>justify : in alignment</em>; <em>pad : in character</em><big>)</big><a class="headerlink" href="#strings_fixed.move[string,string,truncation,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">move</tt> <big>(</big><em>source : in string</em>; <em>target : out string</em>; <em>drop : in truncation := error</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.move[string,string,truncation,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move source to target.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>in string</em>) &#8211; </li>
-<li><strong>target</strong> (<em>out string</em>) &#8211; </li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; </li>
-<li><strong>justify</strong> (<em>in alignment</em>) &#8211; </li>
-<li><strong>pad</strong> (<em>in character</em>) &#8211; </li>
+<li><strong>source</strong> (<em>in string</em>) &#8211; String to move</li>
+<li><strong>target</strong> (<em>out string</em>) &#8211; Destingation string</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation mode</li>
+<li><strong>justify</strong> (<em>in alignment</em>) &#8211; Alignment mode</li>
+<li><strong>pad</strong> (<em>in character</em>) &#8211; Padding character for target when longer than source</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Move source to target</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.index[string,string,direction,character_mapping return natural]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">index</tt> <big>(</big><em>source : string</em>; <em>pattern : string</em>; <em>going : direction</em>; <em>mapping : character_mapping</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.index[string,string,direction,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">index</tt> <big>(</big><em>source : string</em>; <em>pattern : string</em>; <em>going : direction := forward</em>; <em>mapping : character_mapping := identity</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.index[string,string,direction,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the index of the first occurance of pattern in source from the
+beginning or end.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>pattern</strong> (<em>string</em>) &#8211; </li>
-<li><strong>going</strong> (<em>direction</em>) &#8211; </li>
-<li><strong>mapping</strong> (<em>character_mapping</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to search</li>
+<li><strong>pattern</strong> (<em>string</em>) &#8211; Search pattern</li>
+<li><strong>going</strong> (<em>direction</em>) &#8211; Search direction</li>
+<li><strong>mapping</strong> (<em>character_mapping</em>) &#8211; Optional mapping applied to source string</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Index position of pattern or 0 if not found.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Find the index of the first occurance of pattern in source from the
-beginning or end</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.index[string,character_set,membership,direction return natural]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">index</tt> <big>(</big><em>source : string</em>; <em>set : character_set</em>; <em>test : membership</em>; <em>going : direction</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.index[string,character_set,membership,direction return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">index</tt> <big>(</big><em>source : string</em>; <em>set : character_set</em>; <em>test : membership := inside</em>; <em>going : direction := forward</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.index[string,character_set,membership,direction return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the index of first occurance of a character from set in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>set</strong> (<em>character_set</em>) &#8211; </li>
-<li><strong>test</strong> (<em>membership</em>) &#8211; </li>
-<li><strong>going</strong> (<em>direction</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to search</li>
+<li><strong>set</strong> (<em>character_set</em>) &#8211; Character set to search for</li>
+<li><strong>test</strong> (<em>membership</em>) &#8211; Check for characters inside or outside the set</li>
+<li><strong>going</strong> (<em>direction</em>) &#8211; Search direction</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Index position of first matching character or 0 if not found.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Find the index of first occurance of a character from set in source</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.index_non_blank[string,direction return natural]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">index_non_blank</tt> <big>(</big><em>source : string</em>; <em>going : direction</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.index_non_blank[string,direction return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">index_non_blank</tt> <big>(</big><em>source : string</em>; <em>going : direction := forward</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.index_non_blank[string,direction return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the index of the first non-space character in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>going</strong> (<em>direction</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to search</li>
+<li><strong>going</strong> (<em>direction</em>) &#8211; Search direction</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Index position of first non-space character or 0 if none found.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Find the index of the first non-space character in source</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.count[string,string,character_mapping return natural]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">count</tt> <big>(</big><em>source : string</em>; <em>pattern : string</em>; <em>mapping : character_mapping</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.count[string,string,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">count</tt> <big>(</big><em>source : string</em>; <em>pattern : string</em>; <em>mapping : character_mapping := identity</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.count[string,string,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count the occurrences of pattern in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>pattern</strong> (<em>string</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to count patterns in</li>
+<li><strong>pattern</strong> (<em>string</em>) &#8211; Pattern to count in source string</li>
 <li><strong>mapping</strong> (<em>character_mapping</em>) &#8211; </li>
 </ul>
 </td>
 </tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Number or times pattern occurs in the source string.</p>
+</td>
+</tr>
 </tbody>
 </table>
-<p>Count the occurrences of pattern in source</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.count[string,character_set return natural]">
 <tt class="descclassname">strings_fixed.</tt><tt class="descname">count</tt> <big>(</big><em>source : string</em>; <em>set : character_set</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.count[string,character_set return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Count the occurrences of characters from set in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>set</strong> (<em>character_set</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to count characters in</li>
+<li><strong>set</strong> (<em>character_set</em>) &#8211; Character set to count</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Number of times a character from set occurs in the source string.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Count the occurrences of characters from set in source</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="strings_fixed.find_token[string,character_set,membership,positive,natural]">
 <tt class="descclassname">strings_fixed.</tt><tt class="descname">find_token</tt> <big>(</big><em>source : in string</em>; <em>set : in character_set</em>; <em>test : in membership</em>; <em>first : out positive</em>; <em>last : out natural</em><big>)</big><a class="headerlink" href="#strings_fixed.find_token[string,character_set,membership,positive,natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Return the indices of a slice of source that satisfies the membership
+selection for the character set.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>in string</em>) &#8211; </li>
-<li><strong>set</strong> (<em>in character_set</em>) &#8211; </li>
-<li><strong>test</strong> (<em>in membership</em>) &#8211; </li>
-<li><strong>first</strong> (<em>out positive</em>) &#8211; </li>
-<li><strong>last</strong> (<em>out natural</em>) &#8211; </li>
+<li><strong>source</strong> (<em>in string</em>) &#8211; String to search for the token</li>
+<li><strong>set</strong> (<em>in character_set</em>) &#8211; Character set for the token</li>
+<li><strong>test</strong> (<em>in membership</em>) &#8211; Check for characters inside or outside the set</li>
+<li><strong>first</strong> (<em>out positive</em>) &#8211; Start index of the token</li>
+<li><strong>last</strong> (<em>out natural</em>) &#8211; End index of the token or 0 if not found</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Return the indices of a slice of source that satisfies the membership
-selection for the character set.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.translate[string,character_mapping return string]">
 <tt class="descclassname">strings_fixed.</tt><tt class="descname">translate</tt> <big>(</big><em>source : string</em>; <em>mapping : character_mapping</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.translate[string,character_mapping return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert a source string with the provided character mapping.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>mapping</strong> (<em>character_mapping</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to translate</li>
+<li><strong>mapping</strong> (<em>character_mapping</em>) &#8211; Mapping to apply</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">New string with applied mapping.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Convert a source string with the provided character mapping</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="strings_fixed.translate[string,character_mapping]">
 <tt class="descclassname">strings_fixed.</tt><tt class="descname">translate</tt> <big>(</big><em>source : inout string</em>; <em>mapping : in character_mapping</em><big>)</big><a class="headerlink" href="#strings_fixed.translate[string,character_mapping]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert a source string with the provided character mapping.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout string</em>) &#8211; </li>
-<li><strong>mapping</strong> (<em>in character_mapping</em>) &#8211; </li>
+<li><strong>source</strong> (<em>inout string</em>) &#8211; String to translate</li>
+<li><strong>mapping</strong> (<em>in character_mapping</em>) &#8211; Mapping to apply</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Convert a source string with the provided character mapping</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.replace_slice[string,positive,natural,string return string]">
 <tt class="descclassname">strings_fixed.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : string</em>; <em>low : positive</em>; <em>high : natural</em>; <em>by : string</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.replace_slice[string,positive,natural,string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Replace a slice of the source string with the contents of by.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>low</strong> (<em>positive</em>) &#8211; </li>
-<li><strong>high</strong> (<em>natural</em>) &#8211; </li>
-<li><strong>by</strong> (<em>string</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to replace</li>
+<li><strong>low</strong> (<em>positive</em>) &#8211; Start of the slice (inclusive)</li>
+<li><strong>high</strong> (<em>natural</em>) &#8211; End of the slice (inclusive)</li>
+<li><strong>by</strong> (<em>string</em>) &#8211; String to insert into slice position</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">New string with replaced slice.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Replace a slice of the source string with the contents of by</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="strings_fixed.replace_slice[string,positive,natural,string,truncation,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : inout string</em>; <em>low : in positive</em>; <em>high : in natural</em>; <em>by : in string</em>; <em>drop : in truncation</em>; <em>justify : in alignment</em>; <em>pad : in character</em><big>)</big><a class="headerlink" href="#strings_fixed.replace_slice[string,positive,natural,string,truncation,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : inout string</em>; <em>low : in positive</em>; <em>high : in natural</em>; <em>by : in string</em>; <em>drop : in truncation := error</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.replace_slice[string,positive,natural,string,truncation,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace a slice of the source string with the contents of by.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout string</em>) &#8211; </li>
-<li><strong>low</strong> (<em>in positive</em>) &#8211; </li>
-<li><strong>high</strong> (<em>in natural</em>) &#8211; </li>
-<li><strong>by</strong> (<em>in string</em>) &#8211; </li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; </li>
-<li><strong>justify</strong> (<em>in alignment</em>) &#8211; </li>
-<li><strong>pad</strong> (<em>in character</em>) &#8211; </li>
+<li><strong>source</strong> (<em>inout string</em>) &#8211; String to replace</li>
+<li><strong>low</strong> (<em>in positive</em>) &#8211; Start of the slice (inclusive)</li>
+<li><strong>high</strong> (<em>in natural</em>) &#8211; End of the slice (inclusive)</li>
+<li><strong>by</strong> (<em>in string</em>) &#8211; String to insert into slice position</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation mode</li>
+<li><strong>justify</strong> (<em>in alignment</em>) &#8211; Alignment mode</li>
+<li><strong>pad</strong> (<em>in character</em>) &#8211; Padding character when result is shorter than original string</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Replace a slice of the source string with the contents of by</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.insert[string,positive,string return string]">
 <tt class="descclassname">strings_fixed.</tt><tt class="descname">insert</tt> <big>(</big><em>source : string</em>; <em>before : positive</em>; <em>new_item : string</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.insert[string,positive,string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Insert the string new_item before the selected index in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>before</strong> (<em>positive</em>) &#8211; </li>
-<li><strong>new_item</strong> (<em>string</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to insert into</li>
+<li><strong>before</strong> (<em>positive</em>) &#8211; Index position for insertion</li>
+<li><strong>new_item</strong> (<em>string</em>) &#8211; String to insert</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Source string with new_item inserted.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Insert the string new_item before the selected index in source</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="strings_fixed.insert[string,positive,string,truncation]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">insert</tt> <big>(</big><em>source : inout string</em>; <em>before : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation</em><big>)</big><a class="headerlink" href="#strings_fixed.insert[string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">insert</tt> <big>(</big><em>source : inout string</em>; <em>before : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#strings_fixed.insert[string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert the string new_item before the selected index in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout string</em>) &#8211; </li>
-<li><strong>before</strong> (<em>in positive</em>) &#8211; </li>
-<li><strong>new_item</strong> (<em>in string</em>) &#8211; </li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; </li>
+<li><strong>source</strong> (<em>inout string</em>) &#8211; String to insert into</li>
+<li><strong>before</strong> (<em>in positive</em>) &#8211; Index position for insertion</li>
+<li><strong>new_item</strong> (<em>in string</em>) &#8211; String to insert</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation mode</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Insert the string new_item before the selected index in source</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.overwrite[string,positive,string return string]">
 <tt class="descclassname">strings_fixed.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : string</em>; <em>position : positive</em>; <em>new_item : string</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.overwrite[string,positive,string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Overwrite new_item into source starting at the selected position.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>position</strong> (<em>positive</em>) &#8211; </li>
-<li><strong>new_item</strong> (<em>string</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to overwrite</li>
+<li><strong>position</strong> (<em>positive</em>) &#8211; Index position for overwrite</li>
+<li><strong>new_item</strong> (<em>string</em>) &#8211; String to write into source</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">New string with overwritten item.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Overwrite new_item into source starting at the selected position</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="strings_fixed.overwrite[string,positive,string,truncation]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : inout string</em>; <em>position : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation</em><big>)</big><a class="headerlink" href="#strings_fixed.overwrite[string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : inout string</em>; <em>position : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := right</em><big>)</big><a class="headerlink" href="#strings_fixed.overwrite[string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overwrite new_item into source starting at the selected position.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout string</em>) &#8211; </li>
-<li><strong>position</strong> (<em>in positive</em>) &#8211; </li>
-<li><strong>new_item</strong> (<em>in string</em>) &#8211; </li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; </li>
+<li><strong>source</strong> (<em>inout string</em>) &#8211; String to overwrite</li>
+<li><strong>position</strong> (<em>in positive</em>) &#8211; Index position for overwrite</li>
+<li><strong>new_item</strong> (<em>in string</em>) &#8211; String to write into source</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation mode</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Overwrite new_item into source starting at the selected position</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.delete[string,positive,natural return string]">
 <tt class="descclassname">strings_fixed.</tt><tt class="descname">delete</tt> <big>(</big><em>source : string</em>; <em>from : positive</em>; <em>through : natural</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.delete[string,positive,natural return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Delete a slice from source. If from is greater than through, source is
+unmodified.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>from</strong> (<em>positive</em>) &#8211; </li>
-<li><strong>through</strong> (<em>natural</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to delete a slice from</li>
+<li><strong>from</strong> (<em>positive</em>) &#8211; Start index (inclusive)</li>
+<li><strong>through</strong> (<em>natural</em>) &#8211; End index (inclusive)</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">New string with a slice deleted.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Delete a slice from source. If from is greater than through, source is
-unmodified.</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="strings_fixed.delete[string,positive,natural,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">delete</tt> <big>(</big><em>source : inout string</em>; <em>from : in positive</em>; <em>through : in natural</em>; <em>justify : in alignment</em>; <em>pad : in character</em><big>)</big><a class="headerlink" href="#strings_fixed.delete[string,positive,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">delete</tt> <big>(</big><em>source : inout string</em>; <em>from : in positive</em>; <em>through : in natural</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.delete[string,positive,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a slice from source. If from is greater than through, source is
+unmodified.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout string</em>) &#8211; </li>
-<li><strong>from</strong> (<em>in positive</em>) &#8211; </li>
-<li><strong>through</strong> (<em>in natural</em>) &#8211; </li>
-<li><strong>justify</strong> (<em>in alignment</em>) &#8211; </li>
-<li><strong>pad</strong> (<em>in character</em>) &#8211; </li>
+<li><strong>source</strong> (<em>inout string</em>) &#8211; String to delete a slice from</li>
+<li><strong>from</strong> (<em>in positive</em>) &#8211; Start index (inclusive)</li>
+<li><strong>through</strong> (<em>in natural</em>) &#8211; End index (inclusive)</li>
+<li><strong>justify</strong> (<em>in alignment</em>) &#8211; Position of shortened result in string</li>
+<li><strong>pad</strong> (<em>in character</em>) &#8211; Character to use as padding for shortened string</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Delete a slice from source. If from is greater than through, source is
-unmodified.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.trim[string,trim_end return string]">
 <tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : string</em>; <em>side : trim_end</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.trim[string,trim_end return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Remove space characters from leading, trailing, or both ends of source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>side</strong> (<em>trim_end</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to trim</li>
+<li><strong>side</strong> (<em>trim_end</em>) &#8211; Which end to trim</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Source string with space trimmed.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Remove space characters from leading, trailing, or both ends of source</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="strings_fixed.trim[string,trim_end,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout string</em>; <em>side : in trim_end</em>; <em>justify : in alignment</em>; <em>pad : in character</em><big>)</big><a class="headerlink" href="#strings_fixed.trim[string,trim_end,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout string</em>; <em>side : in trim_end</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.trim[string,trim_end,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove space characters from leading, trailing, or both ends of source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout string</em>) &#8211; </li>
-<li><strong>side</strong> (<em>in trim_end</em>) &#8211; </li>
-<li><strong>justify</strong> (<em>in alignment</em>) &#8211; </li>
-<li><strong>pad</strong> (<em>in character</em>) &#8211; </li>
+<li><strong>source</strong> (<em>inout string</em>) &#8211; String to trim</li>
+<li><strong>side</strong> (<em>in trim_end</em>) &#8211; Which end to trim</li>
+<li><strong>justify</strong> (<em>in alignment</em>) &#8211; Position of shortened result in string</li>
+<li><strong>pad</strong> (<em>in character</em>) &#8211; Character to use as padding for shortened string</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Remove space characters from leading, trailing, or both ends of source</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.trim[string,character_set,character_set return string]">
 <tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : string</em>; <em>left : character_set</em>; <em>right : character_set</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.trim[string,character_set,character_set return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Remove all leading characters in left and trailing characters in right
+from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>left</strong> (<em>character_set</em>) &#8211; </li>
-<li><strong>right</strong> (<em>character_set</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to trim</li>
+<li><strong>left</strong> (<em>character_set</em>) &#8211; Index position for start trim</li>
+<li><strong>right</strong> (<em>character_set</em>) &#8211; Index position for end trim</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Source string with ends trimmed.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Remove all leading characters in left and trailing characters in right
-from source</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="strings_fixed.trim[string,character_set,character_set,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout string</em>; <em>left : in character_set</em>; <em>right : in character_set</em>; <em>justify : in alignment</em>; <em>pad : in character</em><big>)</big><a class="headerlink" href="#strings_fixed.trim[string,character_set,character_set,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout string</em>; <em>left : in character_set</em>; <em>right : in character_set</em>; <em>justify : in alignment := extras.strings.left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.trim[string,character_set,character_set,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all leading characters in left and trailing characters in right
+from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout string</em>) &#8211; </li>
-<li><strong>left</strong> (<em>in character_set</em>) &#8211; </li>
-<li><strong>right</strong> (<em>in character_set</em>) &#8211; </li>
-<li><strong>justify</strong> (<em>in alignment</em>) &#8211; </li>
-<li><strong>pad</strong> (<em>in character</em>) &#8211; </li>
+<li><strong>source</strong> (<em>inout string</em>) &#8211; String to trim</li>
+<li><strong>left</strong> (<em>in character_set</em>) &#8211; Index position for start trim</li>
+<li><strong>right</strong> (<em>in character_set</em>) &#8211; Index position for end trim</li>
+<li><strong>justify</strong> (<em>in alignment</em>) &#8211; Position of shortened result in string</li>
+<li><strong>pad</strong> (<em>in character</em>) &#8211; Character to use as padding for shortened string</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Remove all leading characters in left and trailing characters in right
-from source</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.head[string,natural,character return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">head</tt> <big>(</big><em>source : string</em>; <em>count : natural</em>; <em>pad : character</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.head[string,natural,character return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">head</tt> <big>(</big><em>source : string</em>; <em>count : natural</em>; <em>pad : character := ' '</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.head[string,natural,character return string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the first count characters from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>count</strong> (<em>natural</em>) &#8211; </li>
-<li><strong>pad</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to slice from</li>
+<li><strong>count</strong> (<em>natural</em>) &#8211; Number of characters to take from the start of source</li>
+<li><strong>pad</strong> (<em>character</em>) &#8211; Characters to pad with if source length is less than count</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A string of length count.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Return the first count characters from source</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="strings_fixed.head[string,natural,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">head</tt> <big>(</big><em>source : inout string</em>; <em>count : in natural</em>; <em>justify : in alignment</em>; <em>pad : in character</em><big>)</big><a class="headerlink" href="#strings_fixed.head[string,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">head</tt> <big>(</big><em>source : inout string</em>; <em>count : in natural</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.head[string,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the first count characters from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout string</em>) &#8211; </li>
-<li><strong>count</strong> (<em>in natural</em>) &#8211; </li>
-<li><strong>justify</strong> (<em>in alignment</em>) &#8211; </li>
-<li><strong>pad</strong> (<em>in character</em>) &#8211; </li>
+<li><strong>source</strong> (<em>inout string</em>) &#8211; String to slice from</li>
+<li><strong>count</strong> (<em>in natural</em>) &#8211; Number of characters to take from the start of source</li>
+<li><strong>justify</strong> (<em>in alignment</em>) &#8211; Position of shortened result in string</li>
+<li><strong>pad</strong> (<em>in character</em>) &#8211; Characters to pad with if source length is less than count</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Return the first count characters from source</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.tail[string,natural,character return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">tail</tt> <big>(</big><em>source : string</em>; <em>count : natural</em>; <em>pad : character</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.tail[string,natural,character return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">tail</tt> <big>(</big><em>source : string</em>; <em>count : natural</em>; <em>pad : character := ' '</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.tail[string,natural,character return string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the last count characters from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
-<li><strong>count</strong> (<em>natural</em>) &#8211; </li>
-<li><strong>pad</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to slice from</li>
+<li><strong>count</strong> (<em>natural</em>) &#8211; Number of characters to take from the end of source</li>
+<li><strong>pad</strong> (<em>character</em>) &#8211; Characters to pad with if source length is less than count</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A string of length count.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Return the last count characters from source</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="strings_fixed.tail[string,natural,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">tail</tt> <big>(</big><em>source : inout string</em>; <em>count : in natural</em>; <em>justify : in alignment</em>; <em>pad : in character</em><big>)</big><a class="headerlink" href="#strings_fixed.tail[string,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">tail</tt> <big>(</big><em>source : inout string</em>; <em>count : in natural</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.tail[string,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the last count characters from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout string</em>) &#8211; </li>
-<li><strong>count</strong> (<em>in natural</em>) &#8211; </li>
-<li><strong>justify</strong> (<em>in alignment</em>) &#8211; </li>
-<li><strong>pad</strong> (<em>in character</em>) &#8211; </li>
+<li><strong>source</strong> (<em>inout string</em>) &#8211; String to slice from</li>
+<li><strong>count</strong> (<em>in natural</em>) &#8211; Number of characters to take from the end of source</li>
+<li><strong>justify</strong> (<em>in alignment</em>) &#8211; Position of shortened result in string</li>
+<li><strong>pad</strong> (<em>in character</em>) &#8211; Characters to pad with if source length is less than count</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Return the last count characters from source</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_fixed.&quot;*&quot;[natural,character return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>left : natural</em>; <em>right : character</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed."*"[natural,character return string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replicate a character left number of times.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>left</strong> (<em>natural</em>) &#8211; Number of times to repeat the right operand</li>
+<li><strong>right</strong> (<em>character</em>) &#8211; Character to repeat in string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with repeated character.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_fixed.&quot;*&quot;[natural,string return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>left : natural</em>; <em>right : string</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed."*"[natural,string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replicate a string left number of times.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>left</strong> (<em>natural</em>) &#8211; Number of times to repeat the right operand</li>
+<li><strong>right</strong> (<em>string</em>) &#8211; String to repeat in result string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with repeated substring.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="strings_fixed.hash[string return natural]">
 <tt class="descclassname">strings_fixed.</tt><tt class="descname">hash</tt> <big>(</big><em>key : string</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.hash[string return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Compute hash value of a string.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>key</strong> (<em>string</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> (<em>string</em>) &#8211; String to be hashed</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Hash value.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Replicate a character left number of times
-Replicate a string left number of times
-Compute hash value of a string</p>
 </dd></dl>
 
 </div>
@@ -598,7 +688,7 @@ Compute hash value of a string</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="strings.html" title="previous chapter">strings</a></li>
+      <li>Previous: <a href="strings_bounded.html" title="previous chapter">strings_bounded</a></li>
       <li>Next: <a href="strings_maps.html" title="next chapter">strings_maps</a></li>
   </ul></li>
 </ul>

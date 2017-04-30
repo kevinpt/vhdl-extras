@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="ddfs" href="ddfs.html" />
     <link rel="prev" title="characters_latin_1" href="characters_latin_1.html" />
@@ -158,14 +158,11 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Calculate a CRC sequentially.</p>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="crc_ops.crc">
 <tt class="descclassname">crc_ops.</tt><tt class="descname">crc</tt><a class="headerlink" href="#crc_ops.crc" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Calculate a CRC sequentially.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -200,7 +197,8 @@ end component;</p></object>
 <dl class="function">
 <dt id="crc_ops.init_crc[bit_vector return bit_vector]">
 <tt class="descclassname">crc_ops.</tt><tt class="descname">init_crc</tt> <big>(</big><em>Xor_in : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#crc_ops.init_crc[bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Initialize CRC state.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -214,13 +212,13 @@ end component;</p></object>
 </tr>
 </tbody>
 </table>
-<p>Initialize CRC state.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]">
 <tt class="descclassname">crc_ops.</tt><tt class="descname">next_crc</tt> <big>(</big><em>Crc : bit_vector</em>; <em>Poly : bit_vector</em>; <em>Reflect_in : boolean</em>; <em>Data : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Add new data to the CRC.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -237,13 +235,13 @@ end component;</p></object>
 </tr>
 </tbody>
 </table>
-<p>Add new data to the CRC.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]">
 <tt class="descclassname">crc_ops.</tt><tt class="descname">end_crc</tt> <big>(</big><em>Crc : bit_vector</em>; <em>Reflect_out : boolean</em>; <em>Xor_out : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Finalize the CRC.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -259,7 +257,6 @@ end component;</p></object>
 </tr>
 </tbody>
 </table>
-<p>Finalize the CRC.</p>
 </dd></dl>
 
 </div>

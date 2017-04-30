@@ -1,0 +1,1593 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>strings_bounded &mdash; VHDL-extras 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="next" title="strings_fixed" href="strings_fixed.html" />
+    <link rel="prev" title="strings" href="strings.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="strings-bounded">
+<h1>strings_bounded<a class="headerlink" href="#strings-bounded" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_bounded.vhdl">extras_2008/strings_bounded.vhdl</a></p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="strings.html"><em>strings</em></a> <a class="reference internal" href="strings_maps.html"><em>strings_maps</em></a> <a class="reference internal" href="strings_maps_constants.html"><em>strings_fixed_constants</em></a> <a class="reference internal" href="strings_fixed.html"><em>strings_fixed</em></a></p>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>This package provides a string library for operating on bounded length
+strings. This is a clone of the Ada&#8216;95 library <tt class="docutils literal"><span class="pre">Ada.Strings.Bounded</span></tt>. It
+is a nearly complete implementation with only the procedures taking
+character mapping functions omitted because of VHDL limitations.
+This package requires support for VHDL-2008 package generics. The
+maximum size of a bounded string is established by instantiating a new
+package with the <tt class="docutils literal"><span class="pre">MAX</span></tt> generic set to the desired size.</p>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="c1">-- Instantiate the package with a maximum length</span>
+<span class="k">library</span> <span class="nn">extras_2008</span><span class="p">;</span>
+<span class="k">package</span> <span class="n">s20</span> <span class="k">is</span> <span class="k">new</span> <span class="n">extras_2008</span><span class="p">.</span><span class="n">strings_bounded</span>
+  <span class="k">generic</span> <span class="k">map</span><span class="p">(</span><span class="n">MAX</span> <span class="o">=&gt;</span> <span class="mi">20</span><span class="p">);</span>
+<span class="k">use</span> <span class="nn">work.s20.all</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="k">variable</span> <span class="n">str</span> <span class="o">:</span> <span class="n">bounded_string</span><span class="p">;</span> <span class="c1">-- String with up to 20 characters</span>
+<span class="k">variable</span> <span class="n">l</span>   <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">str</span> <span class="o">:=</span> <span class="n">to_bounded_string</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">);</span>
+<span class="n">l</span> <span class="o">:=</span> <span class="n">length</span><span class="p">(</span><span class="n">str</span><span class="p">);</span> <span class="c1">-- returns 3</span>
+<span class="n">append</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="s">&quot;def&quot;</span><span class="p">);</span>
+<span class="n">l</span> <span class="o">:=</span> <span class="n">length</span><span class="p">(</span><span class="n">str</span><span class="p">);</span> <span class="c1">-- returns 6</span>
+</pre></div>
+</div>
+<span class="target" id="package-strings_bounded"></span></div>
+</div>
+<div class="section" id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="strings_bounded.bounded_string">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">bounded_string</tt><a class="headerlink" href="#strings_bounded.bounded_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="subtypes">
+<h2>Subtypes<a class="headerlink" href="#subtypes" title="Permalink to this headline">¶</a></h2>
+<dl class="subtype">
+<dt id="strings_bounded.length_range">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">length_range</tt><a class="headerlink" href="#strings_bounded.length_range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="subprograms">
+<h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="strings_bounded.length[bounded_string return length_range]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">length</tt> <big>(</big><em>source : bounded_string</em><big>)</big> &rarr; length_range<a class="headerlink" href="#strings_bounded.length[bounded_string return length_range]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the length of a bounded_string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to check length of</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Length of the string.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.to_bounded_string[string,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">to_bounded_string</tt> <big>(</big><em>source : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.to_bounded_string[string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a string to bounded_string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>string</em>) &#8211; String to convert</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Converted string.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.to_string[bounded_string return string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">to_string</tt> <big>(</big><em>source : bounded_string</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_bounded.to_string[bounded_string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a bounded_string to string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to convert</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Bounded string converted to a plain string.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.append[None,bounded_string,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>l : None</em>; <em>r : bounded_string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.append[None,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append two bounded_strings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>None</em>) &#8211; Left string</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with l and r concatenated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.append[bounded_string,string,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.append[bounded_string,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a string to a bounded_string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>bounded_string</em>) &#8211; Left string</li>
+<li><strong>r</strong> (<em>string</em>) &#8211; Right string</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with l and r concatenated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.append[string,bounded_string,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.append[string,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a bounded_string to a string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>string</em>) &#8211; Left string</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with l and r concatenated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.append[bounded_string,character,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>l : bounded_string</em>; <em>r : character</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.append[bounded_string,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a character to a bounded_string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>bounded_string</em>) &#8211; Left string</li>
+<li><strong>r</strong> (<em>character</em>) &#8211; Right character</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with l and r concatenated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.append[character,bounded_string,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>l : character</em>; <em>r : bounded_string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.append[character,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a bounded_string to a character.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>character</em>) &#8211; Left character</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with l and r concatenated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.append[bounded_string,bounded_string,truncation]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout bounded_string</em>; <em>new_item : in bounded_string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#strings_bounded.append[bounded_string,bounded_string,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a bounded_string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to append onto</li>
+<li><strong>new_item</strong> (<em>in bounded_string</em>) &#8211; String to append</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation behavior for longer strings</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.append[bounded_string,string,truncation]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout bounded_string</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#strings_bounded.append[bounded_string,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to append onto</li>
+<li><strong>new_item</strong> (<em>in string</em>) &#8211; String to append</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation behavior for longer strings</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.append[bounded_string,character,truncation]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout bounded_string</em>; <em>new_item : in character</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#strings_bounded.append[bounded_string,character,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a character.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to append onto</li>
+<li><strong>new_item</strong> (<em>in character</em>) &#8211; Character to append</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation behavior for longer strings</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&amp;&quot;[None,bounded_string return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&amp;&quot;</tt> <big>(</big><em>l : None</em>; <em>r : bounded_string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded."&"[None,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenate two strings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>None</em>) &#8211; Left string</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with l and r concatenated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&amp;&quot;[bounded_string,string return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&amp;&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded."&"[bounded_string,string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenate a string to a bounded_string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>bounded_string</em>) &#8211; Left string</li>
+<li><strong>r</strong> (<em>string</em>) &#8211; Right string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with l and r concatenated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&amp;&quot;[string,bounded_string return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&amp;&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded."&"[string,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenate a bounded_string to a string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>string</em>) &#8211; Left string</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with l and r concatenated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&amp;&quot;[bounded_string,character return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&amp;&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : character</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded."&"[bounded_string,character return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenate a character to a string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>bounded_string</em>) &#8211; Left string</li>
+<li><strong>r</strong> (<em>character</em>) &#8211; Right character</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with l and r concatenated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&amp;&quot;[character,bounded_string return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&amp;&quot;</tt> <big>(</big><em>l : character</em>; <em>r : bounded_string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded."&"[character,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenate a string to a character.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>character</em>) &#8211; Left character</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with l and r concatenated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.element[bounded_string,positive return character]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">element</tt> <big>(</big><em>source : bounded_string</em>; <em>index : positive</em><big>)</big> &rarr; character<a class="headerlink" href="#strings_bounded.element[bounded_string,positive return character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the character at the index position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to index into</li>
+<li><strong>index</strong> (<em>positive</em>) &#8211; Position of the character in the string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Character at the index position.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.replace_element[bounded_string,positive,character]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">replace_element</tt> <big>(</big><em>source : inout bounded_string</em>; <em>index : in positive</em>; <em>by : in character</em><big>)</big><a class="headerlink" href="#strings_bounded.replace_element[bounded_string,positive,character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace the character at the index position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to have element replaced</li>
+<li><strong>index</strong> (<em>in positive</em>) &#8211; Index position to insert new character</li>
+<li><strong>by</strong> (<em>in character</em>) &#8211; Character to place in the string</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.slice[bounded_string,positive,natural return string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">slice</tt> <big>(</big><em>source : bounded_string</em>; <em>low : positive</em>; <em>high : natural</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_bounded.slice[bounded_string,positive,natural return string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a sliced range of a bounded_string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to slice</li>
+<li><strong>low</strong> (<em>positive</em>) &#8211; low index of slice (inclusive)</li>
+<li><strong>high</strong> (<em>natural</em>) &#8211; high index of slice (inclusive)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Substring of source from low to high.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;=&quot;[None,bounded_string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;=&quot;</tt> <big>(</big><em>l : None</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded."="[None,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test two bounded strings for equality.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>None</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l and r are equal.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;=&quot;[bounded_string,string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;=&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded."="[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a bounded_string and plain string for equality.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l and r are equal.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;=&quot;[string,bounded_string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;=&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded."="[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a plain string and a bounded_string for equality.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>string</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l and r are equal.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&lt;&quot;[None,bounded_string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;&quot;</tt> <big>(</big><em>l : None</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded."<"[None,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test two bounded_strings for one lexicographically before the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>None</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l lexicographically proceeds r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&lt;&quot;[bounded_string,string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded."<"[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a bounded_string and a plain string for one lexicographically before the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l lexicographically proceeds r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&lt;&quot;[string,bounded_string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded."<"[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a plain string and a bounded_string for one lexicographically before the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>string</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l lexicographically proceeds r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&lt;=&quot;[None,bounded_string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;=&quot;</tt> <big>(</big><em>l : None</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded."<="[None,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test two bounded_strings for equality or one lexicographically before the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>None</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l and r are equal or l lexicographically proceeds r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&lt;=&quot;[bounded_string,string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;=&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded."<="[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a bounded_string and a plain string for equality or one lexicographically before the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l and r are equal or l lexicographically proceeds r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&lt;=&quot;[string,bounded_string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;=&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded."<="[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a plain string and a bounded_string for equality or one lexicographically before the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>string</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l and r are equal or l lexicographically proceeds r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&gt;&quot;[None,bounded_string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;&quot;</tt> <big>(</big><em>l : None</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded.">"[None,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test two bounded_strings for one lexicographically after the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>None</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l lexicographically follows r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&gt;&quot;[bounded_string,string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded.">"[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a bounded_string and a plain string for one lexicographically after the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l lexicographically follows r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&gt;&quot;[string,bounded_string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded.">"[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a plain string and a bounded_string for one lexicographically after the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>string</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l lexicographically follows r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&gt;=&quot;[None,bounded_string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;=&quot;</tt> <big>(</big><em>l : None</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded.">="[None,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test two bounded_strings for equality or one lexicographically after the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>None</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l and r are equal or l lexicographically follows r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&gt;=&quot;[bounded_string,string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;=&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded.">="[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a bounded_string and a plain string for equality or one lexicographically after the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l and r are equal or l lexicographically follows r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;&gt;=&quot;[string,bounded_string return boolean]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;=&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_bounded.">="[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a plain string and a bounded_string for equality or one lexicographically after the other.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>string</em>) &#8211; First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true when l and r are equal or l lexicographically follows r.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.index[bounded_string,string,direction,character_mapping return natural]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">index</tt> <big>(</big><em>source : bounded_string</em>; <em>pattern : string</em>; <em>going : direction := forward</em>; <em>mapping : character_mapping := IDENTITY</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_bounded.index[bounded_string,string,direction,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the index of the first occurance of pattern in source from the
+beginning or end.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to index into</li>
+<li><strong>pattern</strong> (<em>string</em>) &#8211; Pattern to search for</li>
+<li><strong>going</strong> (<em>direction</em>) &#8211; Search direction</li>
+<li><strong>mapping</strong> (<em>character_mapping</em>) &#8211; Optional character mapping applied before the search</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Index position of pattern or 0 if not found.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.index[bounded_string,character_set,membership,direction return natural]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">index</tt> <big>(</big><em>source : bounded_string</em>; <em>set : character_set</em>; <em>test : membership := inside</em>; <em>going : direction := forward</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_bounded.index[bounded_string,character_set,membership,direction return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the index of first occurance of a character from set in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to search</li>
+<li><strong>set</strong> (<em>character_set</em>) &#8211; Character set to search for</li>
+<li><strong>test</strong> (<em>membership</em>) &#8211; Check for characters inside or outside the set</li>
+<li><strong>going</strong> (<em>direction</em>) &#8211; Search direction</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Index position of first matching character or 0 if not found.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.index_non_blank[bounded_string,direction return natural]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">index_non_blank</tt> <big>(</big><em>source : bounded_string</em>; <em>going : direction := forward</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_bounded.index_non_blank[bounded_string,direction return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the index of the first non-space character in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to search</li>
+<li><strong>going</strong> (<em>direction</em>) &#8211; Search direction</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Index position of first non-space character or 0 if none found.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.count[bounded_string,string,character_mapping return natural]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">count</tt> <big>(</big><em>source : bounded_string</em>; <em>pattern : string</em>; <em>mapping : character_mapping := IDENTITY</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_bounded.count[bounded_string,string,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count the occurrences of pattern in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to count patterns in</li>
+<li><strong>pattern</strong> (<em>string</em>) &#8211; Pattern to count in source string</li>
+<li><strong>mapping</strong> (<em>character_mapping</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Number or times pattern occurs in the source string.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.count[bounded_string,character_set return natural]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">count</tt> <big>(</big><em>source : bounded_string</em>; <em>set : character_set</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_bounded.count[bounded_string,character_set return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count the occurrences of characters from set in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to count characters in</li>
+<li><strong>set</strong> (<em>character_set</em>) &#8211; Character set to count</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Number of times a character from set occurs in the source string.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.find_token[bounded_string,character_set,membership,positive,natural]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">find_token</tt> <big>(</big><em>source : in bounded_string</em>; <em>set : in character_set</em>; <em>test : in membership</em>; <em>first : out positive</em>; <em>last : out natural</em><big>)</big><a class="headerlink" href="#strings_bounded.find_token[bounded_string,character_set,membership,positive,natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the indices of a slice of source that satisfies the membership
+selection for the character set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>in bounded_string</em>) &#8211; String to search for the token</li>
+<li><strong>set</strong> (<em>in character_set</em>) &#8211; Character set for the token</li>
+<li><strong>test</strong> (<em>in membership</em>) &#8211; Check for characters inside or outside the set</li>
+<li><strong>first</strong> (<em>out positive</em>) &#8211; Start index of the token</li>
+<li><strong>last</strong> (<em>out natural</em>) &#8211; End index of the token or 0 if not found</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.translate[bounded_string,character_mapping return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">translate</tt> <big>(</big><em>source : bounded_string</em>; <em>mapping : character_mapping</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.translate[bounded_string,character_mapping return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a source string with the provided character mapping.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to translate</li>
+<li><strong>mapping</strong> (<em>character_mapping</em>) &#8211; Mapping to apply</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">New string with applied mapping.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.translate[bounded_string,character_mapping]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">translate</tt> <big>(</big><em>source : inout bounded_string</em>; <em>mapping : in character_mapping</em><big>)</big><a class="headerlink" href="#strings_bounded.translate[bounded_string,character_mapping]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a source string with the provided character mapping.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to translate</li>
+<li><strong>mapping</strong> (<em>in character_mapping</em>) &#8211; Mapping to apply</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.replace_slice[bounded_string,positive,natural,string,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : bounded_string</em>; <em>low : positive</em>; <em>high : natural</em>; <em>by : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.replace_slice[bounded_string,positive,natural,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace a slice of the source string with the contents of by.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to replace</li>
+<li><strong>low</strong> (<em>positive</em>) &#8211; Start of the slice (inclusive)</li>
+<li><strong>high</strong> (<em>natural</em>) &#8211; End of the slice (inclusive)</li>
+<li><strong>by</strong> (<em>string</em>) &#8211; String to insert into slice position</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">New string with replaced slice.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.replace_slice[bounded_string,positive,natural,string,truncation]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : inout bounded_string</em>; <em>low : in positive</em>; <em>high : in natural</em>; <em>by : in string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#strings_bounded.replace_slice[bounded_string,positive,natural,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace a slice of the source string with the contents of by.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to replace</li>
+<li><strong>low</strong> (<em>in positive</em>) &#8211; Start of the slice (inclusive)</li>
+<li><strong>high</strong> (<em>in natural</em>) &#8211; End of the slice (inclusive)</li>
+<li><strong>by</strong> (<em>in string</em>) &#8211; String to insert into slice position</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation mode</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.insert[bounded_string,positive,string,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">insert</tt> <big>(</big><em>source : bounded_string</em>; <em>before : positive</em>; <em>new_item : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.insert[bounded_string,positive,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert the string new_item before the selected index in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to insert into</li>
+<li><strong>before</strong> (<em>positive</em>) &#8211; Index position for insertion</li>
+<li><strong>new_item</strong> (<em>string</em>) &#8211; String to insert</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Source string with new_item inserted.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.insert[bounded_string,positive,string,truncation]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">insert</tt> <big>(</big><em>source : inout bounded_string</em>; <em>before : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#strings_bounded.insert[bounded_string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert the string new_item before the selected index in source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to insert into</li>
+<li><strong>before</strong> (<em>in positive</em>) &#8211; Index position for insertion</li>
+<li><strong>new_item</strong> (<em>in string</em>) &#8211; String to insert</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation mode</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.overwrite[bounded_string,positive,string,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : bounded_string</em>; <em>position : positive</em>; <em>new_item : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.overwrite[bounded_string,positive,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overwrite new_item into source starting at the selected position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to overwrite</li>
+<li><strong>position</strong> (<em>positive</em>) &#8211; Index position for overwrite</li>
+<li><strong>new_item</strong> (<em>string</em>) &#8211; String to write into source</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">New string with overwritten item.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.overwrite[bounded_string,positive,string,truncation]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : inout bounded_string</em>; <em>position : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#strings_bounded.overwrite[bounded_string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overwrite new_item into source starting at the selected position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to overwrite</li>
+<li><strong>position</strong> (<em>in positive</em>) &#8211; Index position for overwrite</li>
+<li><strong>new_item</strong> (<em>in string</em>) &#8211; String to write into source</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation mode</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.delete[bounded_string,positive,natural return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">delete</tt> <big>(</big><em>source : bounded_string</em>; <em>from : positive</em>; <em>through : natural</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.delete[bounded_string,positive,natural return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a slice from source. If from is greater than through, source is
+unmodified.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to delete a slice from</li>
+<li><strong>from</strong> (<em>positive</em>) &#8211; Start index (inclusive)</li>
+<li><strong>through</strong> (<em>natural</em>) &#8211; End index (inclusive)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">New string with a slice deleted.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.delete[bounded_string,positive,natural]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">delete</tt> <big>(</big><em>source : inout bounded_string</em>; <em>from : in positive</em>; <em>through : in natural</em><big>)</big><a class="headerlink" href="#strings_bounded.delete[bounded_string,positive,natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a slice from source. If from is greater than through, source is
+unmodified.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to delete a slice from</li>
+<li><strong>from</strong> (<em>in positive</em>) &#8211; Start index (inclusive)</li>
+<li><strong>through</strong> (<em>in natural</em>) &#8211; End index (inclusive)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.trim[bounded_string,trim_end return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : bounded_string</em>; <em>side : trim_end</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.trim[bounded_string,trim_end return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove space characters from leading, trailing, or both ends of source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to trim</li>
+<li><strong>side</strong> (<em>trim_end</em>) &#8211; Which end to trim</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Source string with space trimmed.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.trim[bounded_string,trim_end]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout bounded_string</em>; <em>side : in trim_end</em><big>)</big><a class="headerlink" href="#strings_bounded.trim[bounded_string,trim_end]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove space characters from leading, trailing, or both ends of source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to trim</li>
+<li><strong>side</strong> (<em>in trim_end</em>) &#8211; Which end to trim</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.trim[bounded_string,character_set,character_set return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : bounded_string</em>; <em>left : character_set</em>; <em>right : character_set</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.trim[bounded_string,character_set,character_set return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all leading characters in left and trailing characters in right
+from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to trim</li>
+<li><strong>left</strong> (<em>character_set</em>) &#8211; Index position for start trim</li>
+<li><strong>right</strong> (<em>character_set</em>) &#8211; Index position for end trim</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Source string with ends trimmed.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.trim[bounded_string,character_set,character_set]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout bounded_string</em>; <em>left : in character_set</em>; <em>right : in character_set</em><big>)</big><a class="headerlink" href="#strings_bounded.trim[bounded_string,character_set,character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all leading characters in left and trailing characters in right
+from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to trim</li>
+<li><strong>left</strong> (<em>in character_set</em>) &#8211; Index position for start trim</li>
+<li><strong>right</strong> (<em>in character_set</em>) &#8211; Index position for end trim</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.head[bounded_string,natural,character,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">head</tt> <big>(</big><em>source : bounded_string</em>; <em>count : natural</em>; <em>pad : character := ' '</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.head[bounded_string,natural,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the first count characters from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to slice from</li>
+<li><strong>count</strong> (<em>natural</em>) &#8211; Number of characters to take from the start of source</li>
+<li><strong>pad</strong> (<em>character</em>) &#8211; Characters to pad with if source length is less than count</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A string of length count.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.head[bounded_string,natural,character,truncation]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">head</tt> <big>(</big><em>source : inout bounded_string</em>; <em>count : in natural</em>; <em>pad : in character := ' '</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#strings_bounded.head[bounded_string,natural,character,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the first count characters from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to slice from</li>
+<li><strong>count</strong> (<em>in natural</em>) &#8211; Number of characters to take from the start of source</li>
+<li><strong>pad</strong> (<em>in character</em>) &#8211; Characters to pad with if source length is less than count</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation behavior</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.tail[bounded_string,natural,character,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">tail</tt> <big>(</big><em>source : bounded_string</em>; <em>count : natural</em>; <em>pad : character := ' '</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.tail[bounded_string,natural,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the last count characters from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to slice from</li>
+<li><strong>count</strong> (<em>natural</em>) &#8211; Number of characters to take from the end of source</li>
+<li><strong>pad</strong> (<em>character</em>) &#8211; Characters to pad with if source length is less than count</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A string of length count.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="strings_bounded.tail[bounded_string,natural,character,truncation]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">tail</tt> <big>(</big><em>source : inout bounded_string</em>; <em>count : in natural</em>; <em>pad : in character := ' '</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#strings_bounded.tail[bounded_string,natural,character,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the last count characters from source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to slice from</li>
+<li><strong>count</strong> (<em>in natural</em>) &#8211; Number of characters to take from the end of source</li>
+<li><strong>pad</strong> (<em>in character</em>) &#8211; Characters to pad with if source length is less than count</li>
+<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation behavior</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;*&quot;[natural,character return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>l : natural</em>; <em>r : character</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded."*"[natural,character return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replicate a character left number of times.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>natural</em>) &#8211; </li>
+<li><strong>r</strong> (<em>character</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with repeated character.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;*&quot;[natural,string return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>l : natural</em>; <em>r : string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded."*"[natural,string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replicate a string left number of times.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>natural</em>) &#8211; </li>
+<li><strong>r</strong> (<em>string</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with repeated substring.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.&quot;*&quot;[natural,bounded_string return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>l : natural</em>; <em>r : bounded_string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded."*"[natural,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replicate a bounded_string left number of times.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>natural</em>) &#8211; </li>
+<li><strong>r</strong> (<em>bounded_string</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with repeated substring.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.replicate[natural,character,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">replicate</tt> <big>(</big><em>count : natural</em>; <em>item : character</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.replicate[natural,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replicate a character count number of times.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>count</strong> (<em>natural</em>) &#8211; Number of times to repeat the item operand</li>
+<li><strong>item</strong> (<em>character</em>) &#8211; Character to repeat in string</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with repeated character.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.replicate[natural,string,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">replicate</tt> <big>(</big><em>count : natural</em>; <em>item : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.replicate[natural,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replicate a string count number of times.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>count</strong> (<em>natural</em>) &#8211; Number of times to repeat the item operand</li>
+<li><strong>item</strong> (<em>string</em>) &#8211; String to repeat in result string</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with repeated substring.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strings_bounded.replicate[natural,bounded_string,truncation return bounded_string]">
+<tt class="descclassname">strings_bounded.</tt><tt class="descname">replicate</tt> <big>(</big><em>count : natural</em>; <em>item : bounded_string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#strings_bounded.replicate[natural,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replicate a bounded_string count number of times.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>count</strong> (<em>natural</em>) &#8211; Number of times to repeat the item operand</li>
+<li><strong>item</strong> (<em>bounded_string</em>) &#8211; String to repeat in result string</li>
+<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">String with repeated substring.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+
+
+
+<p class="blurb">Flexible VHDL library</p>
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="strings.html" title="previous chapter">strings</a></li>
+      <li>Next: <a href="strings_fixed.html" title="next chapter">strings_fixed</a></li>
+  </ul></li>
+</ul>
+</div>
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">strings_bounded</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#types">Types</a></li>
+<li><a class="reference internal" href="#subtypes">Subtypes</a></li>
+<li><a class="reference internal" href="#subprograms">Subprograms</a></li>
+</ul>
+</li>
+</ul>
+<h3>Other projects</h3>
+
+<div id="proj_list">
+<p>
+<a href="http://kevinpt.github.io/opbasm/">Opbasm</a><br>
+<a href="http://kevinpt.github.io/ripyl/">Ripyl</a><br>
+<a href="http://code.google.com/p/vertcl">Vertcl</a><br>
+
+<a href="http://kevinpt.github.io/lecroy-colorizer/">Lecroy-colorizer</a>
+</p>
+</div>
+
+<script>
+$(function() { // Retrieve list of repositories from Github and dynamically insert them into sidebar
+
+if(!window.sessionStorage || !JSON) { return; } // Punt on crusty browsers (looking at you IE10)
+
+function JSONP( url, callback ) {
+	var id = ( 'jsonp' + Math.random() * new Date() ).replace('.', '');
+	var script = document.createElement('script');
+	script.src = url.replace( 'callback=?', 'callback=' + id );
+	document.body.appendChild( script );
+	window[ id ] = function( data ) {
+		if (callback) {
+			callback( data );
+		}
+	};
+}
+
+function insert_projects(projects) {
+    var links = [];
+    var cur_proj = "VHDL-extras".toLowerCase();
+    $.each(projects, function(key, value) {
+      if(key != cur_proj) {
+        var title = key.replace(/^./, function(match) {return match.toUpperCase()}); // Capitalize first char
+        links.push("<a href='"+ value +"'>" + title + "</a>");
+      }
+    });
+    
+    $("#proj_list").html("<p>"+ links.join("<br>") +"</p>");
+}
+
+var now = new Date().getTime();
+if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) { // Use cached values (5 min. expiry)
+  insert_projects(JSON.parse(sessionStorage.KTprojects));
+} else { // Retrieve current projects
+  JSONP("https://api.github.com/users/kevinpt/repos?type=owner&callback=?", function(response) {
+    var projects = {};
+    $.each(response.data, function(index, value) {
+      projects[value.name] = value.homepage;
+    });
+    
+    insert_projects(projects);
+    
+    // Store data in session cache
+    sessionStorage.KTprojects = JSON.stringify(projects);
+    var now = new Date().getTime();
+    sessionStorage.KTcacheTime = now;
+  });  
+}
+
+});
+</script>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2015, Kevin Thibedeau.
+      
+      |
+      <a href="../../_sources/rst/modules/strings_bounded.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+
+
+  </body>
+</html>

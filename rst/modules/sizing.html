@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="strings" href="strings.html" />
     <link rel="prev" title="secded_edac" href="secded_edac.html" />
@@ -56,8 +56,8 @@ maximal use it is possible to create designs that eliminate hardcoded
 ranges and automatically resize their signals and variables by changing a
 few key constants or generics.</p>
 <p>These functions can be used in most synthesizers to compute ranges for
-arrays. The core functionality is provided in the <a class="reference internal" href="#sizing.ceil_log[positive,positive return natural]" title="sizing.ceil_log[positive,positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">ceil_log()</span></tt></a> and
-<a class="reference internal" href="#sizing.floor_log[positive,positive return natural]" title="sizing.floor_log[positive,positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">floor_log()</span></tt></a> subprograms. These compute the logarithm in any integer base.
+arrays. The core functionality is provided in the <a class="reference internal" href="#sizing.ceil_log[None,positive return natural]" title="sizing.ceil_log[None,positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">ceil_log()</span></tt></a> and
+<a class="reference internal" href="#sizing.floor_log[None,positive return natural]" title="sizing.floor_log[None,positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">floor_log()</span></tt></a> subprograms. These compute the logarithm in any integer base.
 For convenenience, base-2 functions are also provided along with the array
 sizing functions.</p>
 <div class="section" id="example-usage">
@@ -75,14 +75,15 @@ sizing functions.</p>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="sizing.floor_log[positive,positive return natural]">
-<tt class="descclassname">sizing.</tt><tt class="descname">floor_log</tt> <big>(</big><em>n : positive</em>; <em>b : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#sizing.floor_log[positive,positive return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dt id="sizing.floor_log[None,positive return natural]">
+<tt class="descclassname">sizing.</tt><tt class="descname">floor_log</tt> <big>(</big><em>n : None</em>; <em>b : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#sizing.floor_log[None,positive return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the integer result of the function floor(log(n)).</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong> (<em>positive</em>) &#8211; Number to take logarithm of</li>
+<li><strong>n</strong> (<em>None</em>) &#8211; Number to take logarithm of</li>
 <li><strong>b</strong> (<em>positive</em>) &#8211; Base for the logarithm</li>
 </ul>
 </td>
@@ -92,18 +93,18 @@ sizing functions.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute the integer result of the function floor(log(n)).</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="sizing.ceil_log[positive,positive return natural]">
-<tt class="descclassname">sizing.</tt><tt class="descname">ceil_log</tt> <big>(</big><em>n : positive</em>; <em>b : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#sizing.ceil_log[positive,positive return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dt id="sizing.ceil_log[None,positive return natural]">
+<tt class="descclassname">sizing.</tt><tt class="descname">ceil_log</tt> <big>(</big><em>n : None</em>; <em>b : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#sizing.ceil_log[None,positive return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the integer result of the function ceil(log(n)) where b is the base.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong> (<em>positive</em>) &#8211; Number to take logarithm of</li>
+<li><strong>n</strong> (<em>None</em>) &#8211; Number to take logarithm of</li>
 <li><strong>b</strong> (<em>positive</em>) &#8211; Base for the logarithm</li>
 </ul>
 </td>
@@ -113,13 +114,13 @@ sizing functions.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute the integer result of the function ceil(log(n)) where b is the base.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="sizing.floor_log2[positive return natural]">
 <tt class="descclassname">sizing.</tt><tt class="descname">floor_log2</tt> <big>(</big><em>n : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#sizing.floor_log2[positive return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Compute the integer result of the function floor(log2(n)).</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -133,13 +134,13 @@ sizing functions.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute the integer result of the function floor(log2(n)).</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="sizing.ceil_log2[positive return natural]">
 <tt class="descclassname">sizing.</tt><tt class="descname">ceil_log2</tt> <big>(</big><em>n : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#sizing.ceil_log2[positive return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Compute the integer result of the function ceil(log2(n)).</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -153,13 +154,13 @@ sizing functions.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute the integer result of the function ceil(log2(n)).</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="sizing.bit_size[natural return natural]">
 <tt class="descclassname">sizing.</tt><tt class="descname">bit_size</tt> <big>(</big><em>n : natural</em><big>)</big> &rarr; natural<a class="headerlink" href="#sizing.bit_size[natural return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Compute the total number of bits needed to represent a number in binary.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -173,13 +174,13 @@ sizing functions.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute the total number of bits needed to represent a number in binary.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="sizing.encoding_size[positive return natural]">
 <tt class="descclassname">sizing.</tt><tt class="descname">encoding_size</tt> <big>(</big><em>n : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#sizing.encoding_size[positive return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Compute the number of bits needed to encode n items.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -193,13 +194,14 @@ sizing functions.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute the number of bits needed to encode n items.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="sizing.signed_size[integer return natural]">
 <tt class="descclassname">sizing.</tt><tt class="descname">signed_size</tt> <big>(</big><em>n : integer</em><big>)</big> &rarr; natural<a class="headerlink" href="#sizing.signed_size[integer return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Compute the total number of bits to represent a 2&#8217;s complement signed
+integer in binary.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -213,8 +215,6 @@ sizing functions.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute the total number of bits to represent a 2&#8217;s complement signed
-integer in binary.</p>
 </dd></dl>
 
 </div>

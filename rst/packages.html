@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../index.html" />
     <link rel="next" title="bcd_conversion" href="modules/bcd_conversion.html" />
     <link rel="prev" title="VHDL-extras library documentation" href="../index.html" />
@@ -276,7 +276,7 @@ status flags. The FIFOs have the following differences:</p>
 structures for creating randomized output.</p>
 <div class="section" id="lcar-ops">
 <span id="id16"></span><h3><a class="reference internal" href="modules/lcar_ops.html"><em>lcar_ops</em></a><a class="headerlink" href="#lcar-ops" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/lcar_ops-wolfram_lcar1.svg" /><p>An implementation of the Wolfram Linear Cellular Automata. This is useful for generating pseudo-random numbers with low correlation between bits. Adaptable to any number of cells. Constants are provided for
+<img src="../_images/lcar_ops-wolfram_lcar.svg" /><p>An implementation of the Wolfram Linear Cellular Automata. This is useful for generating pseudo-random numbers with low correlation between bits. Adaptable to any number of cells. Constants are provided for
 maximal length sequences of up to 100 bits.</p>
 </div>
 <div class="section" id="lfsr-ops">
@@ -324,26 +324,26 @@ Ada.Characters.Latin_1.</p>
 <div class="section" id="strings-fixed">
 <span id="id21"></span><h3><a class="reference internal" href="modules/strings_fixed.html"><em>strings_fixed</em></a><a class="headerlink" href="#strings-fixed" title="Permalink to this headline">¶</a></h3>
 <p>This package provides a string library for operating on fixed length
-strings. This is a clone of the Ada&#8216;95 library Ada.Strings.Fixed. It is a
+strings. This is a clone of the Ada&#8216;95 library <tt class="docutils literal"><span class="pre">Ada.Strings.Fixed</span></tt>. It is a
 nearly complete implementation with only the procedures taking character
 mapping functions omitted because of VHDL limitations.</p>
 </div>
 <div class="section" id="strings-maps">
 <span id="id22"></span><h3><a class="reference internal" href="modules/strings_maps.html"><em>strings_maps</em></a><a class="headerlink" href="#strings-maps" title="Permalink to this headline">¶</a></h3>
 <p>This package provides types and functions for manipulating character sets.
-It is a clone of the Ada&#8216;95 package Ada.Strings.Maps.</p>
+It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span class="pre">Ada.Strings.Maps</span></tt>.</p>
 </div>
 <div class="section" id="strings-maps-constants">
 <span id="id23"></span><h3><a class="reference internal" href="modules/strings_maps_constants.html"><em>strings_maps_constants</em></a><a class="headerlink" href="#strings-maps-constants" title="Permalink to this headline">¶</a></h3>
 <p>Constants for various character sets from the range
 of Latin-1 and mappings for upper case, lower case, and basic (unaccented)
 characters. It is a clone of the Ada&#8216;95 package
-Ada.Strings.Maps.Constants.</p>
+<tt class="docutils literal"><span class="pre">Ada.Strings.Maps.Constants</span></tt>.</p>
 </div>
 <div class="section" id="strings-unbounded">
 <span id="id24"></span><h3><a class="reference internal" href="modules/strings_unbounded.html"><em>strings_unbounded</em></a><a class="headerlink" href="#strings-unbounded" title="Permalink to this headline">¶</a></h3>
 <p>This package provides a string library for operating on unbounded length
-strings. This is a clone of the Ada&#8216;95 library Ada.Strings.Unbounded. Due
+strings. This is a clone of the Ada&#8216;95 library <tt class="docutils literal"><span class="pre">Ada.Strings.Unbounded</span></tt>. Due
 to the VHDL restriction on using access types as function parameters only
 a limited subset of the Ada library is reproduced. The unbounded strings
 are represented by the subtype string_acc which is derived from line to
@@ -352,17 +352,21 @@ access to string. Their contents are dynamically allocated. Because
 operators cannot be provided, a new set of &#8220;copy&#8221; procedures are included
 to simplify duplication of an existing unbounded string.</p>
 </div>
+<div class="section" id="strings-bounded">
+<span id="id25"></span><h3><a class="reference internal" href="modules/strings_bounded.html"><em>strings_bounded</em></a><a class="headerlink" href="#strings-bounded" title="Permalink to this headline">¶</a></h3>
+<p>This package is a string library for bounded length strings. It is a clone of the Ada&#8216;95 library <tt class="docutils literal"><span class="pre">Ada.Strings.Bounded</span></tt>.</p>
+</div>
 </div>
 <div class="section" id="miscellaneous">
 <h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
 <p>Additional packages of useful functions.</p>
 <div class="section" id="binaryio">
-<span id="id25"></span><h3><a class="reference internal" href="modules/binaryio.html"><em>binaryio</em></a><a class="headerlink" href="#binaryio" title="Permalink to this headline">¶</a></h3>
+<span id="id26"></span><h3><a class="reference internal" href="modules/binaryio.html"><em>binaryio</em></a><a class="headerlink" href="#binaryio" title="Permalink to this headline">¶</a></h3>
 <p>Procedures for general binary file IO. Support is provided for reading and writing vectors of any size
 with big and little-endian byte order.</p>
 </div>
 <div class="section" id="text-buffering">
-<span id="id26"></span><h3><a class="reference internal" href="modules/text_buffering.html"><em>text_buffering</em></a><a class="headerlink" href="#text-buffering" title="Permalink to this headline">¶</a></h3>
+<span id="id27"></span><h3><a class="reference internal" href="modules/text_buffering.html"><em>text_buffering</em></a><a class="headerlink" href="#text-buffering" title="Permalink to this headline">¶</a></h3>
 <p>This package provides a facility for storing buffered text. It can be used
 to represent the contents of a text file as a linked list of dynamically
 allocated strings for each line. A text file can be read into a buffer and
@@ -370,11 +374,11 @@ the resulting data structure can be incorporated into records passable
 to procedures without having to maintain a separate file handle.</p>
 </div>
 <div class="section" id="ddfs">
-<span id="id27"></span><h3><a class="reference internal" href="modules/ddfs.html"><em>ddfs</em></a><a class="headerlink" href="#ddfs" title="Permalink to this headline">¶</a></h3>
+<span id="id28"></span><h3><a class="reference internal" href="modules/ddfs.html"><em>ddfs</em></a><a class="headerlink" href="#ddfs" title="Permalink to this headline">¶</a></h3>
 <img src="../_images/ddfs-ddfs.svg" /><p>A set of functions for implementing Direct Digital Frequency Synthesizers.</p>
 </div>
 <div class="section" id="glitch-filtering">
-<span id="id28"></span><h3><a class="reference internal" href="modules/glitch_filtering.html"><em>glitch_filtering</em></a><a class="headerlink" href="#glitch-filtering" title="Permalink to this headline">¶</a></h3>
+<span id="id29"></span><h3><a class="reference internal" href="modules/glitch_filtering.html"><em>glitch_filtering</em></a><a class="headerlink" href="#glitch-filtering" title="Permalink to this headline">¶</a></h3>
 <img src="../_images/glitch_filtering-glitch_filter.svg" /><p>Glitch filter components that can be used to remove
 noise from digital input signals. This can be useful for debouncing
 switches directly connected to a device. The glitch_filter component works
@@ -461,6 +465,7 @@ flip-flops and can be directly tied to input pads.</p>
 <li><a class="reference internal" href="#strings-maps"><tt class="docutils literal"><span class="pre">strings_maps</span></tt></a></li>
 <li><a class="reference internal" href="#strings-maps-constants"><tt class="docutils literal"><span class="pre">strings_maps_constants</span></tt></a></li>
 <li><a class="reference internal" href="#strings-unbounded"><tt class="docutils literal"><span class="pre">strings_unbounded</span></tt></a></li>
+<li><a class="reference internal" href="#strings-bounded"><tt class="docutils literal"><span class="pre">strings_bounded</span></tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>

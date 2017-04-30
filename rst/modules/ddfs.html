@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="fifos" href="fifos.html" />
     <link rel="prev" title="crc_ops" href="crc_ops.html" />
@@ -45,31 +45,122 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/ddfs.vhdl">extras/ddfs.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p><a class="reference internal" href="sizing.html"><em>sizing</em></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package provides a set of functions and a component used for
+implementing a Direct Digital Frequency Synthesizer (DDFS). The DDFS
+component is a simple accumulator that increments by a pre computed value
+each cycle. The MSB of the accumulator switches at the requested frequency
+established by the <a class="reference internal" href="#ddfs_pkg.ddfs_increment[real,real,natural return unsigned]" title="ddfs_pkg.ddfs_increment[real,real,natural return unsigned]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">ddfs_increment()</span></tt></a> function. The provided functions perform
+computations with real values and, as such, are only synthesizable when
+used to define constants.</p>
+<p>There are two sets of functions for generating the increment values needed
+by the DDFS accumulator. One set is used to compute static increments that
+are assigned to constants. The other functions work in conjunction with a
+procedure to dynamically generate the increment value using a single
+inferred multiplier.</p>
+<p>It is possible to generate multiple frequencies by computing more than one
+increment constant and multiplexing between them. The <a class="reference internal" href="#ddfs_pkg.ddfs_size[real,real,real return natural]" title="ddfs_pkg.ddfs_size[real,real,real return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">ddfs_size()</span></tt></a> function
+should be called with the smallest target frequency to be used to
+guarantee the requested tolerance is met.</p>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#ddfs_pkg.ddfs_size[real,real,real return natural]" title="ddfs_pkg.ddfs_size[real,real,real return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">ddfs_size()</span></tt></a> and <a class="reference internal" href="#ddfs_pkg.ddfs_increment[real,real,natural return unsigned]" title="ddfs_pkg.ddfs_increment[real,real,natural return unsigned]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">ddfs_increment()</span></tt></a>
+functions are used to compute static increment values:</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">constant</span> <span class="n">SYS_FREQ</span>  <span class="o">:</span> <span class="n">real</span>    <span class="o">:=</span> <span class="mi">50</span><span class="p">.</span><span class="mi">0</span><span class="n">e6</span><span class="p">;</span> <span class="c1">-- 50 MHz</span>
+<span class="k">constant</span> <span class="n">TGT_FREQ</span>  <span class="o">:</span> <span class="n">real</span>    <span class="o">:=</span> <span class="mi">2600</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span> <span class="c1">-- 2600 Hz</span>
+<span class="k">constant</span> <span class="n">DDFS_TOL</span>  <span class="o">:</span> <span class="n">real</span>    <span class="o">:=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">001</span><span class="p">;</span>  <span class="c1">-- 0.1%</span>
+<span class="k">constant</span> <span class="n">SIZE</span>      <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="n">ddfs_size</span><span class="p">(</span><span class="n">SYS_FREQ</span><span class="p">,</span> <span class="n">TGT_FREQ</span><span class="p">,</span> <span class="n">DDFS_TOL</span><span class="p">);</span>
+<span class="k">constant</span> <span class="n">INCREMENT</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">SIZE</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">)</span> <span class="o">:=</span>
+                             <span class="n">ddfs_increment</span><span class="p">(</span><span class="n">SYS_FREQ</span><span class="p">,</span> <span class="n">TGT_FREQ</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">whistle</span><span class="o">:</span> <span class="n">ddfs</span>
+  <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">Clock</span> <span class="o">=&gt;</span> <span class="n">clock</span><span class="p">,</span>
+    <span class="n">Reset</span> <span class="o">=&gt;</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="n">Enable</span>     <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span>
+    <span class="n">Load_phase</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
+    <span class="n">New_phase</span>  <span class="o">=&gt;</span> <span class="n">unsigned</span><span class="p">&#39;</span><span class="s">&quot;&quot;</span><span class="p">,</span>
+
+    <span class="n">Increment</span>   <span class="o">=&gt;</span> <span class="n">INCREMENT</span><span class="p">,</span>
+    <span class="n">Accumulator</span> <span class="o">=&gt;</span> <span class="n">accum</span><span class="p">,</span>
+    <span class="n">Synth_clock</span> <span class="o">=&gt;</span> <span class="n">synth_tone</span><span class="p">,</span> <span class="c1">-- Signal with ~2600 Hz clock</span>
+    <span class="n">Synth_pulse</span> <span class="o">=&gt;</span> <span class="k">open</span>
+  <span class="p">);</span>
+<span class="p">...</span>
+<span class="c1">-- Report the DDFS precision (simulation only)</span>
+<span class="n">report</span> <span class="s">&quot;True synthesized frequency: &quot;</span>
+  <span class="o">&amp;</span> <span class="n">real</span><span class="na">&#39;image</span><span class="p">(</span><span class="n">ddfs_frequency</span><span class="p">(</span><span class="n">SYS_FREQ</span><span class="p">,</span> <span class="n">TGT_FREQ</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">)</span>
+<span class="n">report</span> <span class="s">&quot;DDFS error: &quot;</span> <span class="o">&amp;</span> <span class="n">real</span><span class="na">&#39;image</span><span class="p">(</span><span class="n">ddfs_error</span><span class="p">(</span><span class="n">SYS_FREQ</span><span class="p">,</span> <span class="n">TGT_FREQ</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The alternate set of functions are used to precompute a multiplier factor
+that is used to dynamically generate an increment value in synthesizable
+logic:</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">constant</span> <span class="n">MIN_TGT_FREQ</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">27</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">MAX_TGT_FREQ</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">4200</span><span class="p">;</span>
+<span class="k">constant</span> <span class="n">FRAC_BITS</span>    <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="n">min_fraction_bits</span><span class="p">(</span><span class="n">SYS_FREQ</span><span class="p">,</span>
+                                      <span class="n">MIN_TGT_FREQ</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">DDFS_TOL</span><span class="p">);</span>
+<span class="k">constant</span> <span class="n">DDFS_FACTOR</span>  <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="n">ddfs_dynamic_factor</span><span class="p">(</span><span class="n">SYS_FREQ</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span>
+                                                       <span class="n">FRAC_BITS</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">dyn_freq</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">bit_size</span><span class="p">(</span><span class="n">MAX_TGT_FREQ</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">dyn_inc</span>  <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">SIZE</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">dyn_freq</span> <span class="o">&lt;=</span> <span class="n">to_unsigned</span><span class="p">(</span><span class="mi">261</span><span class="p">,</span> <span class="n">dyn_freq</span><span class="na">&#39;length</span><span class="p">);</span> <span class="c1">-- Middle C</span>
+<span class="p">...</span>
+<span class="n">dyn_freq</span> <span class="o">&lt;=</span> <span class="n">to_unsigned</span><span class="p">(</span><span class="mi">440</span><span class="p">,</span> <span class="n">dyn_freq</span><span class="na">&#39;length</span><span class="p">);</span> <span class="c1">-- Change to A4</span>
+<span class="p">...</span>
+<span class="c1">-- Wrap ddfs_dynamic_inc in a sequencial process to synthesize a</span>
+<span class="c1">-- multiplier with registered product.</span>
+<span class="n">dyn</span><span class="o">:</span> <span class="k">process</span><span class="p">(</span><span class="n">clock</span><span class="p">,</span> <span class="n">reset</span><span class="p">)</span> <span class="k">is</span>
+<span class="k">begin</span>
+  <span class="k">if</span> <span class="n">reset</span> <span class="o">=</span> <span class="sc">&#39;1&#39;</span> <span class="k">then</span>
+    <span class="n">dyn_inc</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">);</span>
+  <span class="k">elsif</span> <span class="n">rising_edge</span><span class="p">(</span><span class="n">clock</span><span class="p">)</span> <span class="k">then</span>
+    <span class="n">ddfs_dynamic_inc</span><span class="p">(</span><span class="n">DDFS_FACTOR</span><span class="p">,</span> <span class="n">FRAC_BITS</span><span class="p">,</span> <span class="n">dyn_freq</span><span class="p">,</span> <span class="n">dyn_inc</span><span class="p">);</span>
+  <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+
+<span class="n">fsynth</span><span class="o">:</span> <span class="n">ddfs</span>
+  <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">Clock</span> <span class="o">=&gt;</span> <span class="n">clock</span><span class="p">,</span>
+    <span class="n">Reset</span> <span class="o">=&gt;</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="n">Enable</span>     <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span>
+    <span class="n">Load_phase</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
+    <span class="n">New_phase</span>  <span class="o">=&gt;</span> <span class="n">unsigned</span><span class="p">&#39;</span><span class="s">&quot;&quot;</span><span class="p">,</span>
+
+    <span class="n">Increment</span>   <span class="o">=&gt;</span> <span class="n">dyn_inc</span><span class="p">,</span>
+    <span class="n">Accumulator</span> <span class="o">=&gt;</span> <span class="n">accum</span><span class="p">,</span>
+    <span class="n">Synth_clock</span> <span class="o">=&gt;</span> <span class="n">synth_tone</span><span class="p">,</span>
+    <span class="n">Synth_pulse</span> <span class="o">=&gt;</span> <span class="k">open</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<span class="target" id="package-ddfs_pkg"></span></div>
 </div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
-<img src="../../_images/lcar_ops-wolfram_lcar.svg" /><span class="target" id="package-ddfs_pkg"></span></div>
 <div class="section" id="id1">
-<h2>Components<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id2">
-<h3>ddfs<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-66de82f626f3c505e9d74c7839d10cd34038f4ae.svg" type="image/svg+xml">
+<h3>ddfs<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-854549f947f04c3fed74fc32b8d3b2ec3afbbb3a.svg" type="image/svg+xml">
             <p class="warning">component ddfs is
 generic (
   RESET_ACTIVE_LEVEL : std_ulogic
 );
 port (
+  --# {{clocks|}}
   Clock : in std_ulogic;
   Reset : in std_ulogic;
+  --# {{control|}}
   Enable : in std_ulogic;
   Load_phase : in std_ulogic;
   New_phase : in unsigned;
   Increment : in unsigned;
+  --# {{data|}}
   Accumulator : out unsigned;
   Synth_clock : out std_ulogic;
   Synth_pulse : out std_ulogic
@@ -78,31 +169,29 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="ddfs_pkg.ddfs">
 <tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs</tt><a class="headerlink" href="#ddfs_pkg.ddfs" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Synthesize a frequency using a DDFS.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; </li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>Load_phase</strong> (<em>in std_ulogic</em>) &#8211; </li>
-<li><strong>New_phase</strong> (<em>in unsigned</em>) &#8211; </li>
-<li><strong>Increment</strong> (<em>in unsigned</em>) &#8211; </li>
-<li><strong>Accumulator</strong> (<em>out unsigned</em>) &#8211; </li>
-<li><strong>Synth_clock</strong> (<em>out std_ulogic</em>) &#8211; </li>
-<li><strong>Synth_pulse</strong> (<em>out std_ulogic</em>) &#8211; </li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Enable the DDFS counter</li>
+<li><strong>Load_phase</strong> (<em>in std_ulogic</em>) &#8211; Load a new phase angle</li>
+<li><strong>New_phase</strong> (<em>in unsigned</em>) &#8211; Phase angle to load</li>
+<li><strong>Increment</strong> (<em>in unsigned</em>) &#8211; Value controlling the synthesized frequency</li>
+<li><strong>Accumulator</strong> (<em>out unsigned</em>) &#8211; Internal accumulator value</li>
+<li><strong>Synth_clock</strong> (<em>out std_ulogic</em>) &#8211; Synthesized frequency</li>
+<li><strong>Synth_pulse</strong> (<em>out std_ulogic</em>) &#8211; Single cycle pulse for rising edge of synth_clock</li>
 </ul>
 </td>
 </tr>
@@ -116,16 +205,22 @@ end component;</p></object>
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="ddfs_pkg.ddfs_size[real,real,real return natural]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_size</tt> <big>(</big><em>sys_freq : real</em>; <em>target_freq : real</em>; <em>tolerance : real</em><big>)</big> &rarr; natural<a class="headerlink" href="#ddfs_pkg.ddfs_size[real,real,real return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_size</tt> <big>(</big><em>Sys_freq : real</em>; <em>Target_freq : real</em>; <em>Tolerance : real</em><big>)</big> &rarr; natural<a class="headerlink" href="#ddfs_pkg.ddfs_size[real,real,real return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the necessary size of a DDFS accumulator based on system and
+target frequencies with a specified tolerance. The DDFS accumulator
+must be at least as large as the result to achieve the requested tolerance.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sys_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>target_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>tolerance</strong> (<em>real</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Sys_freq</strong> (<em>real</em>) &#8211; Clock frequency of the system</li>
+<li><strong>Target_freq</strong> (<em>real</em>) &#8211; Desired frequency to generate</li>
+<li><strong>Tolerance</strong> (<em>real</em>) &#8211; Error tolerance</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Number of bits needed to generate the target frequency within the allowed tolerance.</p>
 </td>
 </tr>
 </tbody>
@@ -134,16 +229,21 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="ddfs_pkg.ddfs_tolerance[real,real,natural return real]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_tolerance</tt> <big>(</big><em>sys_freq : real</em>; <em>target_freq : real</em>; <em>size : natural</em><big>)</big> &rarr; real<a class="headerlink" href="#ddfs_pkg.ddfs_tolerance[real,real,natural return real]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_tolerance</tt> <big>(</big><em>Sys_freq : real</em>; <em>Target_freq : real</em>; <em>Size : natural</em><big>)</big> &rarr; real<a class="headerlink" href="#ddfs_pkg.ddfs_tolerance[real,real,natural return real]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the effective frequency tolerance for a specific size and target
+frequency.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sys_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>target_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>size</strong> (<em>natural</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Sys_freq</strong> (<em>real</em>) &#8211; Clock frequency of the system</li>
+<li><strong>Target_freq</strong> (<em>real</em>) &#8211; Desired frequency to generate</li>
+<li><strong>Size</strong> (<em>natural</em>) &#8211; Size of the DDFS counter</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Tolerance for the target frequency with a Size counter.</p>
 </td>
 </tr>
 </tbody>
@@ -152,16 +252,20 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="ddfs_pkg.ddfs_increment[real,real,natural return natural]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_increment</tt> <big>(</big><em>sys_freq : real</em>; <em>target_freq : real</em>; <em>size : natural</em><big>)</big> &rarr; natural<a class="headerlink" href="#ddfs_pkg.ddfs_increment[real,real,natural return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_increment</tt> <big>(</big><em>Sys_freq : real</em>; <em>Target_freq : real</em>; <em>Size : natural</em><big>)</big> &rarr; natural<a class="headerlink" href="#ddfs_pkg.ddfs_increment[real,real,natural return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the natural increment value needed to generate a target frequency.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sys_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>target_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>size</strong> (<em>natural</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Sys_freq</strong> (<em>real</em>) &#8211; Clock frequency of the system</li>
+<li><strong>Target_freq</strong> (<em>real</em>) &#8211; Desired frequency to generate</li>
+<li><strong>Size</strong> (<em>natural</em>) &#8211; Size of the DDFS counter</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Increment value needed to generate the target frequency.</p>
 </td>
 </tr>
 </tbody>
@@ -170,16 +274,20 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="ddfs_pkg.ddfs_increment[real,real,natural return unsigned]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_increment</tt> <big>(</big><em>sys_freq : real</em>; <em>target_freq : real</em>; <em>size : natural</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#ddfs_pkg.ddfs_increment[real,real,natural return unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_increment</tt> <big>(</big><em>Sys_freq : real</em>; <em>Target_freq : real</em>; <em>Size : natural</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#ddfs_pkg.ddfs_increment[real,real,natural return unsigned]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the unsigned increment value needed to generate a target frequency.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sys_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>target_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>size</strong> (<em>natural</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Sys_freq</strong> (<em>real</em>) &#8211; Clock frequency of the system</li>
+<li><strong>Target_freq</strong> (<em>real</em>) &#8211; Desired frequency to generate</li>
+<li><strong>Size</strong> (<em>natural</em>) &#8211; Size of the DDFS counter</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Increment value needed to generate the target frequency.</p>
 </td>
 </tr>
 </tbody>
@@ -188,17 +296,24 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="ddfs_pkg.min_fraction_bits[real,real,natural,real return natural]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">min_fraction_bits</tt> <big>(</big><em>sys_freq : real</em>; <em>target_freq : real</em>; <em>size : natural</em>; <em>tolerance : real</em><big>)</big> &rarr; natural<a class="headerlink" href="#ddfs_pkg.min_fraction_bits[real,real,natural,real return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">min_fraction_bits</tt> <big>(</big><em>Sys_freq : real</em>; <em>Target_freq : real</em>; <em>Size : natural</em>; <em>Tolerance : real</em><big>)</big> &rarr; natural<a class="headerlink" href="#ddfs_pkg.min_fraction_bits[real,real,natural,real return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the minimum number of fraction bits needed to meet
+the tolerance requirement for a dynamic DDFS. The target
+frequency should be the lowest frequency to ensure proper
+results.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sys_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>target_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>size</strong> (<em>natural</em>) &#8211; </li>
-<li><strong>tolerance</strong> (<em>real</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Sys_freq</strong> (<em>real</em>) &#8211; Clock frequency of the system</li>
+<li><strong>Target_freq</strong> (<em>real</em>) &#8211; Lowest desired frequency to generate</li>
+<li><strong>Size</strong> (<em>natural</em>) &#8211; Size of the DDFS counter</li>
+<li><strong>Tolerance</strong> (<em>real</em>) &#8211; Error tolerance</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Increment value needed to generate the target frequency.</p>
 </td>
 </tr>
 </tbody>
@@ -207,16 +322,20 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="ddfs_pkg.ddfs_dynamic_factor[real,natural,natural return natural]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_dynamic_factor</tt> <big>(</big><em>sys_freq : real</em>; <em>size : natural</em>; <em>fraction_bits : natural</em><big>)</big> &rarr; natural<a class="headerlink" href="#ddfs_pkg.ddfs_dynamic_factor[real,natural,natural return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_dynamic_factor</tt> <big>(</big><em>Sys_freq : real</em>; <em>Size : natural</em>; <em>Fraction_bits : natural</em><big>)</big> &rarr; natural<a class="headerlink" href="#ddfs_pkg.ddfs_dynamic_factor[real,natural,natural return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the factor used to generate dynamic increment values.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sys_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>size</strong> (<em>natural</em>) &#8211; </li>
-<li><strong>fraction_bits</strong> (<em>natural</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Sys_freq</strong> (<em>real</em>) &#8211; Clock frequency of the system</li>
+<li><strong>Size</strong> (<em>natural</em>) &#8211; Size of the DDFS counter</li>
+<li><strong>Fraction_bits</strong> (<em>natural</em>) &#8211; Number of fraction bits</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dynamic increment factor passed into ddfs_dynamic_inc().</p>
 </td>
 </tr>
 </tbody>
@@ -225,15 +344,21 @@ end component;</p></object>
 
 <dl class="procedure">
 <dt id="ddfs_pkg.ddfs_dynamic_inc[natural,natural,unsigned,unsigned]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_dynamic_inc</tt> <big>(</big><em>dynamic_factor : in natural</em>; <em>fraction_bits : in natural</em>; <em>target_freq : in unsigned</em>; <em>increment : out unsigned</em><big>)</big><a class="headerlink" href="#ddfs_pkg.ddfs_dynamic_inc[natural,natural,unsigned,unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_dynamic_inc</tt> <big>(</big><em>Dynamic_factor : in natural</em>; <em>Fraction_bits : in natural</em>; <em>Target_freq : in unsigned</em>; <em>increment : out unsigned</em><big>)</big><a class="headerlink" href="#ddfs_pkg.ddfs_dynamic_inc[natural,natural,unsigned,unsigned]" title="Permalink to this definition">¶</a></dt>
+<dd><p>This procedure computes dynamic increment values by multiplying
+the result of a previous call to ddfs_dynamic_factor by the
+integer target frequency. The result is an integer value with
+fractional bits removed.
+This can be synthesized by invocation within a synchronous
+process.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dynamic_factor</strong> (<em>in natural</em>) &#8211; </li>
-<li><strong>fraction_bits</strong> (<em>in natural</em>) &#8211; </li>
-<li><strong>target_freq</strong> (<em>in unsigned</em>) &#8211; </li>
+<li><strong>Dynamic_factor</strong> (<em>in natural</em>) &#8211; Dynamic factor constant</li>
+<li><strong>Fraction_bits</strong> (<em>in natural</em>) &#8211; Fraction bits for the dynamic DDFS</li>
+<li><strong>Target_freq</strong> (<em>in unsigned</em>) &#8211; Desired frequency to generate</li>
 <li><strong>increment</strong> (<em>out unsigned</em>) &#8211; </li>
 </ul>
 </td>
@@ -244,16 +369,21 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="ddfs_pkg.ddfs_frequency[real,real,natural return real]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_frequency</tt> <big>(</big><em>sys_freq : real</em>; <em>target_freq : real</em>; <em>size : natural</em><big>)</big> &rarr; real<a class="headerlink" href="#ddfs_pkg.ddfs_frequency[real,real,natural return real]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_frequency</tt> <big>(</big><em>Sys_freq : real</em>; <em>Target_freq : real</em>; <em>Size : natural</em><big>)</big> &rarr; real<a class="headerlink" href="#ddfs_pkg.ddfs_frequency[real,real,natural return real]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the actual synthesized frequency for the specified accumulator
+size.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sys_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>target_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>size</strong> (<em>natural</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Sys_freq</strong> (<em>real</em>) &#8211; Clock frequency of the system</li>
+<li><strong>Target_freq</strong> (<em>real</em>) &#8211; Desired frequency to generate</li>
+<li><strong>Size</strong> (<em>natural</em>) &#8211; Size of the DDFS counter</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Frequency generated with the provided parameters.</p>
 </td>
 </tr>
 </tbody>
@@ -262,16 +392,21 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="ddfs_pkg.ddfs_error[real,real,natural return real]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_error</tt> <big>(</big><em>sys_freq : real</em>; <em>target_freq : real</em>; <em>size : natural</em><big>)</big> &rarr; real<a class="headerlink" href="#ddfs_pkg.ddfs_error[real,real,natural return real]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">ddfs_error</tt> <big>(</big><em>Sys_freq : real</em>; <em>Target_freq : real</em>; <em>Size : natural</em><big>)</big> &rarr; real<a class="headerlink" href="#ddfs_pkg.ddfs_error[real,real,natural return real]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the error between the requested output frequency and the actual
+output frequency.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sys_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>target_freq</strong> (<em>real</em>) &#8211; </li>
-<li><strong>size</strong> (<em>natural</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Sys_freq</strong> (<em>real</em>) &#8211; Clock frequency of the system</li>
+<li><strong>Target_freq</strong> (<em>real</em>) &#8211; Desired frequency to generate</li>
+<li><strong>Size</strong> (<em>natural</em>) &#8211; Size of the DDFS counter</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Ratio of generated frequency to target frequency.</p>
 </td>
 </tr>
 </tbody>
@@ -280,15 +415,20 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="ddfs_pkg.resize_fractional[unsigned,positive return unsigned]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">resize_fractional</tt> <big>(</big><em>phase : unsigned</em>; <em>size : positive</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#ddfs_pkg.resize_fractional[unsigned,positive return unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">resize_fractional</tt> <big>(</big><em>Phase : unsigned</em>; <em>Size : positive</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#ddfs_pkg.resize_fractional[unsigned,positive return unsigned]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resize a vector representing a fractional value with the binary point
+preceeding the MSB.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>phase</strong> (<em>unsigned</em>) &#8211; </li>
-<li><strong>size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Phase</strong> (<em>unsigned</em>) &#8211; Phase angle in range 0.0 to 1.0.</li>
+<li><strong>Size</strong> (<em>positive</em>) &#8211; Number of bits in the result</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Resized vector containing phase fraction</p>
 </td>
 </tr>
 </tbody>
@@ -297,15 +437,19 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="ddfs_pkg.radians_to_phase[real,positive return unsigned]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">radians_to_phase</tt> <big>(</big><em>radians : real</em>; <em>size : positive</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#ddfs_pkg.radians_to_phase[real,positive return unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">radians_to_phase</tt> <big>(</big><em>Radians : real</em>; <em>Size : positive</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#ddfs_pkg.radians_to_phase[real,positive return unsigned]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert angle in radians to a fractional phase value.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>radians</strong> (<em>real</em>) &#8211; </li>
-<li><strong>size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Radians</strong> (<em>real</em>) &#8211; Angle to convert</li>
+<li><strong>Size</strong> (<em>positive</em>) &#8211; Number of bits in the result</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Fraction phase in range 0.0 to 1.0.</p>
 </td>
 </tr>
 </tbody>
@@ -314,15 +458,19 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="ddfs_pkg.degrees_to_phase[real,positive return unsigned]">
-<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">degrees_to_phase</tt> <big>(</big><em>degrees : real</em>; <em>size : positive</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#ddfs_pkg.degrees_to_phase[real,positive return unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">ddfs_pkg.</tt><tt class="descname">degrees_to_phase</tt> <big>(</big><em>Degrees : real</em>; <em>Size : positive</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#ddfs_pkg.degrees_to_phase[real,positive return unsigned]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert angle in degrees to a fractional phase value.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>degrees</strong> (<em>real</em>) &#8211; </li>
-<li><strong>size</strong> (<em>positive</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Degrees</strong> (<em>real</em>) &#8211; </li>
+<li><strong>Size</strong> (<em>positive</em>) &#8211; Number of bits in the result</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Fraction phase in range 0.0 to 1.0.</p>
 </td>
 </tr>
 </tbody>
@@ -368,10 +516,12 @@ end component;</p></object>
   <ul>
 <li><a class="reference internal" href="#">ddfs</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#components">Components</a></li>
-<li><a class="reference internal" href="#id1">Components</a><ul>
-<li><a class="reference internal" href="#id2">ddfs</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#components">Components</a><ul>
+<li><a class="reference internal" href="#id1">ddfs</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>

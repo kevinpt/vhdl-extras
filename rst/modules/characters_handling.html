@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="characters_latin_1" href="characters_latin_1.html" />
     <link rel="prev" title="binaryio" href="binaryio.html" />
@@ -45,41 +45,51 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/characters_handling.vhdl">extras/characters_handling.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p><a class="reference internal" href="strings_maps_constants.html"><em>strings_fixed_constants</em></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This is a package of functions that replicate the behavior of the Ada
+standard library package ada.characters.handling. Included are functions
+to test for different character classifications and perform conversion
+of characters and strings to upper and lower case.</p>
 <span class="target" id="package-characters_handling"></span></div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="characters_handling.Is_Alphanumeric[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Alphanumeric</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Alphanumeric[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Alphanumeric</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Alphanumeric[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alphanumeric character test.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to test</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if alphanumeric character.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Character class tests</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="characters_handling.Is_Letter[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Letter</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Letter[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Letter</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Letter[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Letter character test.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to test</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if letter character.</p>
 </td>
 </tr>
 </tbody>
@@ -88,14 +98,18 @@
 
 <dl class="function">
 <dt id="characters_handling.Is_Control[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Control</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Control[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Control</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Control[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control character test.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to test</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if control character.</p>
 </td>
 </tr>
 </tbody>
@@ -104,14 +118,18 @@
 
 <dl class="function">
 <dt id="characters_handling.Is_Digit[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Digit</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Digit[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Digit</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Digit[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Digit character test.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to test</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if digit character.</p>
 </td>
 </tr>
 </tbody>
@@ -120,14 +138,18 @@
 
 <dl class="function">
 <dt id="characters_handling.Is_Hexadecimal_Digit[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Hexadecimal_Digit</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Hexadecimal_Digit[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Hexadecimal_Digit</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Hexadecimal_Digit[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hexadecimal digit character test.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to test</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if hexadecimal character.</p>
 </td>
 </tr>
 </tbody>
@@ -136,14 +158,18 @@
 
 <dl class="function">
 <dt id="characters_handling.Is_Basic[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Basic</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Basic[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Basic</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Basic[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic character test.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to test</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if basic character.</p>
 </td>
 </tr>
 </tbody>
@@ -152,14 +178,18 @@
 
 <dl class="function">
 <dt id="characters_handling.Is_Graphic[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Graphic</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Graphic[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Graphic</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Graphic[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Graphic character test.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to test</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if graphic character.</p>
 </td>
 </tr>
 </tbody>
@@ -168,14 +198,18 @@
 
 <dl class="function">
 <dt id="characters_handling.Is_Lower[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Lower</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Lower[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Lower</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Lower[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lower-case character test.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to test</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if lower-case character.</p>
 </td>
 </tr>
 </tbody>
@@ -184,14 +218,18 @@
 
 <dl class="function">
 <dt id="characters_handling.Is_Upper[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Upper</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Upper[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Upper</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Upper[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upper-case character test.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to test</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if upper-case character.</p>
 </td>
 </tr>
 </tbody>
@@ -200,14 +238,18 @@
 
 <dl class="function">
 <dt id="characters_handling.Is_Special[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Special</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Special[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Special</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Special[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Special character test.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to test</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">true if special character.</p>
 </td>
 </tr>
 </tbody>
@@ -216,31 +258,38 @@
 
 <dl class="function">
 <dt id="characters_handling.To_Lower[character return character]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Lower</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#characters_handling.To_Lower[character return character]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Lower</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#characters_handling.To_Lower[character return character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a character to lower-case.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to convert</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Converted character.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Case conversions</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="characters_handling.To_Lower[string return string]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Lower</tt> <big>(</big><em>source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#characters_handling.To_Lower[string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Lower</tt> <big>(</big><em>Source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#characters_handling.To_Lower[string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a string to lower-case.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Source</strong> (<em>string</em>) &#8211; String to convert</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Converted string.</p>
 </td>
 </tr>
 </tbody>
@@ -249,14 +298,18 @@
 
 <dl class="function">
 <dt id="characters_handling.To_Upper[character return character]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Upper</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#characters_handling.To_Upper[character return character]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Upper</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#characters_handling.To_Upper[character return character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a character to upper-case.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to convert</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Converted character.</p>
 </td>
 </tr>
 </tbody>
@@ -265,14 +318,18 @@
 
 <dl class="function">
 <dt id="characters_handling.To_Upper[string return string]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Upper</tt> <big>(</big><em>source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#characters_handling.To_Upper[string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Upper</tt> <big>(</big><em>Source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#characters_handling.To_Upper[string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a string to upper-case.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Source</strong> (<em>string</em>) &#8211; String to convert</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Converted string.</p>
 </td>
 </tr>
 </tbody>
@@ -281,14 +338,18 @@
 
 <dl class="function">
 <dt id="characters_handling.To_Basic[character return character]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Basic</tt> <big>(</big><em>ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#characters_handling.To_Basic[character return character]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Basic</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#characters_handling.To_Basic[character return character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a character to its basic (unaccented) form.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ch</strong> (<em>character</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Ch</strong> (<em>character</em>) &#8211; Character to convert</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Converted character.</p>
 </td>
 </tr>
 </tbody>
@@ -297,14 +358,18 @@
 
 <dl class="function">
 <dt id="characters_handling.To_Basic[string return string]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Basic</tt> <big>(</big><em>source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#characters_handling.To_Basic[string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Basic</tt> <big>(</big><em>Source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#characters_handling.To_Basic[string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a string to its basic (unaccented) form.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Source</strong> (<em>string</em>) &#8211; String to convert</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Converted string.</p>
 </td>
 </tr>
 </tbody>

@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="crc_ops" href="crc_ops.html" />
     <link rel="prev" title="characters_handling" href="characters_handling.html" />
@@ -45,11 +45,16 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/characters_latin_1.vhdl">extras/characters_latin_1.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>None</p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package provides Latin-1 character constants. These constants are
+adapted from the definitions in the Ada&#8216;95 ARM for the package
+<tt class="docutils literal"><span class="pre">Ada.Characters.Latin_1</span></tt>.</p>
+<p>This package differs from the Ada implementation in that constants are not
+defined for the control characters to avoid ambiguity between the elements
+of the VHDL character enumeration.</p>
 <span class="target" id="package-characters_latin_1"></span></div>
 </div>
 

@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="characters_handling" href="characters_handling.html" />
     <link rel="prev" title="bcd_conversion" href="bcd_conversion.html" />
@@ -45,12 +45,29 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/binaryio.vhdl">extras/binaryio.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>None</p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>FIXME</p>
+<p>This package provides procedures to perform general purpose binary I/O on
+files. The number of bytes read or written is controlled by the width of
+array passed to the procedures. An endianness parameter determines the byte
+order. These procedures do not handle packed binary data. Reading and
+writing arrays that are not multiples of 8 in length will consume or
+produce additional padding bits in the file. Sign extension is performed
+when writing padded signed arrays.</p>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">file</span> <span class="n">fh</span> <span class="o">:</span> <span class="n">octet_file</span> <span class="k">open</span> <span class="n">read_mode</span> <span class="k">is</span> <span class="s">&quot;foo.bin&quot;</span><span class="p">;</span>
+<span class="k">signal</span> <span class="n">uword</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">sword</span> <span class="o">:</span> <span class="n">signed</span><span class="p">(</span><span class="mi">19</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">read</span><span class="p">(</span><span class="n">fh</span><span class="p">,</span> <span class="n">little_endian</span><span class="p">,</span> <span class="n">uword</span><span class="p">);</span> <span class="c1">-- read 16 bits from two octets</span>
+<span class="n">read</span><span class="p">(</span><span class="n">fh</span><span class="p">,</span> <span class="n">big_endian</span><span class="p">,</span> <span class="n">sword</span><span class="p">);</span>    <span class="c1">-- read 20 bits from three octets</span>
+</pre></div>
+</div>
 <span class="target" id="package-binaryio"></span></div>
+</div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
@@ -67,37 +84,17 @@
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="procedure">
-<dt id="binaryio.read[octet_file,octet_file,endianness,unsigned]">
-<tt class="descclassname">binaryio.</tt><tt class="descname">read</tt> <big>(</big><em>file : in octet_file</em>; <em>Fh : in octet_file</em>; <em>Octet_order : in endianness</em>; <em>Word : out unsigned</em><big>)</big><a class="headerlink" href="#binaryio.read[octet_file,octet_file,endianness,unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dt id="binaryio.read[octet_file,endianness,unsigned]">
+<tt class="descclassname">binaryio.</tt><tt class="descname">read</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : out unsigned</em><big>)</big><a class="headerlink" href="#binaryio.read[octet_file,endianness,unsigned]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read binary data into an unsigned vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>file</strong> (<em>in octet_file</em>) &#8211; </li>
-<li><strong>Fh</strong> (<em>in octet_file</em>) &#8211; </li>
-<li><strong>Octet_order</strong> (<em>in endianness</em>) &#8211; </li>
-<li><strong>Word</strong> (<em>out unsigned</em>) &#8211; </li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Binary read and write procedures</p>
-</dd></dl>
-
-<dl class="procedure">
-<dt id="binaryio.read[octet_file,octet_file,endianness,signed]">
-<tt class="descclassname">binaryio.</tt><tt class="descname">read</tt> <big>(</big><em>file : in octet_file</em>; <em>Fh : in octet_file</em>; <em>Octet_order : in endianness</em>; <em>Word : out signed</em><big>)</big><a class="headerlink" href="#binaryio.read[octet_file,octet_file,endianness,signed]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>file</strong> (<em>in octet_file</em>) &#8211; </li>
-<li><strong>Fh</strong> (<em>in octet_file</em>) &#8211; </li>
-<li><strong>Octet_order</strong> (<em>in endianness</em>) &#8211; </li>
-<li><strong>Word</strong> (<em>out signed</em>) &#8211; </li>
+<li><strong>Fh</strong> (<em>None octet_file</em>) &#8211; File handle</li>
+<li><strong>Octet_order</strong> (<em>None endianness</em>) &#8211; Endianness of the octets</li>
+<li><strong>Word</strong> (<em>out unsigned</em>) &#8211; Data read from the file</li>
 </ul>
 </td>
 </tr>
@@ -106,17 +103,17 @@
 </dd></dl>
 
 <dl class="procedure">
-<dt id="binaryio.write[octet_file,octet_file,endianness,unsigned]">
-<tt class="descclassname">binaryio.</tt><tt class="descname">write</tt> <big>(</big><em>file : in octet_file</em>; <em>Fh : in octet_file</em>; <em>Octet_order : in endianness</em>; <em>Word : in unsigned</em><big>)</big><a class="headerlink" href="#binaryio.write[octet_file,octet_file,endianness,unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dt id="binaryio.read[octet_file,endianness,signed]">
+<tt class="descclassname">binaryio.</tt><tt class="descname">read</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : out signed</em><big>)</big><a class="headerlink" href="#binaryio.read[octet_file,endianness,signed]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read binary data into a signed vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>file</strong> (<em>in octet_file</em>) &#8211; </li>
-<li><strong>Fh</strong> (<em>in octet_file</em>) &#8211; </li>
-<li><strong>Octet_order</strong> (<em>in endianness</em>) &#8211; </li>
-<li><strong>Word</strong> (<em>in unsigned</em>) &#8211; </li>
+<li><strong>Fh</strong> (<em>None octet_file</em>) &#8211; File handle</li>
+<li><strong>Octet_order</strong> (<em>None endianness</em>) &#8211; Endianness of the octets</li>
+<li><strong>Word</strong> (<em>out signed</em>) &#8211; Data read from the file</li>
 </ul>
 </td>
 </tr>
@@ -125,17 +122,36 @@
 </dd></dl>
 
 <dl class="procedure">
-<dt id="binaryio.write[octet_file,octet_file,endianness,signed]">
-<tt class="descclassname">binaryio.</tt><tt class="descname">write</tt> <big>(</big><em>file : in octet_file</em>; <em>Fh : in octet_file</em>; <em>Octet_order : in endianness</em>; <em>Word : in signed</em><big>)</big><a class="headerlink" href="#binaryio.write[octet_file,octet_file,endianness,signed]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dt id="binaryio.write[octet_file,endianness,unsigned]">
+<tt class="descclassname">binaryio.</tt><tt class="descname">write</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : unsigned</em><big>)</big><a class="headerlink" href="#binaryio.write[octet_file,endianness,unsigned]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write an unsigned vector to a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>file</strong> (<em>in octet_file</em>) &#8211; </li>
-<li><strong>Fh</strong> (<em>in octet_file</em>) &#8211; </li>
-<li><strong>Octet_order</strong> (<em>in endianness</em>) &#8211; </li>
-<li><strong>Word</strong> (<em>in signed</em>) &#8211; </li>
+<li><strong>Fh</strong> (<em>None octet_file</em>) &#8211; File handle</li>
+<li><strong>Octet_order</strong> (<em>None endianness</em>) &#8211; Endianness of the octets</li>
+<li><strong>Word</strong> (<em>None unsigned</em>) &#8211; Data to write into the file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="binaryio.write[octet_file,endianness,signed]">
+<tt class="descclassname">binaryio.</tt><tt class="descname">write</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : signed</em><big>)</big><a class="headerlink" href="#binaryio.write[octet_file,endianness,signed]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a signed vector to a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Fh</strong> (<em>None octet_file</em>) &#8211; File handle</li>
+<li><strong>Octet_order</strong> (<em>None endianness</em>) &#8211; Endianness of the octets</li>
+<li><strong>Word</strong> (<em>None signed</em>) &#8211; Data to write into the file</li>
 </ul>
 </td>
 </tr>
@@ -182,7 +198,10 @@
   <ul>
 <li><a class="reference internal" href="#">binaryio</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#types">Types</a></li>
 <li><a class="reference internal" href="#subprograms">Subprograms</a></li>
 </ul>

@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="prev" title="text_buffering" href="text_buffering.html" />
    
@@ -138,9 +138,16 @@ cycle specification:</p>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
+<dt id="timing_ops.resolution_limit[ return delay_length]">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">resolution_limit</tt><big>(</big><big>)</big> &rarr; delay_length<a class="headerlink" href="#timing_ops.resolution_limit[ return delay_length]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current simulation time resolution.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="timing_ops.to_real[time return real]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">to_real</tt> <big>(</big><em>Tval : time</em><big>)</big> &rarr; real<a class="headerlink" href="#timing_ops.to_real[time return real]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert time to real time.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -154,14 +161,13 @@ cycle specification:</p>
 </tr>
 </tbody>
 </table>
-<p>Get the current simulation time resolution.
-Convert time to real time.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_time[real return time]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">to_time</tt> <big>(</big><em>Rval : real</em><big>)</big> &rarr; time<a class="headerlink" href="#timing_ops.to_time[real return time]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert real time to time.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -175,13 +181,13 @@ Convert time to real time.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert real time to time.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_period[frequency return delay_length]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">to_period</tt> <big>(</big><em>Freq : frequency</em><big>)</big> &rarr; delay_length<a class="headerlink" href="#timing_ops.to_period[frequency return delay_length]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert frequency to period.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -195,13 +201,13 @@ Convert time to real time.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert frequency to period.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_period[real return delay_length]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">to_period</tt> <big>(</big><em>Freq : real</em><big>)</big> &rarr; delay_length<a class="headerlink" href="#timing_ops.to_period[real return delay_length]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert real frequency to period.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -215,13 +221,13 @@ Convert time to real time.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert real frequency to period.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_real[frequency return real]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">to_real</tt> <big>(</big><em>Freq : frequency</em><big>)</big> &rarr; real<a class="headerlink" href="#timing_ops.to_real[frequency return real]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert frequency to real frequency.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -235,13 +241,13 @@ Convert time to real time.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert frequency to real frequency.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_frequency[delay_length return frequency]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">to_frequency</tt> <big>(</big><em>Period : delay_length</em><big>)</big> &rarr; frequency<a class="headerlink" href="#timing_ops.to_frequency[delay_length return frequency]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert period to frequency.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -255,13 +261,13 @@ Convert time to real time.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert period to frequency.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_frequency[real return frequency]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">to_frequency</tt> <big>(</big><em>Period : real</em><big>)</big> &rarr; frequency<a class="headerlink" href="#timing_ops.to_frequency[real return frequency]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert real period to frequency.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -275,13 +281,14 @@ Convert time to real time.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert real period to frequency.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_clock_cycles[delay_length,frequency,time_rounding return clock_cycles]">
-<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : delay_length</em>; <em>Clock_freq : frequency</em>; <em>round_style : time_rounding</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[delay_length,frequency,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : delay_length</em>; <em>Clock_freq : frequency</em>; <em>round_style : time_rounding := TIME_ROUND_STYLE</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[delay_length,frequency,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute clock cycles for the specified number of seconds using a clock
+frequency as the time base.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -297,14 +304,14 @@ Convert time to real time.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute clock cycles for the specified number of seconds using a clock
-frequency as the time base.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_clock_cycles[delay_length,real,time_rounding return clock_cycles]">
-<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : delay_length</em>; <em>Clock_freq : real</em>; <em>round_style : time_rounding</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[delay_length,real,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : delay_length</em>; <em>Clock_freq : real</em>; <em>round_style : time_rounding := TIME_ROUND_STYLE</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[delay_length,real,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute clock cycles for the specified number of seconds using a real clock
+frequency as the time base.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -320,14 +327,14 @@ frequency as the time base.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute clock cycles for the specified number of seconds using a real clock
-frequency as the time base.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_clock_cycles[real,real,time_rounding return clock_cycles]">
-<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : real</em>; <em>Clock_freq : real</em>; <em>round_style : time_rounding</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[real,real,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : real</em>; <em>Clock_freq : real</em>; <em>round_style : time_rounding := TIME_ROUND_STYLE</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[real,real,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute clock cycles for the specified number of real seconds using a real clock
+frequency as the time base.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -343,14 +350,14 @@ frequency as the time base.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute clock cycles for the specified number of real seconds using a real clock
-frequency as the time base.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_clock_cycles[real,frequency,time_rounding return clock_cycles]">
-<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : real</em>; <em>Clock_freq : frequency</em>; <em>round_style : time_rounding</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[real,frequency,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : real</em>; <em>Clock_freq : frequency</em>; <em>round_style : time_rounding := TIME_ROUND_STYLE</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[real,frequency,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute clock cycles for the specified number of real seconds using a clock
+frequency as the time base.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -366,14 +373,14 @@ frequency as the time base.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute clock cycles for the specified number of real seconds using a clock
-frequency as the time base.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_clock_cycles[delay_length,delay_length return clock_cycles]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : delay_length</em>; <em>Clock_period : delay_length</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[delay_length,delay_length return clock_cycles]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Compute clock cycles for the specified number of seconds using a clock
+period as the time base.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -388,14 +395,14 @@ frequency as the time base.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute clock cycles for the specified number of seconds using a clock
-period as the time base.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.to_clock_cycles[real,delay_length,time_rounding return clock_cycles]">
-<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : real</em>; <em>Clock_period : delay_length</em>; <em>round_style : time_rounding</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[real,delay_length,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">to_clock_cycles</tt> <big>(</big><em>Secs : real</em>; <em>Clock_period : delay_length</em>; <em>round_style : time_rounding := TIME_ROUND_STYLE</em><big>)</big> &rarr; clock_cycles<a class="headerlink" href="#timing_ops.to_clock_cycles[real,delay_length,time_rounding return clock_cycles]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute clock cycles for the specified number of real seconds using a clock
+period as the time base.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -411,14 +418,13 @@ period as the time base.</p>
 </tr>
 </tbody>
 </table>
-<p>Compute clock cycles for the specified number of real seconds using a clock
-period as the time base.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.time_duration[clock_cycles,real return delay_length]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">time_duration</tt> <big>(</big><em>Cycles : clock_cycles</em>; <em>Clock_freq : real</em><big>)</big> &rarr; delay_length<a class="headerlink" href="#timing_ops.time_duration[clock_cycles,real return delay_length]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Calculate the time span represented by a number of clock cycles.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -433,13 +439,13 @@ period as the time base.</p>
 </tr>
 </tbody>
 </table>
-<p>Calculate the time span represented by a number of clock cycles.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.time_duration[clock_cycles,delay_length return delay_length]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">time_duration</tt> <big>(</big><em>Cycles : clock_cycles</em>; <em>Clock_period : delay_length</em><big>)</big> &rarr; delay_length<a class="headerlink" href="#timing_ops.time_duration[clock_cycles,delay_length return delay_length]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Calculate the time span represented by a number of clock cycles.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -454,13 +460,13 @@ period as the time base.</p>
 </tr>
 </tbody>
 </table>
-<p>Calculate the time span represented by a number of clock cycles.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="timing_ops.time_duration[clock_cycles,real return real]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">time_duration</tt> <big>(</big><em>Cycles : clock_cycles</em>; <em>Clock_freq : real</em><big>)</big> &rarr; real<a class="headerlink" href="#timing_ops.time_duration[clock_cycles,real return real]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Calculate the real time span represented by a number of clock cycles.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -475,13 +481,14 @@ period as the time base.</p>
 </tr>
 </tbody>
 </table>
-<p>Calculate the real time span represented by a number of clock cycles.</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="timing_ops.report_time_precision[string,clock_cycles,real,real]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">report_time_precision</tt> <big>(</big><em>Identifier : in string</em>; <em>Cycles : in clock_cycles</em>; <em>Requested_secs : in real</em>; <em>Actual_secs : in real</em><big>)</big><a class="headerlink" href="#timing_ops.report_time_precision[string,clock_cycles,real,real]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Report statement for checking difference between requested time value
+and the output of to_clock_cycles().</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -495,14 +502,14 @@ period as the time base.</p>
 </tr>
 </tbody>
 </table>
-<p>Report statement for checking difference between requested time value
-and the output of to_clock_cycles().</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="timing_ops.report_time_precision[string,clock_cycles,time,time]">
 <tt class="descclassname">timing_ops.</tt><tt class="descname">report_time_precision</tt> <big>(</big><em>Identifier : in string</em>; <em>Cycles : in clock_cycles</em>; <em>Requested_secs : in time</em>; <em>Actual_secs : in time</em><big>)</big><a class="headerlink" href="#timing_ops.report_time_precision[string,clock_cycles,time,time]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Report statement for checking difference between requested time value
+and the output of to_clock_cycles().</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -516,14 +523,13 @@ and the output of to_clock_cycles().</p>
 </tr>
 </tbody>
 </table>
-<p>Report statement for checking difference between requested time value
-and the output of to_clock_cycles().</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="timing_ops.clock_gen[std_ulogic,boolean,frequency,duty_cycle]">
-<tt class="descclassname">timing_ops.</tt><tt class="descname">clock_gen</tt> <big>(</big><em>Clock : out std_ulogic</em>; <em>Stop_clock : in boolean</em>; <em>Clock_freq : in frequency</em>; <em>Duty : in duty_cycle</em><big>)</big><a class="headerlink" href="#timing_ops.clock_gen[std_ulogic,boolean,frequency,duty_cycle]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">clock_gen</tt> <big>(</big><em>Clock : out std_ulogic</em>; <em>Stop_clock : in boolean</em>; <em>Clock_freq : in frequency</em>; <em>Duty : duty_cycle := 0.5</em><big>)</big><a class="headerlink" href="#timing_ops.clock_gen[std_ulogic,boolean,frequency,duty_cycle]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate clock waveform for simulation only.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -531,19 +537,19 @@ and the output of to_clock_cycles().</p>
 <li><strong>Clock</strong> (<em>out std_ulogic</em>) &#8211; Generated clock signal</li>
 <li><strong>Stop_clock</strong> (<em>in boolean</em>) &#8211; Control signal that exits procedure when true</li>
 <li><strong>Clock_freq</strong> (<em>in frequency</em>) &#8211; Frequency of the generated clock</li>
-<li><strong>Duty</strong> (<em>in duty_cycle</em>) &#8211; Optional duty cycle of the generated clock (0.0 to 1.0)</li>
+<li><strong>Duty</strong> (<em>None duty_cycle</em>) &#8211; Optional duty cycle of the generated clock (0.0 to 1.0)</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Generate clock waveform for simulation only.</p>
 </dd></dl>
 
 <dl class="procedure">
 <dt id="timing_ops.clock_gen[std_ulogic,boolean,delay_length,duty_cycle]">
-<tt class="descclassname">timing_ops.</tt><tt class="descname">clock_gen</tt> <big>(</big><em>Clock : out std_ulogic</em>; <em>Stop_clock : in boolean</em>; <em>Clock_period : in delay_length</em>; <em>Duty : in duty_cycle</em><big>)</big><a class="headerlink" href="#timing_ops.clock_gen[std_ulogic,boolean,delay_length,duty_cycle]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descclassname">timing_ops.</tt><tt class="descname">clock_gen</tt> <big>(</big><em>Clock : out std_ulogic</em>; <em>Stop_clock : in boolean</em>; <em>Clock_period : in delay_length</em>; <em>Duty : duty_cycle := 0.5</em><big>)</big><a class="headerlink" href="#timing_ops.clock_gen[std_ulogic,boolean,delay_length,duty_cycle]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate clock waveform for simulation only.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -551,13 +557,12 @@ and the output of to_clock_cycles().</p>
 <li><strong>Clock</strong> (<em>out std_ulogic</em>) &#8211; Generated clock signal</li>
 <li><strong>Stop_clock</strong> (<em>in boolean</em>) &#8211; Control signal that exits procedure when true</li>
 <li><strong>Clock_period</strong> (<em>in delay_length</em>) &#8211; Period of the generated clock</li>
-<li><strong>Duty</strong> (<em>in duty_cycle</em>) &#8211; Optional duty cycle of the generated clock (0.0 to 1.0)</li>
+<li><strong>Duty</strong> (<em>None duty_cycle</em>) &#8211; Optional duty cycle of the generated clock (0.0 to 1.0)</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Generate clock waveform for simulation only.</p>
 </dd></dl>
 
 </div>

@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="hamming_edac" href="hamming_edac.html" />
     <link rel="prev" title="glitch_filtering" href="glitch_filtering.html" />
@@ -100,16 +100,13 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>An example Gray code counter implementation. This counter maintains an
-internal binary register and converts its output to Gray code stored in a
-separate register.</p>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <dl class="entity">
 <dt id="gray_code.gray_counter">
 <tt class="descclassname">gray_code.</tt><tt class="descname">gray_counter</tt><a class="headerlink" href="#gray_code.gray_counter" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>An example Gray code counter implementation. This counter maintains an
+internal binary register and converts its output to Gray code stored in a
+separate register.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -140,7 +137,8 @@ separate register.</p>
 <dl class="function">
 <dt id="gray_code.to_gray[std_ulogic_vector return std_ulogic_vector]">
 <tt class="descclassname">gray_code.</tt><tt class="descname">to_gray</tt> <big>(</big><em>Binary : std_ulogic_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#gray_code.to_gray[std_ulogic_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert binary to Gray code.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -154,13 +152,13 @@ separate register.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert binary to Gray code.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="gray_code.to_gray[std_logic_vector return std_logic_vector]">
 <tt class="descclassname">gray_code.</tt><tt class="descname">to_gray</tt> <big>(</big><em>Binary : std_logic_vector</em><big>)</big> &rarr; std_logic_vector<a class="headerlink" href="#gray_code.to_gray[std_logic_vector return std_logic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert binary to Gray code.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -174,13 +172,13 @@ separate register.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert binary to Gray code.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="gray_code.to_gray[unsigned return unsigned]">
 <tt class="descclassname">gray_code.</tt><tt class="descname">to_gray</tt> <big>(</big><em>Binary : unsigned</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#gray_code.to_gray[unsigned return unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert binary to Gray code.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -194,13 +192,13 @@ separate register.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert binary to Gray code.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="gray_code.to_binary[std_ulogic_vector return std_ulogic_vector]">
 <tt class="descclassname">gray_code.</tt><tt class="descname">to_binary</tt> <big>(</big><em>Gray : std_ulogic_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#gray_code.to_binary[std_ulogic_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert Gray code to binary.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -214,13 +212,13 @@ separate register.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert Gray code to binary.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="gray_code.to_binary[std_logic_vector return std_logic_vector]">
 <tt class="descclassname">gray_code.</tt><tt class="descname">to_binary</tt> <big>(</big><em>Gray : std_logic_vector</em><big>)</big> &rarr; std_logic_vector<a class="headerlink" href="#gray_code.to_binary[std_logic_vector return std_logic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert Gray code to binary.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -234,13 +232,13 @@ separate register.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert Gray code to binary.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="gray_code.to_binary[unsigned return unsigned]">
 <tt class="descclassname">gray_code.</tt><tt class="descname">to_binary</tt> <big>(</big><em>Gray : unsigned</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#gray_code.to_binary[unsigned return unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert Gray code to binary.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -254,7 +252,6 @@ separate register.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert Gray code to binary.</p>
 </dd></dl>
 
 </div>

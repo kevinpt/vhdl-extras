@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="binaryio" href="binaryio.html" />
     <link rel="prev" title="VHDL-extras packages" href="../packages.html" />
@@ -95,19 +95,16 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Convert a binary input to BCD encoding. A conversion by asserting <tt class="docutils literal"><span class="pre">Convert</span></tt>.
+<dl class="entity">
+<dt id="bcd_conversion.binary_to_bcd">
+<tt class="descclassname">bcd_conversion.</tt><tt class="descname">binary_to_bcd</tt><a class="headerlink" href="#bcd_conversion.binary_to_bcd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a binary input to BCD encoding. A conversion by asserting <tt class="docutils literal"><span class="pre">Convert</span></tt>.
 The <tt class="docutils literal"><span class="pre">BCD</span></tt> output is valid when the <tt class="docutils literal"><span class="pre">Done</span></tt> signal goes high.</p>
 <p>This component will operate with any size binary array of 4 bits or larger
 and produces a BCD array whose length is 4 times the value returned by the
 <a class="reference internal" href="#bcd_conversion.decimal_size[natural return natural]" title="bcd_conversion.decimal_size[natural return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">decimal_size()</span></tt></a> function.
 The conversion of an n-bit binary number will take n cycles to complete.</p>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<dl class="entity">
-<dt id="bcd_conversion.binary_to_bcd">
-<tt class="descclassname">bcd_conversion.</tt><tt class="descname">binary_to_bcd</tt><a class="headerlink" href="#bcd_conversion.binary_to_bcd" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -153,19 +150,16 @@ end component;</p></object>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>Convert a BCD encoded input to binary. A conversion by asserting <tt class="docutils literal"><span class="pre">Convert</span></tt>.
+<dl class="entity">
+<dt id="bcd_conversion.bcd_to_binary">
+<tt class="descclassname">bcd_conversion.</tt><tt class="descname">bcd_to_binary</tt><a class="headerlink" href="#bcd_conversion.bcd_to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a BCD encoded input to binary. A conversion by asserting <tt class="docutils literal"><span class="pre">Convert</span></tt>.
 The <tt class="docutils literal"><span class="pre">Binary</span></tt> output is valid when the <tt class="docutils literal"><span class="pre">Done</span></tt> signal goes high.</p>
 <p>The length of the input must be a multiple of four. The binary array produced will be
 large enough to hold the maximum decimal value of the BCD input. Its
 length will be <tt class="docutils literal"><span class="pre">bit_size(10**(Bcd'length/4)</span> <span class="pre">-</span> <span class="pre">1)</span></tt>. The conversion of a BCD
 number to an n-bit binary number will take n+3 cycles to complete.</p>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<dl class="entity">
-<dt id="bcd_conversion.bcd_to_binary">
-<tt class="descclassname">bcd_conversion.</tt><tt class="descname">bcd_to_binary</tt><a class="headerlink" href="#bcd_conversion.bcd_to_binary" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -195,7 +189,8 @@ number to an n-bit binary number will take n+3 cycles to complete.</p>
 <dl class="function">
 <dt id="bcd_conversion.decimal_size[natural return natural]">
 <tt class="descclassname">bcd_conversion.</tt><tt class="descname">decimal_size</tt> <big>(</big><em>n : natural</em><big>)</big> &rarr; natural<a class="headerlink" href="#bcd_conversion.decimal_size[natural return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Calculate the number of decimal digits needed to represent a number n.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -209,13 +204,16 @@ number to an n-bit binary number will take n+3 cycles to complete.</p>
 </tr>
 </tbody>
 </table>
-<p>Calculate the number of decimal digits needed to represent a number n.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="bcd_conversion.to_bcd[unsigned return unsigned]">
 <tt class="descclassname">bcd_conversion.</tt><tt class="descname">to_bcd</tt> <big>(</big><em>Binary : unsigned</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#bcd_conversion.to_bcd[unsigned return unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert binary number to BCD encoding
+This uses the double-dabble algorithm to perform the BCD conversion. It
+will operate with any size binary array and return a BCD array whose
+length is 4 times the value returned by the decimal_size function.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -229,16 +227,17 @@ number to an n-bit binary number will take n+3 cycles to complete.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert binary number to BCD encoding
-This uses the double-dabble algorithm to perform the BCD conversion. It
-will operate with any size binary array and return a BCD array whose
-length is 4 times the value returned by the decimal_size function.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="bcd_conversion.to_binary[unsigned return unsigned]">
 <tt class="descclassname">bcd_conversion.</tt><tt class="descname">to_binary</tt> <big>(</big><em>Bcd : unsigned</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#bcd_conversion.to_binary[unsigned return unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Convert a BCD number to binary encoding
+This uses the double-dabble algorithm in reverse. The length of the
+input must be a multiple of four. The returned binary array will be
+large enough to hold the maximum decimal value of the BCD input. Its
+length will be bit_size(10**(Bcd&#8217;length/4) - 1).</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -252,11 +251,6 @@ length is 4 times the value returned by the decimal_size function.</p>
 </tr>
 </tbody>
 </table>
-<p>Convert a BCD number to binary encoding
-This uses the double-dabble algorithm in reverse. The length of the
-input must be a multiple of four. The returned binary array will be
-large enough to hold the maximum decimal value of the BCD input. Its
-length will be bit_size(10**(Bcd&#8217;length/4) - 1).</p>
 </dd></dl>
 
 </div>
