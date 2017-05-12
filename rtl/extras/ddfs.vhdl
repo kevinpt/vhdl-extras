@@ -97,7 +97,7 @@
 --#    ...
 --#    dyn_freq <= to_unsigned(440, dyn_freq'length); -- Change to A4
 --#    ...
---#    -- Wrap ddfs_dynamic_inc in a sequencial process to synthesize a
+--#    -- Wrap ddfs_dynamic_inc in a sequential process to synthesize a
 --#    -- multiplier with registered product.
 --#    dyn: process(clock, reset) is
 --#    begin
@@ -276,6 +276,32 @@ package ddfs_pkg is
       New_phase  : in unsigned;          --# Phase angle to load
 
       Increment : in unsigned;      --# Value controlling the synthesized frequency
+
+      --# {{data|}}
+      Accumulator : out unsigned;   --# Internal accumulator value
+      Synth_clock : out std_ulogic; --# Synthesized frequency
+      Synth_pulse : out std_ulogic  --# Single cycle pulse for rising edge of synth_clock
+    );
+  end component;
+
+
+  --## Synthesize a frequency using a DDFS.
+  component ddfs_pipelined is
+    generic (
+      MAX_CARRY_LENGTH   : positive := 100;
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
+    );
+    port (
+      --# {{clocks|}}
+      Clock : in std_ulogic;             --# System clock
+      Reset : in std_ulogic;             --# Asynchronous reset
+
+      --# {{control|}}
+      Enable     : in std_ulogic := '1'; --# Enable the DDFS counter
+      Load_phase : in std_ulogic;        --# Load a new phase angle
+      New_phase  : in unsigned;          --# Phase angle to load
+
+      Increment  : in unsigned;          --# Value controlling the synthesized frequency
 
       --# {{data|}}
       Accumulator : out unsigned;   --# Internal accumulator value
@@ -480,7 +506,7 @@ package body ddfs_pkg is
     variable result : unsigned(size-1 downto 0) := (others => '0');
   begin
     if size <= p'length then
-      -- Slice off upper bits
+      -- Slice off lower bits
       result := p(p'high downto p'high-(size-1));
     else
       -- Left justify phase in result
@@ -551,7 +577,7 @@ begin
     end if;
   end process;
 
-  Accumulator <= accum;
+  Accumulator <= resize(accum, Accumulator'length);
 
   -- Output the MSB of the accumulator
   Synth_clock <= accum(accum'high);
@@ -567,6 +593,136 @@ begin
       prev_msb <= accum(accum'high);
 
       if accum(accum'high) = '1' and prev_msb = '0' then
+        Synth_pulse <= '1';
+      else
+        Synth_pulse <= '0';
+      end if;
+    end if;
+  end process;
+
+end architecture;
+
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+library extras;
+use extras.ddfs_pkg.resize_fractional;
+use extras.arithmetic.pipelined_adder;
+
+--## Synthesize a frequency using a DDFS.
+entity ddfs_pipelined is
+  generic (
+    MAX_CARRY_LENGTH   : positive := 100;
+    RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
+  );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;             --# System clock
+    Reset : in std_ulogic;             --# Asynchronous reset
+
+    --# {{control|}}
+    Enable     : in std_ulogic := '1'; --# Enable the DDFS counter
+    Load_phase : in std_ulogic;        --# Load a new phase angle
+    New_phase  : in unsigned;          --# Phase angle to load
+
+    Increment  : in unsigned;          --# Value controlling the synthesized frequency
+
+    --# {{data|}}
+    Accumulator : out unsigned;   --# Internal accumulator value
+    Synth_clock : out std_ulogic; --# Synthesized frequency
+    Synth_pulse : out std_ulogic  --# Single cycle pulse for rising edge of synth_clock
+  );
+end entity;
+
+architecture rtl of ddfs_pipelined is
+
+  constant SLICES : natural := (Accumulator'length + MAX_CARRY_LENGTH - 1) / MAX_CARRY_LENGTH;
+
+  subtype inc_word is unsigned(Increment'length-1 downto 0);
+  type inc_array is array(natural range <>) of inc_word;
+
+  signal increments : inc_array(0 to SLICES-1);
+
+  subtype incr_range is natural range 0 to SLICES-1;
+  signal incr_ix : incr_range;
+
+  signal accum : unsigned(Increment'length downto 0); -- Extra bit for carry out
+  signal next_inc : unsigned(accum'length-2 downto 0);
+  signal prev_msb : std_ulogic;
+
+begin
+
+  -- Compute increments for each pipeline stage
+  increments(0) <= resize(Increment, inc_word'length);
+
+  inc: for i in 1 to SLICES-1 generate
+    increments(i) <= increments(i-1) + resize(Increment, inc_word'length);
+  end generate;
+
+  next_inc <= resize(increments(incr_ix), accum'length-1);
+
+  pa: pipelined_adder
+    generic map (
+      SLICES => SLICES,
+      CONST_B_INPUT => false,
+      RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL
+    )
+    port map (
+      Clock => clock,
+      Reset => reset,
+
+      A => accum(accum'high-1 downto 0),
+      B => next_inc,
+
+      Sum => accum
+    );
+
+  ctrl: process(Clock, Reset) is
+  begin
+    if Reset = RESET_ACTIVE_LEVEL then
+      incr_ix <= 0;
+    elsif rising_edge(Clock) then
+      if incr_ix /= SLICES-1 then
+        incr_ix <= incr_ix + 1;
+      else
+        incr_ix <= 0;
+      end if;
+    end if;
+  end process;
+
+
+--  inc: process(Clock, Reset)
+--  begin
+--    if Reset = RESET_ACTIVE_LEVEL then
+--      accum <= (others => '0');
+--    elsif rising_edge(Clock) then
+--      if Load_phase = '1' then
+--        accum <= resize_fractional(New_phase, accum'length);
+--      elsif Enable = '1' then
+--        accum <= accum + Increment;
+--      end if;
+--    end if;
+--  end process;
+
+  Accumulator <= resize(accum, Accumulator'length);
+
+  -- Output the MSB of the accumulator (skipping carry_out)
+  Synth_clock <= accum(accum'high-1);
+
+
+  -- Detect rising edge of synth_clock to make a 1-cycle pulse
+  ed: process(Clock, Reset)
+  begin
+    if Reset = RESET_ACTIVE_LEVEL then
+      prev_msb <= '0';
+      Synth_pulse <= '0';
+    elsif rising_edge(Clock) then
+      prev_msb <= accum(accum'high-1);
+
+      if accum(accum'high-1) = '1' and prev_msb = '0' then
         Synth_pulse <= '1';
       else
         Synth_pulse <= '0';
