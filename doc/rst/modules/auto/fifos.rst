@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/fifos.vhdl on 2017-04-30 17:19:09.145105
+.. Generated from ../rtl/extras/fifos.vhdl on 2017-05-07 22:53:55.844639
 .. vhdl:package:: fifos
 
 

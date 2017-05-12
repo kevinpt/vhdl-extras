@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/sizing.vhdl on 2017-04-30 17:19:09.266065
+.. Generated from ../rtl/extras/sizing.vhdl on 2017-05-07 22:53:55.982499
 .. vhdl:package:: sizing
 
 

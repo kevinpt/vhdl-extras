@@ -8,8 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# common_2008.vhdl - Common data types shared across VHDL-2008 components
---# $Id$
---# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
+--# Freely available from VHDL-extras (http://github.com/kevinpt/vhdl-extras)
 --#
 --# Copyright © 2014 Kevin Thibedeau
 --# (kevin 'period' thibedeau 'at' gmail 'punto' com)
@@ -53,25 +52,119 @@ package common is
   type unsigned_array is array(natural range <>) of unsigned;
   type signed_array   is array(natural range <>) of signed;
 
-
+  --## Convert std_ulogic_vector array to std_logic_vector array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_slv_array(a : sulv_array) return slv_array;
+  
+  --## Convert std_logic_vector array to std_ulogic_vector array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_sulv_array(a : slv_array) return sulv_array;
 
+  --## Convert std_ulogic_vector array to unsigned array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_unsigned_array(a : sulv_array) return unsigned_array;
+  
+  --## Convert unsigned array to std_ulogic_vector array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_sulv_array(a : unsigned_array) return sulv_array;
 
+  --## Convert std_ulogic_vector array to signed array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_signed_array(a : sulv_array) return signed_array;
+  
+  --## Convert signed array to std_ulogic_vector array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_sulv_array(a : signed_array) return sulv_array;
 
-
+  --## Convert std_logic_vector array to unsigned array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_unsigned_array(a : slv_array) return unsigned_array;
+
+  --## Convert unsigned array to std_logic_vector array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_slv_array(a : unsigned_array) return slv_array;
 
+  --## Convert std_logic_vector array to signed array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_signed_array(a : slv_array) return signed_array;
+  
+  --## Convert signed array to std_logic_vector array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_slv_array(a : signed_array) return slv_array;
 
+  --## Convert unsigned array to signed array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_signed_array(a : unsigned_array) return signed_array;
+
+  --## Convert signed array to unsigned array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
   function to_unsigned_array(a : signed_array) return unsigned_array;
+
+
+
+  --## Convert a scaler std_ulogic_vector to a single element std_ulogic_vector array.
+  --# Args:
+  --#  A: Vector
+  --# Returns:
+  --#  Array with new type.
+  function to_sulv_array(a : std_ulogic_vector) return sulv_array;
+
+  --## Convert a scaler std_logic_vector to a single element std_logic_vector array.
+  --# Args:
+  --#  A: Vector
+  --# Returns:
+  --#  Array with new type.
+  function to_slv_array(a : std_logic_vector) return slv_array;
+
+  --## Convert a scaler unsigned to a single element unsigned array.
+  --# Args:
+  --#  A: Vector
+  --# Returns:
+  --#  Array with new type.
+  function to_unsigned_array(a : unsigned) return unsigned_array;
+  
+  --## Convert a scaler signed to a single element signed array.
+  --# Args:
+  --#  A: Vector
+  --# Returns:
+  --#  Array with new type.
+  function to_signed_array(a : signed) return signed_array;
 
 end package;
 
@@ -192,6 +285,36 @@ package body common is
     for i in a'range loop
       r(i) := unsigned(a(i));
     end loop;
+    return r;
+  end function;
+
+
+
+  function to_sulv_array(a : std_ulogic_vector) return sulv_array is
+    variable r : sulv_array(0 downto 0)(a'range);
+  begin
+    r(0) := a;
+    return r;
+  end function;
+
+  function to_slv_array(a : std_logic_vector) return slv_array is
+    variable r : slv_array(0 downto 0)(a'range);
+  begin
+    r(0) := a;
+    return r;
+  end function;
+
+  function to_unsigned_array(a : unsigned) return unsigned_array is
+    variable r : unsigned_array(0 downto 0)(a'range);
+  begin
+    r(0) := a;
+    return r;
+  end function;
+
+  function to_signed_array(a : signed) return signed_array is
+    variable r : signed_array(0 downto 0)(a'range);
+  begin
+    r(0) := a;
     return r;
   end function;
 

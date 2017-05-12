@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/reg_file.vhdl on 2017-04-30 17:19:09.053142
+.. Generated from ../rtl/extras/reg_file.vhdl on 2017-05-07 22:53:55.753467
 .. vhdl:package:: reg_file_pkg
 
 
@@ -8,6 +8,7 @@ Types
 
 .. vhdl:type:: reg_array
 
+  Array of register words.
 
 Subtypes
 --------
@@ -15,6 +16,7 @@ Subtypes
 
 .. vhdl:subtype:: reg_word
 
+  Register word vector.
 
 Components
 ----------

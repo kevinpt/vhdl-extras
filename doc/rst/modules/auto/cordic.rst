@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/cordic.vhdl on 2017-04-30 17:19:09.215621
+.. Generated from ../rtl/extras/cordic.vhdl on 2017-05-07 22:53:55.915668
 .. vhdl:package:: cordic
 
 
@@ -90,6 +90,7 @@ cordic_sequential
     --# {{control|}}
     Load : in std_ulogic;
     Done : out std_ulogic;
+    Almost_done : out std_ulogic;
     Mode : in cordic_mode;
     --# {{data|}}
     X : in signed(SIZE-1 downto 0);
@@ -122,6 +123,8 @@ cordic_sequential
   :ptype Load: in std_ulogic
   :port Done: 
   :ptype Done: out std_ulogic
+  :port Almost_done: 
+  :ptype Almost_done: out std_ulogic
   :port Mode: 
   :ptype Mode: in cordic_mode
   :port X: 
@@ -272,6 +275,7 @@ sincos_sequential
     --# {{control|}}
     Load : in std_ulogic;
     Done : out std_ulogic;
+    Almost_done : out std_ulogic;
     Angle : in signed(SIZE-1 downto 0);
     --# {{data|}}
     Sin : out signed(SIZE-1 downto 0);
@@ -304,6 +308,8 @@ sincos_sequential
   :ptype Load: in std_ulogic
   :port Done: 
   :ptype Done: out std_ulogic
+  :port Almost_done: 
+  :ptype Almost_done: out std_ulogic
   :port Angle: 
   :ptype Angle: in signed(SIZE-1 downto 0)
   :port Sin: 

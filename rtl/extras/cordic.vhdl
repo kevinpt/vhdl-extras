@@ -8,8 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# cordic.vhdl - CORDIC operations for vector rotation and sin/cos generation
---# $Id$
---# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
+--# Freely available from VHDL-extras (http://github.com/kevinpt/vhdl-extras)
 --#
 --# Copyright © 2014 Kevin Thibedeau
 --# (kevin 'period' thibedeau 'at' gmail 'punto' com)
@@ -90,7 +89,7 @@
 --#    Y0 = y, X0 = x, Z0 = 0; vector --> gain*magnitude in X, angle in Z
 
 --#  The X and Y parameters are represented as unconstrained signed vectors. You
---#  establish the presicion of a CORDIC implementation by selecting the width of
+--#  establish the precision of a CORDIC implementation by selecting the width of
 --#  these vectors. The interpretation of these numbers does not affect the
 --#  internal CORDIC implementation but most implementations will need them to be
 --#  fixed point integers with the maximum number of fractional bits possible.

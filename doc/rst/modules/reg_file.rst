@@ -117,3 +117,8 @@ Example usage
     
 .. include:: auto/reg_file.rst
 
+VHDL-2008 Variant
+-----------------
+
+.. include:: auto/reg_file_2008.rst
+

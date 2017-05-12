@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/timing_ops_xilinx.vhdl on 2017-04-30 17:19:09.327234
+.. Generated from ../rtl/extras/timing_ops_xilinx.vhdl on 2017-05-07 22:53:56.041630
 .. vhdl:package:: timing_ops
 
 
@@ -17,6 +17,13 @@ Subtypes
 
 
 .. vhdl:subtype:: duty_cycle
+
+
+Constants
+---------
+
+
+.. vhdl:constant:: TIME_ROUND_STYLE
 
 
 Subprograms

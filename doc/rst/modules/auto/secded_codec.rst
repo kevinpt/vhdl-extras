@@ -1,5 +1,24 @@
-.. Generated from ../rtl/extras/secded_codec.vhdl on 2017-04-30 17:19:09.293891
+.. Generated from ../rtl/extras/secded_codec.vhdl on 2017-05-07 22:53:56.009055
 .. vhdl:package:: secded_codec_pkg
+
+
+Constants
+---------
+
+
+.. vhdl:constant:: CODEC_ENCODE
+
+
+.. vhdl:constant:: CODEC_DECODE
+
+
+.. vhdl:constant:: INSERT_NONE
+
+
+.. vhdl:constant:: INSERT_SINGLE
+
+
+.. vhdl:constant:: INSERT_DOUBLE
 
 
 Components

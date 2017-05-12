@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras_2008/reg_file_2008.vhdl on 2017-04-25 22:17:58.632829
+.. Generated from ../rtl/extras_2008/reg_file_2008.vhdl on 2017-05-07 22:23:47.450305
 .. vhdl:package:: extras_2008.reg_file_pkg
 
 
@@ -11,7 +11,7 @@ reg_file
 
 .. symbolator::
 
-  component extras_2008.reg_file is
+  component reg_file is
   generic (
     RESET_ACTIVE_LEVEL : std_ulogic;
     DIRECT_READ_BIT_MASK : reg_array;
@@ -42,7 +42,8 @@ reg_file
 .. vhdl:entity:: extras_2008.reg_file
 
   Flexible register file with support for strobed outputs. This variant
-  uses VHDL-2008 syntax to
+  uses VHDL-2008 syntax to define the reg_array type. Any register width
+  can be instantiated without needing to modify the library.
 
 
   :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level

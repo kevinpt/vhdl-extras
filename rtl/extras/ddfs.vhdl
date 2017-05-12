@@ -8,10 +8,9 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# ddfs.vhdl - Direct Digital Frequency Synthesizer
---# $Id$
---# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
+--# Freely available from VHDL-extras (http://github.com/kevinpt/vhdl-extras)
 --#
---# Copyright © 2014 Kevin Thibedeau
+--# Copyright © 2014, 2017 Kevin Thibedeau
 --# (kevin 'period' thibedeau 'at' gmail 'punto' com)
 --#
 --# Permission is hereby granted, free of charge, to any person obtaining a

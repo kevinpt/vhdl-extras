@@ -8,8 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# timing_ops.vhdl - Routines for time calculations
---# $Id$
---# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
+--# Freely available from VHDL-extras (http://github.com/kevinpt/vhdl-extras)
 --#
 --# Copyright © 2010 Kevin Thibedeau
 --# (kevin 'period' thibedeau 'at' gmail 'punto' com)
@@ -102,6 +101,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 package timing_ops is
+  --## Clock cycle count.
   subtype clock_cycles is natural;
 
   --## Frequency physical type.
@@ -112,13 +112,14 @@ package timing_ops is
     GHz = 1000 MHz;
   end units;
   
+  --## Rounding modes.
   type time_rounding is (
     round_nearest, -- Normal floating point round to nearest integer
     round_inf,     -- Round up to +infinity
     round_neginf   -- Round down to -infinity
   );
 
-  -- Default rounding style
+  --## Default rounding mode.
   constant TIME_ROUND_STYLE : time_rounding := round_nearest;
 
   --## Get the current simulation time resolution.
@@ -288,6 +289,7 @@ package timing_ops is
     Requested_secs : in time; Actual_secs : in time );
 
 
+  --## Duty cycle ranging from 0 to 1.0.
   subtype duty_cycle is real range 0.0 to 1.0;
 
   --## Generate clock waveform for simulation only.

@@ -1,19 +1,19 @@
-.. Generated from ../rtl/extras_2008/strings_bounded.vhdl on 2017-04-27 22:47:07.929255
-.. vhdl:package:: strings_bounded
+.. Generated from ../rtl/extras_2008/strings_bounded.vhdl on 2017-05-07 22:23:47.412284
+.. vhdl:package:: extras_2008.strings_bounded
 
 
 Types
 -----
 
 
-.. vhdl:type:: bounded_string
+.. vhdl:type:: extras_2008.bounded_string
 
 
 Subtypes
 --------
 
 
-.. vhdl:subtype:: length_range
+.. vhdl:subtype:: extras_2008.length_range
 
 
 Subprograms

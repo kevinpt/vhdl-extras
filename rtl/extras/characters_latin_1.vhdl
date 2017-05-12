@@ -8,8 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# characters_latin_1.vhdl - Character constants for Latin-1
---# $Id$
---# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
+--# Freely available from VHDL-extras (http://github.com/kevinpt/vhdl-extras)
 --#
 --# Copyright © 2010 Kevin Thibedeau
 --# (kevin 'period' thibedeau 'at' gmail 'punto' com)

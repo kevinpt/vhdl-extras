@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/characters_handling.vhdl on 2017-04-30 17:19:09.478411
+.. Generated from ../rtl/extras/characters_handling.vhdl on 2017-05-07 22:53:56.206485
 .. vhdl:package:: characters_handling
 
 

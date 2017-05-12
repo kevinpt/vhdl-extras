@@ -9,7 +9,7 @@
 -----------------------------  =  ----------------------------------
 --# binaryio.vhdl - Procedures for binary file I/O
 --# $Id:$
---# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
+--# Freely available from VHDL-extras (http://github.com/kevinpt/vhdl-extras)
 --#
 --# Copyright © 2010 Kevin Thibedeau
 --# (kevin 'period' thibedeau 'at' gmail 'punto' com)

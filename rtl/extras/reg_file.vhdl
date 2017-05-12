@@ -8,8 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# reg_file.vhdl - General purpose register file
---# $Id$
---# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
+--# Freely available from VHDL-extras (http://github.com/kevinpt/vhdl-extras)
 --#
 --# Copyright © 2014 Kevin Thibedeau
 --# (kevin 'period' thibedeau 'at' gmail 'punto' com)
@@ -139,8 +138,11 @@ package reg_file_pkg is
   -- ******************************************************************
   -- Redefine this subtype as needed to suit the required register size
   -- ******************************************************************
+
+  --## Register word vector.
   subtype reg_word is std_ulogic_vector(15 downto 0);
 
+  --## Array of register words.
   type reg_array is array(natural range <>) of reg_word;
 
   --# Flexible register file with support for strobed outputs.

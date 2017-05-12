@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/text_buffering.vhdl on 2017-04-30 17:31:21.505298
+.. Generated from ../rtl/extras/text_buffering.vhdl on 2017-05-07 22:53:56.192283
 .. vhdl:package:: text_buffering
 
 

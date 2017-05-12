@@ -8,8 +8,7 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# strings_unbounded.vhdl - A library for unbounded length strings
---# $Id$
---# Freely available from VHDL-extras (http://code.google.com/p/vhdl-extras)
+--# Freely available from VHDL-extras (http://github.com/kevinpt/vhdl-extras)
 --#
 --# Copyright © 2010, 2015 Kevin Thibedeau
 --# (kevin 'period' thibedeau 'at' gmail 'punto' com)

@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/gray_code.vhdl on 2017-04-30 17:19:09.663875
+.. Generated from ../rtl/extras/gray_code.vhdl on 2017-05-07 22:53:56.365587
 .. vhdl:package:: gray_code
 
 

@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/synchronizing.vhdl on 2017-04-30 17:19:09.388867
+.. Generated from ../rtl/extras/synchronizing.vhdl on 2017-05-07 22:53:56.115227
 .. vhdl:package:: synchronizing
 
 

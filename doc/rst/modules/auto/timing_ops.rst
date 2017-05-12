@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/timing_ops.vhdl on 2017-04-30 17:19:09.313229
+.. Generated from ../rtl/extras/timing_ops.vhdl on 2017-05-07 22:53:56.028278
 .. vhdl:package:: timing_ops
 
 
@@ -12,6 +12,7 @@ Types
 
 .. vhdl:type:: time_rounding
 
+  Rounding modes.
 
 Subtypes
 --------
@@ -19,9 +20,19 @@ Subtypes
 
 .. vhdl:subtype:: clock_cycles
 
+  Clock cycle count.
 
 .. vhdl:subtype:: duty_cycle
 
+  Duty cycle ranging from 0 to 1.0.
+
+Constants
+---------
+
+
+.. vhdl:constant:: TIME_ROUND_STYLE
+
+  Default rounding mode.
 
 Subprograms
 -----------
