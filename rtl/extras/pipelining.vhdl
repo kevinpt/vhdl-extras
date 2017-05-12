@@ -157,6 +157,138 @@ package pipelining is
     );
   end component;
 
+
+  --## Fixed delay line for std_ulogic data.
+  component fixed_delay_line is
+    generic (
+      STAGES : natural  --# Number of delay stages (0 for short circuit)
+      );
+    port (
+      --# {{clocks|}}
+      Clock : in std_ulogic;           --# System clock
+      -- No reset so this can be inferred as SRL16/32
+
+      --# {{control|}}
+      Enable : in std_ulogic;          --# Synchronous enable
+
+      --# {{data|}}
+      Data_in  : in std_ulogic;        --# Input data
+      Data_out : out std_ulogic        --# Delayed output data
+      );
+  end component;
+
+
+  --## Fixed delay line for std_ulogic_vector data.
+  component fixed_delay_line_sulv is
+    generic (
+      STAGES : natural  --# Number of delay stages (0 for short circuit)
+      );
+    port (
+      --# {{clocks|}}
+      Clock : in std_ulogic;           --# System clock
+      -- No reset so this can be inferred as SRL16/32
+
+      --# {{control|}}
+      Enable : in std_ulogic;          --# Synchronous enable
+
+      --# {{data|}}
+      Data_in  : in std_ulogic_vector; --# Input data
+      Data_out : out std_ulogic_vector --# Delayed output data
+      );
+  end component;
+
+  --## Fixed delay line for signed data.
+  component fixed_delay_line_signed is
+    generic (
+      STAGES : natural  --# Number of delay stages (0 for short circuit)
+      );
+    port (
+      --# {{clocks|}}
+      Clock : in std_ulogic;           --# System clock
+      -- No reset so this can be inferred as SRL16/32
+
+      --# {{control|}}
+      Enable : in std_ulogic;          --# Synchronous enable
+
+      --# {{data|}}
+      Data_in  : in signed; --# Input data
+      Data_out : out signed --# Delayed output data
+      );
+  end component;
+
+  --## Fixed delay line for unsigned data.
+  component fixed_delay_line_unsigned is
+    generic (
+      STAGES : natural  --# Number of delay stages (0 for short circuit)
+      );
+    port (
+      --# {{clocks|}}
+      Clock : in std_ulogic;           --# System clock
+      -- No reset so this can be inferred as SRL16/32
+
+      --# {{control|}}
+      Enable : in std_ulogic;          --# Synchronous enable
+
+      --# {{data|}}
+      Data_in  : in unsigned; --# Input data
+      Data_out : out unsigned --# Delayed output data
+      );
+  end component;
+
+
+
+  --## Fixed delay line for std_ulogic_vector data.
+  component dynamic_delay_line_sulv is
+    port (
+      --# {{clocks|}}
+      Clock : in std_ulogic;           --# System clock
+      -- No reset so this can be inferred as SRL16/32
+
+      --# {{control|}}
+      Enable  : in std_ulogic;         --# Synchronous enable
+      Address : in unsigned;           --# Selected delay stage
+
+      --# {{data|}}
+      Data_in  : in std_ulogic_vector; --# Input data
+      Data_out : out std_ulogic_vector --# Delayed output data
+      );
+  end component;
+
+  --## Fixed delay line for signed data.
+  component dynamic_delay_line_signed is
+    port (
+      --# {{clocks|}}
+      Clock : in std_ulogic;           --# System clock
+      -- No reset so this can be inferred as SRL16/32
+
+      --# {{control|}}
+      Enable  : in std_ulogic;         --# Synchronous enable
+      Address : in unsigned;           --# Selected delay stage
+
+      --# {{data|}}
+      Data_in  : in signed;            --# Input data
+      Data_out : out signed            --# Delayed output data
+      );
+  end component;
+
+  --## Fixed delay line for unsigned data.
+  component dynamic_delay_line_unsigned is
+    port (
+      --# {{clocks|}}
+      Clock : in std_ulogic;           --# System clock
+      -- No reset so this can be inferred as SRL16/32
+
+      --# {{control|}}
+      Enable  : in std_ulogic;         --# Synchronous enable
+      Address : in unsigned;           --# Selected delay stage
+
+      --# {{data|}}
+      Data_in  : in unsigned;          --# Input data
+      Data_out : out unsigned          --# Delayed output data
+      );
+  end component;
+
+
 end package;
 
 
@@ -378,3 +510,323 @@ begin
     Sig_out <= pl_regs(pl_regs'high);
   end process;
 end architecture;
+
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+--## Fixed delay line for std_ulogic_vector data.
+entity fixed_delay_line is
+  generic (
+    STAGES : natural  --# Number of delay stages (0 for short circuit)
+    );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;           --# System clock
+    -- No reset so this can be inferred as SRL16/32
+
+    --# {{control|}}
+    Enable : in std_ulogic;          --# Synchronous enable
+
+    --# {{data|}}
+    Data_in  : in std_ulogic;        --# Input data
+    Data_out : out std_ulogic        --# Delayed output data
+    );
+end entity;
+
+architecture rtl of fixed_delay_line is
+  signal dly : std_ulogic_vector(0 to STAGES-1);
+begin
+
+  gt: if STAGES > 0 generate
+    delay: process(Clock) is
+    begin
+      if rising_edge(Clock) then
+        if Enable = '1' then
+          dly <= Data_in & dly(0 to dly'high-1);
+        end if;
+      end if;
+    end process;
+
+    Data_out <= dly(dly'high);
+  end generate;
+
+  gf: if STAGES = 0 generate
+    Data_out <= Data_in;
+  end generate;
+end architecture;
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+--## Fixed delay line for std_ulogic_vector data.
+entity fixed_delay_line_sulv is
+  generic (
+    STAGES : natural  --# Number of delay stages (0 for short circuit)
+    );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;           --# System clock
+    -- No reset so this can be inferred as SRL16/32
+
+    --# {{control|}}
+    Enable : in std_ulogic;          --# Synchronous enable
+
+    --# {{data|}}
+    Data_in  : in std_ulogic_vector; --# Input data
+    Data_out : out std_ulogic_vector --# Delayed output data
+    );
+end entity;
+
+architecture rtl of fixed_delay_line_sulv is
+  subtype word is std_ulogic_vector(Data_in'length-1 downto 0);
+  type word_array is array(natural range <>) of word;
+
+  signal dly : word_array(0 to STAGES-1);
+begin
+
+  gt: if STAGES > 0 generate
+    delay: process(Clock) is
+    begin
+      if rising_edge(Clock) then
+        if Enable = '1' then
+          dly <= Data_in & dly(0 to dly'high-1);
+        end if;
+      end if;
+    end process;
+
+    Data_out <= dly(dly'high);
+  end generate;
+
+  gf: if STAGES = 0 generate
+    Data_out <= Data_in;
+  end generate;
+end architecture;
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+--## Fixed delay line for signed data.
+entity fixed_delay_line_signed is
+  generic (
+    STAGES : natural  --# Number of delay stages (0 for short circuit)
+    );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;           --# System clock
+    -- No reset so this can be inferred as SRL16/32
+
+    --# {{control|}}
+    Enable : in std_ulogic;          --# Synchronous enable
+
+    --# {{data|}}
+    Data_in  : in signed;            --# Input data
+    Data_out : out signed            --# Delayed output data
+    );
+end entity;
+
+architecture rtl of fixed_delay_line_signed is
+  subtype word is signed(Data_in'length-1 downto 0);
+  type word_array is array(natural range <>) of word;
+
+  signal dly : word_array(0 to STAGES-1);
+begin
+
+  gt: if STAGES > 0 generate
+    delay: process(Clock) is
+    begin
+      if rising_edge(Clock) then
+        if Enable = '1' then
+          dly <= Data_in & dly(0 to dly'high-1);
+        end if;
+      end if;
+    end process;
+
+    Data_out <= dly(dly'high);
+  end generate;
+
+  gf: if STAGES = 0 generate
+    Data_out <= Data_in;
+  end generate;
+end architecture;
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+--## Fixed delay line for unsigned data.
+entity fixed_delay_line_unsigned is
+  generic (
+    STAGES : natural  --# Number of delay stages (0 for short circuit)
+    );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;           --# System clock
+    -- No reset so this can be inferred as SRL16/32
+
+    --# {{control|}}
+    Enable : in std_ulogic;          --# Synchronous enable
+
+    --# {{data|}}
+    Data_in  : in unsigned;          --# Input data
+    Data_out : out unsigned          --# Delayed output data
+    );
+end entity;
+
+architecture rtl of fixed_delay_line_unsigned is
+  subtype word is unsigned(Data_in'length-1 downto 0);
+  type word_array is array(natural range <>) of word;
+
+  signal dly : word_array(0 to STAGES-1);
+begin
+
+  gt: if STAGES > 0 generate
+    delay: process(Clock) is
+    begin
+      if rising_edge(Clock) then
+        if Enable = '1' then
+          dly <= Data_in & dly(0 to dly'high-1);
+        end if;
+      end if;
+    end process;
+
+    Data_out <= dly(dly'high);
+  end generate;
+
+  gf: if STAGES = 0 generate
+    Data_out <= Data_in;
+  end generate;
+end architecture;
+
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+--## Fixed delay line for std_ulogic_vector data.
+entity dynamic_delay_line_sulv is
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;           --# System clock
+    -- No reset so this can be inferred as SRL16/32
+
+    --# {{control|}}
+    Enable  : in std_ulogic;         --# Synchronous enable
+    Address : in unsigned;           --# Selected delay stage
+
+    --# {{data|}}
+    Data_in  : in std_ulogic_vector; --# Input data
+    Data_out : out std_ulogic_vector --# Delayed output data
+    );
+end entity;
+
+architecture rtl of dynamic_delay_line_sulv is
+  constant STAGES : positive := 2**Address'length;
+  subtype word is std_ulogic_vector(Data_in'length-1 downto 0);
+  type word_array is array(natural range <>) of word;
+
+  signal dly : word_array(0 to STAGES-1);
+begin
+
+  delay: process(Clock) is
+  begin
+    if rising_edge(Clock) then
+      if Enable= '1' then
+        dly <= Data_in & dly(0 to dly'high-1);
+      end if;
+    end if;
+  end process;
+
+  Data_out <= dly(to_integer(Address));
+end architecture;
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+--## Fixed delay line for signed data.
+entity dynamic_delay_line_signed is
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;           --# System clock
+    -- No reset so this can be inferred as SRL16/32
+
+    --# {{control|}}
+    Enable  : in std_ulogic;         --# Synchronous enable
+    Address : in unsigned;           --# Selected delay stage
+
+    --# {{data|}}
+    Data_in  : in signed;            --# Input data
+    Data_out : out signed            --# Delayed output data
+    );
+end entity;
+
+architecture rtl of dynamic_delay_line_signed is
+  constant STAGES : positive := 2**Address'length;
+  subtype word is signed(Data_in'length-1 downto 0);
+  type word_array is array(natural range <>) of word;
+
+  signal dly : word_array(0 to STAGES-1);
+begin
+
+  delay: process(Clock) is
+  begin
+    if rising_edge(Clock) then
+      if Enable= '1' then
+        dly <= Data_in & dly(0 to dly'high-1);
+      end if;
+    end if;
+  end process;
+
+  Data_out <= dly(to_integer(Address));
+end architecture;
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+--## Fixed delay line for unsigned data.
+entity dynamic_delay_line_unsigned is
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;           --# System clock
+    -- No reset so this can be inferred as SRL16/32
+
+    --# {{control|}}
+    Enable  : in std_ulogic;         --# Synchronous enable
+    Address : in unsigned;           --# Selected delay stage
+
+    --# {{data|}}
+    Data_in  : in unsigned;          --# Input data
+    Data_out : out unsigned          --# Delayed output data
+    );
+end entity;
+
+architecture rtl of dynamic_delay_line_unsigned is
+  constant STAGES : positive := 2**Address'length;
+  subtype word is unsigned(Data_in'length-1 downto 0);
+  type word_array is array(natural range <>) of word;
+
+  signal dly : word_array(0 to STAGES-1);
+begin
+
+  delay: process(Clock) is
+  begin
+    if rising_edge(Clock) then
+      if Enable= '1' then
+        dly <= Data_in & dly(0 to dly'high-1);
+      end if;
+    end if;
+  end process;
+
+  Data_out <= dly(to_integer(Address));
+end architecture;
+
