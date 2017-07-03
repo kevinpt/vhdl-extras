@@ -7,11 +7,11 @@ secded_codec
 Dependencies
 ------------
 
-* :doc:`sizing`
-* :doc:`pipelining`
-* :doc:`hamming_edac`
-* :doc:`secded_edac`
-* :doc:`parity_ops`
+:doc:`sizing`
+:doc:`pipelining`
+:doc:`hamming_edac`
+:doc:`secded_edac`
+:doc:`parity_ops`
 
 Description
 -----------
@@ -26,7 +26,7 @@ Optional pipelining is available to reduce the maximum delay through the
 internal logic. To be effective, you must activate the retiming feature of
 the synthesis tool being used. See the notes in :doc:`pipelining` for more
 information on how to accomplish this. The pipelining is controlled with
-the ``PIPELINE_STAGES`` generic.
+the ``PIPELINE_STAGES`` generic. A value of 0 will disable pipelining.
 
 To facilitate testing, the codec includes an error generator that can
 insert single-bit and double-bit errors into the encoded output. When

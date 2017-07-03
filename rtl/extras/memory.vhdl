@@ -38,10 +38,28 @@
 --#  These memories share a SYNC_READ generic which will optionally generate
 --#  synchronous or asynchronous read ports for each instance. On Xilinx devices
 --#  asynchronous read forces the synthesis of distributed RAM using LUTs rather
---#  than BRAMs. When SYNC_READ is false the Read enable input is unused.
+--#  than BRAMs. When SYNC_READ is false the Read enable input is unused and
+--#  the read port clock can be tied to '0'.
 --#
 --#  The ROM component gets its contents using synthesizable file IO to read a
 --#  list of binary or hex values.
+--#
+--# EXAMPLE USAGE:
+--#
+--#  Create a 256-byte ROM with contents supplied by the binary image file "rom.img":
+--#
+--#  r: rom
+--#    generic map (
+--#      ROM_FILE => "rom.img",
+--#      FORMAT => BINARY_TEXT,
+--#      MEM_SIZE => 256
+--#    )
+--#    port map (
+--#      Clock => clock,
+--#      Re => re,
+--#      Addr => addr,
+--#      Data => data
+--#    );
 --------------------------------------------------------------------
 
 library ieee;
@@ -70,6 +88,7 @@ package memory is
     );
   end component;
 
+  --# Data file format. Either binary or ASCII hex.
   type rom_format is (BINARY_TEXT, HEX_TEXT);
 
   --# A synthesizable ROM using a file to specify the contents.

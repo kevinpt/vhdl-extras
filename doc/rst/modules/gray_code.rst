@@ -2,7 +2,7 @@
 gray_code
 =========
 
-`extras/bcd_conversion.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/gray_code.vhdl>`_
+`extras/gray_code.vhdl <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/gray_code.vhdl>`_
 
 Dependencies
 ------------

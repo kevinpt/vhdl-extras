@@ -15,7 +15,7 @@ Description
 
 This package provides common data types for the strings_fixed and
 strings_unbounded libraries. It is based on the equivalent Ada'95 package
-Ada.Strings.
+``Ada.Strings``.
     
     
 .. include:: auto/strings.rst

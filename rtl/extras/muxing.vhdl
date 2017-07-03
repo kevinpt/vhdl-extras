@@ -35,7 +35,7 @@
 --#
 --# DESCRIPTION:
 --#  A set of routines for creating parameterized multiplexers, decoders,
---#  and demultiplexers
+--#  and demultiplexers.
 --#
 --# EXAMPLE USAGE:
 --#    signal sel : unsigned(3 downto 0);
@@ -62,7 +62,7 @@ package muxing is
   --# Args:
   --#  Sel: Numeric value to decode (range 0 to 2**Sel'length-1)
   --# Returns:
-  --#  Decoded (one-hot) representation of Sel
+  --#  Decoded (one-hot) representation of Sel.
   function decode( Sel : unsigned ) return std_ulogic_vector;
 
   --## Decoder with variable sized output (user specified).
@@ -70,7 +70,7 @@ package muxing is
   --#  Sel:  Numeric value to decode (range 0 to Size-1)
   --#  Size: Number of bits in result (leftmost bits)
   --# Returns:
-  --#  Decoded (one-hot) representation of Sel
+  --#  Decoded (one-hot) representation of Sel.
   function decode( Sel : unsigned; Size : positive)
     return std_ulogic_vector;
 

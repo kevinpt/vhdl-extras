@@ -17,7 +17,7 @@ This package provides a set of functions and a component used for
 implementing a Direct Digital Frequency Synthesizer (DDFS). The DDFS
 component is a simple accumulator that increments by a pre computed value
 each cycle. The MSB of the accumulator switches at the requested frequency
-established by the :vhdl:func:`~ddfs_pkg.ddfs_increment` function. The provided functions perform
+established by the :vhdl:func:`~extras.ddfs_pkg.ddfs_increment` function. The provided functions perform
 computations with real values and, as such, are only synthesizable when
 used to define constants.
 
@@ -28,14 +28,21 @@ procedure to dynamically generate the increment value using a single
 inferred multiplier.
 
 It is possible to generate multiple frequencies by computing more than one
-increment constant and multiplexing between them. The :vhdl:func:`~ddfs_pkg.ddfs_size` function
+increment constant and multiplexing between them. The :vhdl:func:`~extras.ddfs_pkg.ddfs_size` function
 should be called with the smallest target frequency to be used to
-guarantee the requested tolerance is met.
+guarantee the requested tolerance is met. You can alternately set a fixed size and compute the
+effective tolerance with :vhdl:func:`~extras.ddfs_pkg.ddfs_tolerance`.
+
+
+For simulation reporting, you can compute the effective output frequency with the :vhdl:func:`~extras.ddfs_pkg.ddfs_frequency` function and the error ratio
+with :vhdl:func:`~extras.ddfs_pkg.ddfs_error`. 
+
+The utility function :vhdl:func:`~extras.ddfs_pkg.resize_fractional` will truncate unwanted LSBs when downsizing the generated DDFS accumulator value.
 
 Example usage
 ~~~~~~~~~~~~~
 
-The :vhdl:func:`~ddfs_pkg.ddfs_size` and :vhdl:func:`~ddfs_pkg.ddfs_increment`
+The :vhdl:func:`~extras.ddfs_pkg.ddfs_size` and :vhdl:func:`~extras.ddfs_pkg.ddfs_increment`
 functions are used to compute static increment values:
 
 .. code-block:: vhdl
@@ -67,9 +74,9 @@ functions are used to compute static increment values:
     & real'image(ddfs_frequency(SYS_FREQ, TGT_FREQ, SIZE)
   report "DDFS error: " & real'image(ddfs_error(SYS_FREQ, TGT_FREQ, SIZE)
 
-The alternate set of functions are used to precompute a multiplier factor
-that is used to dynamically generate an increment value in synthesizable
-logic:
+The alternate set of functions :vhdl:func:`~extras.ddfs_pkg.min_fraction_bits`,
+:vhdl:func:`~extras.ddfs_pkg.ddfs_dynamic_factor`, and :vhdl:func:`~extras.ddfs_pkg.ddfs_dynamic_inc` are used to precompute a multiplier factor
+that is used to dynamically generate an increment value in synthesizable logic:
 
 .. code-block:: vhdl
 

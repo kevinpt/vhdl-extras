@@ -137,6 +137,8 @@ use ieee.std_logic_1164.all;
 
 package lfsr_ops is
 
+  --## Array of LFSR coefficients. Passed as an argument to
+  --#  :vhdl:func:`~extras.lfsr_ops.to_tap_map`.
   type lfsr_coefficients is array(natural range <>) of natural;
 
   --## Convert a coefficient list to an expanded vector with a '1' in the place.
@@ -158,6 +160,7 @@ package lfsr_ops is
   function lfsr_taps( Size : positive ) return std_ulogic_vector;
 
 
+  --## Type of LFSR: normal (init to 0's) or inverted (init to 1's).
   type lfsr_kind is (normal, inverted);
 
   --## Iterate the next state in a Galois LFSR.

@@ -49,7 +49,7 @@
 --#
 --#  The layout of an ecc_vector is determined by its range. All objects of
 --#  this type must use a descending range with a positive upper bound and a
---#  negative lower bound. Note that the conversion function to_ecc_vector does
+--#  negative lower bound. Note that the conversion function to_ecc_vec() does
 --#  not produce a result that meets this requirement so it should not be
 --#  invoked directly as a parameter to a function expecting a proper
 --#  ecc_vector.

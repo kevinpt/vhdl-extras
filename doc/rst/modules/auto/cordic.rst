@@ -1,5 +1,5 @@
-.. Generated from ../rtl/extras/cordic.vhdl on 2017-05-07 22:53:55.915668
-.. vhdl:package:: cordic
+.. Generated from ../rtl/extras/cordic.vhdl on 2017-07-02 23:54:29.922988
+.. vhdl:package:: extras.cordic
 
 
 Types
@@ -8,6 +8,7 @@ Types
 
 .. vhdl:type:: cordic_mode
 
+  Rotation or vector mode selection.
 
 Components
 ----------
@@ -45,31 +46,32 @@ cordic_pipelined
 
 .. vhdl:entity:: cordic_pipelined
 
-
-
-  :generic SIZE: 
+  CORDIC with pipeline registers between each stage.
+  
+  :generic SIZE: Width of operands
   :gtype SIZE: positive
-  :generic ITERATIONS: 
+  :generic ITERATIONS: Number of iterations for CORDIC algorithm
   :gtype ITERATIONS: positive
-  :generic RESET_ACTIVE_LEVEL: 
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock: 
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset: 
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Mode: 
+  :port Mode: Rotation or vector mode selection
   :ptype Mode: in cordic_mode
-  :port X: 
+  :port X: X coordinate
   :ptype X: in signed(SIZE-1 downto 0)
-  :port Y: 
+  :port Y: Y coordinate
   :ptype Y: in signed(SIZE-1 downto 0)
-  :port Z: 
+  :port Z: Z coordinate (angle in brads)
   :ptype Z: in signed(SIZE-1 downto 0)
-  :port X_result: 
+  :port X_result: X result
   :ptype X_result: out signed(SIZE-1 downto 0)
-  :port Y_result: 
+  :port Y_result: Y result
   :ptype Y_result: out signed(SIZE-1 downto 0)
-  :port Z_result: 
+  :port Z_result: Z result
   :ptype Z_result: out signed(SIZE-1 downto 0)
 
 cordic_sequential
@@ -88,9 +90,9 @@ cordic_sequential
     Clock : in std_ulogic;
     Reset : in std_ulogic;
     --# {{control|}}
-    Load : in std_ulogic;
-    Done : out std_ulogic;
-    Almost_done : out std_ulogic;
+    Data_valid : in std_ulogic;
+    Busy : out std_ulogic;
+    Result_valid : out std_ulogic;
     Mode : in cordic_mode;
     --# {{data|}}
     X : in signed(SIZE-1 downto 0);
@@ -107,37 +109,38 @@ cordic_sequential
 
 .. vhdl:entity:: cordic_sequential
 
-
-
-  :generic SIZE: 
+  CORDIC with a single stage applied iteratively.
+  
+  :generic SIZE: Width of operands
   :gtype SIZE: positive
-  :generic ITERATIONS: 
+  :generic ITERATIONS: Number of iterations for CORDIC algorithm
   :gtype ITERATIONS: positive
-  :generic RESET_ACTIVE_LEVEL: 
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock: 
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset: 
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Load: 
-  :ptype Load: in std_ulogic
-  :port Done: 
-  :ptype Done: out std_ulogic
-  :port Almost_done: 
-  :ptype Almost_done: out std_ulogic
-  :port Mode: 
+  :port Data_valid: Load new input data
+  :ptype Data_valid: in std_ulogic
+  :port Busy: Generating new result
+  :ptype Busy: out std_ulogic
+  :port Result_valid: Flag when result is valid
+  :ptype Result_valid: out std_ulogic
+  :port Mode: Rotation or vector mode selection
   :ptype Mode: in cordic_mode
-  :port X: 
+  :port X: X coordinate
   :ptype X: in signed(SIZE-1 downto 0)
-  :port Y: 
+  :port Y: Y coordinate
   :ptype Y: in signed(SIZE-1 downto 0)
-  :port Z: 
+  :port Z: Z coordinate (angle in brads)
   :ptype Z: in signed(SIZE-1 downto 0)
-  :port X_result: 
+  :port X_result: X result
   :ptype X_result: out signed(SIZE-1 downto 0)
-  :port Y_result: 
+  :port Y_result: Y result
   :ptype Y_result: out signed(SIZE-1 downto 0)
-  :port Z_result: 
+  :port Z_result: Z result
   :ptype Z_result: out signed(SIZE-1 downto 0)
 
 cordic_flex_pipelined
@@ -173,33 +176,36 @@ cordic_flex_pipelined
 
 .. vhdl:entity:: cordic_flex_pipelined
 
-
-
-  :generic SIZE: 
+  CORDIC with pipelining implemented with register retiming.
+  This variant can be used to have more or fewer pipeline stages than
+  the number of iterations to fine tune performance and resource usage.
+  
+  :generic SIZE: Width of operands
   :gtype SIZE: positive
-  :generic ITERATIONS: 
+  :generic ITERATIONS: Number of iterations for CORDIC algorithm
   :gtype ITERATIONS: positive
-  :generic PIPELINE_STAGES: 
+  :generic PIPELINE_STAGES: Number of register stages
   :gtype PIPELINE_STAGES: natural
-  :generic RESET_ACTIVE_LEVEL: 
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock: 
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset: 
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Mode: 
+  :port Mode: Rotation or vector mode selection
   :ptype Mode: in cordic_mode
-  :port X: 
+  :port X: X coordinate
   :ptype X: in signed(SIZE-1 downto 0)
-  :port Y: 
+  :port Y: Y coordinate
   :ptype Y: in signed(SIZE-1 downto 0)
-  :port Z: 
+  :port Z: Z coordinate (angle in brads)
   :ptype Z: in signed(SIZE-1 downto 0)
-  :port X_result: 
+  :port X_result: X result
   :ptype X_result: out signed(SIZE-1 downto 0)
-  :port Y_result: 
+  :port Y_result: Y result
   :ptype Y_result: out signed(SIZE-1 downto 0)
-  :port Z_result: 
+  :port Z_result: Z result
   :ptype Z_result: out signed(SIZE-1 downto 0)
 
 sincos_pipelined
@@ -232,27 +238,28 @@ sincos_pipelined
 
 .. vhdl:entity:: sincos_pipelined
 
-
-
-  :generic SIZE: 
+  Compute Sine and Cosine with a pipelined CORDIC implementation.
+  
+  :generic SIZE: Width of operands
   :gtype SIZE: positive
-  :generic ITERATIONS: 
+  :generic ITERATIONS: Number of iterations for CORDIC algorithm
   :gtype ITERATIONS: positive
-  :generic FRAC_BITS: 
+  :generic FRAC_BITS: Total fractional bits
   :gtype FRAC_BITS: positive
-  :generic MAGNITUDE: 
+  :generic MAGNITUDE: Scale factor for vector length
   :gtype MAGNITUDE: real
-  :generic RESET_ACTIVE_LEVEL: 
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock: 
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset: 
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Angle: 
+  :port Angle: Angle in brads (2**SIZE brads = 2*pi radians)
   :ptype Angle: in signed(SIZE-1 downto 0)
-  :port Sin: 
+  :port Sin: Sine of Angle
   :ptype Sin: out signed(SIZE-1 downto 0)
-  :port Cos: 
+  :port Cos: Cosine of Angle
   :ptype Cos: out signed(SIZE-1 downto 0)
 
 sincos_sequential
@@ -273,9 +280,9 @@ sincos_sequential
     Clock : in std_ulogic;
     Reset : in std_ulogic;
     --# {{control|}}
-    Load : in std_ulogic;
-    Done : out std_ulogic;
-    Almost_done : out std_ulogic;
+    Data_valid : in std_ulogic;
+    Busy : out std_ulogic;
+    Result_valid : out std_ulogic;
     Angle : in signed(SIZE-1 downto 0);
     --# {{data|}}
     Sin : out signed(SIZE-1 downto 0);
@@ -288,111 +295,112 @@ sincos_sequential
 
 .. vhdl:entity:: sincos_sequential
 
-
-
-  :generic SIZE: 
+  Compute Sine and Cosine with a sequential CORDIC implementation.
+  
+  :generic SIZE: Width of operands
   :gtype SIZE: positive
-  :generic ITERATIONS: 
+  :generic ITERATIONS: Number of iterations for CORDIC algorithm
   :gtype ITERATIONS: positive
-  :generic FRAC_BITS: 
+  :generic FRAC_BITS: Total fractional bits
   :gtype FRAC_BITS: positive
-  :generic MAGNITUDE: 
+  :generic MAGNITUDE: Scale factor for vector length
   :gtype MAGNITUDE: real
-  :generic RESET_ACTIVE_LEVEL: 
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock: 
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset: 
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Load: 
-  :ptype Load: in std_ulogic
-  :port Done: 
-  :ptype Done: out std_ulogic
-  :port Almost_done: 
-  :ptype Almost_done: out std_ulogic
-  :port Angle: 
+  :port Data_valid: Load new input data
+  :ptype Data_valid: in std_ulogic
+  :port Busy: Generating new result
+  :ptype Busy: out std_ulogic
+  :port Result_valid: Flag when result is valid
+  :ptype Result_valid: out std_ulogic
+  :port Angle: Angle in brads (2**SIZE brads = 2*pi radians)
   :ptype Angle: in signed(SIZE-1 downto 0)
-  :port Sin: 
+  :port Sin: Sine of Angle
   :ptype Sin: out signed(SIZE-1 downto 0)
-  :port Cos: 
+  :port Cos: Cosine of Angle
   :ptype Cos: out signed(SIZE-1 downto 0)
 
 Subprograms
 -----------
 
 
-.. vhdl:function:: function cordic_gain(iterations : positive) return real;
+.. vhdl:function:: function cordic_gain(Iterations : positive) return real;
+
+   Compute vector length gain after applying CORDIC.
+  
+  :param Iterations: Number of iterations
+  :type Iterations: positive
+  :returns: Gain factor.
+  
 
 
+.. vhdl:procedure:: procedure adjust_angle(X : in signed; Y : in signed; Z : in signed; Xa : out signed; Ya : out signed; Za : out signed);
 
-  :param iterations: 
-  :type iterations: positive
-
-
-.. vhdl:procedure:: procedure adjust_angle(x : None; y : None; z : in signed; xa : None; ya : None; za : out signed);
-
-
-
-  :param x: 
-  :type x: None None
-  :param y: 
-  :type y: None None
-  :param z: 
-  :type z: in signed
-  :param xa: 
-  :type xa: None None
-  :param ya: 
-  :type ya: None None
-  :param za: 
-  :type za: out signed
+   Correct angle so that it lies in quadrant 1 or 4.
+  
+  :param X: X coordinate
+  :type X: in signed
+  :param Y: Y coordinate
+  :type Y: in signed
+  :param Z: Z coordinate (angle)
+  :type Z: in signed
+  :param Xa: Adjusted X coordinate
+  :type Xa: out signed
+  :param Ya: Adjusted Y coordinate
+  :type Ya: out signed
+  :param Za: Adjusted Z coordinate (angle)
+  :type Za: out signed
 
 
-.. vhdl:procedure:: procedure rotate(iterations : in integer; x : None; y : None; z : in signed; xr : None; yr : None; zr : out signed);
+.. vhdl:procedure:: procedure rotate(iterations : in integer; X : in signed; Y : in signed; Z : in signed; Xr : out signed; Yr : out signed; Zr : out signed);
+
+   Apply a single iteration of CORDIC rotation mode.
+  
+  :param X: X coordinate
+  :type X: in signed
+  :param Y: Y coordinate
+  :type Y: in signed
+  :param Z: Z coordinate (angle)
+  :type Z: in signed
+  :param Xr: Rotated X coordinate
+  :type Xr: out signed
+  :param Yr: Rotated Y coordinate
+  :type Yr: out signed
+  :param Zr: Rotated Z coordinate (angle)
+  :type Zr: out signed
 
 
+.. vhdl:procedure:: procedure vector(iterations : in integer; X : in signed; Y : in signed; Z : in signed; Xr : out signed; Yr : out signed; Zr : out signed);
 
-  :param iterations: 
-  :type iterations: in integer
-  :param x: 
-  :type x: None None
-  :param y: 
-  :type y: None None
-  :param z: 
-  :type z: in signed
-  :param xr: 
-  :type xr: None None
-  :param yr: 
-  :type yr: None None
-  :param zr: 
-  :type zr: out signed
-
-
-.. vhdl:procedure:: procedure vector(iterations : in integer; x : None; y : None; z : in signed; xr : None; yr : None; zr : out signed);
+   Apply a single iteration of CORDIC vector mode.
+  
+  :param X: X coordinate
+  :type X: in signed
+  :param Y: Y coordinate
+  :type Y: in signed
+  :param Z: Z coordinate (angle)
+  :type Z: in signed
+  :param Xr: Vectored X coordinate
+  :type Xr: out signed
+  :param Yr: Vectored Y coordinate
+  :type Yr: out signed
+  :param Zr: Vectored Z coordinate (angle)
+  :type Zr: out signed
 
 
+.. vhdl:function:: function effective_fractional_bits(Iterations : positive; Frac_bits : positive) return real;
 
-  :param iterations: 
-  :type iterations: in integer
-  :param x: 
-  :type x: None None
-  :param y: 
-  :type y: None None
-  :param z: 
-  :type z: in signed
-  :param xr: 
-  :type xr: None None
-  :param yr: 
-  :type yr: None None
-  :param zr: 
-  :type zr: out signed
-
-
-.. vhdl:function:: function effective_fractional_bits(iterations : None; frac_bits : positive) return real;
-
-
-
-  :param iterations: 
-  :type iterations: None
-  :param frac_bits: 
-  :type frac_bits: positive
+   Compute the number of usable fractional bits in CORDIC result.
+  
+  :param Iterations: Number of CORDIC iterations
+  :type Iterations: positive
+  :param Frac_bits: Fractional bits in the input coordinates
+  :type Frac_bits: positive
+  :returns: Effective number of fractional bits.
+  
 

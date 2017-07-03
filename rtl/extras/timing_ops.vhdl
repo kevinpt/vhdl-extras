@@ -58,7 +58,7 @@
 --#  result that is different from what would be expected assuming infinite
 --#  precision. The magnitude of any errors will depend on how close the
 --#  converted time is to the clock period. To assist in controlling the
---#  errors, a rounding_style parameter is available on all forms of
+--#  errors, a time_rounding parameter is available on all forms of
 --#  to_clock_cycles that use real as an intermediate type for the calculation.
 --#  It is set by default to round up toward infinity in anticipation that
 --#  these functions will most often be used to compute the minium number of
@@ -119,10 +119,14 @@ package timing_ops is
     round_neginf   -- Round down to -infinity
   );
 
-  --## Default rounding mode.
+  --## Default rounding mode. Round to nearest.
   constant TIME_ROUND_STYLE : time_rounding := round_nearest;
 
   --## Get the current simulation time resolution.
+  --# Example:
+  --#   variable min_time : time := resolution_limit;
+  --#   ...
+  --#   wait for min_time;
   function resolution_limit return delay_length;
 
   --## Convert time to real time.
@@ -130,6 +134,9 @@ package timing_ops is
   --#   Tval: Time to convert
   --# Returns:
   --#   Time converted to a real in units of seconds.
+  --# Example:
+  --#   variable rtime : real;
+  --#   rtime := to_real(now);
   function to_real( Tval : time ) return real;
 
   --## Convert real time to time.
@@ -137,6 +144,9 @@ package timing_ops is
   --#   Rval: Time to convert
   --# Returns:
   --#   Real converted to time.
+  --# Example:
+  --#   variable itime : time;
+  --#   itime := to_time(1.0e-6);
   function to_time( Rval : real ) return time;
 
   --## Convert frequency to period.
@@ -144,6 +154,9 @@ package timing_ops is
   --#   Freq: Frequency to convert
   --# Returns:
   --#   Inverse of the frequency.
+  --# Example:
+  --#   variable period : delay_length;
+  --#   period := to_period(10 MHz);
   function to_period( Freq : frequency ) return delay_length;
 
   --## Convert real frequency to period.
@@ -151,6 +164,9 @@ package timing_ops is
   --#   Freq: Frequency to convert
   --# Returns:
   --#   Inverse of the frequency.
+  --# Example:
+  --#   variable period : delay_length;
+  --#   period := to_period(10.0e6);
   function to_period( Freq : real ) return delay_length;
 
 
@@ -159,6 +175,9 @@ package timing_ops is
   --#   Freq: Frequency to convert
   --# Returns:
   --#   Real frequency.
+  --# Example:
+  --#   variable rfreq : real;
+  --#   rfreq := to_real(10 MHz);
   function to_real( Freq : frequency ) return real;
 
 
@@ -167,6 +186,9 @@ package timing_ops is
   --#   Period: Period to convert
   --# Returns:
   --#   Inverse of the period.
+  --# Example:
+  --#   variable freq : frequency;
+  --#   freq := to_frequency(1 us);
   function to_frequency( Period : delay_length ) return frequency;
 
   --## Convert real period to frequency.
@@ -174,6 +196,9 @@ package timing_ops is
   --#   Period: Period to convert
   --# Returns:
   --#   Inverse of the period.
+  --# Example:
+  --#   variable freq : frequency;
+  --#   freq := to_frequency(1.0e-6);
   function to_frequency( Period : real ) return frequency;
 
 
@@ -366,7 +391,7 @@ package body timing_ops is
 -- =================
 
 
-  --## Get the current simulation time resolution
+  --## Get the current simulation time resolution.
   function resolution_limit return delay_length is
     variable tr : time_resolution;
   begin

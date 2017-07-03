@@ -124,141 +124,190 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 package cordic is
+
+  --# Rotation or vector mode selection.
   type cordic_mode is (cordic_rotate, cordic_vector);
 
+  --## CORDIC with pipeline registers between each stage.
   component cordic_pipelined is
     generic (
-      SIZE               : positive;
-      ITERATIONS         : positive;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      SIZE               : positive; --# Width of operands
+      ITERATIONS         : positive; --# Number of iterations for CORDIC algorithm
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
       --# {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic;
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
       --# {{control|}}
-      Mode  : in cordic_mode;
+      Mode  : in cordic_mode; --# Rotation or vector mode selection
 
       --# {{data|}}
-      X : in signed(SIZE-1 downto 0);
-      Y : in signed(SIZE-1 downto 0);
-      Z : in signed(SIZE-1 downto 0);
+      X : in signed(SIZE-1 downto 0); --# X coordinate
+      Y : in signed(SIZE-1 downto 0); --# Y coordinate
+      Z : in signed(SIZE-1 downto 0); --# Z coordinate (angle in brads)
 
-      X_result : out signed(SIZE-1 downto 0);
-      Y_result : out signed(SIZE-1 downto 0);
-      Z_result : out signed(SIZE-1 downto 0)
+      X_result : out signed(SIZE-1 downto 0); --# X result
+      Y_result : out signed(SIZE-1 downto 0); --# Y result
+      Z_result : out signed(SIZE-1 downto 0)  --# Z result
     );
   end component;
 
+  --## CORDIC with a single stage applied iteratively.
   component cordic_sequential is
     generic (
-      SIZE               : positive;
-      ITERATIONS         : positive;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      SIZE               : positive; --# Width of operands
+      ITERATIONS         : positive; --# Number of iterations for CORDIC algorithm
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
       --# {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic;
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
       --# {{control|}}
-      Load : in std_ulogic;
-      Done : out std_ulogic;
-      Mode : in cordic_mode;
+      Data_valid   : in std_ulogic;  --# Load new input data
+      Busy         : out std_ulogic; --# Generating new result
+      Result_valid : out std_ulogic; --# Flag when result is valid
+      Mode         : in cordic_mode; --# Rotation or vector mode selection
 
       --# {{data|}}
-      X : in signed(SIZE-1 downto 0);
-      Y : in signed(SIZE-1 downto 0);
-      Z : in signed(SIZE-1 downto 0);
+      X : in signed(SIZE-1 downto 0); --# X coordinate
+      Y : in signed(SIZE-1 downto 0); --# Y coordinate
+      Z : in signed(SIZE-1 downto 0); --# Z coordinate (angle in brads)
 
-      X_result : out signed(SIZE-1 downto 0);
-      Y_result : out signed(SIZE-1 downto 0);
-      Z_result : out signed(SIZE-1 downto 0)
+      X_result : out signed(SIZE-1 downto 0); --# X result
+      Y_result : out signed(SIZE-1 downto 0); --# Y result
+      Z_result : out signed(SIZE-1 downto 0)  --# Z result
     );
   end component;
 
+      
+  --## CORDIC with pipelining implemented with register retiming.
+  --#  This variant can be used to have more or fewer pipeline stages than
+  --#  the number of iterations to fine tune performance and resource usage.
   component cordic_flex_pipelined is
     generic (
-      SIZE               : positive;
-      ITERATIONS         : positive;
-      PIPELINE_STAGES    : natural;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      SIZE               : positive; --# Width of operands
+      ITERATIONS         : positive; --# Number of iterations for CORDIC algorithm
+      PIPELINE_STAGES    : natural;  --# Number of register stages
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
       --# {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic;
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
       --# {{control|}}
-      Mode  : in cordic_mode;
+      Mode  : in cordic_mode; --# Rotation or vector mode selection
 
       --# {{data|}}
-      X : in signed(SIZE-1 downto 0);
-      Y : in signed(SIZE-1 downto 0);
-      Z : in signed(SIZE-1 downto 0);
+      X : in signed(SIZE-1 downto 0); --# X coordinate
+      Y : in signed(SIZE-1 downto 0); --# Y coordinate
+      Z : in signed(SIZE-1 downto 0); --# Z coordinate (angle in brads)
 
-      X_result : out signed(SIZE-1 downto 0);
-      Y_result : out signed(SIZE-1 downto 0);
-      Z_result : out signed(SIZE-1 downto 0)
+      X_result : out signed(SIZE-1 downto 0); --# X result
+      Y_result : out signed(SIZE-1 downto 0); --# Y result
+      Z_result : out signed(SIZE-1 downto 0)  --# Z result
     );
   end component;
 
+  --## Compute Sine and Cosine with a pipelined CORDIC implementation.
   component sincos_pipelined is
     generic (
-      SIZE       : positive;       -- Width of parameters
-      ITERATIONS : positive; -- Number of CORDIC iterations
-      FRAC_BITS  : positive;  -- Total fractional bits
-      MAGNITUDE  : real := 1.0;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      SIZE       : positive;    --# Width of operands
+      ITERATIONS : positive;    --# Number of iterations for CORDIC algorithm
+      FRAC_BITS  : positive;    --# Total fractional bits
+      MAGNITUDE  : real := 1.0; --# Scale factor for vector length
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
       --# {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic;
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
       --# {{control|}}
-      Angle : in signed(SIZE-1 downto 0); -- Angle in brads (2**SIZE brads = 2*pi radians)
+      Angle : in signed(SIZE-1 downto 0); --# Angle in brads (2**SIZE brads = 2*pi radians)
 
       --# {{data|}}
-      Sin   : out signed(SIZE-1 downto 0);  -- Sine of Angle
-      Cos   : out signed(SIZE-1 downto 0)   -- Cosine of Angle
+      Sin   : out signed(SIZE-1 downto 0);  --# Sine of Angle
+      Cos   : out signed(SIZE-1 downto 0)   --# Cosine of Angle
     );
   end component;
 
+  --## Compute Sine and Cosine with a sequential CORDIC implementation.
   component sincos_sequential is
     generic (
-      SIZE       : positive;
-      ITERATIONS : positive;
-      FRAC_BITS  : positive;
-      MAGNITUDE  : real := 1.0;
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      SIZE       : positive;    --# Width of operands
+      ITERATIONS : positive;    --# Number of iterations for CORDIC algorithm
+      FRAC_BITS  : positive;    --# Total fractional bits
+      MAGNITUDE  : real := 1.0; --# Scale factor for vector length
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
       --# {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic;
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
       --# {{control|}}
-      Load : in std_ulogic;
-      Done : out std_ulogic;
+      Data_valid   : in std_ulogic;  --# Load new input data
+      Busy         : out std_ulogic; --# Generating new result
+      Result_valid : out std_ulogic; --# Flag when result is valid
 
-      Angle : in signed(SIZE-1 downto 0);
+      Angle : in signed(SIZE-1 downto 0); --# Angle in brads (2**SIZE brads = 2*pi radians)
 
       --# {{data|}}
-      Sin : out signed(SIZE-1 downto 0);
-      Cos : out signed(SIZE-1 downto 0)
+      Sin : out signed(SIZE-1 downto 0); --# Sine of Angle
+      Cos : out signed(SIZE-1 downto 0)  --# Cosine of Angle
     );
   end component;
 
+  --## Compute vector length gain after applying CORDIC.
+  --# Args:
+  --#  Iterations : Number of iterations
+  --# Returns:
+  --#  Gain factor.
+  function cordic_gain(Iterations : positive) return real;
 
-  function cordic_gain(iterations : positive) return real;
-  procedure adjust_angle(x, y, z : in signed; signal xa, ya, za : out signed);
 
-  procedure rotate(iterations : in integer; x, y, z : in signed; signal xr, yr, zr : out signed);
-  procedure vector(iterations : in integer; x, y, z : in signed; signal xr, yr, zr : out signed);
+  --## Correct angle so that it lies in quadrant 1 or 4.
+  --# Args:
+  --#  X : X coordinate
+  --#  Y : Y coordinate
+  --#  Z : Z coordinate (angle)
+  --#  Xa : Adjusted X coordinate
+  --#  Ya : Adjusted Y coordinate
+  --#  Za : Adjusted Z coordinate (angle)
+  procedure adjust_angle(X, Y, Z : in signed; signal Xa, Ya, Za : out signed);
 
-  function effective_fractional_bits(iterations, frac_bits : positive) return real;
+  --## Apply a single iteration of CORDIC rotation mode.
+  --# Args:
+  --#  X : X coordinate
+  --#  Y : Y coordinate
+  --#  Z : Z coordinate (angle)
+  --#  Xr : Rotated X coordinate
+  --#  Yr : Rotated Y coordinate
+  --#  Zr : Rotated Z coordinate (angle)
+  procedure rotate(iterations : in integer; X, Y, Z : in signed; signal Xr, Yr, Zr : out signed);
+
+  --## Apply a single iteration of CORDIC vector mode.
+  --# Args:
+  --#  X : X coordinate
+  --#  Y : Y coordinate
+  --#  Z : Z coordinate (angle)
+  --#  Xr : Vectored X coordinate
+  --#  Yr : Vectored Y coordinate
+  --#  Zr : Vectored Z coordinate (angle)
+  procedure vector(iterations : in integer; X, Y, Z : in signed; signal Xr, Yr, Zr : out signed);
+
+  --## Compute the number of usable fractional bits in CORDIC result.
+  --# Args:
+  --#  Iterations: Number of CORDIC iterations
+  --#  Frac_bits:  Fractional bits in the input coordinates
+  --# Returns:
+  --#  Effective number of fractional bits.
+  function effective_fractional_bits(Iterations, Frac_bits : positive) return real;
 end package;
 
 library ieee;
@@ -275,6 +324,7 @@ package body cordic is
     end loop;
     return g;
   end function;
+  
 
   --## Adjust points in the left half of the X-Y plane so that they will
   --#  lie within the +/-99.7 degree convergence zone of CORDIC on the right
@@ -593,9 +643,10 @@ entity cordic_sequential is
     Clock : in std_ulogic;
     Reset : in std_ulogic;
 
-    Load : in std_ulogic;
-    Done : out std_ulogic;
-    Mode : in cordic_mode;
+    Data_valid   : in std_ulogic;  --# Load new input data
+    Busy         : out std_ulogic; --# Generating new result
+    Result_valid : out std_ulogic; --# Flag when result is valid
+    Mode         : in cordic_mode; --# Rotation or vector mode selection
 
     X : in signed(SIZE-1 downto 0);
     Y : in signed(SIZE-1 downto 0);
@@ -642,14 +693,16 @@ begin
       yr <= (others => '0');
       zr <= (others => '0');
       cur_iter <= 0;
-      Done <= '0';
+      Result_valid <= '0';
+      Busy <= '0';
     elsif rising_edge(Clock) then
-      if Load = '1' then
+      if Data_valid = '1' then
         xr <= X;
         yr <= Y;
         zr <= Z;
         cur_iter <= 0;
-        Done <= '0';
+        Result_valid <= '0';
+        Busy <= '1';
       else
         if cur_iter /= ITERATIONS then
         --if cur_iter(ITERATIONS) /= '1' then
@@ -675,7 +728,8 @@ begin
         end if;
 
         if cur_iter = ITERATIONS-1 then
-          Done <= '1';
+          Result_valid <= '1';
+          Busy <= '0';
         end if;
       end if;
 
@@ -713,8 +767,9 @@ entity sincos_sequential is
     Clock : in std_ulogic;
     Reset : in std_ulogic;
 
-    Load  : in std_ulogic;  -- Start processing a new angle value
-    Done  : out std_ulogic; -- Indicates when iterations are complete
+    Data_valid   : in std_ulogic;  --# Load new input data
+    Busy         : out std_ulogic; --# Generating new result
+    Result_valid : out std_ulogic; --# Flag when result is valid
 
     Angle : in signed(SIZE-1 downto 0); -- Angle in brads (2**SIZE brads = 2*pi radians)
 
@@ -725,7 +780,7 @@ end entity;
 
 architecture rtl of sincos_sequential is
   signal xa, ya, za, x_result, y_result : signed(Angle'range);
-  signal done_loc : std_ulogic;
+  signal rv_loc : std_ulogic;
 begin
 
   adj: process(Clock, Reset) is
@@ -752,8 +807,9 @@ begin
     ) port map (
       Clock => Clock,
       Reset => Reset,
-      Load => Load,
-      Done => done_loc,
+      Data_valid => Data_valid,
+      Result_valid => rv_loc,
+      Busy => Busy,
       Mode => cordic_rotate,
 
       X => xa,
@@ -765,16 +821,17 @@ begin
       Z_result => open
     );
 
-  Done <= done_loc;
-
   -- Capture the sin and cos when iteration is done
   reg: process(Clock, Reset) is
   begin
     if Reset = RESET_ACTIVE_LEVEL then
       Cos <= (others => '0');
       Sin <= (others => '0');
+      Result_valid <= '0';
     elsif rising_edge(Clock) then
-      if done_loc = '1' then
+      Result_valid <= rv_loc;
+
+      if rv_loc = '1' then -- Capture result
         Cos <= x_result;
         Sin <= y_result;
       end if;

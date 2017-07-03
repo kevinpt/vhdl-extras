@@ -14,13 +14,13 @@ Description
 
 This package provides functions and components for performing conversion
 between binary and packed Binary Coded Decimal (BCD). The functions
-:vhdl:func:`~bcd_conversion.to_bcd` and :vhdl:func:`~bcd_conversion.to_binary`
+:vhdl:func:`~extras.bcd_conversion.to_bcd` and :vhdl:func:`~extras.bcd_conversion.to_binary`
 can be used to create synthesizable combinational
 logic for performing a conversion. In synthesized code they are best used
 with shorter arrays comprising only a few digits. For larger numbers, the
-components :vhdl:entity:`~bcd_conversion.binary_to_bcd` and
-:vhdl:entity:`~bcd_conversion.bcd_to_binary` can be used to perform a
-conversion over multiple clock cycles. The utility function :vhdl:func:`~bcd_conversion.decimal_size`
+components :vhdl:entity:`~extras.bcd_conversion.binary_to_bcd` and
+:vhdl:entity:`~extras.bcd_conversion.bcd_to_binary` can be used to perform a
+conversion over multiple clock cycles. The utility function :vhdl:func:`~extras.bcd_conversion.decimal_size`
 can be used to determine the number of decimal digits in a BCD array. Its
 result must be multiplied by 4 to get the length of a packed BCD array.
 

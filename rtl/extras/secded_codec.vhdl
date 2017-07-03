@@ -8,7 +8,6 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# secded_codec.vhdl - Synthesizable SECDED encoder/decoder component
---# $Id:$
 --# Freely available from VHDL-extras (http://github.com/kevinpt/vhdl-extras)
 --#
 --# Copyright © 2010 Kevin Thibedeau
@@ -45,7 +44,7 @@
 --#  internal logic. To be effective, you must activate the retiming feature of
 --#  the synthesis tool being used. See the notes in pipelining.vhdl for more
 --#  information on how to accomplish this. The pipelining is controlled with
---#  the PIPELINE_STAGES generic.
+--#  the PIPELINE_STAGES generic. A value of 0 will disable pipelining.
 --#
 --#  To facilitate testing, the codec includes an error generator that can
 --#  insert single-bit and double-bit errors into the encoded output. When
@@ -63,12 +62,17 @@ use extras.secded_edac.secded_indices;
 package secded_codec_pkg is
 
   -- Coded_mode constants
+  --# Select encoding mode
   constant CODEC_ENCODE : std_ulogic := '0';
+  --# Select decoding mode
   constant CODEC_DECODE : std_ulogic := '1';
 
   -- Insert_error constants
+  --# No error injection
   constant INSERT_NONE   : std_ulogic_vector := "00";
+  --# Single-bit error injection
   constant INSERT_SINGLE : std_ulogic_vector := "01";
+  --# Double-bit error injection
   constant INSERT_DOUBLE : std_ulogic_vector := "10";
 
   component secded_codec is

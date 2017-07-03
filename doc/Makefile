@@ -41,6 +41,11 @@ help:
 clean:
 	-rm -rf $(BUILDDIR)/*
 
+autodoc: 
+	vhdl-autodoc -i ../rtl/extras  -o rst/modules/auto -L extras -f
+	vhdl-autodoc -i ../rtl/extras_2008 -o rst/modules/auto -L extras_2008 -f
+	symbolator -L ../rtl/extras -L ../rtl/extras_2008 -s data_types.dat
+
 gh-pages: html
 	cp -r $(BUILDDIR)/html/* ../../vhdl-extras-html
 

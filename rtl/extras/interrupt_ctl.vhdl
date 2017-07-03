@@ -36,15 +36,17 @@
 --# DESCRIPTION:
 --#  This package provides a general purpose interrupt controller that handles
 --#  the management of multiple interrupt sources. It uses unconstrained arrays
---#  to specify the interrupt vector signals. It can be sized as needed to suit
---#  required number of interrupts.
+--#  to specify the interrupt vector signals. It can thus be sized as needed to
+--#  suit required number of interrupts.
 --#
 --#  The priority of the interrupts is fixed with the lowest index having the
---#  higest priority. You can use ascending or descending ranges for the
+--#  highest priority. You can use ascending or descending ranges for the
 --#  control vectors. Multiple pending interrupts are serviced from highest to
 --#  lowest priority. If a higher priority interrupt arrives when a lower
 --#  priority interrupt is currently in service, the higher priority interrupt
---#  takes effect after the lower interrupt is acknowledged.
+--#  takes effect after the lower interrupt is acknowledged. If you disable a
+--#  pending interrupt with its mask it will not return after reenabling the
+--#  mask bit until the next interrupt arrives.
 --#
 --#  EXAMPLE USAGE:
 --#
@@ -59,13 +61,14 @@
 --#      Clock => clock,
 --#      Reset => reset,
 --#
---#      Int_mask    => int_mask,     -- Mask to enable/disable interrupts
---#      Int_request => int_request,  -- Interrupt sources
---#      Pending     => pending_int,  -- Current set of pending interrupts
---#      Current     => current_int,  -- Vector identifying which interrupt is active
+--#      Int_mask    => int_mask,      -- Mask to enable/disable interrupts
+--#      Int_request => int_request,   -- Interrupt sources
+--#      Pending     => pending_int,   -- Current set of pending interrupts
+--#      Current     => current_int,   -- Vector identifying which interrupt is active
 --#
---#      Interrupt   => interrupt,    -- Signal when an interrupt is pending
---#      Acknowledge => interrupt_ack -- Acknowledge the interrupt has been serviced
+--#      Interrupt     => interrupt,     -- Signal when an interrupt is pending
+--#      Acknowledge   => interrupt_ack, -- Acknowledge the interrupt has been serviced
+--#      Clear_pending => clear_pending  -- Optional control to clear all
 --#    );
 --#
 --#  -- Assemble interrupt sources into a request vector
@@ -81,23 +84,27 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 package interrupt_ctl_pkg is
+
+
+  --## Priority interrupt controller.
   component interrupt_ctl is
     generic (
-      RESET_ACTIVE_LEVEL : std_ulogic := '1'
+      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
-      -- {{clocks|}}
-      Clock : in std_ulogic;
-      Reset : in std_ulogic;
+      --# {{clocks|}}
+      Clock : in std_ulogic; --# System clock
+      Reset : in std_ulogic; --# Asynchronous reset
 
-      -- {{control|}}
-      Int_mask    : in std_ulogic_vector;  -- Set bits correspond to active interrupts
-      Int_request : in std_ulogic_vector;  -- Controls used to activate new interrupts
-      Pending     : out std_ulogic_vector; -- Set bits indicate which interrupts are pending
-      Current     : out std_ulogic_vector; -- Single set bit for the active interrupt
+      --# {{control|}}
+      Int_mask    : in std_ulogic_vector;  --# Set bits correspond to active interrupts
+      Int_request : in std_ulogic_vector;  --# Controls used to activate new interrupts
+      Pending     : out std_ulogic_vector; --# Set bits indicate which interrupts are pending
+      Current     : out std_ulogic_vector; --# Single set bit for the active interrupt
 
-      Interrupt   : out std_ulogic; -- Flag indicating when an interrupt is pending
-      Acknowledge : in std_ulogic   -- Clear the active interupt
+      Interrupt     : out std_ulogic; --# Flag indicating when an interrupt is pending
+      Acknowledge   : in std_ulogic;  --# Clear the active interupt
+      Clear_pending : in std_ulogic   --# Clear all pending interrupts
     );
   end component;
 end package;
@@ -108,19 +115,22 @@ use ieee.std_logic_1164.all;
 
 entity interrupt_ctl is
   generic (
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
   );
   port (
-    Clock : in std_ulogic;
-    Reset : in std_ulogic;
+    --# {{clocks|}}
+    Clock : in std_ulogic; --# System clock
+    Reset : in std_ulogic; --# Asynchronous reset
 
-    Int_mask    : in std_ulogic_vector;  -- Set bits correspond to active interrupts
-    Int_request : in std_ulogic_vector;  -- Controls used to activate new interrupts
-    Pending     : out std_ulogic_vector; -- Set bits indicate which interrupts are pending
-    Current     : out std_ulogic_vector; -- Single set bit for the active interrupt
+    --# {{control|}}
+    Int_mask    : in std_ulogic_vector;  --# Set bits correspond to active interrupts
+    Int_request : in std_ulogic_vector;  --# Controls used to activate new interrupts
+    Pending     : out std_ulogic_vector; --# Set bits indicate which interrupts are pending
+    Current     : out std_ulogic_vector; --# Single set bit for the active interrupt
 
-    Interrupt   : out std_ulogic; -- Flag indicating when an interrupt is pending
-    Acknowledge : in std_ulogic   -- Clear the active interupt
+    Interrupt     : out std_ulogic; --# Flag indicating when an interrupt is pending
+    Acknowledge   : in std_ulogic;  --# Clear the active interupt
+    Clear_pending : in std_ulogic   --# Clear all pending interrupts
   );
 end entity;
 
@@ -192,9 +202,11 @@ begin
       interrupt_loc <= '0';
     elsif rising_edge(Clock) then
 
-      if Acknowledge = '1' then
+      if Clear_pending = '1' then -- Clear all
+        clear_int_n := (others => '0');
+      elsif Acknowledge = '1' then -- Clear the pending interrupt
         clear_int_n := not current_loc;
-      else
+      else -- Clear nothing
         clear_int_n := (others => '1');
       end if;
 
@@ -205,7 +217,6 @@ begin
 
       -- Determine the active interrupt from among those pending
       current_v := priority_decode(pending_v);
-      --current_loc <= current_v;
 
       -- Flag when any active interrupt is pending
       interrupt_v := or_reduce(current_v);

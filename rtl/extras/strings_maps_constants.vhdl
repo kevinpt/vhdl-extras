@@ -45,23 +45,52 @@ use extras.strings_maps.all;
 
 package strings_maps_constants is
 
+  --# No characters.
   constant NULL_SET : character_set := (others => false);
+  
+  --# Map all characters to themselves.
   constant IDENTITY : character_mapping;
 
+  --# Control characters.
   constant CONTROL_SET           : character_set;
+  
+  --# Graphical characters.
   constant GRAPHIC_SET           : character_set;
+  
+  --# Letters only.
   constant LETTER_SET            : character_set;
+  
+  --# Lower-case letters.
   constant LOWER_SET             : character_set;
+  
+  --# Upper-case letters.
   constant UPPER_SET             : character_set;
+  
+  --# Plain and accented letters.
   constant BASIC_SET             : character_set;
+  
+  --# Digits 0-9.
   constant DECIMAL_DIGIT_SET     : character_set;
+  
+  --# Hex digits 0-9 and A-F.
   constant HEXADECIMAL_DIGIT_SET : character_set;
+  
+  --# Letters and numbers.
   constant ALPHANUMERIC_SET      : character_set;
+  
+  --# Punctuation symbols.
   constant SPECIAL_SET           : character_set;
+  
+  --# ASCII subset of Latin-1.
   constant ISO_646_SET           : character_set;
 
+  --# Map letters to lower-case.
   constant LOWER_CASE_MAP : character_mapping;
+  
+  --# Map letters to upper-case.
   constant UPPER_CASE_MAP : character_mapping;
+  
+  --# Map accented characters to their basic form.
   constant BASIC_MAP      : character_mapping;
 
 end package;

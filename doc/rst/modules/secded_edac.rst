@@ -17,7 +17,7 @@ Description
 This package implements Single Error Correction, Double Error Detection
 (SECDED) by extending the Hamming code with an extra overall parity bit.
 It is built on top of the functions implemented in :doc:`hamming_edac`.
-The :vhdl:type:`~hamming_edac.ecc_vector` is extended with an additional
+The :vhdl:type:`~extras.hamming_edac.ecc_vector` is extended with an additional
 parity bit to the right of the Hamming parity as shown below.
 
 SECDED ``ecc_vector`` layout:

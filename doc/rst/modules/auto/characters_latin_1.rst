@@ -1,5 +1,5 @@
-.. Generated from ../rtl/extras/characters_latin_1.vhdl on 2017-05-07 22:53:56.333004
-.. vhdl:package:: characters_latin_1
+.. Generated from ../rtl/extras/characters_latin_1.vhdl on 2017-07-02 23:54:30.409575
+.. vhdl:package:: extras.characters_latin_1
 
 
 Constants

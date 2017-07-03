@@ -1,5 +1,5 @@
-.. Generated from ../rtl/extras/reg_file.vhdl on 2017-05-07 22:53:55.753467
-.. vhdl:package:: reg_file_pkg
+.. Generated from ../rtl/extras/reg_file.vhdl on 2017-07-02 23:54:29.755390
+.. vhdl:package:: extras.reg_file_pkg
 
 
 Types
@@ -16,7 +16,7 @@ Subtypes
 
 .. vhdl:subtype:: reg_word
 
-  Register word vector.
+  Register word vector. Modify this to use different word sizes.
 
 Components
 ----------
@@ -58,33 +58,33 @@ reg_file
 .. vhdl:entity:: reg_file
 
   Flexible register file with support for strobed outputs.
-
-
-  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
+  
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :generic DIRECT_READ_BIT_MASK:  Masks indicating which register bits are directly read
+  :generic DIRECT_READ_BIT_MASK: Masks indicating which register bits are directly read
   :gtype DIRECT_READ_BIT_MASK: reg_array
-  :generic STROBE_BIT_MASK:  Masks indicating which register bits clear themselves after a write of '1'
+  :generic STROBE_BIT_MASK: Masks indicating which register bits clear themselves after a write of '1'
   :gtype STROBE_BIT_MASK: reg_array
-  :generic REGISTER_INPUTS:  Register the input ports when true
+  :generic REGISTER_INPUTS: Register the input ports when true
   :gtype REGISTER_INPUTS: boolean
-  :port Clock:  System clock
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset:  Asynchronous reset
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Clear:  Initialize all registers to '0'
+  :port Clear: Initialize all registers to '0'
   :ptype Clear: in std_ulogic
-  :port Reg_sel:  Register address for write and read 
+  :port Reg_sel: Register address for write and read
   :ptype Reg_sel: in unsigned
-  :port We:  Write to selected register
+  :port We: Write to selected register
   :ptype We: in std_ulogic
-  :port Wr_data:  Write port
+  :port Wr_data: Write port
   :ptype Wr_data: in reg_word
-  :port Rd_data:  Read port
+  :port Rd_data: Read port
   :ptype Rd_data: out reg_word
-  :port Registers:  Register file contents
+  :port Registers: Register file contents
   :ptype Registers: out reg_array
-  :port Direct_read:  Read-only signals direct from external logic
+  :port Direct_read: Read-only signals direct from external logic
   :ptype Direct_read: in reg_array
-  :port Reg_written:  Status flags indicating when each register is written
+  :port Reg_written: Status flags indicating when each register is written
   :ptype Reg_written: out std_ulogic_vector

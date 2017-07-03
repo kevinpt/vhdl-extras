@@ -53,7 +53,7 @@ use extras.strings.all;
 use extras.strings_maps.all;
 
 package strings_unbounded is
-  --## Create a subtype of the textio line type to form a coupling between libraries
+  --## A subtype of the textio ``line`` type to form a coupling between libraries.
   subtype unbounded_string is line;
 
   --## Convert a string to unbounded_string.

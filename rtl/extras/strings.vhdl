@@ -41,9 +41,19 @@
 --------------------------------------------------------------------
 
 package strings is
+
+  --# Horizontal alignment.
   type alignment  is (left, right, center);
+  
+  --# End to truncate when result is too long.
   type truncation is (left, right, error);
+  
+  --# Inside or outside of a character set.
   type membership is (inside, outside);
+  
+  --# Scan direction.
   type direction  is (forward, backward);
+  
+  --# End to trim off.
   type trim_end   is (left, right, both);
 end strings;

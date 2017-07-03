@@ -1,5 +1,5 @@
-.. Generated from ../rtl/extras/binaryio.vhdl on 2017-05-07 22:53:55.764008
-.. vhdl:package:: binaryio
+.. Generated from ../rtl/extras/binaryio.vhdl on 2017-07-02 23:54:29.768723
+.. vhdl:package:: extras.binaryio
 
 
 Types
@@ -8,9 +8,14 @@ Types
 
 .. vhdl:type:: octet_file
 
+  File of 8-bit bytes.
 
 .. vhdl:type:: endianness
 
+  Endianness of multi-byte words.
+  
+  * little-endian = least significant octet first : 1234, 123, etc.
+  * big-endian    = most significant octet first  : 4321, 321, etc.
 
 Subprograms
 -----------
@@ -18,9 +23,8 @@ Subprograms
 
 .. vhdl:procedure:: procedure read(Fh : octet_file; Octet_order : endianness; Word : out unsigned);
 
-  Read binary data into an unsigned vector.
-
-
+   Read binary data into an unsigned vector.
+  
   :param Fh: File handle
   :type Fh: None octet_file
   :param Octet_order: Endianness of the octets
@@ -31,9 +35,8 @@ Subprograms
 
 .. vhdl:procedure:: procedure read(Fh : octet_file; Octet_order : endianness; Word : out signed);
 
-  Read binary data into a signed vector.
-
-
+   Read binary data into a signed vector.
+  
   :param Fh: File handle
   :type Fh: None octet_file
   :param Octet_order: Endianness of the octets
@@ -44,9 +47,8 @@ Subprograms
 
 .. vhdl:procedure:: procedure write(Fh : octet_file; Octet_order : endianness; Word : unsigned);
 
-  Write an unsigned vector to a file.
-
-
+   Write an unsigned vector to a file.
+  
   :param Fh: File handle
   :type Fh: None octet_file
   :param Octet_order: Endianness of the octets
@@ -57,13 +59,12 @@ Subprograms
 
 .. vhdl:procedure:: procedure write(Fh : octet_file; Octet_order : endianness; Word : signed);
 
-  Write a signed vector to a file.
-
-
+   Write a signed vector to a file.
+  
   :param Fh: File handle
   :type Fh: None octet_file
   :param Octet_order: Endianness of the octets
   :type Octet_order: None endianness
-  :param Word: Data to write into the file
+  :param Word: Data to write into the file. Will be sign extended if not a multiple of 8-bits.
   :type Word: None signed
 

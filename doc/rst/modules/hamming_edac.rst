@@ -14,7 +14,7 @@ Description
 
 This package provides functions that perform single-bit error detection
 and correction using Hamming code. Encoded data is represented in the
-:vhdl:type:`~hamming_edac.ecc_vector` type with the data preserved in normal sequence using array
+:vhdl:type:`~extras.hamming_edac.ecc_vector` type with the data preserved in normal sequence using array
 indices from data'length-1 downto 0. The Hamming parity bits p are
 represented in the encoded array as negative indices from -1 downto -p.
 The parity bits are sequenced with the most significant on the left (-1)
@@ -24,10 +24,10 @@ encoded array. These functions have no upper limit in the size of data
 they can handle. For practical reasons, these functions should not be used
 with less than four data bits.
 
-The layout of an :vhdl:type:`~hamming_edac.ecc_vector` is determined by its range. All objects of
+The layout of an :vhdl:type:`~extras.hamming_edac.ecc_vector` is determined by its range. All objects of
 this type must use a descending range with a positive upper bound and a
 negative lower bound. Note that the conversion function
-:vhdl:func:`~hamming_edac.to_ecc_vector` does
+:vhdl:func:`~extras.hamming_edac.to_ecc_vec` does
 not produce a result that meets this requirement so it should not be
 invoked directly as a parameter to a function expecting a proper
 ``ecc_vector``.
@@ -40,11 +40,11 @@ Hamming ``ecc_vector`` layout:
   [(data'length - 1) <-> 0] [-1 <-> -parity_size]
             data               Hamming parity
 
-The output from :vhdl:func:`~hamming_edac.hamming_encode` produces an ``ecc_vector`` with this layout.
+The output from :vhdl:func:`~extras.hamming_edac.hamming_encode` produces an ``ecc_vector`` with this layout.
 Depending on the hardware implementation it may be desirable to interleave
 the parity bits with the data to protect against certain failures that may
 go undetected when encoded data is distributed across multiple memory
-devices. Use :vhdl:func:`~hamming_edac.hamming_interleave` to perform this reordering of bits.
+devices. Use :vhdl:func:`~extras.hamming_edac.hamming_interleave` to perform this reordering of bits.
 
 Background
 ~~~~~~~~~~
@@ -97,11 +97,11 @@ Example usage
   corrected_word <= hamming_decode(hamming_word);
   if hamming_has_error(hamming_word) then ... -- check for error
 
-Note that :vhdl:func:`~hamming_edac.hamming_decode` and
-:vhdl:func:`~hamming_edac.hamming_has_error` will synthesize with some
+Note that :vhdl:func:`~extras.hamming_edac.hamming_decode` and
+:vhdl:func:`~extras.hamming_edac.hamming_has_error` will synthesize with some
 common logic. Use the alternate versions in conjunction with
-:vhdl:func:`~hamming_edac.hamming_interleave` and
-:vhdl:func:`~hamming_edac.hamming_parity` to conserve logic when both are used:
+:vhdl:func:`~extras.hamming_edac.hamming_interleave` and
+:vhdl:func:`~extras.hamming_edac.hamming_parity` to conserve logic when both are used:
 
 .. code-block:: vhdl
 

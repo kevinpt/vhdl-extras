@@ -66,8 +66,10 @@ use extras.strings_fixed;
 package strings_bounded is
   generic (MAX : positive); -- Maximum length of a bounded string
 
+  --# String length constrained to maximum length set by the ``MAX`` package generic.
   subtype length_range is natural range 0 to MAX;
 
+  --# Bounded string object.
   type bounded_string is record
     length : length_range;
     data   : string(1 to MAX);

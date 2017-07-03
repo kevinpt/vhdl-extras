@@ -64,6 +64,8 @@ package sizing is
   --#   b: Base for the logarithm
   --# Returns:
   --#   Approximate logarithm of n rounded down.
+  --# Example:
+  --#  size := floor_log(20, 2);
   function floor_log(n, b : positive) return natural;
 
   --## Compute the integer result of the function ceil(log(n)) where b is the base.
@@ -73,6 +75,8 @@ package sizing is
   --#   b: Base for the logarithm
   --# Returns:
   --#   Approximate logarithm of n rounded up.
+  --# Example:
+  --#  size := ceil_log(20, 2);
   function ceil_log(n, b : positive) return natural;
 
 

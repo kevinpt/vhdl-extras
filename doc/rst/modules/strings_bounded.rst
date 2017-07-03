@@ -8,7 +8,10 @@ strings_bounded
 Dependencies
 ------------
 
-:doc:`strings` :doc:`strings_maps` :doc:`strings_maps_constants` :doc:`strings_fixed`
+:doc:`strings`
+:doc:`strings_maps`
+:doc:`strings_maps_constants`
+:doc:`strings_fixed`
 
 
 Description
@@ -21,6 +24,10 @@ character mapping functions omitted because of VHDL limitations.
 This package requires support for VHDL-2008 package generics. The
 maximum size of a bounded string is established by instantiating a new
 package with the ``MAX`` generic set to the desired size.
+
+Unlike :doc:`fixed length strings <strings_fixed>` which must always be
+padded to their full length, bounded strings can have any length up to the
+maximum set when the package is instantiated.
 
 Example usage
 ~~~~~~~~~~~~~

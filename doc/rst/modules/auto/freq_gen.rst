@@ -1,5 +1,5 @@
-.. Generated from ../rtl/extras/freq_gen.vhdl on 2017-05-07 22:53:55.777661
-.. vhdl:package:: freq_gen_pkg
+.. Generated from ../rtl/extras/freq_gen.vhdl on 2017-07-02 23:54:29.781833
+.. vhdl:package:: extras.freq_gen_pkg
 
 
 Components
@@ -39,39 +39,39 @@ freq_gen
 
 .. vhdl:entity:: freq_gen
 
-
-
-  :generic SYS_FREQ: 
+  
+  :generic SYS_FREQ:
   :gtype SYS_FREQ: real
-  :generic DDFS_TOL: 
+  :generic DDFS_TOL:
   :gtype DDFS_TOL: real
-  :generic SIZE: 
+  :generic SIZE:
   :gtype SIZE: natural
-  :generic MIN_TGT_FREQ: 
+  :generic MIN_TGT_FREQ:
   :gtype MIN_TGT_FREQ: natural
-  :generic MAX_TGT_FREQ: 
+  :generic MAX_TGT_FREQ:
   :gtype MAX_TGT_FREQ: natural
-  :generic FREQ_SCALE: 
+  :generic FREQ_SCALE:
   :gtype FREQ_SCALE: natural
-  :generic MAGNITUDE: 
+  :generic MAGNITUDE:
   :gtype MAGNITUDE: real
-  :generic ITERATIONS: 
+  :generic ITERATIONS:
   :gtype ITERATIONS: positive
-  :port Clock: 
+  
+  :port Clock: None
   :ptype Clock: in std_ulogic
-  :port Reset: 
+  :port Reset: None
   :ptype Reset: in std_ulogic
-  :port Load_phase: 
+  :port Load_phase: None
   :ptype Load_phase: in std_ulogic
-  :port New_phase: 
+  :port New_phase: None
   :ptype New_phase: in unsigned
-  :port Dyn_freq: 
+  :port Dyn_freq: None
   :ptype Dyn_freq: in unsigned
-  :port Sin: 
+  :port Sin: None
   :ptype Sin: out signed(SIZE-1 downto 0)
-  :port Cos: 
+  :port Cos: None
   :ptype Cos: out signed(SIZE-1 downto 0)
-  :port Angle: 
+  :port Angle: None
   :ptype Angle: out signed(SIZE-1 downto 0)
 
 freq_gen_pipelined
@@ -107,37 +107,37 @@ freq_gen_pipelined
 
 .. vhdl:entity:: freq_gen_pipelined
 
-
-
-  :generic SYS_FREQ: 
+  
+  :generic SYS_FREQ:
   :gtype SYS_FREQ: real
-  :generic DDFS_TOL: 
+  :generic DDFS_TOL:
   :gtype DDFS_TOL: real
-  :generic SIZE: 
+  :generic SIZE:
   :gtype SIZE: natural
-  :generic MIN_TGT_FREQ: 
+  :generic MIN_TGT_FREQ:
   :gtype MIN_TGT_FREQ: natural
-  :generic MAX_TGT_FREQ: 
+  :generic MAX_TGT_FREQ:
   :gtype MAX_TGT_FREQ: natural
-  :generic FREQ_SCALE: 
+  :generic FREQ_SCALE:
   :gtype FREQ_SCALE: natural
-  :generic MAGNITUDE: 
+  :generic MAGNITUDE:
   :gtype MAGNITUDE: real
-  :generic ITERATIONS: 
+  :generic ITERATIONS:
   :gtype ITERATIONS: positive
-  :port Clock: 
+  
+  :port Clock: None
   :ptype Clock: in std_ulogic
-  :port Reset: 
+  :port Reset: None
   :ptype Reset: in std_ulogic
-  :port Load_phase: 
+  :port Load_phase: None
   :ptype Load_phase: in std_ulogic
-  :port New_phase: 
+  :port New_phase: None
   :ptype New_phase: in unsigned
-  :port Dyn_freq: 
+  :port Dyn_freq: None
   :ptype Dyn_freq: in unsigned
-  :port Sin: 
+  :port Sin: None
   :ptype Sin: out signed(SIZE-1 downto 0)
-  :port Cos: 
+  :port Cos: None
   :ptype Cos: out signed(SIZE-1 downto 0)
-  :port Angle: 
+  :port Angle: None
   :ptype Angle: out signed(SIZE-1 downto 0)

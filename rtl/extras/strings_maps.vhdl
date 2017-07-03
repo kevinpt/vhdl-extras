@@ -40,13 +40,16 @@
 
 package strings_maps is
 
+  --# Array of boolean flag bits indexed by ``character``.
   type character_set is array(character) of boolean;
 
+  --# Inclusive range of characters within the Latin-1 set.
   type character_range is record
     low : character;
     high : character;
   end record;
 
+  --# Collection of character ranges.
   type character_ranges is array( positive range <> ) of character_range;
 
   --%% Conversion between character sets and ranges
@@ -102,6 +105,7 @@ package strings_maps is
   function is_subset( elements : character_set; set : character_set ) return boolean;
   alias "<=" is is_subset[character_set, character_set return boolean];
 
+  --# Sequence of characters that compose a character set.
   subtype character_sequence is string;
 
   --%% Conversion between character sets and sequences
@@ -127,6 +131,7 @@ package strings_maps is
   --#  A sequence string with each character from the set.
   function to_sequence( set : character_set ) return character_sequence;
 
+  --# Mapping from one character to another.
   type character_mapping is array(character) of character;
 
   --## Look up the mapping for a character.

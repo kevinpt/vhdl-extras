@@ -8,7 +8,6 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# binaryio.vhdl - Procedures for binary file I/O
---# $Id:$
 --# Freely available from VHDL-extras (http://github.com/kevinpt/vhdl-extras)
 --#
 --# Copyright © 2010 Kevin Thibedeau
@@ -61,10 +60,13 @@ package binaryio is
   -- that read and write metadata to binary files of integer types
   alias octet is character;
 
+  --# File of 8-bit bytes.
   type octet_file is file of octet;
 
-  -- little-endian = least significant octet first : 1234, 123, etc.
-  -- big-endian    = most significant octet first  : 4321, 321, etc.
+  --# Endianness of multi-byte words.
+  --#
+  --# * little-endian = least significant octet first : 1234, 123, etc.
+  --# * big-endian    = most significant octet first  : 4321, 321, etc.
   type endianness is ( little_endian, big_endian );
 
   --%% Binary read and write procedures 
@@ -94,7 +96,7 @@ package binaryio is
   --# Args:
   --#  Fh:          File handle
   --#  Octet_order: Endianness of the octets
-  --#  Word:        Data to write into the file
+  --#  Word:        Data to write into the file. Will be sign extended if not a multiple of 8-bits.
   procedure write( file Fh : octet_file; Octet_order : endianness; Word : signed );
 
 end package;

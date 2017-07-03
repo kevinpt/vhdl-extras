@@ -10,13 +10,15 @@ muxing
 Dependencies
 ------------
 
-None
+:doc:`common_2008` (for muxing_2008)
 
 Description
 -----------
 
 A set of routines for creating parameterized multiplexers, decoders,
-and demultiplexers
+and demultiplexers. The VHDL-2008 version has an additional :vhdl:func:`~extras_2008.muxing.mux`
+function that can select from multi-bit inputs implemented in
+VHDL-2008 syntax.
 
 Example usage
 ~~~~~~~~~~~~~
@@ -36,6 +38,25 @@ Example usage
 
   d2 <= demux(m, sel, d2'length);
 
+Muxing vectors with VHDL-2008:
+
+.. code-block:: vhdl
+
+  library extras_2008;
+  use extras_2008.muxing.all;
+  use extras_2008.common.sulv_array;
+  
+  signal sel : unsigned(3 downto 0);
+  signal m : std_ulogic_vector(7 downto 0);
+  signal data : sulv_array(0 to 2**sel'length-1)(m'range);
+  ...
+  m <= mux(data, sel);
+
 
 .. include:: auto/muxing.rst
+
+VHDL-2008 variant
+-----------------
+
+.. include:: auto/muxing_2008.rst
 

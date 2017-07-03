@@ -1,5 +1,5 @@
-.. Generated from ../rtl/extras/glitch_filtering.vhdl on 2017-05-07 22:53:55.953247
-.. vhdl:package:: glitch_filtering
+.. Generated from ../rtl/extras/glitch_filtering.vhdl on 2017-07-02 23:54:29.971279
+.. vhdl:package:: extras.glitch_filtering
 
 
 Components
@@ -33,19 +33,19 @@ glitch_filter
 
   Basic glitch filter with a constant filter delay
   This version filters a single signal of std_ulogic
-
-
-  :generic FILTER_CYCLES:  Number of clock cycles to filter
+  
+  :generic FILTER_CYCLES: Number of clock cycles to filter
   :gtype FILTER_CYCLES: positive
-  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock:  System clock
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset:  Asynchronous reset
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Noisy:  Noisy input signal
+  :port Noisy: Noisy input signal
   :ptype Noisy: in std_ulogic
-  :port Filtered:  Filtered output
+  :port Filtered: Filtered output
   :ptype Filtered: out std_ulogic
 
 dynamic_glitch_filter
@@ -76,19 +76,19 @@ dynamic_glitch_filter
 
   Glitch filter with a dynamically alterable filter delay
   This version filters a single signal of std_ulogic  component dynamic_glitch_filter is
-
-
-  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
+  
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock:  System clock
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset:  Asynchronous reset
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Filter_cycles:  Number of clock cycles to filter
+  :port Filter_cycles: Number of clock cycles to filter
   :ptype Filter_cycles: in unsigned
-  :port Noisy:  Noisy input signal
+  :port Noisy: Noisy input signal
   :ptype Noisy: in std_ulogic
-  :port Filtered:  Filtered output
+  :port Filtered: Filtered output
   :ptype Filtered: out std_ulogic
 
 array_glitch_filter
@@ -118,19 +118,19 @@ array_glitch_filter
 
   Basic glitch filter with a constant filter delay
   This version filters an array of std_ulogic
-
-
-  :generic FILTER_CYCLES:  Number of clock cycles to filter
+  
+  :generic FILTER_CYCLES: Number of clock cycles to filter
   :gtype FILTER_CYCLES: positive
-  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock:  System clock
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset:  Asynchronous reset
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Noisy:  Noisy input signals
+  :port Noisy: Noisy input signals
   :ptype Noisy: in std_ulogic_vector
-  :port Filtered:  Filtered output
+  :port Filtered: Filtered output
   :ptype Filtered: out std_ulogic_vector
 
 dynamic_array_glitch_filter
@@ -161,17 +161,17 @@ dynamic_array_glitch_filter
 
   Glitch filter with a dynamically alterable filter delay
   This version filters an array of std_ulogic
-
-
-  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
+  
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock:  System clock
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset:  Asynchronous reset
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Filter_cycles:  Number of clock cycles to filter
+  :port Filter_cycles: Number of clock cycles to filter
   :ptype Filter_cycles: in unsigned
-  :port Noisy:  Noisy input signals
+  :port Noisy: Noisy input signals
   :ptype Noisy: in std_ulogic_vector
-  :port Filtered:  Filtered output
+  :port Filtered: Filtered output
   :ptype Filtered: out std_ulogic_vector

@@ -179,7 +179,7 @@ package fifos is
       );
   end component;
 
-  --# This is a dual port FIFO with the ability to drop partially accumulated data. Ths permits
+  --# This is a dual port FIFO with the ability to drop partially accumulated data. This permits
   --# you to take in data that may be corrupted and drop it if a trailing checksum or CRC is not valid.
   component packet_fifo is
     generic (

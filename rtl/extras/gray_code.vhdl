@@ -8,7 +8,6 @@
 --                            ===                                 --
 -----------------------------  =  ----------------------------------
 --# gray_code.vhdl - Functions for Gray code conversions
---# $Id:$
 --# Freely available from VHDL-extras (http://github.com/kevinpt/vhdl-extras)
 --#
 --# Copyright © 2010 Kevin Thibedeau

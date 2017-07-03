@@ -19,20 +19,20 @@ This package implements a set of generic FIFO components. There are three
 variants. All use the same basic interface for the read/write ports and
 status flags. The FIFOs have the following differences:
 
-:vhdl:entity:`~fifos.simple_fifo`
+:vhdl:entity:`~extras.fifos.simple_fifo`
   Basic minimal FIFO for use in a single clock domain. This
   component lacks the synchronizing logic needed for the
   other two FIFOs and will synthesize more compactly.
 
-:vhdl:entity:`~fifos.fifo`
+:vhdl:entity:`~extras.fifos.fifo`
   General FIFO with separate domains for read and write ports.
 
-:vhdl:entity:`~fifos.packet_fifo`
+:vhdl:entity:`~extras.fifos.packet_fifo`
   Extension of ``fifo`` component with ability to discard
   written data before it is read. Useful for managing
   packetized protocols with error detection at the end.
 
-All of these FIFOs use the dual_port_ram component from the memory package.
+All of these FIFOs use the :vhdl:entity:`~extras.memory.dual_port_ram` component from the memory package.
 Reads can be performed concurrently with writes. The dual_port_ram
 ``SYNC_READ`` generic is provided on the FIFO components to select between
 synchronous or asynchronous read ports. When ``SYNC_READ`` is false,
@@ -83,7 +83,7 @@ flags will not be delayed. i.e. a read when the FIFO contains one entry
 will assert the Empty flag one cycle later. Likewise, a write when the
 FIFO has one empty entry left will assert the Full flag one cycle later.
 
-The :vhdl:entity:`~fifos.simple_fifo` component always updates all of its status flags on the
+The :vhdl:entity:`~extras.fifos.simple_fifo` component always updates all of its status flags on the
 cycle after a read or write regardless of whether thay are asserted or
 deasserted. 
 
@@ -93,7 +93,7 @@ leaving them unconnected (open) if they are not needed in a design.
 Similarly, if the thresholds are connected to constants rather than
 signals, the comparison logic will be reduced during synthesis.
 
-The :vhdl:entity:`~fifos.packet_fifo` component has two additional control signals ``Keep`` and
+The :vhdl:entity:`~extras.fifos.packet_fifo` component has two additional control signals ``Keep`` and
 ``Discard``. When writing to the FIFO, the internal address pointers are
 not updated on the read port domain until ``Keep`` is pulsed high. If written
 data is not needed it can be dropped by pulsing ``Discard`` high. It is not

@@ -1,5 +1,5 @@
-.. Generated from ../rtl/extras/strings.vhdl on 2017-05-07 22:53:56.366722
-.. vhdl:package:: strings
+.. Generated from ../rtl/extras/strings.vhdl on 2017-07-02 23:54:30.450386
+.. vhdl:package:: extras.strings
 
 
 Types
@@ -8,15 +8,20 @@ Types
 
 .. vhdl:type:: alignment
 
+  Horizontal alignment.
 
 .. vhdl:type:: truncation
 
+  End to truncate when result is too long.
 
 .. vhdl:type:: membership
 
+  Inside or outside of a character set.
 
 .. vhdl:type:: direction
 
+  Scan direction.
 
 .. vhdl:type:: trim_end
 
+  End to trim off.

@@ -53,7 +53,7 @@
 --#  result that is different from what would be expected assuming infinite
 --#  precision. The magnitude of any errors will depend on how close the
 --#  converted time is to the clock period. To assist in controlling the
---#  errors, a rounding_style parameter is available on all forms of
+--#  errors, a time_rounding parameter is available on all forms of
 --#  to_clock_cycles that use real as an intermediate type for the calculation.
 --#  It is set by default to round up toward infinity in anticipation that
 --#  these functions will most often be used to compute the minium number of

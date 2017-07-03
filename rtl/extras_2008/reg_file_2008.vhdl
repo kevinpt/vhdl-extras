@@ -138,15 +138,16 @@ use extras_2008.common.all;
 
 package reg_file_pkg is
 
-  --## Register word vector.
+  -- Register word vector.
   alias reg_word is std_ulogic_vector;
   
-  --## Array of register words.
+  -- Array of register words.
   alias reg_array is sulv_array;
 
   --# Flexible register file with support for strobed outputs. This variant
-  --# uses VHDL-2008 syntax to define the reg_array type. Any register width
-  --# can be instantiated without needing to modify the library.
+  --# uses VHDL-2008 syntax to define the reg_array type as an unconstrained
+  --# array-of-arrays. Any register width can be instantiated without needing
+  --# to modify the library.
   component reg_file is
     generic (
       RESET_ACTIVE_LEVEL : std_ulogic := '1'; --# Asynch. reset control level

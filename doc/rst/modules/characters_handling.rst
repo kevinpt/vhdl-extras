@@ -14,7 +14,7 @@ Description
 -----------
 
 This is a package of functions that replicate the behavior of the Ada
-standard library package ada.characters.handling. Included are functions
+standard library package ``Ada.Characters.Handling``. Included are functions
 to test for different character classifications and perform conversion
 of characters and strings to upper and lower case.
   

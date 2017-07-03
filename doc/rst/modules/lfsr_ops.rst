@@ -63,15 +63,15 @@ will work correctly.
 
 A table of coefficients for maximal length polynomials covering 2 to
 100-bit LFSRs is provided in ``LFSR_COEFF_TABLE``. You can use these to
-generate a ``Tap_map`` signal with the :vhdl:func:`~lfsr_ops.lfsr_taps` function. You can build a
-``Tap_map`` for any arbitrary set of coefficients with the :vhdl:func:`~lfsr_ops.to_tap_map`
+generate a ``Tap_map`` signal with the :vhdl:func:`~extras.lfsr_ops.lfsr_taps` function. You can build a
+``Tap_map`` for any arbitrary set of coefficients with the :vhdl:func:`~extras.lfsr_ops.to_tap_map`
 function. Since ``Tap_map`` is a signal it is possible to switch coefficient
 sets in the middle of operation if desired. If you implement it as a
 constant the LFSR will have it's logic reduced to the optimal form in
 synthesis.
 
-In addition to the LFSR functions, a pair of components (:vhdl:entity:`~lfsr_ops.fibonacci_lfsr`
-and :vhdl:entity:`~lfsr_ops.galois_lfsr`) are available for use outside of a process. All
+In addition to the LFSR functions, a pair of components (:vhdl:entity:`~extras.lfsr_ops.fibonacci_lfsr`
+and :vhdl:entity:`~extras.lfsr_ops.galois_lfsr`) are available for use outside of a process. All
 implementations have an ``INIT_ZERO`` generic that can be used to start
 an LFSR in the all 0's state and set the ``Kind`` to 'inverted'. When true the
 initial state switches from all 1's to all 0's and XORs are replaced with

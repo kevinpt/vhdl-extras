@@ -139,7 +139,7 @@ package reg_file_pkg is
   -- Redefine this subtype as needed to suit the required register size
   -- ******************************************************************
 
-  --## Register word vector.
+  --## Register word vector. Modify this to use different word sizes.
   subtype reg_word is std_ulogic_vector(15 downto 0);
 
   --## Array of register words.

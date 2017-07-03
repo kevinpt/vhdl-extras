@@ -1,5 +1,5 @@
-.. Generated from ../rtl/extras/secded_edac.vhdl on 2017-05-07 22:53:55.977598
-.. vhdl:package:: secded_edac
+.. Generated from ../rtl/extras/secded_edac.vhdl on 2017-07-02 23:54:30.001281
+.. vhdl:package:: extras.secded_edac
 
 
 Types
@@ -20,105 +20,105 @@ Subprograms
 
 .. vhdl:function:: function secded_message_size(Data_size : positive) return positive;
 
-  Determine the size of a message (data interleaved with parity) given
-  the size of data to be protected.
-
-
+   Determine the size of a message (data interleaved with parity) given
+   the size of data to be protected.
+  
   :param Data_size: Number of data bits
   :type Data_size: positive
-  :returns:   Message size.
+  :returns: Message size.
+  
 
 
 .. vhdl:function:: function secded_indices(Data_size : positive) return ecc_range;
 
-  Return the left and right indices needed to declare an ecc_vector for the
-  requested data size.
-
-
+   Return the left and right indices needed to declare an ecc_vector for the
+   requested data size.
+  
   :param Data_size: Number of data bits
   :type Data_size: positive
-  :returns:   Range with left and right.
+  :returns: Range with left and right.
+  
 
 
 .. vhdl:function:: function secded_parity_size(Message_size : positive) return positive;
 
-  Determine the number of parity bits for a given message size.
-
-
+   Determine the number of parity bits for a given message size.
+  
   :param Message_size: Number of bits in complete message
   :type Message_size: positive
-  :returns:   Parity size.  
+  :returns: Parity size.
+  
 
 
 .. vhdl:function:: function secded_data_size(Message_size : positive) return positive;
 
-  Determine the number of data bits for a given message size.
-
-
+   Determine the number of data bits for a given message size.
+  
   :param Message_size: Number of bits in complete message
   :type Message_size: positive
-  :returns:   Data size.
+  :returns: Data size.
+  
 
 
 .. vhdl:function:: function secded_encode(Data : std_ulogic_vector) return ecc_vector;
 
-  Encode the supplied data into an ecc_vector using Hamming code for
-  the parity and an additional overall parity for SECDED. This version
-  uses self contained logic.
-
-
+   Encode the supplied data into an ecc_vector using Hamming code for
+   the parity and an additional overall parity for SECDED. This version
+   uses self contained logic.
+  
   :param Data: Raw data
   :type Data: std_ulogic_vector
-  :returns:   Encoded data with parity.
+  :returns: Encoded data with parity.
+  
 
 
 .. vhdl:function:: function secded_encode(Data : std_ulogic_vector; Parity_bits : unsigned) return ecc_vector;
 
-  Encode the supplied data into an ecc_vector using Hamming code for
-  the parity and an additional overall parity for SECDED. This version
-  depends on external logic to generate the Hamming parity bits.
-
-
+   Encode the supplied data into an ecc_vector using Hamming code for
+   the parity and an additional overall parity for SECDED. This version
+   depends on external logic to generate the Hamming parity bits.
+  
   :param Data: Raw data
   :type Data: std_ulogic_vector
   :param Parity_bits: Number of parity bits
   :type Parity_bits: unsigned
-  :returns:   Encoded data with parity.
+  :returns: Encoded data with parity.
+  
 
 
 .. vhdl:function:: function secded_decode(Encoded_data : ecc_vector) return std_ulogic_vector;
 
-  Decode an ecc_vector into the plain data bits, potentially correcting
-  a single-bit error if a bit has flipped. This version uses self
-  contained logic.
-
-
+   Decode an ecc_vector into the plain data bits, potentially correcting
+   a single-bit error if a bit has flipped. This version uses self
+   contained logic.
+  
   :param Encoded_data: Encoded (uninterleaved) message
   :type Encoded_data: ecc_vector
-  :returns:   Decoded data.
+  :returns: Decoded data.
+  
 
 
 .. vhdl:function:: function secded_has_errors(Encoded_data : ecc_vector) return secded_errors;
 
-  Test for a single-bit and double-bit errors in an ecc_vector. Returns
-  true for each error type.
-
-
+   Test for a single-bit and double-bit errors in an ecc_vector. Returns
+   true for each error type.
+  
   :param Encoded_data: Encoded (uninterleaved) message
   :type Encoded_data: ecc_vector
-  :returns:   true if message has a single or double-bit error.
+  :returns: true if message has a single or double-bit error.
+  
 
 
 .. vhdl:function:: function secded_has_errors(Encoded_data : ecc_vector; Syndrome : unsigned) return secded_errors;
 
-  Test for a single-bit and double-bit errors in an ecc_vector. Returns
-  true for each error type. This version depends on external logic to
-  generate a syndrome.
-
-
+   Test for a single-bit and double-bit errors in an ecc_vector. Returns
+   true for each error type. This version depends on external logic to
+   generate a syndrome.
+  
   :param Encoded_data: Encoded (uninterleaved) message
   :type Encoded_data: ecc_vector
   :param Syndrome: Syndrome generated by hamming_parity()
   :type Syndrome: unsigned
-  :returns:   true if message has a single or double-bit error.
+  :returns: true if message has a single or double-bit error.
+  
 

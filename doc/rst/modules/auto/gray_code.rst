@@ -1,5 +1,5 @@
-.. Generated from ../rtl/extras/gray_code.vhdl on 2017-05-07 22:53:56.365587
-.. vhdl:package:: gray_code
+.. Generated from ../rtl/extras/gray_code.vhdl on 2017-07-02 23:54:30.448463
+.. vhdl:package:: extras.gray_code
 
 
 Components
@@ -37,23 +37,23 @@ gray_counter
   An example Gray code counter implementation. This counter maintains an
   internal binary register and converts its output to Gray code stored in a
   separate register.
-
-
-  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
+  
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock:  System clock
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset:  Asynchronous reset
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Load:  Synchronous load, active high
+  :port Load: Synchronous load, active high
   :ptype Load: in std_ulogic
-  :port Enable:  Synchronous enable, active high
+  :port Enable: Synchronous enable, active high
   :ptype Enable: in std_ulogic
-  :port Binary_load:  Loadable binary value
+  :port Binary_load: Loadable binary value
   :ptype Binary_load: in unsigned
-  :port Binary:  Binary count
+  :port Binary: Binary count
   :ptype Binary: out unsigned
-  :port Gray:  Gray code count
+  :port Gray: Gray code count
   :ptype Gray: out unsigned
 
 Subprograms
@@ -62,60 +62,57 @@ Subprograms
 
 .. vhdl:function:: function to_gray(Binary : std_ulogic_vector) return std_ulogic_vector;
 
-  Convert binary to Gray code.
-
-
+   Convert binary to Gray code.
+  
   :param Binary: Binary value
   :type Binary: std_ulogic_vector
-  :returns:  Gray-coded vector.
+  :returns: Gray-coded vector.
+  
 
 
 .. vhdl:function:: function to_gray(Binary : std_logic_vector) return std_logic_vector;
 
-  Convert binary to Gray code.
-
-
+   Convert binary to Gray code.
+  
   :param Binary: Binary value
   :type Binary: std_logic_vector
-  :returns:  Gray-coded vector.
+  :returns: Gray-coded vector.
+  
 
 
 .. vhdl:function:: function to_gray(Binary : unsigned) return unsigned;
 
-  Convert binary to Gray code.
-
-
+   Convert binary to Gray code.
+  
   :param Binary: Binary value
   :type Binary: unsigned
-  :returns:  Gray-coded vector.
+  :returns: Gray-coded vector.
+  
 
 
 .. vhdl:function:: function to_binary(Gray : std_ulogic_vector) return std_ulogic_vector;
 
-  Convert Gray code to binary.
-
-
-  :param Gray: 
-  :type Gray: std_ulogic_vector
-  :returns:  Decoded binary value.
+   Convert Gray code to binary.
+  
+  :param Binary: Gray-coded value
+  :returns: Decoded binary value.
+  
 
 
 .. vhdl:function:: function to_binary(Gray : std_logic_vector) return std_logic_vector;
 
-  Convert Gray code to binary.
-
-
-  :param Gray: 
-  :type Gray: std_logic_vector
-  :returns:  Decoded binary value.
+   Convert Gray code to binary.
+  
+  :param Binary: Gray-coded value
+  :returns: Decoded binary value.
+  
 
 
 .. vhdl:function:: function to_binary(Gray : unsigned) return unsigned;
 
-  Convert Gray code to binary.
-
-
-  :param Gray: 
-  :type Gray: unsigned
-  :returns:  Decoded binary value.
+   Convert Gray code to binary.
+  
+  :param Binary: Gray-coded value
+  :returns: Decoded binary value.
+  
 

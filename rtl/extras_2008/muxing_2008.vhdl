@@ -74,7 +74,7 @@ package muxing is
   --# Args:
   --#  Sel: Numeric value to decode (range 0 to 2**Sel'length-1)
   --# Returns:
-  --#  Decoded (one-hot) representation of Sel
+  --#  Decoded (one-hot) representation of Sel.
   function decode( Sel : unsigned ) return std_ulogic_vector;
 
   --## Decoder with variable sized output (user specified).
@@ -82,7 +82,7 @@ package muxing is
   --#  Sel:  Numeric value to decode (range 0 to Size-1)
   --#  Size: Number of bits in result (leftmost bits)
   --# Returns:
-  --#  Decoded (one-hot) representation of Sel
+  --#  Decoded (one-hot) representation of Sel.
   function decode( Sel : unsigned; Size : positive)
     return std_ulogic_vector;
 
@@ -119,7 +119,7 @@ package muxing is
 
 
 
-  --############# VHDL-2008 extension #############
+  --@@@@@@@@@@@@@@ VHDL-2008 extension @@@@@@@@@@@@@@
 
   --## Multiplexer with variable sized, multi-bit inputs.
   --# Args:
@@ -264,7 +264,7 @@ package body muxing is
   end function;
 
 
-  --############# VHDL-2008 extension #############
+  --@@@@@@@@@@@@@@ VHDL-2008 extension @@@@@@@@@@@@@@
 
   --## Multiplexer with variable sized, multi-bit inputs
   --#  The Inputs vector should have an ascending range to ensure the Sel value

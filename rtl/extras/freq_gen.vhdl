@@ -150,7 +150,7 @@ architecture rtl of freq_gen is
   signal dyn_inc, accum  : unsigned(DDFS_LEN-1 downto 0);
   signal angle_loc : signed(SIZE-1 downto 0);
 
-  signal load, done : std_ulogic;
+  signal data_valid, result_valid : std_ulogic;
   signal sin_seq, cos_seq : signed(SIZE-1 downto 0);
 
 begin
@@ -190,8 +190,8 @@ begin
       Clock => Clock,
       Reset => Reset,
 
-      Load => load,
-      Done => done,
+      Data_valid => data_valid,
+      Result_valid => result_valid,
 
       Angle => angle_loc,
       Sin => sin_seq,
@@ -204,7 +204,7 @@ begin
       Sin <= (others => '0');
       Cos <= (others => '0');
     elsif rising_edge(Clock) then
-      if done = '1' then
+      if result_valid = '1' then
         Sin <= sin_seq;
         Cos <= cos_seq;
       else
@@ -212,7 +212,7 @@ begin
     end if;
   end process;
 
-  load <= done;
+  data_valid <= result_valid;
 
 end architecture;
 

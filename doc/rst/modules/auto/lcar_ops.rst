@@ -1,5 +1,5 @@
-.. Generated from ../rtl/extras/lcar_ops.vhdl on 2017-05-07 22:53:55.798533
-.. vhdl:package:: lcar_ops
+.. Generated from ../rtl/extras/lcar_ops.vhdl on 2017-07-02 23:54:29.800771
+.. vhdl:package:: extras.lcar_ops
 
 
 Components
@@ -35,52 +35,52 @@ wolfram_lcar
 .. vhdl:entity:: wolfram_lcar
 
   General purpose implementation of a rule 150/90 LCAR.
-
-
-  :generic RESET_ACTIVE_LEVEL:  Asynch. reset control level
+  
+  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
   :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  :port Clock:  System clock
+  
+  :port Clock: System clock
   :ptype Clock: in std_ulogic
-  :port Reset:  Asynchronous reset
+  :port Reset: Asynchronous reset
   :ptype Reset: in std_ulogic
-  :port Enable:  Synchronous enable
+  :port Enable: Synchronous enable
   :ptype Enable: in std_ulogic
-  :port Rule_map:  Rules for each cell '1' -> 150, '0' -> 90
+  :port Rule_map: Rules for each cell '1' -> 150, '0' -> 90
   :ptype Rule_map: in std_ulogic_vector
-  :port Left_in:  Left side input to LCAR
+  :port Left_in: Left side input to LCAR
   :ptype Left_in: in std_ulogic
-  :port Right_in:  Right side input to LCAR
+  :port Right_in: Right side input to LCAR
   :ptype Right_in: in std_ulogic
-  :port State:  The state of each cell
+  :port State: The state of each cell
   :ptype State: out std_ulogic_vector
 
 Subprograms
 -----------
 
 
-.. vhdl:function:: function next_wolfram_lcar(State : None; Rule_map : std_ulogic_vector; Left_in : None; Right_in : std_ulogic := '0') return std_ulogic_vector;
+.. vhdl:function:: function next_wolfram_lcar(State : std_ulogic_vector; Rule_map : std_ulogic_vector; Left_in : std_ulogic := '0'; Right_in : std_ulogic := '0') return std_ulogic_vector;
 
-  Determine the next state of the LCAR defined by the Rule_map.
+   Determine the next state of the LCAR defined by the Rule_map.
   
-
-
+  
   :param State: Current state of the LCAR cells
-  :type State: None
+  :type State: std_ulogic_vector
   :param Rule_map: Rules for each cell; '1' -> 150, '0' -> 90
   :type Rule_map: std_ulogic_vector
   :param Left_in: Left side input to LCAR
-  :type Left_in: None
+  :type Left_in: std_ulogic
   :param Right_in: Right side input to LCAR
   :type Right_in: std_ulogic
-  :returns:   Next iteration of the LCAR rules which becomes the new state
+  :returns: Next iteration of the LCAR rules which becomes the new state
+  
 
 
 .. vhdl:function:: function lcar_rule(Size : positive) return std_ulogic_vector;
 
-  Lookup a predefined rule set from the table.
-
-
+   Lookup a predefined rule set from the table.
+  
   :param Size: Number of LCAR cells
   :type Size: positive
-  :returns:   Rule map for a maximal length sequence.
+  :returns: Rule map for a maximal length sequence.
+  
 

@@ -8,7 +8,8 @@ strings_fixed_constants
 Dependencies
 ------------
 
-:doc:`strings_maps`, :doc:`characters_latin_1`
+:doc:`strings_maps`,
+:doc:`characters_latin_1`
 
 Description
 -----------

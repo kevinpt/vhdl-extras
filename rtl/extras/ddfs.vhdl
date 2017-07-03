@@ -210,7 +210,7 @@ package ddfs_pkg is
   --#  Target_freq:    Desired frequency to generate
   --#  Increment:      Increment value needed to generate the target frequency.
   procedure ddfs_dynamic_inc(Dynamic_factor : in natural; Fraction_bits : in natural;
-    signal Target_freq : in unsigned; signal increment : out unsigned);
+    signal Target_freq : in unsigned; signal Increment : out unsigned);
 
   --## Compute the actual synthesized frequency for the specified accumulator
   --#  size.
@@ -253,7 +253,7 @@ package ddfs_pkg is
   
   --## Convert angle in degrees to a fractional phase value.
   --# Args:
-  --#  Radians: Angle to convert
+  --#  Degrees: Angle to convert
   --#  Size:    Number of bits in the result
   --# Returns:
   --#  Fraction phase in range 0.0 to 1.0.
@@ -456,7 +456,7 @@ package body ddfs_pkg is
   --#  This can be synthesized by invocation within a synchronous
   --#  process.
   procedure ddfs_dynamic_inc(dynamic_factor : in natural; fraction_bits : in natural;
-    signal target_freq : in unsigned; signal increment : out unsigned) is
+    signal target_freq : in unsigned; signal Increment : out unsigned) is
 
     variable factor : unsigned(bit_size(dynamic_factor)-1 downto 0);
     variable prod : unsigned(factor'length + target_freq'length - 1 downto 0);
@@ -469,7 +469,7 @@ package body ddfs_pkg is
     prod := factor * target_freq;
 
     -- Slice off the fractional part of the fixed point product
-    increment <= resize(prod(prod'high downto fraction_bits), increment'length);
+    Increment <= resize(prod(prod'high downto fraction_bits), increment'length);
   end procedure;
 
 

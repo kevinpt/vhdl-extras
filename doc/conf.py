@@ -90,7 +90,7 @@ pygments_style = 'sphinx'
 
 graphviz_output_format = 'svg'
 
-symbolator_cmd_args = ['-t']
+symbolator_cmd_args = ['-t', '-L', 'data_types.dat']
 
 mathjax_path = 'http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'
 

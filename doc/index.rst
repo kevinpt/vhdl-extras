@@ -17,8 +17,8 @@ Requirements
 You can use the VHDL-extras library files piecemeal with no tools other than the simulator or synthesizer you will process them with. If you wish to use the provided Modelsim build scripts you will need Modelsim, Python 2.x, sed, grep, and GNU make. To run the test suite you will need Python 2.7 and Modelsim. See the sections on :ref:`installation` and :ref:`testing` for more information on setting up the VHDL-extras library. You can get optional colorized output from the build and test scripts by installing the Python colorama package.
 
 
-The Code
-========
+Library contents
+================
 
 The VHDL-extras library contains the following packages:
 
@@ -31,6 +31,11 @@ The VHDL-extras library contains the following packages:
     :ref:`synchronizing` -- Clock domain synchronizing components
 
     :ref:`timing_ops` -- Conversions for time, frequency, and clock cycles
+
+* Arithmetic
+    :ref:`arithmetic` -- Pipelined adder
+    
+    :ref:`bit_ops` -- Bitwise operations
 
 * Error handling
     :ref:`crc_ops` -- Compute CRCs

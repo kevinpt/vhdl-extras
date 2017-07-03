@@ -69,13 +69,17 @@ use extras.strings_unbounded.all;
 package text_buffering is
 
   type buffer_line;
+  
+  --# Pointer to next node in list.
   type buffer_line_acc is access buffer_line;
 
+  --# Linked list node of text lines.
   type buffer_line is record
     s : unbounded_string;
     succ : buffer_line_acc;
   end record;
 
+  --# Buffer of text lines.
   type text_buffer is record
     buf          : buffer_line_acc;
     buf_tail     : buffer_line_acc;

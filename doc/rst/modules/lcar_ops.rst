@@ -15,7 +15,7 @@ Description
 This package provides a component that implements the `Wolfram Linear
 Cellular Automata Register (LCAR) <https://en.wikipedia.org/wiki/Elementary_cellular_automaton>`_
 as described in "Statistical Mechanics
-of Cellular Automata", Wolfram 1983. The LCAR implemented in :vhdl:entity:`~lcar_ops.wolfram_lcar`
+of Cellular Automata", Wolfram 1983. The LCAR implemented in :vhdl:entity:`~extras.lcar_ops.wolfram_lcar`
 uses rules 90 and 150 for each cell as defined by an input ``Rule_map`` where
 a '0' indicates rule 90 and '1' indicates rule 150 for the corresponding
 cell in the State register.
