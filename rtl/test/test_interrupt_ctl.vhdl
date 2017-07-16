@@ -21,8 +21,9 @@ architecture test of test_interrupt_ctl is
   signal sim_done : boolean := false;
 
   signal int_mask, int_request, pending_int, current_int : std_ulogic_vector(7 downto 0);
-  signal clock, reset, interrupt, interrupt_ack : std_ulogic;
+  signal clock, reset, interrupt, interrupt_ack, clear_pending : std_ulogic;
 begin
+
 
   stim: process
   begin
@@ -32,6 +33,7 @@ begin
     int_request <= (others => '0');
     int_mask <= (others => '1');
     interrupt_ack <= '0';
+    clear_pending <= '0';
 
     reset <= '1', '0' after CPERIOD;
 
@@ -63,6 +65,21 @@ begin
     assert interrupt = '0' and current_int = "00000000"
       report "Unexpected interrupt 4" severity failure;
     wait for CPERIOD * 2;
+
+    -- Clear all pending interrupts
+    int_request(3) <= '1', '0' after CPERIOD;
+    int_request(2) <= '1', '0' after CPERIOD;
+    int_request(1) <= '1', '0' after CPERIOD;
+    wait for CPERIOD * 2;
+    assert interrupt = '1' and pending_int = "00001110"
+      report "Unexpected interrupt 4.5" severity failure;
+
+    clear_pending <= '1', '0' after CPERIOD;
+    wait for CPERIOD * 2;
+    assert interrupt = '0' and pending_int = "00000000"
+      report "Unexpected interrupt 4.6" severity failure;
+    wait for CPERIOD * 2;
+
 
     -- Assert lower priority followed by higher priority
     int_request(4) <= '1', '0' after CPERIOD;
@@ -121,8 +138,9 @@ begin
       Pending     => pending_int,
       Current     => current_int,
 
-      Interrupt   => interrupt,
-      Acknowledge => interrupt_ack
+      Interrupt     => interrupt,
+      Acknowledge   => interrupt_ack,
+      Clear_pending => clear_pending
     );
 
   cgen: process
