@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/pipelining.vhdl on 2017-07-02 23:54:30.209108
+.. Generated from ../rtl/extras/pipelining.vhdl on 2017-07-03 00:37:38.633186
 .. vhdl:package:: extras.pipelining
 
 

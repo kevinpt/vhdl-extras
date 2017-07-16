@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/timing_ops_xilinx.vhdl on 2017-07-02 23:54:30.093007
+.. Generated from ../rtl/extras/timing_ops_xilinx.vhdl on 2017-07-03 00:37:38.518187
 .. vhdl:package:: extras.timing_ops
 
 

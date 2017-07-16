@@ -78,7 +78,7 @@ initial state switches from all 1's to all 0's and XORs are replaced with
 XNORs. The ``FULL_CYCLE`` generic activates the full cycle option described
 above.
 
-Ecample usage
+Example usage
 ~~~~~~~~~~~~~
 
 .. code-block:: vhdl

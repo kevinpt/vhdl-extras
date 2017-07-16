@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/characters_latin_1.vhdl on 2017-07-02 23:54:30.409575
+.. Generated from ../rtl/extras/characters_latin_1.vhdl on 2017-07-03 00:37:38.829565
 .. vhdl:package:: extras.characters_latin_1
 
 

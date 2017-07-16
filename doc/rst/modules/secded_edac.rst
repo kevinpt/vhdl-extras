@@ -7,8 +7,8 @@ secded_edac
 Dependencies
 ------------
 
-* :doc:`sizing`
-* :doc:`hamming_edac`
+* :doc:`sizing`,
+* :doc:`hamming_edac`,
 * :doc:`parity_ops`
 
 Description

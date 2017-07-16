@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/cordic.vhdl on 2017-07-02 23:54:29.922988
+.. Generated from ../rtl/extras/cordic.vhdl on 2017-07-03 00:37:38.353128
 .. vhdl:package:: extras.cordic
 
 

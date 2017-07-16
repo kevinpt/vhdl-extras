@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/hamming_edac.vhdl on 2017-07-02 23:54:30.161052
+.. Generated from ../rtl/extras/hamming_edac.vhdl on 2017-07-03 00:37:38.585863
 .. vhdl:package:: extras.hamming_edac
 
 

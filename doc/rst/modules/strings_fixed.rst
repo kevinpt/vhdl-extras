@@ -8,8 +8,8 @@ strings_fixed
 Dependencies
 ------------
 
-:doc:`strings`
-:doc:`strings_maps`
+:doc:`strings`,
+:doc:`strings_maps`,
 :doc:`strings_maps_constants`
 
 Description

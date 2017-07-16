@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/freq_gen.vhdl on 2017-07-02 23:54:29.781833
+.. Generated from ../rtl/extras/freq_gen.vhdl on 2017-07-03 00:37:38.213803
 .. vhdl:package:: extras.freq_gen_pkg
 
 

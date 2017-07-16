@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/secded_codec.vhdl on 2017-07-02 23:54:30.037194
+.. Generated from ../rtl/extras/secded_codec.vhdl on 2017-07-03 00:37:38.462908
 .. vhdl:package:: extras.secded_codec_pkg
 
 

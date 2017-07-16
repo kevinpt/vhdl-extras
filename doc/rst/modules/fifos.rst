@@ -8,8 +8,8 @@ fifos
 Dependencies
 ------------
 
-:doc:`memory <memory>`
-:doc:`sizing <sizing>`
+:doc:`memory <memory>`,
+:doc:`sizing <sizing>`,
 :doc:`synchronizing <synchronizing>`
 
 Description

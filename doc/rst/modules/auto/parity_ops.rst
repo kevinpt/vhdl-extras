@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/parity_ops.vhdl on 2017-07-02 23:54:29.759874
+.. Generated from ../rtl/extras/parity_ops.vhdl on 2017-07-03 00:37:38.192394
 .. vhdl:package:: extras.parity_ops
 
 

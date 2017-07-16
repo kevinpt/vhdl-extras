@@ -8,9 +8,9 @@ strings_bounded
 Dependencies
 ------------
 
-:doc:`strings`
-:doc:`strings_maps`
-:doc:`strings_maps_constants`
+:doc:`strings`,
+:doc:`strings_maps`,
+:doc:`strings_maps_constants`,
 :doc:`strings_fixed`
 
 

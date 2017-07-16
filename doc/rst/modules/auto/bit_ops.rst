@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/bit_ops.vhdl on 2017-07-02 23:54:30.263623
+.. Generated from ../rtl/extras/bit_ops.vhdl on 2017-07-03 00:37:38.686526
 .. vhdl:package:: extras.bit_ops
 
 

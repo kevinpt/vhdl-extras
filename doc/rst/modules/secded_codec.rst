@@ -7,10 +7,10 @@ secded_codec
 Dependencies
 ------------
 
-:doc:`sizing`
-:doc:`pipelining`
-:doc:`hamming_edac`
-:doc:`secded_edac`
+:doc:`sizing`,
+:doc:`pipelining`,
+:doc:`hamming_edac`,
+:doc:`secded_edac`,
 :doc:`parity_ops`
 
 Description
