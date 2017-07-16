@@ -281,3 +281,13 @@ class TestRandVHDL(tsup.RandomSeededTestCase):
         entity = 'test.test_interrupt_ctl'
         self.run_simulation(entity, TEST_SEED=self.seed)
 
+    def test_bit_ops(self):
+        entity = 'test.test_bit_ops'
+        #self.run_simulation(entity, TEST_SEED=self.seed)
+
+        self.test_name = 'Testbench ' + entity
+        self.trial_count = 10
+        for i in xrange(self.trial_count):
+            self.update_progress(i+1)
+            self.run_simulation(entity, update=False)
+
