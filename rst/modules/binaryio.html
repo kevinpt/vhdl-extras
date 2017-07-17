@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
-    <link rel="next" title="characters_handling" href="characters_handling.html" />
+    <link rel="next" title="bit_ops" href="bit_ops.html" />
     <link rel="prev" title="bcd_conversion" href="bcd_conversion.html" />
    
   
@@ -58,35 +58,46 @@ produce additional padding bits in the file. Sign extension is performed
 when writing padded signed arrays.</p>
 <div class="section" id="example-usage">
 <h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">file</span> <span class="n">fh</span> <span class="o">:</span> <span class="n">octet_file</span> <span class="k">open</span> <span class="n">read_mode</span> <span class="k">is</span> <span class="s">&quot;foo.bin&quot;</span><span class="p">;</span>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">file</span> <span class="n">fh</span>  <span class="o">:</span> <span class="n">octet_file</span> <span class="k">open</span> <span class="n">read_mode</span> <span class="k">is</span> <span class="s">&quot;foo.bin&quot;</span><span class="p">;</span>
+<span class="k">file</span> <span class="n">fh2</span> <span class="o">:</span> <span class="n">octet_file</span> <span class="k">open</span> <span class="n">write_mode</span> <span class="k">is</span> <span class="s">&quot;out.bin&quot;</span><span class="p">;</span>
 <span class="k">signal</span> <span class="n">uword</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
 <span class="k">signal</span> <span class="n">sword</span> <span class="o">:</span> <span class="n">signed</span><span class="p">(</span><span class="mi">19</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
 <span class="p">...</span>
 <span class="n">read</span><span class="p">(</span><span class="n">fh</span><span class="p">,</span> <span class="n">little_endian</span><span class="p">,</span> <span class="n">uword</span><span class="p">);</span> <span class="c1">-- read 16 bits from two octets</span>
 <span class="n">read</span><span class="p">(</span><span class="n">fh</span><span class="p">,</span> <span class="n">big_endian</span><span class="p">,</span> <span class="n">sword</span><span class="p">);</span>    <span class="c1">-- read 20 bits from three octets</span>
+<span class="p">...</span>
+<span class="n">write</span><span class="p">(</span><span class="n">fh2</span><span class="p">,</span> <span class="n">little_endian</span><span class="p">,</span> <span class="n">uword</span><span class="p">);</span>
+<span class="n">write</span><span class="p">(</span><span class="n">fh2</span><span class="p">,</span> <span class="n">big_endian</span><span class="p">,</span> <span class="n">sword</span><span class="p">);</span>
 </pre></div>
 </div>
-<span class="target" id="package-binaryio"></span></div>
+<span class="target" id="package-extras.binaryio"></span></div>
 </div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
-<dt id="binaryio.octet_file">
-<tt class="descclassname">binaryio.</tt><tt class="descname">octet_file</tt><a class="headerlink" href="#binaryio.octet_file" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.binaryio.octet_file">
+<tt class="descclassname">binaryio.</tt><tt class="descname">octet_file</tt><a class="headerlink" href="#extras.binaryio.octet_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>File of 8-bit bytes.</p>
+</dd></dl>
 
 <dl class="type">
-<dt id="binaryio.endianness">
-<tt class="descclassname">binaryio.</tt><tt class="descname">endianness</tt><a class="headerlink" href="#binaryio.endianness" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.binaryio.endianness">
+<tt class="descclassname">binaryio.</tt><tt class="descname">endianness</tt><a class="headerlink" href="#extras.binaryio.endianness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Endianness of multi-byte words.</p>
+<ul class="simple">
+<li>little-endian = least significant octet first : 1234, 123, etc.</li>
+<li>big-endian    = most significant octet first  : 4321, 321, etc.</li>
+</ul>
+</dd></dl>
 
 </div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="procedure">
-<dt id="binaryio.read[octet_file,endianness,unsigned]">
-<tt class="descclassname">binaryio.</tt><tt class="descname">read</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : out unsigned</em><big>)</big><a class="headerlink" href="#binaryio.read[octet_file,endianness,unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read binary data into an unsigned vector.</p>
+<dt id="extras.binaryio.read[octet_file,endianness,unsigned]">
+<tt class="descclassname">binaryio.</tt><tt class="descname">read</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : out unsigned</em><big>)</big><a class="headerlink" href="#extras.binaryio.read[octet_file,endianness,unsigned]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Read binary data into an unsigned vector.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -103,9 +114,10 @@ when writing padded signed arrays.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="binaryio.read[octet_file,endianness,signed]">
-<tt class="descclassname">binaryio.</tt><tt class="descname">read</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : out signed</em><big>)</big><a class="headerlink" href="#binaryio.read[octet_file,endianness,signed]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read binary data into a signed vector.</p>
+<dt id="extras.binaryio.read[octet_file,endianness,signed]">
+<tt class="descclassname">binaryio.</tt><tt class="descname">read</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : out signed</em><big>)</big><a class="headerlink" href="#extras.binaryio.read[octet_file,endianness,signed]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Read binary data into a signed vector.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -122,9 +134,10 @@ when writing padded signed arrays.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="binaryio.write[octet_file,endianness,unsigned]">
-<tt class="descclassname">binaryio.</tt><tt class="descname">write</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : unsigned</em><big>)</big><a class="headerlink" href="#binaryio.write[octet_file,endianness,unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write an unsigned vector to a file.</p>
+<dt id="extras.binaryio.write[octet_file,endianness,unsigned]">
+<tt class="descclassname">binaryio.</tt><tt class="descname">write</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : unsigned</em><big>)</big><a class="headerlink" href="#extras.binaryio.write[octet_file,endianness,unsigned]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Write an unsigned vector to a file.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -141,9 +154,10 @@ when writing padded signed arrays.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="binaryio.write[octet_file,endianness,signed]">
-<tt class="descclassname">binaryio.</tt><tt class="descname">write</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : signed</em><big>)</big><a class="headerlink" href="#binaryio.write[octet_file,endianness,signed]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write a signed vector to a file.</p>
+<dt id="extras.binaryio.write[octet_file,endianness,signed]">
+<tt class="descclassname">binaryio.</tt><tt class="descname">write</tt> <big>(</big><em>Fh : octet_file</em>; <em>Octet_order : endianness</em>; <em>Word : signed</em><big>)</big><a class="headerlink" href="#extras.binaryio.write[octet_file,endianness,signed]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Write a signed vector to a file.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -151,7 +165,7 @@ when writing padded signed arrays.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>Fh</strong> (<em>None octet_file</em>) &#8211; File handle</li>
 <li><strong>Octet_order</strong> (<em>None endianness</em>) &#8211; Endianness of the octets</li>
-<li><strong>Word</strong> (<em>None signed</em>) &#8211; Data to write into the file</li>
+<li><strong>Word</strong> (<em>None signed</em>) &#8211; Data to write into the file. Will be sign extended if not a multiple of 8-bits.</li>
 </ul>
 </td>
 </tr>
@@ -171,7 +185,7 @@ when writing padded signed arrays.</p>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -179,10 +193,12 @@ when writing padded signed arrays.</p>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
@@ -190,7 +206,7 @@ when writing padded signed arrays.</p>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="bcd_conversion.html" title="previous chapter">bcd_conversion</a></li>
-      <li>Next: <a href="characters_handling.html" title="next chapter">characters_handling</a></li>
+      <li>Next: <a href="bit_ops.html" title="next chapter">bit_ops</a></li>
   </ul></li>
 </ul>
 </div>

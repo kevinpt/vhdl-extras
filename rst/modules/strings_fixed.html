@@ -45,9 +45,9 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_fixed.vhdl">extras/strings_fixed.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="strings.html"><em>strings</em></a>
-<a class="reference internal" href="strings_maps.html"><em>strings_maps</em></a>
-<a class="reference internal" href="strings_maps_constants.html"><em>strings_fixed_constants</em></a></p>
+<p><a class="reference internal" href="strings.html"><em>strings</em></a>,
+<a class="reference internal" href="strings_maps.html"><em>strings_maps</em></a>,
+<a class="reference internal" href="strings_maps_constants.html"><em>strings_maps_constants</em></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -55,13 +55,17 @@
 strings. This is a clone of the Ada&#8216;95 library <tt class="docutils literal"><span class="pre">Ada.Strings.Fixed</span></tt>. It is a
 nearly complete implementation with only the procedures taking character
 mapping functions omitted because of VHDL limitations.</p>
-<span class="target" id="package-strings_fixed"></span></div>
+<p>These are functions for operating on the native VHDL string type. Any operation
+that results in a shorter string must be padded with additional characters to fill
+out the entire string.</p>
+<span class="target" id="package-extras.strings_fixed"></span></div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="procedure">
-<dt id="strings_fixed.move[string,string,truncation,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">move</tt> <big>(</big><em>source : in string</em>; <em>target : out string</em>; <em>drop : in truncation := error</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.move[string,string,truncation,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Move source to target.</p>
+<dt id="extras.strings_fixed.move[string,string,truncation,alignment,character]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">move</tt> <big>(</big><em>source : in string</em>; <em>target : out string</em>; <em>drop : in truncation := error</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#extras.strings_fixed.move[string,string,truncation,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Move source to target.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -80,10 +84,11 @@ mapping functions omitted because of VHDL limitations.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.index[string,string,direction,character_mapping return natural]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">index</tt> <big>(</big><em>source : string</em>; <em>pattern : string</em>; <em>going : direction := forward</em>; <em>mapping : character_mapping := identity</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.index[string,string,direction,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find the index of the first occurance of pattern in source from the
-beginning or end.</p>
+<dt id="extras.strings_fixed.index[string,string,direction,character_mapping return natural]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">index</tt> <big>(</big><em>source : string</em>; <em>pattern : string</em>; <em>going : direction := forward</em>; <em>mapping : character_mapping := identity</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.strings_fixed.index[string,string,direction,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Find the index of the first occurance of pattern in source from the
+beginning or end.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -104,9 +109,10 @@ beginning or end.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.index[string,character_set,membership,direction return natural]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">index</tt> <big>(</big><em>source : string</em>; <em>set : character_set</em>; <em>test : membership := inside</em>; <em>going : direction := forward</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.index[string,character_set,membership,direction return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find the index of first occurance of a character from set in source.</p>
+<dt id="extras.strings_fixed.index[string,character_set,membership,direction return natural]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">index</tt> <big>(</big><em>source : string</em>; <em>set : character_set</em>; <em>test : membership := inside</em>; <em>going : direction := forward</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.strings_fixed.index[string,character_set,membership,direction return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Find the index of first occurance of a character from set in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -127,9 +133,10 @@ beginning or end.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.index_non_blank[string,direction return natural]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">index_non_blank</tt> <big>(</big><em>source : string</em>; <em>going : direction := forward</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.index_non_blank[string,direction return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find the index of the first non-space character in source.</p>
+<dt id="extras.strings_fixed.index_non_blank[string,direction return natural]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">index_non_blank</tt> <big>(</big><em>source : string</em>; <em>going : direction := forward</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.strings_fixed.index_non_blank[string,direction return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Find the index of the first non-space character in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -148,9 +155,10 @@ beginning or end.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.count[string,string,character_mapping return natural]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">count</tt> <big>(</big><em>source : string</em>; <em>pattern : string</em>; <em>mapping : character_mapping := identity</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.count[string,string,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Count the occurrences of pattern in source.</p>
+<dt id="extras.strings_fixed.count[string,string,character_mapping return natural]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">count</tt> <big>(</big><em>source : string</em>; <em>pattern : string</em>; <em>mapping : character_mapping := identity</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.strings_fixed.count[string,string,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Count the occurrences of pattern in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -158,7 +166,6 @@ beginning or end.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>source</strong> (<em>string</em>) &#8211; String to count patterns in</li>
 <li><strong>pattern</strong> (<em>string</em>) &#8211; Pattern to count in source string</li>
-<li><strong>mapping</strong> (<em>character_mapping</em>) &#8211; </li>
 </ul>
 </td>
 </tr>
@@ -170,9 +177,10 @@ beginning or end.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.count[string,character_set return natural]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">count</tt> <big>(</big><em>source : string</em>; <em>set : character_set</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.count[string,character_set return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Count the occurrences of characters from set in source.</p>
+<dt id="extras.strings_fixed.count[string,character_set return natural]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">count</tt> <big>(</big><em>source : string</em>; <em>set : character_set</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.strings_fixed.count[string,character_set return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Count the occurrences of characters from set in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -191,10 +199,11 @@ beginning or end.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_fixed.find_token[string,character_set,membership,positive,natural]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">find_token</tt> <big>(</big><em>source : in string</em>; <em>set : in character_set</em>; <em>test : in membership</em>; <em>first : out positive</em>; <em>last : out natural</em><big>)</big><a class="headerlink" href="#strings_fixed.find_token[string,character_set,membership,positive,natural]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the indices of a slice of source that satisfies the membership
-selection for the character set.</p>
+<dt id="extras.strings_fixed.find_token[string,character_set,membership,positive,natural]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">find_token</tt> <big>(</big><em>source : in string</em>; <em>set : in character_set</em>; <em>test : in membership</em>; <em>first : out positive</em>; <em>last : out natural</em><big>)</big><a class="headerlink" href="#extras.strings_fixed.find_token[string,character_set,membership,positive,natural]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the indices of a slice of source that satisfies the membership
+selection for the character set.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -213,9 +222,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.translate[string,character_mapping return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">translate</tt> <big>(</big><em>source : string</em>; <em>mapping : character_mapping</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.translate[string,character_mapping return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a source string with the provided character mapping.</p>
+<dt id="extras.strings_fixed.translate[string,character_mapping return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">translate</tt> <big>(</big><em>source : string</em>; <em>mapping : character_mapping</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.strings_fixed.translate[string,character_mapping return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a source string with the provided character mapping.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -234,9 +244,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_fixed.translate[string,character_mapping]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">translate</tt> <big>(</big><em>source : inout string</em>; <em>mapping : in character_mapping</em><big>)</big><a class="headerlink" href="#strings_fixed.translate[string,character_mapping]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a source string with the provided character mapping.</p>
+<dt id="extras.strings_fixed.translate[string,character_mapping]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">translate</tt> <big>(</big><em>source : inout string</em>; <em>mapping : in character_mapping</em><big>)</big><a class="headerlink" href="#extras.strings_fixed.translate[string,character_mapping]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a source string with the provided character mapping.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -252,9 +263,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.replace_slice[string,positive,natural,string return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : string</em>; <em>low : positive</em>; <em>high : natural</em>; <em>by : string</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.replace_slice[string,positive,natural,string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace a slice of the source string with the contents of by.</p>
+<dt id="extras.strings_fixed.replace_slice[string,positive,natural,string return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : string</em>; <em>low : positive</em>; <em>high : natural</em>; <em>by : string</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.strings_fixed.replace_slice[string,positive,natural,string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Replace a slice of the source string with the contents of by.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -275,9 +287,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_fixed.replace_slice[string,positive,natural,string,truncation,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : inout string</em>; <em>low : in positive</em>; <em>high : in natural</em>; <em>by : in string</em>; <em>drop : in truncation := error</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.replace_slice[string,positive,natural,string,truncation,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace a slice of the source string with the contents of by.</p>
+<dt id="extras.strings_fixed.replace_slice[string,positive,natural,string,truncation,alignment,character]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : inout string</em>; <em>low : in positive</em>; <em>high : in natural</em>; <em>by : in string</em>; <em>drop : in truncation := error</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#extras.strings_fixed.replace_slice[string,positive,natural,string,truncation,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Replace a slice of the source string with the contents of by.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -298,9 +311,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.insert[string,positive,string return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">insert</tt> <big>(</big><em>source : string</em>; <em>before : positive</em>; <em>new_item : string</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.insert[string,positive,string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert the string new_item before the selected index in source.</p>
+<dt id="extras.strings_fixed.insert[string,positive,string return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">insert</tt> <big>(</big><em>source : string</em>; <em>before : positive</em>; <em>new_item : string</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.strings_fixed.insert[string,positive,string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Insert the string new_item before the selected index in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -320,9 +334,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_fixed.insert[string,positive,string,truncation]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">insert</tt> <big>(</big><em>source : inout string</em>; <em>before : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#strings_fixed.insert[string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert the string new_item before the selected index in source.</p>
+<dt id="extras.strings_fixed.insert[string,positive,string,truncation]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">insert</tt> <big>(</big><em>source : inout string</em>; <em>before : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#extras.strings_fixed.insert[string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Insert the string new_item before the selected index in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -340,9 +355,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.overwrite[string,positive,string return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : string</em>; <em>position : positive</em>; <em>new_item : string</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.overwrite[string,positive,string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Overwrite new_item into source starting at the selected position.</p>
+<dt id="extras.strings_fixed.overwrite[string,positive,string return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : string</em>; <em>position : positive</em>; <em>new_item : string</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.strings_fixed.overwrite[string,positive,string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Overwrite new_item into source starting at the selected position.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -362,9 +378,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_fixed.overwrite[string,positive,string,truncation]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : inout string</em>; <em>position : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := right</em><big>)</big><a class="headerlink" href="#strings_fixed.overwrite[string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Overwrite new_item into source starting at the selected position.</p>
+<dt id="extras.strings_fixed.overwrite[string,positive,string,truncation]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : inout string</em>; <em>position : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := right</em><big>)</big><a class="headerlink" href="#extras.strings_fixed.overwrite[string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Overwrite new_item into source starting at the selected position.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -382,10 +399,11 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.delete[string,positive,natural return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">delete</tt> <big>(</big><em>source : string</em>; <em>from : positive</em>; <em>through : natural</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.delete[string,positive,natural return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete a slice from source. If from is greater than through, source is
-unmodified.</p>
+<dt id="extras.strings_fixed.delete[string,positive,natural return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">delete</tt> <big>(</big><em>source : string</em>; <em>from : positive</em>; <em>through : natural</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.strings_fixed.delete[string,positive,natural return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Delete a slice from source. If from is greater than through, source is
+unmodified.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -405,10 +423,11 @@ unmodified.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_fixed.delete[string,positive,natural,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">delete</tt> <big>(</big><em>source : inout string</em>; <em>from : in positive</em>; <em>through : in natural</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.delete[string,positive,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete a slice from source. If from is greater than through, source is
-unmodified.</p>
+<dt id="extras.strings_fixed.delete[string,positive,natural,alignment,character]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">delete</tt> <big>(</big><em>source : inout string</em>; <em>from : in positive</em>; <em>through : in natural</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#extras.strings_fixed.delete[string,positive,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Delete a slice from source. If from is greater than through, source is
+unmodified.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -427,9 +446,10 @@ unmodified.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.trim[string,trim_end return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : string</em>; <em>side : trim_end</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.trim[string,trim_end return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove space characters from leading, trailing, or both ends of source.</p>
+<dt id="extras.strings_fixed.trim[string,trim_end return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : string</em>; <em>side : trim_end</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.strings_fixed.trim[string,trim_end return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Remove space characters from leading, trailing, or both ends of source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -448,9 +468,10 @@ unmodified.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_fixed.trim[string,trim_end,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout string</em>; <em>side : in trim_end</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.trim[string,trim_end,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove space characters from leading, trailing, or both ends of source.</p>
+<dt id="extras.strings_fixed.trim[string,trim_end,alignment,character]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout string</em>; <em>side : in trim_end</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#extras.strings_fixed.trim[string,trim_end,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Remove space characters from leading, trailing, or both ends of source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -468,10 +489,11 @@ unmodified.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.trim[string,character_set,character_set return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : string</em>; <em>left : character_set</em>; <em>right : character_set</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.trim[string,character_set,character_set return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove all leading characters in left and trailing characters in right
-from source.</p>
+<dt id="extras.strings_fixed.trim[string,character_set,character_set return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : string</em>; <em>left : character_set</em>; <em>right : character_set</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.strings_fixed.trim[string,character_set,character_set return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Remove all leading characters in left and trailing characters in right
+from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -491,10 +513,11 @@ from source.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_fixed.trim[string,character_set,character_set,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout string</em>; <em>left : in character_set</em>; <em>right : in character_set</em>; <em>justify : in alignment := extras.strings.left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.trim[string,character_set,character_set,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove all leading characters in left and trailing characters in right
-from source.</p>
+<dt id="extras.strings_fixed.trim[string,character_set,character_set,alignment,character]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout string</em>; <em>left : in character_set</em>; <em>right : in character_set</em>; <em>justify : in alignment := extras.strings.left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#extras.strings_fixed.trim[string,character_set,character_set,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Remove all leading characters in left and trailing characters in right
+from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -513,9 +536,10 @@ from source.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.head[string,natural,character return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">head</tt> <big>(</big><em>source : string</em>; <em>count : natural</em>; <em>pad : character := ' '</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.head[string,natural,character return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the first count characters from source.</p>
+<dt id="extras.strings_fixed.head[string,natural,character return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">head</tt> <big>(</big><em>source : string</em>; <em>count : natural</em>; <em>pad : character := ' '</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.strings_fixed.head[string,natural,character return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the first count characters from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -535,9 +559,10 @@ from source.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_fixed.head[string,natural,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">head</tt> <big>(</big><em>source : inout string</em>; <em>count : in natural</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.head[string,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the first count characters from source.</p>
+<dt id="extras.strings_fixed.head[string,natural,alignment,character]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">head</tt> <big>(</big><em>source : inout string</em>; <em>count : in natural</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#extras.strings_fixed.head[string,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the first count characters from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -555,9 +580,10 @@ from source.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.tail[string,natural,character return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">tail</tt> <big>(</big><em>source : string</em>; <em>count : natural</em>; <em>pad : character := ' '</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed.tail[string,natural,character return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the last count characters from source.</p>
+<dt id="extras.strings_fixed.tail[string,natural,character return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">tail</tt> <big>(</big><em>source : string</em>; <em>count : natural</em>; <em>pad : character := ' '</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.strings_fixed.tail[string,natural,character return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the last count characters from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -577,9 +603,10 @@ from source.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_fixed.tail[string,natural,alignment,character]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">tail</tt> <big>(</big><em>source : inout string</em>; <em>count : in natural</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_fixed.tail[string,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the last count characters from source.</p>
+<dt id="extras.strings_fixed.tail[string,natural,alignment,character]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">tail</tt> <big>(</big><em>source : inout string</em>; <em>count : in natural</em>; <em>justify : in alignment := left</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#extras.strings_fixed.tail[string,natural,alignment,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the last count characters from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -597,9 +624,10 @@ from source.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.&quot;*&quot;[natural,character return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>left : natural</em>; <em>right : character</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed."*"[natural,character return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replicate a character left number of times.</p>
+<dt id="extras.strings_fixed.&quot;*&quot;[natural,character return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>left : natural</em>; <em>right : character</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.strings_fixed."*"[natural,character return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Replicate a character left number of times.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -618,9 +646,10 @@ from source.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.&quot;*&quot;[natural,string return string]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>left : natural</em>; <em>right : string</em><big>)</big> &rarr; string<a class="headerlink" href="#strings_fixed."*"[natural,string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replicate a string left number of times.</p>
+<dt id="extras.strings_fixed.&quot;*&quot;[natural,string return string]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>left : natural</em>; <em>right : string</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.strings_fixed."*"[natural,string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Replicate a string left number of times.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -639,9 +668,10 @@ from source.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_fixed.hash[string return natural]">
-<tt class="descclassname">strings_fixed.</tt><tt class="descname">hash</tt> <big>(</big><em>key : string</em><big>)</big> &rarr; natural<a class="headerlink" href="#strings_fixed.hash[string return natural]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute hash value of a string.</p>
+<dt id="extras.strings_fixed.hash[string return natural]">
+<tt class="descclassname">strings_fixed.</tt><tt class="descname">hash</tt> <big>(</big><em>key : string</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.strings_fixed.hash[string return natural]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Compute hash value of a string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -670,7 +700,7 @@ from source.</p>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -678,10 +708,12 @@ from source.</p>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">

@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../index.html" />
-    <link rel="next" title="bcd_conversion" href="modules/bcd_conversion.html" />
+    <link rel="next" title="arithmetic" href="modules/arithmetic.html" />
     <link rel="prev" title="VHDL-extras library documentation" href="../index.html" />
    
   
@@ -42,14 +42,33 @@
             
   <div class="section" id="vhdl-extras-packages">
 <h1>VHDL-extras packages<a class="headerlink" href="#vhdl-extras-packages" title="Permalink to this headline">¶</a></h1>
-<p>The following is a detailed description of the packages provided in VHDL-extras.</p>
+<p>The following is a summary of the packages provided in VHDL-extras.</p>
 <div class="section" id="core-packages">
 <h2>Core Packages<a class="headerlink" href="#core-packages" title="Permalink to this headline">¶</a></h2>
 <p>These packages provide core functionality that is of general use in a
 wide array of applications.</p>
 <div class="section" id="pipelining">
 <span id="id1"></span><h3><a class="reference internal" href="modules/pipelining.html"><em>pipelining</em></a><a class="headerlink" href="#pipelining" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/pipelining-pipeline_u.svg" /><p>Configurable pipeline registers for use with automated retiming during synthesis. This provides a variable length chain of registers that can be placed after a section of combinational logic. When your synthesis tool is configured to enable retiming, these registers will be dispersed throughout the combinational logic to reduce the worst case delay. You can tweak the pipeline stages with a simple change in a generic to tune your results.</p>
+<object data="../_images/symbol-pipelining-pipeline_ul.svg" type="image/svg+xml">
+            <p class="warning">component pipeline_ul is
+generic (
+  PIPELINE_STAGES : positive;
+  ATTR_REG_BALANCING : string;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{data|}}
+  Sig_in : in std_ulogic;
+  Sig_out : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Configurable pipeline registers for use with automated retiming during synthesis. This provides a variable length chain of registers that can be placed after a section of combinational logic. When your synthesis tool is configured to enable retiming, these registers will be dispersed throughout the combinational logic to reduce the worst case delay. You can tweak the pipeline stages with a simple change in a generic to tune your results.</p>
 </div>
 <div class="section" id="sizing">
 <span id="id2"></span><h3><a class="reference internal" href="modules/sizing.html"><em>sizing</em></a><a class="headerlink" href="#sizing" title="Permalink to this headline">¶</a></h3>
@@ -65,7 +84,32 @@ wide array of applications.</p>
 </div>
 <div class="section" id="synchronizing">
 <span id="id3"></span><h3><a class="reference internal" href="modules/synchronizing.html"><em>synchronizing</em></a><a class="headerlink" href="#synchronizing" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/synchronizing-handshake_synchronizer.svg" /><p>Synchronizer entities for transferring signals between clock domains. There are three entities provided:</p>
+<object data="../_images/symbol-synchronising-handshake_synchronizer.svg" type="image/svg+xml">
+            <p class="warning">component handshake_synchronizer is
+generic (
+  STAGES : natural;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock_tx : in std_ulogic;
+  Reset_tx : in std_ulogic;
+  Clock_rx : in std_ulogic;
+  Reset_rx : in std_ulogic;
+  --# {{data|Send port}}
+  Tx_data : in std_ulogic_vector;
+  Send_data : in std_ulogic;
+  Sending : out std_ulogic;
+  Data_sent : out std_ulogic;
+  --# {{Receive port}}
+  Rx_data : out std_ulogic_vector;
+  New_data : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Synchronizer entities for transferring signals between clock domains. There are three entities provided:</p>
 <ul class="simple">
 <li>bit_synchronizer &#8211; Suitable for synchronizing individual bit-wide signals</li>
 <li>reset_synchronizer &#8211; A special synchronizer for generating asyncronous resets that are synchronously released</li>
@@ -103,12 +147,57 @@ simulation-only clock generation procedure. A variant of timing_ops is provided 
 </div>
 </div>
 </div>
+<div class="section" id="arithmetic">
+<h2>Arithmetic<a class="headerlink" href="#arithmetic" title="Permalink to this headline">¶</a></h2>
+<p>These packages implement arithmetic operations.</p>
+<div class="section" id="id5">
+<span id="id6"></span><h3><a class="reference internal" href="modules/arithmetic.html"><em>arithmetic</em></a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>General purpose pipelined adder.</p>
+</div>
+<div class="section" id="bit-ops">
+<span id="id7"></span><h3><a class="reference internal" href="modules/bit_ops.html"><em>bit_ops</em></a><a class="headerlink" href="#bit-ops" title="Permalink to this headline">¶</a></h3>
+<p>Bitwise operations.</p>
+</div>
+<div class="section" id="cordic">
+<span id="id8"></span><h3><a class="reference internal" href="modules/cordic.html"><em>cordic</em></a><a class="headerlink" href="#cordic" title="Permalink to this headline">¶</a></h3>
+<p>CORDIC rotation algorithm with specializations for computing Sine and Cosine.</p>
+</div>
+<div class="section" id="filtering">
+<span id="id9"></span><h3><a class="reference internal" href="modules/filtering.html"><em>filtering</em></a><a class="headerlink" href="#filtering" title="Permalink to this headline">¶</a></h3>
+<p>Digital filters.</p>
+</div>
+</div>
 <div class="section" id="error-handling">
 <h2>Error handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
 <p>Packages for performing error detection and correction.</p>
 <div class="section" id="crc-ops">
-<span id="id5"></span><h3><a class="reference internal" href="modules/crc_ops.html"><em>crc_ops</em></a><a class="headerlink" href="#crc-ops" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/crc_ops-crc.svg" /><p>This package provides a general purpose CRC implementation. It consists
+<span id="id10"></span><h3><a class="reference internal" href="modules/crc_ops.html"><em>crc_ops</em></a><a class="headerlink" href="#crc-ops" title="Permalink to this headline">¶</a></h3>
+<object data="../_images/symbol-crc_ops-crc.svg" type="image/svg+xml">
+            <p class="warning">component crc is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|CRC configuration}}
+  Poly : in std_ulogic_vector;
+  Xor_in : in std_ulogic_vector;
+  Xor_out : in std_ulogic_vector;
+  Reflect_in : in boolean;
+  Reflect_out : in boolean;
+  Initialize : in std_ulogic;
+  --# {{data|}}
+  Enable : in std_ulogic;
+  Data : in std_ulogic_vector;
+  Checksum : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This package provides a general purpose CRC implementation. It consists
 of a set of functions that can be used to iteratively process successive
 data vectors as well an an entity that combines the functions into a
 easily instantiated form. The CRC can be readily specified using the Rocksoft
@@ -167,28 +256,76 @@ produce the final CRC value.</p>
 </div>
 </div>
 <div class="section" id="hamming-edac">
-<span id="id6"></span><h3><a class="reference internal" href="modules/hamming_edac.html"><em>hamming_edac</em></a><a class="headerlink" href="#hamming-edac" title="Permalink to this headline">¶</a></h3>
+<span id="id11"></span><h3><a class="reference internal" href="modules/hamming_edac.html"><em>hamming_edac</em></a><a class="headerlink" href="#hamming-edac" title="Permalink to this headline">¶</a></h3>
 <p>A flexible implementation of the Hamming code for any data size of 4-bits or greater.</p>
 </div>
 <div class="section" id="parity-ops">
-<span id="id7"></span><h3><a class="reference internal" href="modules/parity_ops.html"><em>parity_ops</em></a><a class="headerlink" href="#parity-ops" title="Permalink to this headline">¶</a></h3>
+<span id="id12"></span><h3><a class="reference internal" href="modules/parity_ops.html"><em>parity_ops</em></a><a class="headerlink" href="#parity-ops" title="Permalink to this headline">¶</a></h3>
 <p>Basic parity operations.</p>
 </div>
 <div class="section" id="secded-edac">
-<span id="id8"></span><h3><a class="reference internal" href="modules/secded_edac.html"><em>secded_edac</em></a><a class="headerlink" href="#secded-edac" title="Permalink to this headline">¶</a></h3>
+<span id="id13"></span><h3><a class="reference internal" href="modules/secded_edac.html"><em>secded_edac</em></a><a class="headerlink" href="#secded-edac" title="Permalink to this headline">¶</a></h3>
 <p>Single Error Correction, Double Error Detection implemented with extended Hamming code.</p>
 </div>
 <div class="section" id="secded-codec">
-<span id="id9"></span><h3><a class="reference internal" href="modules/secded_codec.html"><em>secded_codec</em></a><a class="headerlink" href="#secded-codec" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/secded_codec-secded_codec.svg" /><p>An entity providing a combined SECDED encoder and decoder with added error injection for system verification. Optional pipelining is provided.</p>
+<span id="id14"></span><h3><a class="reference internal" href="modules/secded_codec.html"><em>secded_codec</em></a><a class="headerlink" href="#secded-codec" title="Permalink to this headline">¶</a></h3>
+<object data="../_images/symbol-secded_codec-secded_codec.svg" type="image/svg+xml">
+            <p class="warning">component secded_codec is
+generic (
+  DATA_SIZE : positive;
+  PIPELINE_STAGES : natural;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Codec_mode : in std_ulogic;
+  Insert_error : in std_ulogic_vector(1 downto 0);
+  --# {{data|Encoding port}}
+  Data : in std_ulogic_vector(DATA_SIZE-1 downto 0);
+  Encoded_data : out ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right);
+  --# {{Decoding port}}
+  Ecc_data : in ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right);
+  Decoded_data : out std_ulogic_vector(DATA_SIZE-1 downto 0);
+  --# {{Error flags}}
+  Single_bit_error : out std_ulogic;
+  Double_bit_error : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>An entity providing a combined SECDED encoder and decoder with added error injection for system verification. Optional pipelining is provided.</p>
 </div>
 </div>
 <div class="section" id="encoding">
 <h2>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h2>
 <p>Packages for encoding data into alternate forms.</p>
 <div class="section" id="bcd-conversion">
-<span id="id10"></span><h3><a class="reference internal" href="modules/bcd_conversion.html"><em>bcd_conversion</em></a><a class="headerlink" href="#bcd-conversion" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/bcd_conversion-binary_to_bcd.svg" /><p>This package provides functions and components for performing conversion
+<span id="id15"></span><h3><a class="reference internal" href="modules/bcd_conversion.html"><em>bcd_conversion</em></a><a class="headerlink" href="#bcd-conversion" title="Permalink to this headline">¶</a></h3>
+<object data="../_images/symbol-bcd_conversion-binary_to_bcd.svg" type="image/svg+xml">
+            <p class="warning">component binary_to_bcd is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Convert : in std_ulogic;
+  Done : out std_ulogic;
+  --# {{data|}}
+  Binary : in unsigned;
+  BCD : out unsigned
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This package provides functions and components for performing conversion
 between binary and packed Binary Coded Decimal (BCD). The functions
 to_bcd and to_binary can be used to create synthesizable combinational
 logic for performing a conversion. In synthesized code they are best used
@@ -206,8 +343,29 @@ result must be multiplied by 4 to get the length of a packed BCD array.</p>
 </div>
 </div>
 <div class="section" id="gray-code">
-<span id="id11"></span><h3><a class="reference internal" href="modules/gray_code.html"><em>gray_code</em></a><a class="headerlink" href="#gray-code" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/gray_code-gray_counter.svg" /><p>This package provides functions to convert between Gray code and binary. An example
+<span id="id16"></span><h3><a class="reference internal" href="modules/gray_code.html"><em>gray_code</em></a><a class="headerlink" href="#gray-code" title="Permalink to this headline">¶</a></h3>
+<object data="../_images/symbol-gray_code-gray_counter.svg" type="image/svg+xml">
+            <p class="warning">component gray_counter is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Load : in std_ulogic;
+  Enable : in std_ulogic;
+  --# {{data|}}
+  Binary_load : in unsigned;
+  Binary : out unsigned;
+  Gray : out unsigned
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This package provides functions to convert between Gray code and binary. An example
 implementation of a Gray code counter is also included.</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">bin</span><span class="p">,</span> <span class="n">gray</span><span class="p">,</span> <span class="n">bin2</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
 <span class="p">...</span>
@@ -218,7 +376,7 @@ implementation of a Gray code counter is also included.</p>
 </div>
 </div>
 <div class="section" id="muxing">
-<span id="id12"></span><h3><a class="reference internal" href="modules/muxing.html"><em>muxing</em></a><a class="headerlink" href="#muxing" title="Permalink to this headline">¶</a></h3>
+<span id="id17"></span><h3><a class="reference internal" href="modules/muxing.html"><em>muxing</em></a><a class="headerlink" href="#muxing" title="Permalink to this headline">¶</a></h3>
 <p>Parameterized multiplexers, decoders, and demultiplexers. A VHDL-2008 variant is available that
 implements a fully generic multi-bit mux.</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">sel</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
@@ -251,8 +409,38 @@ implements a fully generic multi-bit mux.</p>
 <h2>Memories<a class="headerlink" href="#memories" title="Permalink to this headline">¶</a></h2>
 <p>Packages with internal memories</p>
 <div class="section" id="fifos">
-<span id="id13"></span><h3><a class="reference internal" href="modules/fifos.html"><em>fifos</em></a><a class="headerlink" href="#fifos" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/fifos-fifo.svg" /><p>This package implements a set of generic FIFO components. There are three
+<span id="id18"></span><h3><a class="reference internal" href="modules/fifos.html"><em>fifos</em></a><a class="headerlink" href="#fifos" title="Permalink to this headline">¶</a></h3>
+<object data="../_images/symbol-fifos-fifo.svg" type="image/svg+xml">
+            <p class="warning">component fifo is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic;
+  MEM_SIZE : positive;
+  SYNC_READ : boolean
+);
+port (
+  --# {{data|Write port}}
+  Wr_clock : in std_ulogic;
+  Wr_reset : in std_ulogic;
+  We : in std_ulogic;
+  Wr_data : in std_ulogic_vector;
+  --# {{Read port}}
+  Rd_clock : in std_ulogic;
+  Rd_reset : in std_ulogic;
+  Re : in std_ulogic;
+  Rd_data : out std_ulogic_vector;
+  --# {{Status}}
+  Empty : out std_ulogic;
+  Full : out std_ulogic;
+  Almost_empty_thresh : in natural;
+  Almost_full_thresh : in natural;
+  Almost_empty : out std_ulogic;
+  Almost_full : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This package implements a set of generic FIFO components. There are three
 variants. All use the same basic interface for the read/write ports and
 status flags. The FIFOs have the following differences:</p>
 <ul class="simple">
@@ -262,12 +450,62 @@ status flags. The FIFOs have the following differences:</p>
 </ul>
 </div>
 <div class="section" id="memory">
-<span id="id14"></span><h3><a class="reference internal" href="modules/memory.html"><em>memory</em></a><a class="headerlink" href="#memory" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/memory-dual_port_ram.svg" /><p>This package provides general purpose components for inferred dual-ported RAM and ROM.</p>
+<span id="id19"></span><h3><a class="reference internal" href="modules/memory.html"><em>memory</em></a><a class="headerlink" href="#memory" title="Permalink to this headline">¶</a></h3>
+<object data="../_images/symbol-memory-dual_port_ram.svg" type="image/svg+xml">
+            <p class="warning">component dual_port_ram is
+generic (
+  MEM_SIZE : positive;
+  SYNC_READ : boolean
+);
+port (
+  --# {{data|Write port}}
+  Wr_clock : in std_ulogic;
+  We : in std_ulogic;
+  Wr_addr : in natural;
+  Wr_data : in std_ulogic_vector;
+  --# {{Read port}}
+  Rd_clock : in std_ulogic;
+  Re : in std_ulogic;
+  Rd_addr : in natural;
+  Rd_data : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This package provides general purpose components for inferred dual-ported RAM and ROM.</p>
 </div>
 <div class="section" id="reg-file">
-<span id="id15"></span><h3><a class="reference internal" href="modules/reg_file.html"><em>reg_file</em></a><a class="headerlink" href="#reg-file" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/reg_file-reg_file.svg" /><p>This is an implementation of a general purpose register file. The VHDL-93 version must be manually customized to set the size of the registers internally. The VHDL-2008 version is fully generic by employing an unconstrained array of unconstrained arrays to implement the registers. In addition to simple read/write registers you can configure individual bits to act as self clearing strobes when written and to read back directly from internal signals rather than from the register contents.</p>
+<span id="id20"></span><h3><a class="reference internal" href="modules/reg_file.html"><em>reg_file</em></a><a class="headerlink" href="#reg-file" title="Permalink to this headline">¶</a></h3>
+<object data="../_images/symbol-reg_file-reg_file.svg" type="image/svg+xml">
+            <p class="warning">component reg_file is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic;
+  DIRECT_READ_BIT_MASK : reg_array;
+  STROBE_BIT_MASK : reg_array;
+  REGISTER_INPUTS : boolean
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Clear : in std_ulogic;
+  --# {{data|Addressed port}}
+  Reg_sel : in unsigned;
+  We : in std_ulogic;
+  Wr_data : in reg_word;
+  Rd_data : out reg_word;
+  --# {{Registers}}
+  Registers : out reg_array;
+  Direct_read : in reg_array;
+  Reg_written : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>This is an implementation of a general purpose register file. The VHDL-93 version must be manually customized to set the size of the registers internally. The VHDL-2008 version is fully generic by employing an unconstrained array of unconstrained arrays to implement the registers. In addition to simple read/write registers you can configure individual bits to act as self clearing strobes when written and to read back directly from internal signals rather than from the register contents.</p>
 </div>
 </div>
 <div class="section" id="randomization">
@@ -275,16 +513,58 @@ status flags. The FIFOs have the following differences:</p>
 <p>These packages provide linear feedback shift registers and related
 structures for creating randomized output.</p>
 <div class="section" id="lcar-ops">
-<span id="id16"></span><h3><a class="reference internal" href="modules/lcar_ops.html"><em>lcar_ops</em></a><a class="headerlink" href="#lcar-ops" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/lcar_ops-wolfram_lcar.svg" /><p>An implementation of the Wolfram Linear Cellular Automata. This is useful for generating pseudo-random numbers with low correlation between bits. Adaptable to any number of cells. Constants are provided for
+<span id="id21"></span><h3><a class="reference internal" href="modules/lcar_ops.html"><em>lcar_ops</em></a><a class="headerlink" href="#lcar-ops" title="Permalink to this headline">¶</a></h3>
+<object data="../_images/symbol-lcar_ops-wolfram_lcar.svg" type="image/svg+xml">
+            <p class="warning">component wolfram_lcar is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  Enable : in std_ulogic;
+  --# {{control|}}
+  Rule_map : in std_ulogic_vector;
+  --# {{data|}}
+  Left_in : in std_ulogic;
+  Right_in : in std_ulogic;
+  State : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>An implementation of the Wolfram Linear Cellular Automata. This is useful for generating pseudo-random numbers with low correlation between bits. Adaptable to any number of cells. Constants are provided for
 maximal length sequences of up to 100 bits.</p>
 </div>
 <div class="section" id="lfsr-ops">
-<span id="id17"></span><h3><a class="reference internal" href="modules/lfsr_ops.html"><em>lfsr_ops</em></a><a class="headerlink" href="#lfsr-ops" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/lfsr_ops-fibonacci_lfsr.svg" /><p>Various implementations of Galois and Fibonacci Linear Feedback Shift Registers. These adapt to any size register. Coefficients are provided for maximal length sequences up to 100 bits.</p>
+<span id="id22"></span><h3><a class="reference internal" href="modules/lfsr_ops.html"><em>lfsr_ops</em></a><a class="headerlink" href="#lfsr-ops" title="Permalink to this headline">¶</a></h3>
+<object data="../_images/symbol-lfsr_ops-fibonacci_lfsr.svg" type="image/svg+xml">
+            <p class="warning">component fibonacci_lfsr is
+generic (
+  INIT_ZERO : boolean;
+  FULL_CYCLE : boolean;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  Enable : in std_ulogic;
+  --# {{control|}}
+  Tap_map : in std_ulogic_vector;
+  --# {{data|}}
+  State : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Various implementations of Galois and Fibonacci Linear Feedback Shift Registers. These adapt to any size register. Coefficients are provided for maximal length sequences up to 100 bits.</p>
 </div>
 <div class="section" id="random">
-<span id="id18"></span><h3><a class="reference internal" href="modules/random.html"><em>random</em></a><a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h3>
+<span id="id23"></span><h3><a class="reference internal" href="modules/random.html"><em>random</em></a><a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h3>
 <p>This package provides a general set of pseudo-random number functions.
 It is implemented as a wrapper around the ieee.math_real.uniform
 procedure and is only suitable for simulation not synthesis. See the
@@ -305,7 +585,7 @@ in both implementations.</p>
 <p>A set of packages that provide string and character operations adapted
 from the Ada standard library.</p>
 <div class="section" id="characters-handling">
-<span id="id19"></span><h3><a class="reference internal" href="modules/characters_handling.html"><em>characters_handling</em></a><a class="headerlink" href="#characters-handling" title="Permalink to this headline">¶</a></h3>
+<span id="id24"></span><h3><a class="reference internal" href="modules/characters_handling.html"><em>characters_handling</em></a><a class="headerlink" href="#characters-handling" title="Permalink to this headline">¶</a></h3>
 <p>This is a package of functions that replicate the behavior of the Ada
 standard library package ada.characters.handling. Included are functions
 to test for different character classifications and perform conversion
@@ -318,30 +598,30 @@ adapted from the definitions in the Ada&#8216;95 ARM for the package
 Ada.Characters.Latin_1.</p>
 </div>
 <div class="section" id="strings">
-<span id="id20"></span><h3><a class="reference internal" href="modules/strings.html"><em>strings</em></a><a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
+<span id="id25"></span><h3><a class="reference internal" href="modules/strings.html"><em>strings</em></a><a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
 <p>Shared types for the string packages.</p>
 </div>
 <div class="section" id="strings-fixed">
-<span id="id21"></span><h3><a class="reference internal" href="modules/strings_fixed.html"><em>strings_fixed</em></a><a class="headerlink" href="#strings-fixed" title="Permalink to this headline">¶</a></h3>
+<span id="id26"></span><h3><a class="reference internal" href="modules/strings_fixed.html"><em>strings_fixed</em></a><a class="headerlink" href="#strings-fixed" title="Permalink to this headline">¶</a></h3>
 <p>This package provides a string library for operating on fixed length
 strings. This is a clone of the Ada&#8216;95 library <tt class="docutils literal"><span class="pre">Ada.Strings.Fixed</span></tt>. It is a
 nearly complete implementation with only the procedures taking character
 mapping functions omitted because of VHDL limitations.</p>
 </div>
 <div class="section" id="strings-maps">
-<span id="id22"></span><h3><a class="reference internal" href="modules/strings_maps.html"><em>strings_maps</em></a><a class="headerlink" href="#strings-maps" title="Permalink to this headline">¶</a></h3>
+<span id="id27"></span><h3><a class="reference internal" href="modules/strings_maps.html"><em>strings_maps</em></a><a class="headerlink" href="#strings-maps" title="Permalink to this headline">¶</a></h3>
 <p>This package provides types and functions for manipulating character sets.
 It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span class="pre">Ada.Strings.Maps</span></tt>.</p>
 </div>
 <div class="section" id="strings-maps-constants">
-<span id="id23"></span><h3><a class="reference internal" href="modules/strings_maps_constants.html"><em>strings_maps_constants</em></a><a class="headerlink" href="#strings-maps-constants" title="Permalink to this headline">¶</a></h3>
+<span id="id28"></span><h3><a class="reference internal" href="modules/strings_maps_constants.html"><em>strings_maps_constants</em></a><a class="headerlink" href="#strings-maps-constants" title="Permalink to this headline">¶</a></h3>
 <p>Constants for various character sets from the range
 of Latin-1 and mappings for upper case, lower case, and basic (unaccented)
 characters. It is a clone of the Ada&#8216;95 package
 <tt class="docutils literal"><span class="pre">Ada.Strings.Maps.Constants</span></tt>.</p>
 </div>
 <div class="section" id="strings-unbounded">
-<span id="id24"></span><h3><a class="reference internal" href="modules/strings_unbounded.html"><em>strings_unbounded</em></a><a class="headerlink" href="#strings-unbounded" title="Permalink to this headline">¶</a></h3>
+<span id="id29"></span><h3><a class="reference internal" href="modules/strings_unbounded.html"><em>strings_unbounded</em></a><a class="headerlink" href="#strings-unbounded" title="Permalink to this headline">¶</a></h3>
 <p>This package provides a string library for operating on unbounded length
 strings. This is a clone of the Ada&#8216;95 library <tt class="docutils literal"><span class="pre">Ada.Strings.Unbounded</span></tt>. Due
 to the VHDL restriction on using access types as function parameters only
@@ -353,7 +633,7 @@ operators cannot be provided, a new set of &#8220;copy&#8221; procedures are inc
 to simplify duplication of an existing unbounded string.</p>
 </div>
 <div class="section" id="strings-bounded">
-<span id="id25"></span><h3><a class="reference internal" href="modules/strings_bounded.html"><em>strings_bounded</em></a><a class="headerlink" href="#strings-bounded" title="Permalink to this headline">¶</a></h3>
+<span id="id30"></span><h3><a class="reference internal" href="modules/strings_bounded.html"><em>strings_bounded</em></a><a class="headerlink" href="#strings-bounded" title="Permalink to this headline">¶</a></h3>
 <p>This package is a string library for bounded length strings. It is a clone of the Ada&#8216;95 library <tt class="docutils literal"><span class="pre">Ada.Strings.Bounded</span></tt>.</p>
 </div>
 </div>
@@ -361,12 +641,16 @@ to simplify duplication of an existing unbounded string.</p>
 <h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
 <p>Additional packages of useful functions.</p>
 <div class="section" id="binaryio">
-<span id="id26"></span><h3><a class="reference internal" href="modules/binaryio.html"><em>binaryio</em></a><a class="headerlink" href="#binaryio" title="Permalink to this headline">¶</a></h3>
+<span id="id31"></span><h3><a class="reference internal" href="modules/binaryio.html"><em>binaryio</em></a><a class="headerlink" href="#binaryio" title="Permalink to this headline">¶</a></h3>
 <p>Procedures for general binary file IO. Support is provided for reading and writing vectors of any size
 with big and little-endian byte order.</p>
 </div>
+<div class="section" id="interrupt-ctl">
+<span id="id32"></span><h3><a class="reference internal" href="modules/interrupt_ctl.html"><em>interrupt_ctl</em></a><a class="headerlink" href="#interrupt-ctl" title="Permalink to this headline">¶</a></h3>
+<p>General purpose priority interrupt controller.</p>
+</div>
 <div class="section" id="text-buffering">
-<span id="id27"></span><h3><a class="reference internal" href="modules/text_buffering.html"><em>text_buffering</em></a><a class="headerlink" href="#text-buffering" title="Permalink to this headline">¶</a></h3>
+<span id="id33"></span><h3><a class="reference internal" href="modules/text_buffering.html"><em>text_buffering</em></a><a class="headerlink" href="#text-buffering" title="Permalink to this headline">¶</a></h3>
 <p>This package provides a facility for storing buffered text. It can be used
 to represent the contents of a text file as a linked list of dynamically
 allocated strings for each line. A text file can be read into a buffer and
@@ -374,12 +658,53 @@ the resulting data structure can be incorporated into records passable
 to procedures without having to maintain a separate file handle.</p>
 </div>
 <div class="section" id="ddfs">
-<span id="id28"></span><h3><a class="reference internal" href="modules/ddfs.html"><em>ddfs</em></a><a class="headerlink" href="#ddfs" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/ddfs-ddfs.svg" /><p>A set of functions for implementing Direct Digital Frequency Synthesizers.</p>
+<span id="id34"></span><h3><a class="reference internal" href="modules/ddfs.html"><em>ddfs</em></a><a class="headerlink" href="#ddfs" title="Permalink to this headline">¶</a></h3>
+<object data="../_images/symbol-ddfs-ddfs.svg" type="image/svg+xml">
+            <p class="warning">component ddfs is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Enable : in std_ulogic;
+  Load_phase : in std_ulogic;
+  New_phase : in unsigned;
+  Increment : in unsigned;
+  --# {{data|}}
+  Accumulator : out unsigned;
+  Synth_clock : out std_ulogic;
+  Synth_pulse : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>A set of functions for implementing Direct Digital Frequency Synthesizers.</p>
 </div>
 <div class="section" id="glitch-filtering">
-<span id="id29"></span><h3><a class="reference internal" href="modules/glitch_filtering.html"><em>glitch_filtering</em></a><a class="headerlink" href="#glitch-filtering" title="Permalink to this headline">¶</a></h3>
-<img src="../_images/glitch_filtering-glitch_filter.svg" /><p>Glitch filter components that can be used to remove
+<span id="id35"></span><h3><a class="reference internal" href="modules/glitch_filtering.html"><em>glitch_filtering</em></a><a class="headerlink" href="#glitch-filtering" title="Permalink to this headline">¶</a></h3>
+<object data="../_images/symbol-glitch_filtering-glitch_filter.svg" type="image/svg+xml">
+            <p class="warning">component glitch_filter is
+generic (
+  FILTER_CYCLES : positive;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{data|}}
+  Noisy : in std_ulogic;
+  Filtered : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Glitch filter components that can be used to remove
 noise from digital input signals. This can be useful for debouncing
 switches directly connected to a device. The glitch_filter component works
 with a single std_ulogic signal while array_glitch_filter provides
@@ -398,7 +723,7 @@ flip-flops and can be directly tied to input pads.</p>
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -406,10 +731,12 @@ flip-flops and can be directly tied to input pads.</p>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
@@ -417,7 +744,7 @@ flip-flops and can be directly tied to input pads.</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="../index.html" title="previous chapter">VHDL-extras library documentation</a></li>
-      <li>Next: <a href="modules/bcd_conversion.html" title="next chapter">bcd_conversion</a></li>
+      <li>Next: <a href="modules/arithmetic.html" title="next chapter">arithmetic</a></li>
   </ul></li>
 </ul>
 </div>
@@ -429,6 +756,13 @@ flip-flops and can be directly tied to input pads.</p>
 <li><a class="reference internal" href="#sizing"><tt class="docutils literal"><span class="pre">sizing</span></tt></a></li>
 <li><a class="reference internal" href="#synchronizing"><tt class="docutils literal"><span class="pre">synchronizing</span></tt></a></li>
 <li><a class="reference internal" href="#timing-ops"><tt class="docutils literal"><span class="pre">timing_ops</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#arithmetic">Arithmetic</a><ul>
+<li><a class="reference internal" href="#id5"><tt class="docutils literal"><span class="pre">arithmetic</span></tt></a></li>
+<li><a class="reference internal" href="#bit-ops"><tt class="docutils literal"><span class="pre">bit_ops</span></tt></a></li>
+<li><a class="reference internal" href="#cordic"><tt class="docutils literal"><span class="pre">cordic</span></tt></a></li>
+<li><a class="reference internal" href="#filtering"><tt class="docutils literal"><span class="pre">filtering</span></tt></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#error-handling">Error handling</a><ul>
@@ -470,6 +804,7 @@ flip-flops and can be directly tied to input pads.</p>
 </li>
 <li><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
 <li><a class="reference internal" href="#binaryio"><tt class="docutils literal"><span class="pre">binaryio</span></tt></a></li>
+<li><a class="reference internal" href="#interrupt-ctl"><tt class="docutils literal"><span class="pre">interrupt_ctl</span></tt></a></li>
 <li><a class="reference internal" href="#text-buffering"><tt class="docutils literal"><span class="pre">text_buffering</span></tt></a></li>
 <li><a class="reference internal" href="#ddfs"><tt class="docutils literal"><span class="pre">ddfs</span></tt></a></li>
 <li><a class="reference internal" href="#glitch-filtering"><tt class="docutils literal"><span class="pre">glitch_filtering</span></tt></a></li>

@@ -34,8 +34,8 @@ Williams 1993. A CRC specification consists of the following parameters:
   Reflect_out
     Determine bit order of final crc result
 
-A CRC can be computed using a set of three functions :vhdl:func:`~crc_ops.init_crc`,
-:vhdl:func:`~crc_ops.next_crc`, and :vhdl:func:`~crc_ops.end_crc`.
+A CRC can be computed using a set of three functions :vhdl:func:`~extras.crc_ops.init_crc`,
+:vhdl:func:`~extras.crc_ops.next_crc`, and :vhdl:func:`~extras.crc_ops.end_crc`.
 All functions are assigned to a common variable/signal that maintans the shift
 register state between succesive calls. After initialization with ``init_crc``, data
 is processed by repeated calls to ``next_crc``. The width of the data vector is
@@ -47,6 +47,8 @@ produce the final CRC value.
 
 Example usage
 ~~~~~~~~~~~~~
+
+Compute CRC in a loop. This will synthesize into a combinational circuit.
 
 .. code-block:: vhdl
 

@@ -2,7 +2,7 @@
 VHDL-extras packages
 ====================
 
-The following is a detailed description of the packages provided in VHDL-extras.
+The following is a summary of the packages provided in VHDL-extras.
 
 Core Packages
 -------------
@@ -15,7 +15,26 @@ wide array of applications.
 :doc:`pipelining <modules/pipelining>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/pipelining-pipeline_u.svg
+.. symbolator::
+  :name: pipelining-pipeline_ul
+
+  component pipeline_ul is
+  generic (
+    PIPELINE_STAGES : positive;
+    ATTR_REG_BALANCING : string;
+    RESET_ACTIVE_LEVEL : std_ulogic
+  );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;
+    Reset : in std_ulogic;
+    --# {{data|}}
+    Sig_in : in std_ulogic;
+    Sig_out : out std_ulogic
+  );
+  end component;
+
+|
 
 Configurable pipeline registers for use with automated retiming during synthesis. This provides a variable length chain of registers that can be placed after a section of combinational logic. When your synthesis tool is configured to enable retiming, these registers will be dispersed throughout the combinational logic to reduce the worst case delay. You can tweak the pipeline stages with a simple change in a generic to tune your results.
 
@@ -41,7 +60,33 @@ A set of functions for computing integer logarithms and for determining the size
 :doc:`synchronizing <modules/synchronizing>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/synchronizing-handshake_synchronizer.svg
+.. symbolator::
+  :name: synchronising-handshake_synchronizer
+
+  component handshake_synchronizer is
+  generic (
+    STAGES : natural;
+    RESET_ACTIVE_LEVEL : std_ulogic
+  );
+  port (
+    --# {{clocks|}}
+    Clock_tx : in std_ulogic;
+    Reset_tx : in std_ulogic;
+    Clock_rx : in std_ulogic;
+    Reset_rx : in std_ulogic;
+    --# {{data|Send port}}
+    Tx_data : in std_ulogic_vector;
+    Send_data : in std_ulogic;
+    Sending : out std_ulogic;
+    Data_sent : out std_ulogic;
+    --# {{Receive port}}
+    Rx_data : out std_ulogic_vector;
+    New_data : out std_ulogic
+  );
+  end component;
+
+|
+
 
 Synchronizer entities for transferring signals between clock domains. There are three entities provided:
 
@@ -84,6 +129,43 @@ simulation-only clock generation procedure. A variant of timing_ops is provided 
       wait;
     end process;
 
+
+Arithmetic
+----------
+
+These packages implement arithmetic operations.
+
+.. _arithmetic:
+
+:doc:`arithmetic <modules/arithmetic>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+General purpose pipelined adder.
+
+
+.. _bit_ops:
+
+:doc:`bit_ops <modules/bit_ops>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bitwise operations.
+
+
+.. _cordic:
+
+:doc:`cordic <modules/cordic>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+CORDIC rotation algorithm with specializations for computing Sine and Cosine.
+
+.. _filtering:
+
+:doc:`filtering <modules/filtering>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Digital filters.
+
+
 Error handling
 --------------
 
@@ -94,7 +176,32 @@ Packages for performing error detection and correction.
 :doc:`crc_ops <modules/crc_ops>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/crc_ops-crc.svg
+.. symbolator::
+  :name: crc_ops-crc
+
+  component crc is
+  generic (
+    RESET_ACTIVE_LEVEL : std_ulogic
+  );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;
+    Reset : in std_ulogic;
+    --# {{control|CRC configuration}}
+    Poly : in std_ulogic_vector;
+    Xor_in : in std_ulogic_vector;
+    Xor_out : in std_ulogic_vector;
+    Reflect_in : in boolean;
+    Reflect_out : in boolean;
+    Initialize : in std_ulogic;
+    --# {{data|}}
+    Enable : in std_ulogic;
+    Data : in std_ulogic_vector;
+    Checksum : out std_ulogic_vector
+  );
+  end component;
+
+|
 
 This package provides a general purpose CRC implementation. It consists
 of a set of functions that can be used to iteratively process successive
@@ -184,7 +291,36 @@ Single Error Correction, Double Error Detection implemented with extended Hammin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. image:: ../image/sym/secded_codec-secded_codec.svg
+.. symbolator::
+  :name: secded_codec-secded_codec
+
+  component secded_codec is
+  generic (
+    DATA_SIZE : positive;
+    PIPELINE_STAGES : natural;
+    RESET_ACTIVE_LEVEL : std_ulogic
+  );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;
+    Reset : in std_ulogic;
+    --# {{control|}}
+    Codec_mode : in std_ulogic;
+    Insert_error : in std_ulogic_vector(1 downto 0);
+    --# {{data|Encoding port}}
+    Data : in std_ulogic_vector(DATA_SIZE-1 downto 0);
+    Encoded_data : out ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right);
+    --# {{Decoding port}}
+    Ecc_data : in ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right);
+    Decoded_data : out std_ulogic_vector(DATA_SIZE-1 downto 0);
+    --# {{Error flags}}
+    Single_bit_error : out std_ulogic;
+    Double_bit_error : out std_ulogic
+  );
+  end component;
+
+|
+
 
 An entity providing a combined SECDED encoder and decoder with added error injection for system verification. Optional pipelining is provided.
 
@@ -198,7 +334,27 @@ Packages for encoding data into alternate forms.
 :doc:`bcd_conversion <modules/bcd_conversion>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/bcd_conversion-binary_to_bcd.svg
+.. symbolator::
+  :name: bcd_conversion-binary_to_bcd
+
+  component binary_to_bcd is
+  generic (
+    RESET_ACTIVE_LEVEL : std_ulogic
+  );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;
+    Reset : in std_ulogic;
+    --# {{control|}}
+    Convert : in std_ulogic;
+    Done : out std_ulogic;
+    --# {{data|}}
+    Binary : in unsigned;
+    BCD : out unsigned
+  );
+  end component;
+
+|
 
 This package provides functions and components for performing conversion
 between binary and packed Binary Coded Decimal (BCD). The functions
@@ -223,7 +379,28 @@ result must be multiplied by 4 to get the length of a packed BCD array.
 :doc:`gray_code <modules/gray_code>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/gray_code-gray_counter.svg
+.. symbolator::
+  :name: gray_code-gray_counter
+
+  component gray_counter is
+  generic (
+    RESET_ACTIVE_LEVEL : std_ulogic
+  );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;
+    Reset : in std_ulogic;
+    --# {{control|}}
+    Load : in std_ulogic;
+    Enable : in std_ulogic;
+    --# {{data|}}
+    Binary_load : in unsigned;
+    Binary : out unsigned;
+    Gray : out unsigned
+  );
+  end component;
+
+|
 
 This package provides functions to convert between Gray code and binary. An example
 implementation of a Gray code counter is also included.
@@ -281,7 +458,38 @@ Packages with internal memories
 :doc:`fifos <modules/fifos>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/fifos-fifo.svg
+.. symbolator::
+  :name: fifos-fifo
+
+  component fifo is
+  generic (
+    RESET_ACTIVE_LEVEL : std_ulogic;
+    MEM_SIZE : positive;
+    SYNC_READ : boolean
+  );
+  port (
+    --# {{data|Write port}}
+    Wr_clock : in std_ulogic;
+    Wr_reset : in std_ulogic;
+    We : in std_ulogic;
+    Wr_data : in std_ulogic_vector;
+    --# {{Read port}}
+    Rd_clock : in std_ulogic;
+    Rd_reset : in std_ulogic;
+    Re : in std_ulogic;
+    Rd_data : out std_ulogic_vector;
+    --# {{Status}}
+    Empty : out std_ulogic;
+    Full : out std_ulogic;
+    Almost_empty_thresh : in natural;
+    Almost_full_thresh : in natural;
+    Almost_empty : out std_ulogic;
+    Almost_full : out std_ulogic
+  );
+  end component;
+
+|
+
 
 This package implements a set of generic FIFO components. There are three
 variants. All use the same basic interface for the read/write ports and
@@ -297,7 +505,29 @@ status flags. The FIFOs have the following differences:
 :doc:`memory <modules/memory>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/memory-dual_port_ram.svg
+.. symbolator::
+  :name: memory-dual_port_ram
+
+  component dual_port_ram is
+  generic (
+    MEM_SIZE : positive;
+    SYNC_READ : boolean
+  );
+  port (
+    --# {{data|Write port}}
+    Wr_clock : in std_ulogic;
+    We : in std_ulogic;
+    Wr_addr : in natural;
+    Wr_data : in std_ulogic_vector;
+    --# {{Read port}}
+    Rd_clock : in std_ulogic;
+    Re : in std_ulogic;
+    Rd_addr : in natural;
+    Rd_data : out std_ulogic_vector
+  );
+  end component;
+
+|
 
 This package provides general purpose components for inferred dual-ported RAM and ROM.
 
@@ -306,7 +536,36 @@ This package provides general purpose components for inferred dual-ported RAM an
 :doc:`reg_file <modules/reg_file>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/reg_file-reg_file.svg
+.. symbolator::
+  :name: reg_file-reg_file
+
+  component reg_file is
+  generic (
+    RESET_ACTIVE_LEVEL : std_ulogic;
+    DIRECT_READ_BIT_MASK : reg_array;
+    STROBE_BIT_MASK : reg_array;
+    REGISTER_INPUTS : boolean
+  );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;
+    Reset : in std_ulogic;
+    --# {{control|}}
+    Clear : in std_ulogic;
+    --# {{data|Addressed port}}
+    Reg_sel : in unsigned;
+    We : in std_ulogic;
+    Wr_data : in reg_word;
+    Rd_data : out reg_word;
+    --# {{Registers}}
+    Registers : out reg_array;
+    Direct_read : in reg_array;
+    Reg_written : out std_ulogic_vector
+  );
+  end component;
+
+|
+
 
 This is an implementation of a general purpose register file. The VHDL-93 version must be manually customized to set the size of the registers internally. The VHDL-2008 version is fully generic by employing an unconstrained array of unconstrained arrays to implement the registers. In addition to simple read/write registers you can configure individual bits to act as self clearing strobes when written and to read back directly from internal signals rather than from the register contents.
 
@@ -321,7 +580,28 @@ structures for creating randomized output.
 :doc:`lcar_ops <modules/lcar_ops>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/lcar_ops-wolfram_lcar.svg
+.. symbolator::
+  :name: lcar_ops-wolfram_lcar
+
+  component wolfram_lcar is
+  generic (
+    RESET_ACTIVE_LEVEL : std_ulogic
+  );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;
+    Reset : in std_ulogic;
+    Enable : in std_ulogic;
+    --# {{control|}}
+    Rule_map : in std_ulogic_vector;
+    --# {{data|}}
+    Left_in : in std_ulogic;
+    Right_in : in std_ulogic;
+    State : out std_ulogic_vector
+  );
+  end component;
+
+|
 
 An implementation of the Wolfram Linear Cellular Automata. This is useful for generating pseudo-random numbers with low correlation between bits. Adaptable to any number of cells. Constants are provided for
 maximal length sequences of up to 100 bits.
@@ -331,7 +611,28 @@ maximal length sequences of up to 100 bits.
 :doc:`lfsr_ops <modules/lfsr_ops>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/lfsr_ops-fibonacci_lfsr.svg
+.. symbolator::
+  :name: lfsr_ops-fibonacci_lfsr
+
+  component fibonacci_lfsr is
+  generic (
+    INIT_ZERO : boolean;
+    FULL_CYCLE : boolean;
+    RESET_ACTIVE_LEVEL : std_ulogic
+  );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;
+    Reset : in std_ulogic;
+    Enable : in std_ulogic;
+    --# {{control|}}
+    Tap_map : in std_ulogic_vector;
+    --# {{data|}}
+    State : out std_ulogic_vector
+  );
+  end component;
+
+|
 
 Various implementations of Galois and Fibonacci Linear Feedback Shift Registers. These adapt to any size register. Coefficients are provided for maximal length sequences up to 100 bits.
 
@@ -453,6 +754,13 @@ Additional packages of useful functions.
 Procedures for general binary file IO. Support is provided for reading and writing vectors of any size
 with big and little-endian byte order.
 
+.. _interrupt_ctl:
+
+:doc:`interrupt_ctl <modules/interrupt_ctl>`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+General purpose priority interrupt controller.
+
 .. _text_buffering:
 
 :doc:`text_buffering <modules/text_buffering>`
@@ -470,7 +778,30 @@ to procedures without having to maintain a separate file handle.
 :doc:`ddfs <modules/ddfs>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/ddfs-ddfs.svg
+.. symbolator::
+  :name: ddfs-ddfs
+
+  component ddfs is
+  generic (
+    RESET_ACTIVE_LEVEL : std_ulogic
+  );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;
+    Reset : in std_ulogic;
+    --# {{control|}}
+    Enable : in std_ulogic;
+    Load_phase : in std_ulogic;
+    New_phase : in unsigned;
+    Increment : in unsigned;
+    --# {{data|}}
+    Accumulator : out unsigned;
+    Synth_clock : out std_ulogic;
+    Synth_pulse : out std_ulogic
+  );
+  end component;
+
+|
 
 A set of functions for implementing Direct Digital Frequency Synthesizers.
 
@@ -479,7 +810,25 @@ A set of functions for implementing Direct Digital Frequency Synthesizers.
 :doc:`glitch_filtering <modules/glitch_filtering>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../image/sym/glitch_filtering-glitch_filter.svg
+.. symbolator::
+  :name: glitch_filtering-glitch_filter
+
+  component glitch_filter is
+  generic (
+    FILTER_CYCLES : positive;
+    RESET_ACTIVE_LEVEL : std_ulogic
+  );
+  port (
+    --# {{clocks|}}
+    Clock : in std_ulogic;
+    Reset : in std_ulogic;
+    --# {{data|}}
+    Noisy : in std_ulogic;
+    Filtered : out std_ulogic
+  );
+  end component;
+
+|
 
 Glitch filter components that can be used to remove
 noise from digital input signals. This can be useful for debouncing

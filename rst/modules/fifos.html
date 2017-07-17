@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
-    <link rel="next" title="glitch_filtering" href="glitch_filtering.html" />
+    <link rel="next" title="filtering" href="filtering.html" />
     <link rel="prev" title="ddfs" href="ddfs.html" />
    
   
@@ -45,8 +45,8 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/fifos.vhdl">extras/fifos.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="memory.html"><em>memory</em></a>
-<a class="reference internal" href="sizing.html"><em>sizing</em></a>
+<p><a class="reference internal" href="memory.html"><em>memory</em></a>,
+<a class="reference internal" href="sizing.html"><em>sizing</em></a>,
 <a class="reference internal" href="synchronizing.html"><em>synchronizing</em></a></p>
 </div>
 <div class="section" id="description">
@@ -55,18 +55,18 @@
 variants. All use the same basic interface for the read/write ports and
 status flags. The FIFOs have the following differences:</p>
 <dl class="docutils">
-<dt><a class="reference internal" href="#fifos.simple_fifo" title="fifos.simple_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">simple_fifo</span></tt></a></dt>
+<dt><a class="reference internal" href="#extras.fifos.simple_fifo" title="extras.fifos.simple_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">simple_fifo</span></tt></a></dt>
 <dd>Basic minimal FIFO for use in a single clock domain. This
 component lacks the synchronizing logic needed for the
 other two FIFOs and will synthesize more compactly.</dd>
-<dt><a class="reference internal" href="#fifos.fifo" title="fifos.fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">fifo</span></tt></a></dt>
+<dt><a class="reference internal" href="#extras.fifos.fifo" title="extras.fifos.fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">fifo</span></tt></a></dt>
 <dd>General FIFO with separate domains for read and write ports.</dd>
-<dt><a class="reference internal" href="#fifos.packet_fifo" title="fifos.packet_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">packet_fifo</span></tt></a></dt>
+<dt><a class="reference internal" href="#extras.fifos.packet_fifo" title="extras.fifos.packet_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">packet_fifo</span></tt></a></dt>
 <dd>Extension of <tt class="docutils literal"><span class="pre">fifo</span></tt> component with ability to discard
 written data before it is read. Useful for managing
 packetized protocols with error detection at the end.</dd>
 </dl>
-<p>All of these FIFOs use the dual_port_ram component from the memory package.
+<p>All of these FIFOs use the <a class="reference internal" href="memory.html#extras.memory.dual_port_ram" title="extras.memory.dual_port_ram"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">dual_port_ram</span></tt></a> component from the memory package.
 Reads can be performed concurrently with writes. The dual_port_ram
 <tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> generic is provided on the FIFO components to select between
 synchronous or asynchronous read ports. When <tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> is false,
@@ -120,7 +120,7 @@ cross-domain flag updates that <em>deassert</em> the flags. Assertion of the
 flags will not be delayed. i.e. a read when the FIFO contains one entry
 will assert the Empty flag one cycle later. Likewise, a write when the
 FIFO has one empty entry left will assert the Full flag one cycle later.</p>
-<p>The <a class="reference internal" href="#fifos.simple_fifo" title="fifos.simple_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">simple_fifo</span></tt></a> component always updates all of its status flags on the
+<p>The <a class="reference internal" href="#extras.fifos.simple_fifo" title="extras.fifos.simple_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">simple_fifo</span></tt></a> component always updates all of its status flags on the
 cycle after a read or write regardless of whether thay are asserted or
 deasserted.</p>
 <p>The <tt class="docutils literal"><span class="pre">Almost_*</span></tt> flags use more complex comparison logic than the <tt class="docutils literal"><span class="pre">Full</span></tt> and
@@ -128,7 +128,7 @@ deasserted.</p>
 leaving them unconnected (open) if they are not needed in a design.
 Similarly, if the thresholds are connected to constants rather than
 signals, the comparison logic will be reduced during synthesis.</p>
-<p>The <a class="reference internal" href="#fifos.packet_fifo" title="fifos.packet_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">packet_fifo</span></tt></a> component has two additional control signals <tt class="docutils literal"><span class="pre">Keep</span></tt> and
+<p>The <a class="reference internal" href="#extras.fifos.packet_fifo" title="extras.fifos.packet_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">packet_fifo</span></tt></a> component has two additional control signals <tt class="docutils literal"><span class="pre">Keep</span></tt> and
 <tt class="docutils literal"><span class="pre">Discard</span></tt>. When writing to the FIFO, the internal address pointers are
 not updated on the read port domain until <tt class="docutils literal"><span class="pre">Keep</span></tt> is pulsed high. If written
 data is not needed it can be dropped by pulsing <tt class="docutils literal"><span class="pre">Discard</span></tt> high. It is not
@@ -136,12 +136,12 @@ possible to discard data once <tt class="docutils literal"><span class="pre">Kee
 performed concurrently with writes but the <tt class="docutils literal"><span class="pre">Empty</span></tt> flag will activate if
 previously kept data is consumed even if new data has been written but
 not yet retained with <tt class="docutils literal"><span class="pre">Keep</span></tt>.</p>
-<span class="target" id="package-fifos"></span></div>
+<span class="target" id="package-extras.fifos"></span></div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="simple-fifo">
 <h3>simple_fifo<a class="headerlink" href="#simple-fifo" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-31168fe7e540aa865a5aae23bfcfd4072e8abce5.svg" type="image/svg+xml">
+<object data="../../_images/symbol-fifos-simple_fifo.svg" type="image/svg+xml">
             <p class="warning">component simple_fifo is
 generic (
   RESET_ACTIVE_LEVEL : std_ulogic;
@@ -171,8 +171,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="fifos.simple_fifo">
-<tt class="descclassname">fifos.</tt><tt class="descname">simple_fifo</tt><a class="headerlink" href="#fifos.simple_fifo" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.fifos.simple_fifo">
+<tt class="descclassname">fifos.</tt><tt class="descname">simple_fifo</tt><a class="headerlink" href="#extras.fifos.simple_fifo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Basic FIFO implementatioin for use on a single clock domain.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -208,7 +208,7 @@ end component;</p></object>
 </div>
 <div class="section" id="fifo">
 <h3>fifo<a class="headerlink" href="#fifo" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-7cb00873fc72cad98a139a3e265f58b50aec124d.svg" type="image/svg+xml">
+<object data="../../_images/symbol-fifos-fifo.svg" type="image/svg+xml">
             <p class="warning">component fifo is
 generic (
   RESET_ACTIVE_LEVEL : std_ulogic;
@@ -239,8 +239,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="fifos.fifo">
-<tt class="descclassname">fifos.</tt><tt class="descname">fifo</tt><a class="headerlink" href="#fifos.fifo" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.fifos.fifo">
+<tt class="descclassname">fifos.</tt><tt class="descname">fifo</tt><a class="headerlink" href="#extras.fifos.fifo" title="Permalink to this definition">¶</a></dt>
 <dd><p>General purpose FIFO best used to transfer data across clock domains.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -278,7 +278,7 @@ end component;</p></object>
 </div>
 <div class="section" id="packet-fifo">
 <h3>packet_fifo<a class="headerlink" href="#packet-fifo" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-e791dba17a1faa4cd944bb5d9f5b65e1a6069745.svg" type="image/svg+xml">
+<object data="../../_images/symbol-fifos-packet_fifo.svg" type="image/svg+xml">
             <p class="warning">component packet_fifo is
 generic (
   RESET_ACTIVE_LEVEL : std_ulogic;
@@ -311,9 +311,9 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="fifos.packet_fifo">
-<tt class="descclassname">fifos.</tt><tt class="descname">packet_fifo</tt><a class="headerlink" href="#fifos.packet_fifo" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a dual port FIFO with the ability to drop partially accumulated data. Ths permits
+<dt id="extras.fifos.packet_fifo">
+<tt class="descclassname">fifos.</tt><tt class="descname">packet_fifo</tt><a class="headerlink" href="#extras.fifos.packet_fifo" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a dual port FIFO with the ability to drop partially accumulated data. This permits
 you to take in data that may be corrupted and drop it if a trailing checksum or CRC is not valid.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -363,7 +363,7 @@ you to take in data that may be corrupted and drop it if a trailing checksum or 
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -371,10 +371,12 @@ you to take in data that may be corrupted and drop it if a trailing checksum or 
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
@@ -382,7 +384,7 @@ you to take in data that may be corrupted and drop it if a trailing checksum or 
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="ddfs.html" title="previous chapter">ddfs</a></li>
-      <li>Next: <a href="glitch_filtering.html" title="next chapter">glitch_filtering</a></li>
+      <li>Next: <a href="filtering.html" title="next chapter">filtering</a></li>
   </ul></li>
 </ul>
 </div>

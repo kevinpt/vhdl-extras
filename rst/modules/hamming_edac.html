@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
-    <link rel="next" title="lcar_ops" href="lcar_ops.html" />
+    <link rel="next" title="interrupt_ctl" href="interrupt_ctl.html" />
     <link rel="prev" title="gray_code" href="gray_code.html" />
    
   
@@ -51,7 +51,7 @@
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides functions that perform single-bit error detection
 and correction using Hamming code. Encoded data is represented in the
-<a class="reference internal" href="#hamming_edac.ecc_vector" title="hamming_edac.ecc_vector"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">ecc_vector</span></tt></a> type with the data preserved in normal sequence using array
+<a class="reference internal" href="#extras.hamming_edac.ecc_vector" title="extras.hamming_edac.ecc_vector"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">ecc_vector</span></tt></a> type with the data preserved in normal sequence using array
 indices from data&#8217;length-1 downto 0. The Hamming parity bits p are
 represented in the encoded array as negative indices from -1 downto -p.
 The parity bits are sequenced with the most significant on the left (-1)
@@ -60,10 +60,10 @@ easy removal of the parity bits by slicing the data portion out of the
 encoded array. These functions have no upper limit in the size of data
 they can handle. For practical reasons, these functions should not be used
 with less than four data bits.</p>
-<p>The layout of an <a class="reference internal" href="#hamming_edac.ecc_vector" title="hamming_edac.ecc_vector"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">ecc_vector</span></tt></a> is determined by its range. All objects of
+<p>The layout of an <a class="reference internal" href="#extras.hamming_edac.ecc_vector" title="extras.hamming_edac.ecc_vector"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">ecc_vector</span></tt></a> is determined by its range. All objects of
 this type must use a descending range with a positive upper bound and a
 negative lower bound. Note that the conversion function
-<tt class="xref vhdl vhdl-func docutils literal"><span class="pre">to_ecc_vector()</span></tt> does
+<a class="reference internal" href="#extras.hamming_edac.to_ecc_vec[std_ulogic_vector,natural return ecc_vector]" title="extras.hamming_edac.to_ecc_vec[std_ulogic_vector,natural return ecc_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">to_ecc_vec()</span></tt></a> does
 not produce a result that meets this requirement so it should not be
 invoked directly as a parameter to a function expecting a proper
 <tt class="docutils literal"><span class="pre">ecc_vector</span></tt>.</p>
@@ -73,11 +73,11 @@ invoked directly as a parameter to a function expecting a proper
           data               Hamming parity
 </pre></div>
 </div>
-<p>The output from <a class="reference internal" href="#hamming_edac.hamming_encode[std_ulogic_vector,unsigned return ecc_vector]" title="hamming_edac.hamming_encode[std_ulogic_vector,unsigned return ecc_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_encode()</span></tt></a> produces an <tt class="docutils literal"><span class="pre">ecc_vector</span></tt> with this layout.
+<p>The output from <a class="reference internal" href="#extras.hamming_edac.hamming_encode[std_ulogic_vector return ecc_vector]" title="extras.hamming_edac.hamming_encode[std_ulogic_vector return ecc_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_encode()</span></tt></a> produces an <tt class="docutils literal"><span class="pre">ecc_vector</span></tt> with this layout.
 Depending on the hardware implementation it may be desirable to interleave
 the parity bits with the data to protect against certain failures that may
 go undetected when encoded data is distributed across multiple memory
-devices. Use <a class="reference internal" href="#hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]" title="hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_interleave()</span></tt></a> to perform this reordering of bits.</p>
+devices. Use <a class="reference internal" href="#extras.hamming_edac.hamming_interleave[ecc_vector return std_ulogic_vector]" title="extras.hamming_edac.hamming_interleave[ecc_vector return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_interleave()</span></tt></a> to perform this reordering of bits.</p>
 <div class="section" id="background">
 <h3>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h3>
 <p>The Hamming code is developed by interleaving the parity bits
@@ -122,11 +122,11 @@ In most cases registers should be added to remove glitches on the outputs.</p>
 <span class="k">if</span> <span class="n">hamming_has_error</span><span class="p">(</span><span class="n">hamming_word</span><span class="p">)</span> <span class="k">then</span> <span class="p">...</span> <span class="c1">-- check for error</span>
 </pre></div>
 </div>
-<p>Note that <a class="reference internal" href="#hamming_edac.hamming_decode[ecc_vector return std_ulogic_vector]" title="hamming_edac.hamming_decode[ecc_vector return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_decode()</span></tt></a> and
-<a class="reference internal" href="#hamming_edac.hamming_has_error[unsigned return boolean]" title="hamming_edac.hamming_has_error[unsigned return boolean]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_has_error()</span></tt></a> will synthesize with some
+<p>Note that <a class="reference internal" href="#extras.hamming_edac.hamming_decode[std_ulogic_vector,unsigned return std_ulogic_vector]" title="extras.hamming_edac.hamming_decode[std_ulogic_vector,unsigned return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_decode()</span></tt></a> and
+<a class="reference internal" href="#extras.hamming_edac.hamming_has_error[ecc_vector return boolean]" title="extras.hamming_edac.hamming_has_error[ecc_vector return boolean]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_has_error()</span></tt></a> will synthesize with some
 common logic. Use the alternate versions in conjunction with
-<a class="reference internal" href="#hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]" title="hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_interleave()</span></tt></a> and
-<a class="reference internal" href="#hamming_edac.hamming_parity[std_ulogic_vector return unsigned]" title="hamming_edac.hamming_parity[std_ulogic_vector return unsigned]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_parity()</span></tt></a> to conserve logic when both are used:</p>
+<a class="reference internal" href="#extras.hamming_edac.hamming_interleave[ecc_vector return std_ulogic_vector]" title="extras.hamming_edac.hamming_interleave[ecc_vector return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_interleave()</span></tt></a> and
+<a class="reference internal" href="#extras.hamming_edac.hamming_parity[std_ulogic_vector return unsigned]" title="extras.hamming_edac.hamming_parity[std_ulogic_vector return unsigned]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">hamming_parity()</span></tt></a> to conserve logic when both are used:</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">variable</span> <span class="n">message</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="n">hamming_word</span><span class="na">&#39;length</span> <span class="k">downto</span> <span class="mi">1</span><span class="p">);</span>
 <span class="k">variable</span> <span class="n">syndrome</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="o">-</span><span class="n">hamming_word</span><span class="na">&#39;low</span> <span class="k">downto</span> <span class="mi">1</span><span class="p">);</span>
 <span class="p">...</span>
@@ -151,19 +151,19 @@ they are co-located and not used simultaneously:</p>
 <span class="n">corrected_word</span> <span class="o">&lt;=</span> <span class="n">hamming_decode</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">parity_bits</span><span class="p">);</span>
 </pre></div>
 </div>
-<span class="target" id="package-hamming_edac"></span></div>
+<span class="target" id="package-extras.hamming_edac"></span></div>
 </div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
-<dt id="hamming_edac.ecc_vector">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">ecc_vector</tt><a class="headerlink" href="#hamming_edac.ecc_vector" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.hamming_edac.ecc_vector">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">ecc_vector</tt><a class="headerlink" href="#extras.hamming_edac.ecc_vector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Representation of a message with data and parity segments.</p>
 </dd></dl>
 
 <dl class="type">
-<dt id="hamming_edac.ecc_range">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">ecc_range</tt><a class="headerlink" href="#hamming_edac.ecc_range" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.hamming_edac.ecc_range">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">ecc_range</tt><a class="headerlink" href="#extras.hamming_edac.ecc_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Range information for a message.</p>
 </dd></dl>
 
@@ -171,9 +171,10 @@ they are co-located and not used simultaneously:</p>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="hamming_edac.to_ecc_vec[std_ulogic_vector,natural return ecc_vector]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">to_ecc_vec</tt> <big>(</big><em>Arg : std_ulogic_vector</em>; <em>Parity_size : natural := 0</em><big>)</big> &rarr; ecc_vector<a class="headerlink" href="#hamming_edac.to_ecc_vec[std_ulogic_vector,natural return ecc_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a plain vector into ecc_vector.</p>
+<dt id="extras.hamming_edac.to_ecc_vec[std_ulogic_vector,natural return ecc_vector]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">to_ecc_vec</tt> <big>(</big><em>Arg : std_ulogic_vector</em>; <em>Parity_size : natural := 0</em><big>)</big> &rarr; ecc_vector<a class="headerlink" href="#extras.hamming_edac.to_ecc_vec[std_ulogic_vector,natural return ecc_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a plain vector into ecc_vector.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -192,9 +193,10 @@ they are co-located and not used simultaneously:</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.to_sulv[ecc_vector return std_ulogic_vector]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">to_sulv</tt> <big>(</big><em>Arg : ecc_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#hamming_edac.to_sulv[ecc_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert an ecc_vector to a plain vector.</p>
+<dt id="extras.hamming_edac.to_sulv[ecc_vector return std_ulogic_vector]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">to_sulv</tt> <big>(</big><em>Arg : ecc_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.hamming_edac.to_sulv[ecc_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert an ecc_vector to a plain vector.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -212,9 +214,10 @@ they are co-located and not used simultaneously:</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.get_data[ecc_vector return std_ulogic_vector]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">get_data</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#hamming_edac.get_data[ecc_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract data portion from encoded ecc_vector.</p>
+<dt id="extras.hamming_edac.get_data[ecc_vector return std_ulogic_vector]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">get_data</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.hamming_edac.get_data[ecc_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Extract data portion from encoded ecc_vector.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -232,9 +235,10 @@ they are co-located and not used simultaneously:</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.get_parity[ecc_vector return unsigned]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">get_parity</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#hamming_edac.get_parity[ecc_vector return unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract parity portion from encoded ecc_vector.</p>
+<dt id="extras.hamming_edac.get_parity[ecc_vector return unsigned]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">get_parity</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#extras.hamming_edac.get_parity[ecc_vector return unsigned]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Extract parity portion from encoded ecc_vector.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -252,10 +256,11 @@ they are co-located and not used simultaneously:</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_message_size[positive return positive]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_message_size</tt> <big>(</big><em>Data_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#hamming_edac.hamming_message_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine the size of a message (data interleaved with parity) given
-the size of data to be protected.</p>
+<dt id="extras.hamming_edac.hamming_message_size[positive return positive]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_message_size</tt> <big>(</big><em>Data_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#extras.hamming_edac.hamming_message_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Determine the size of a message (data interleaved with parity) given
+the size of data to be protected.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -273,9 +278,10 @@ the size of data to be protected.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_parity_size[positive return positive]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_parity_size</tt> <big>(</big><em>Message_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#hamming_edac.hamming_parity_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine the number of parity bits for a given message size.</p>
+<dt id="extras.hamming_edac.hamming_parity_size[positive return positive]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_parity_size</tt> <big>(</big><em>Message_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#extras.hamming_edac.hamming_parity_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Determine the number of parity bits for a given message size.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -293,9 +299,10 @@ the size of data to be protected.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_data_size[positive return positive]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_data_size</tt> <big>(</big><em>Message_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#hamming_edac.hamming_data_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine the number of data bits for a given message size.</p>
+<dt id="extras.hamming_edac.hamming_data_size[positive return positive]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_data_size</tt> <big>(</big><em>Message_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#extras.hamming_edac.hamming_data_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Determine the number of data bits for a given message size.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -313,10 +320,11 @@ the size of data to be protected.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_indices[positive return ecc_range]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_indices</tt> <big>(</big><em>Data_size : positive</em><big>)</big> &rarr; ecc_range<a class="headerlink" href="#hamming_edac.hamming_indices[positive return ecc_range]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the left and right indices needed to declare an ecc_vector for the
-requested data size.</p>
+<dt id="extras.hamming_edac.hamming_indices[positive return ecc_range]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_indices</tt> <big>(</big><em>Data_size : positive</em><big>)</big> &rarr; ecc_range<a class="headerlink" href="#extras.hamming_edac.hamming_indices[positive return ecc_range]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the left and right indices needed to declare an ecc_vector for the
+requested data size.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -334,10 +342,11 @@ requested data size.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_interleave</tt> <big>(</big><em>Data : std_ulogic_vector</em>; <em>Parity_bits : unsigned</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Combine separate data and parity bits into a message with
-interleaved parity.</p>
+<dt id="extras.hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_interleave</tt> <big>(</big><em>Data : std_ulogic_vector</em>; <em>Parity_bits : unsigned</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.hamming_edac.hamming_interleave[std_ulogic_vector,unsigned return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Combine separate data and parity bits into a message with
+interleaved parity.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -356,10 +365,11 @@ interleaved parity.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_interleave[ecc_vector return std_ulogic_vector]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_interleave</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#hamming_edac.hamming_interleave[ecc_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reorder data and parity bits from an ecc_vector into a message with
-interleaved parity.</p>
+<dt id="extras.hamming_edac.hamming_interleave[ecc_vector return std_ulogic_vector]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_interleave</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.hamming_edac.hamming_interleave[ecc_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Reorder data and parity bits from an ecc_vector into a message with
+interleaved parity.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -377,16 +387,17 @@ interleaved parity.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_parity[std_ulogic_vector return unsigned]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_parity</tt> <big>(</big><em>Message : std_ulogic_vector</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#hamming_edac.hamming_parity[std_ulogic_vector return unsigned]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate Hamming parity bits from an interleaved message
+<dt id="extras.hamming_edac.hamming_parity[std_ulogic_vector return unsigned]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_parity</tt> <big>(</big><em>Message : std_ulogic_vector</em><big>)</big> &rarr; unsigned<a class="headerlink" href="#extras.hamming_edac.hamming_parity[std_ulogic_vector return unsigned]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Generate Hamming parity bits from an interleaved message
 This is the core routine of the package that determines which bits of a
 message to XOR together. It is employed for both encoding and decoding
 When encoding, the message should have all zeroes interleaved for the
 parity bits. The result is the parity to be used by a decoder.
 When decoding, the previously generated parity bits are interleaved and
 the result is a syndrome that can be used for error detection and
-correction.</p>
+correction.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -404,10 +415,11 @@ correction.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_encode[std_ulogic_vector return ecc_vector]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_encode</tt> <big>(</big><em>Data : std_ulogic_vector</em><big>)</big> &rarr; ecc_vector<a class="headerlink" href="#hamming_edac.hamming_encode[std_ulogic_vector return ecc_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Encode the supplied data into an ecc_vector using Hamming code for
-the parity. This version uses self contained logic.</p>
+<dt id="extras.hamming_edac.hamming_encode[std_ulogic_vector return ecc_vector]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_encode</tt> <big>(</big><em>Data : std_ulogic_vector</em><big>)</big> &rarr; ecc_vector<a class="headerlink" href="#extras.hamming_edac.hamming_encode[std_ulogic_vector return ecc_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Encode the supplied data into an ecc_vector using Hamming code for
+the parity. This version uses self contained logic.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -425,11 +437,12 @@ the parity. This version uses self contained logic.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_encode[std_ulogic_vector,unsigned return ecc_vector]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_encode</tt> <big>(</big><em>Data : std_ulogic_vector</em>; <em>Parity_bits : unsigned</em><big>)</big> &rarr; ecc_vector<a class="headerlink" href="#hamming_edac.hamming_encode[std_ulogic_vector,unsigned return ecc_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Encode the supplied data into an ecc_vector using Hamming code for
+<dt id="extras.hamming_edac.hamming_encode[std_ulogic_vector,unsigned return ecc_vector]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_encode</tt> <big>(</big><em>Data : std_ulogic_vector</em>; <em>Parity_bits : unsigned</em><big>)</big> &rarr; ecc_vector<a class="headerlink" href="#extras.hamming_edac.hamming_encode[std_ulogic_vector,unsigned return ecc_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Encode the supplied data into an ecc_vector using Hamming code for
 the parity. This version depends on external logic to generate the
-parity bits.</p>
+parity bits.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -448,11 +461,12 @@ parity bits.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_decode[ecc_vector return std_ulogic_vector]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_decode</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#hamming_edac.hamming_decode[ecc_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decode an ecc_vector into the plain data bits, potentially correcting
+<dt id="extras.hamming_edac.hamming_decode[ecc_vector return std_ulogic_vector]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_decode</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.hamming_edac.hamming_decode[ecc_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Decode an ecc_vector into the plain data bits, potentially correcting
 a single-bit error if a bit has flipped. This version uses self
-contained logic.</p>
+contained logic.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -470,18 +484,18 @@ contained logic.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_decode[std_ulogic_vector,unsigned return std_ulogic_vector]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_decode</tt> <big>(</big><em>Message : std_ulogic_vector</em>; <em>Syndrome : unsigned</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#hamming_edac.hamming_decode[std_ulogic_vector,unsigned return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decode an interleaved message into the plain data bits, potentially
+<dt id="extras.hamming_edac.hamming_decode[std_ulogic_vector,unsigned return std_ulogic_vector]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_decode</tt> <big>(</big><em>Message : std_ulogic_vector</em>; <em>Syndrome : unsigned</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.hamming_edac.hamming_decode[std_ulogic_vector,unsigned return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Decode an interleaved message into the plain data bits, potentially
 correcting a single-bit error if a bit has flipped. This version depends
-on external logic to interleave the message and generate a syndrome.</p>
+on external logic to interleave the message and generate a syndrome.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>Message</strong> (<em>std_ulogic_vector</em>) &#8211; Interleaved message</li>
-<li><strong>Syndrome</strong> (<em>unsigned</em>) &#8211; </li>
 </ul>
 </td>
 </tr>
@@ -493,9 +507,10 @@ on external logic to interleave the message and generate a syndrome.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_has_error[ecc_vector return boolean]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_has_error</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; boolean<a class="headerlink" href="#hamming_edac.hamming_has_error[ecc_vector return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test for a single-bit error in an ecc_vector. Returns true for an error.</p>
+<dt id="extras.hamming_edac.hamming_has_error[ecc_vector return boolean]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_has_error</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.hamming_edac.hamming_has_error[ecc_vector return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Test for a single-bit error in an ecc_vector. Returns true for an error.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -513,10 +528,11 @@ on external logic to interleave the message and generate a syndrome.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hamming_edac.hamming_has_error[unsigned return boolean]">
-<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_has_error</tt> <big>(</big><em>Syndrome : unsigned</em><big>)</big> &rarr; boolean<a class="headerlink" href="#hamming_edac.hamming_has_error[unsigned return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test for a single-bit error in an ecc_vector. Returns true for an error.
-This version depends on external logic to generate a syndrome.</p>
+<dt id="extras.hamming_edac.hamming_has_error[unsigned return boolean]">
+<tt class="descclassname">hamming_edac.</tt><tt class="descname">hamming_has_error</tt> <big>(</big><em>Syndrome : unsigned</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.hamming_edac.hamming_has_error[unsigned return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Test for a single-bit error in an ecc_vector. Returns true for an error.
+This version depends on external logic to generate a syndrome.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -545,7 +561,7 @@ This version depends on external logic to generate a syndrome.</p>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -553,10 +569,12 @@ This version depends on external logic to generate a syndrome.</p>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
@@ -564,7 +582,7 @@ This version depends on external logic to generate a syndrome.</p>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="gray_code.html" title="previous chapter">gray_code</a></li>
-      <li>Next: <a href="lcar_ops.html" title="next chapter">lcar_ops</a></li>
+      <li>Next: <a href="interrupt_ctl.html" title="next chapter">interrupt_ctl</a></li>
   </ul></li>
 </ul>
 </div>

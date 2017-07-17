@@ -15,12 +15,12 @@ Description
 -----------
 
 This is a package of functions to perform calculations on time
-and convert between different representations. The clock_gen procedures
+and convert between different representations. The :vhdl:func:`~extras.timing_ops.clock_gen` procedures
 can be used to create a clock signal for simulation.
 
-A new physical type ``frequency`` is introduced and conversions between time,
+A new physical type :vhdl:type:`~extras.timing_ops.frequency` is introduced and conversions between time,
 frequency, and real (time and frequency) are provided. Functions to
-convert from time in these three forms to integer ``clock_cycles`` are also
+convert from time in these three forms to integer  :vhdl:type:`~extras.timing_ops.clock_cycles` are also
 included. The conversion from time to real uses an integer intermediate
 representation of time. It is designed to compensate for tools that use
 64-bit time and 32-bit integers but only 31-bits of precision will be
@@ -34,21 +34,31 @@ User defined physical types are limited to the range of ``integer``. On 32-bit
 platforms ``frequency'high`` = (2**31)-1 Hz = 2.14 GHz. Real numbers must be
 used to represent higher frequencies.
 
-The ``to_clock_cycles`` functions can introduce rounding errors and produce a
+The :vhdl:func:`~extras.timing_ops.to_clock_cycles` functions can introduce rounding errors and produce a
 result that is different from what would be expected assuming infinite
 precision. The magnitude of any errors will depend on how close the
 converted time is to the clock period. To assist in controlling the
-errors, a ``rounding_style`` parameter is available on all forms of
+errors, a :vhdl:type:`~extras.timing_ops.time_rounding` parameter is available on all forms of
 ``to_clock_cycles`` that use real as an intermediate type for the calculation.
 It is set by default to round up toward infinity in anticipation that
 these functions will most often be used to compute the minium number of
 cycles for a delay. You can override this behavior to either round down or
 maintain normal round to nearest for the conversion from ``real`` to
-``clock_cycles``.
+:vhdl:type:`~extras.timing_ops.clock_cycles`.
 
-To help detect the effect of rounding errors the ``time_duration`` and
-``report_time_precision`` routines can be used in simulation to indicate
+To help detect the effect of rounding errors the :vhdl:func:`~extras.timing_ops.time_duration` and
+:vhdl:func:`~extras.timing_ops.report_time_precision` routines can be used in simulation to indicate
 deviation from the requested time span.
+
+Xilinx note
+~~~~~~~~~~~
+
+The Xilinx version of `timing_ops <https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/timing_ops_xilinx.vhdl>`_ is needed for synthesis with
+Xilinx XST. The physical type :vhdl:type:`~extras.timing_ops.frequency` and any associated functions have
+been removed. The standard ``timing_ops`` package will work with Xilinx Vivado
+and most third party synthesizers so consider using it instead if XST is
+not being used.
+
 
 Example usage
 ~~~~~~~~~~~~~
@@ -70,7 +80,7 @@ The value of the ``COUNT_1US`` constant will change to reflect any change in
 the system clock frequency and the size of the signal ``counter`` will now
 automatically adapt to guarantee it can represent the count for 1 us.
 
-The ``clock_gen`` procedure can be called from a process to generate a clock
+The :vhdl:func:`~extras.timing_ops.clock_gen` procedure can be called from a process to generate a clock
 in simulation with the requested frequency or period and an optional duty
 cycle specification:
 

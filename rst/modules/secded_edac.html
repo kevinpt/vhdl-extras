@@ -46,8 +46,8 @@
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="sizing.html"><em>sizing</em></a></li>
-<li><a class="reference internal" href="hamming_edac.html"><em>hamming_edac</em></a></li>
+<li><a class="reference internal" href="sizing.html"><em>sizing</em></a>,</li>
+<li><a class="reference internal" href="hamming_edac.html"><em>hamming_edac</em></a>,</li>
 <li><a class="reference internal" href="parity_ops.html"><em>parity_ops</em></a></li>
 </ul>
 </div>
@@ -56,7 +56,7 @@
 <p>This package implements Single Error Correction, Double Error Detection
 (SECDED) by extending the Hamming code with an extra overall parity bit.
 It is built on top of the functions implemented in <a class="reference internal" href="hamming_edac.html"><em>hamming_edac</em></a>.
-The <a class="reference internal" href="hamming_edac.html#hamming_edac.ecc_vector" title="hamming_edac.ecc_vector"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">ecc_vector</span></tt></a> is extended with an additional
+The <a class="reference internal" href="hamming_edac.html#extras.hamming_edac.ecc_vector" title="extras.hamming_edac.ecc_vector"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">ecc_vector</span></tt></a> is extended with an additional
 parity bit to the right of the Hamming parity as shown below.</p>
 <p>SECDED <tt class="docutils literal"><span class="pre">ecc_vector</span></tt> layout:</p>
 <div class="highlight-python"><div class="highlight"><pre>                           MSb            LSb
@@ -82,19 +82,19 @@ parity bit to the right of the Hamming parity as shown below.</p>
 and error checker and also between an encoder and decoder that don&#8217;t
 operate simultaneously. Refer to <a class="reference internal" href="hamming_edac.html"><em>hamming_edac</em></a> and <a class="reference internal" href="secded_codec.html"><em>secded_codec</em></a>
 for examples of this approach.</p>
-<span class="target" id="package-secded_edac"></span></div>
+<span class="target" id="package-extras.secded_edac"></span></div>
 </div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
-<dt id="secded_edac.secded_error_kind">
-<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_error_kind</tt><a class="headerlink" href="#secded_edac.secded_error_kind" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.secded_edac.secded_error_kind">
+<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_error_kind</tt><a class="headerlink" href="#extras.secded_edac.secded_error_kind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Type of SECDED errors.</p>
 </dd></dl>
 
 <dl class="type">
-<dt id="secded_edac.secded_errors">
-<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_errors</tt><a class="headerlink" href="#secded_edac.secded_errors" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.secded_edac.secded_errors">
+<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_errors</tt><a class="headerlink" href="#extras.secded_edac.secded_errors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Boolean bitfield for SECDED errors.</p>
 </dd></dl>
 
@@ -102,10 +102,11 @@ for examples of this approach.</p>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="secded_edac.secded_message_size[positive return positive]">
-<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_message_size</tt> <big>(</big><em>Data_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#secded_edac.secded_message_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine the size of a message (data interleaved with parity) given
-the size of data to be protected.</p>
+<dt id="extras.secded_edac.secded_message_size[positive return positive]">
+<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_message_size</tt> <big>(</big><em>Data_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#extras.secded_edac.secded_message_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Determine the size of a message (data interleaved with parity) given
+the size of data to be protected.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -123,10 +124,11 @@ the size of data to be protected.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="secded_edac.secded_indices[positive return ecc_range]">
-<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_indices</tt> <big>(</big><em>Data_size : positive</em><big>)</big> &rarr; ecc_range<a class="headerlink" href="#secded_edac.secded_indices[positive return ecc_range]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the left and right indices needed to declare an ecc_vector for the
-requested data size.</p>
+<dt id="extras.secded_edac.secded_indices[positive return ecc_range]">
+<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_indices</tt> <big>(</big><em>Data_size : positive</em><big>)</big> &rarr; ecc_range<a class="headerlink" href="#extras.secded_edac.secded_indices[positive return ecc_range]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the left and right indices needed to declare an ecc_vector for the
+requested data size.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -144,9 +146,10 @@ requested data size.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="secded_edac.secded_parity_size[positive return positive]">
-<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_parity_size</tt> <big>(</big><em>Message_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#secded_edac.secded_parity_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine the number of parity bits for a given message size.</p>
+<dt id="extras.secded_edac.secded_parity_size[positive return positive]">
+<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_parity_size</tt> <big>(</big><em>Message_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#extras.secded_edac.secded_parity_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Determine the number of parity bits for a given message size.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -164,9 +167,10 @@ requested data size.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="secded_edac.secded_data_size[positive return positive]">
-<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_data_size</tt> <big>(</big><em>Message_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#secded_edac.secded_data_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine the number of data bits for a given message size.</p>
+<dt id="extras.secded_edac.secded_data_size[positive return positive]">
+<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_data_size</tt> <big>(</big><em>Message_size : positive</em><big>)</big> &rarr; positive<a class="headerlink" href="#extras.secded_edac.secded_data_size[positive return positive]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Determine the number of data bits for a given message size.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -184,11 +188,12 @@ requested data size.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="secded_edac.secded_encode[std_ulogic_vector return ecc_vector]">
-<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_encode</tt> <big>(</big><em>Data : std_ulogic_vector</em><big>)</big> &rarr; ecc_vector<a class="headerlink" href="#secded_edac.secded_encode[std_ulogic_vector return ecc_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Encode the supplied data into an ecc_vector using Hamming code for
+<dt id="extras.secded_edac.secded_encode[std_ulogic_vector return ecc_vector]">
+<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_encode</tt> <big>(</big><em>Data : std_ulogic_vector</em><big>)</big> &rarr; ecc_vector<a class="headerlink" href="#extras.secded_edac.secded_encode[std_ulogic_vector return ecc_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Encode the supplied data into an ecc_vector using Hamming code for
 the parity and an additional overall parity for SECDED. This version
-uses self contained logic.</p>
+uses self contained logic.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -206,11 +211,12 @@ uses self contained logic.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="secded_edac.secded_encode[std_ulogic_vector,unsigned return ecc_vector]">
-<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_encode</tt> <big>(</big><em>Data : std_ulogic_vector</em>; <em>Parity_bits : unsigned</em><big>)</big> &rarr; ecc_vector<a class="headerlink" href="#secded_edac.secded_encode[std_ulogic_vector,unsigned return ecc_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Encode the supplied data into an ecc_vector using Hamming code for
+<dt id="extras.secded_edac.secded_encode[std_ulogic_vector,unsigned return ecc_vector]">
+<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_encode</tt> <big>(</big><em>Data : std_ulogic_vector</em>; <em>Parity_bits : unsigned</em><big>)</big> &rarr; ecc_vector<a class="headerlink" href="#extras.secded_edac.secded_encode[std_ulogic_vector,unsigned return ecc_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Encode the supplied data into an ecc_vector using Hamming code for
 the parity and an additional overall parity for SECDED. This version
-depends on external logic to generate the Hamming parity bits.</p>
+depends on external logic to generate the Hamming parity bits.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -229,11 +235,12 @@ depends on external logic to generate the Hamming parity bits.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="secded_edac.secded_decode[ecc_vector return std_ulogic_vector]">
-<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_decode</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#secded_edac.secded_decode[ecc_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decode an ecc_vector into the plain data bits, potentially correcting
+<dt id="extras.secded_edac.secded_decode[ecc_vector return std_ulogic_vector]">
+<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_decode</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.secded_edac.secded_decode[ecc_vector return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Decode an ecc_vector into the plain data bits, potentially correcting
 a single-bit error if a bit has flipped. This version uses self
-contained logic.</p>
+contained logic.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -251,10 +258,11 @@ contained logic.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="secded_edac.secded_has_errors[ecc_vector return secded_errors]">
-<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_has_errors</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; secded_errors<a class="headerlink" href="#secded_edac.secded_has_errors[ecc_vector return secded_errors]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test for a single-bit and double-bit errors in an ecc_vector. Returns
-true for each error type.</p>
+<dt id="extras.secded_edac.secded_has_errors[ecc_vector return secded_errors]">
+<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_has_errors</tt> <big>(</big><em>Encoded_data : ecc_vector</em><big>)</big> &rarr; secded_errors<a class="headerlink" href="#extras.secded_edac.secded_has_errors[ecc_vector return secded_errors]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Test for a single-bit and double-bit errors in an ecc_vector. Returns
+true for each error type.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -272,11 +280,12 @@ true for each error type.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="secded_edac.secded_has_errors[ecc_vector,unsigned return secded_errors]">
-<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_has_errors</tt> <big>(</big><em>Encoded_data : ecc_vector</em>; <em>Syndrome : unsigned</em><big>)</big> &rarr; secded_errors<a class="headerlink" href="#secded_edac.secded_has_errors[ecc_vector,unsigned return secded_errors]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test for a single-bit and double-bit errors in an ecc_vector. Returns
+<dt id="extras.secded_edac.secded_has_errors[ecc_vector,unsigned return secded_errors]">
+<tt class="descclassname">secded_edac.</tt><tt class="descname">secded_has_errors</tt> <big>(</big><em>Encoded_data : ecc_vector</em>; <em>Syndrome : unsigned</em><big>)</big> &rarr; secded_errors<a class="headerlink" href="#extras.secded_edac.secded_has_errors[ecc_vector,unsigned return secded_errors]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Test for a single-bit and double-bit errors in an ecc_vector. Returns
 true for each error type. This version depends on external logic to
-generate a syndrome.</p>
+generate a syndrome.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -306,7 +315,7 @@ generate a syndrome.</p>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -314,10 +323,12 @@ generate a syndrome.</p>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">

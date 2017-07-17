@@ -27,7 +27,7 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="synchronizing" href="synchronizing.html" />
-    <link rel="prev" title="strings_fixed_constants" href="strings_maps_constants.html" />
+    <link rel="prev" title="strings_maps_constants" href="strings_maps_constants.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -45,7 +45,9 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_unbounded.vhdl">extras/strings_unbounded.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="strings.html"><em>strings</em></a> <a class="reference internal" href="strings_maps.html"><em>strings_maps</em></a> <a class="reference internal" href="strings_fixed.html"><em>strings_fixed</em></a></p>
+<p><a class="reference internal" href="strings.html"><em>strings</em></a>,
+<a class="reference internal" href="strings_maps.html"><em>strings_maps</em></a>,
+<a class="reference internal" href="strings_fixed.html"><em>strings_fixed</em></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -53,27 +55,29 @@
 strings. This is a clone of the Ada&#8216;95 library <tt class="docutils literal"><span class="pre">Ada.Strings.Unbounded</span></tt>. Due
 to the VHDL restriction on using access types as function parameters only
 a limited subset of the Ada library is reproduced. The unbounded strings
-are represented by the subtype <a class="reference internal" href="#strings_unbounded.unbounded_string" title="strings_unbounded.unbounded_string"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">unbounded_string</span></tt></a> which is derived from line
-to ease interoperability with <tt class="docutils literal"><span class="pre">std.textio.line</span></tt> and <a class="reference internal" href="#strings_unbounded.unbounded_string" title="strings_unbounded.unbounded_string"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">unbounded_string</span></tt></a> are of
+are represented by the subtype <a class="reference internal" href="#extras.strings_unbounded.unbounded_string" title="extras.strings_unbounded.unbounded_string"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">unbounded_string</span></tt></a>
+which is derived from line to ease interoperability with <tt class="docutils literal"><span class="pre">std.textio.line</span></tt>
+and <a class="reference internal" href="#extras.strings_unbounded.unbounded_string" title="extras.strings_unbounded.unbounded_string"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">unbounded_string</span></tt></a> are of
 type access to string. Their contents are dynamically allocated. Because
 operators cannot be provided, a new set of &#8220;copy&#8221; procedures are included
 to simplify duplication of an existing unbounded string.</p>
-<span class="target" id="package-strings_unbounded"></span></div>
+<span class="target" id="package-extras.strings_unbounded"></span></div>
 <div class="section" id="subtypes">
 <h2>Subtypes<a class="headerlink" href="#subtypes" title="Permalink to this headline">¶</a></h2>
 <dl class="subtype">
-<dt id="strings_unbounded.unbounded_string">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">unbounded_string</tt><a class="headerlink" href="#strings_unbounded.unbounded_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a subtype of the textio line type to form a coupling between libraries</p>
+<dt id="extras.strings_unbounded.unbounded_string">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">unbounded_string</tt><a class="headerlink" href="#extras.strings_unbounded.unbounded_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>A subtype of the textio <tt class="docutils literal"><span class="pre">line</span></tt> type to form a coupling between libraries.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="strings_unbounded.to_unbounded_string[string return unbounded_string]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">to_unbounded_string</tt> <big>(</big><em>source : string</em><big>)</big> &rarr; unbounded_string<a class="headerlink" href="#strings_unbounded.to_unbounded_string[string return unbounded_string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a string to unbounded_string.</p>
+<dt id="extras.strings_unbounded.to_unbounded_string[string return unbounded_string]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">to_unbounded_string</tt> <big>(</big><em>source : string</em><big>)</big> &rarr; unbounded_string<a class="headerlink" href="#extras.strings_unbounded.to_unbounded_string[string return unbounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a string to unbounded_string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -91,9 +95,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_unbounded.to_unbounded_string[natural return unbounded_string]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">to_unbounded_string</tt> <big>(</big><em>length : natural</em><big>)</big> &rarr; unbounded_string<a class="headerlink" href="#strings_unbounded.to_unbounded_string[natural return unbounded_string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Allocate a string of length.</p>
+<dt id="extras.strings_unbounded.to_unbounded_string[natural return unbounded_string]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">to_unbounded_string</tt> <big>(</big><em>length : natural</em><big>)</big> &rarr; unbounded_string<a class="headerlink" href="#extras.strings_unbounded.to_unbounded_string[natural return unbounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Allocate a string of length.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -111,9 +116,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.to_string[unbounded_string,string]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">to_string</tt> <big>(</big><em>source : in unbounded_string</em>; <em>dest : out string</em><big>)</big><a class="headerlink" href="#strings_unbounded.to_string[unbounded_string,string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copy a unbounded_string to the string dest.</p>
+<dt id="extras.strings_unbounded.to_string[unbounded_string,string]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">to_string</tt> <big>(</big><em>source : in unbounded_string</em>; <em>dest : out string</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.to_string[unbounded_string,string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Copy a unbounded_string to the string dest.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -129,9 +135,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.initialize[unbounded_string]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">initialize</tt> <big>(</big><em>source : inout unbounded_string</em><big>)</big><a class="headerlink" href="#strings_unbounded.initialize[unbounded_string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create an empty unbounded_string.</p>
+<dt id="extras.strings_unbounded.initialize[unbounded_string]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">initialize</tt> <big>(</big><em>source : inout unbounded_string</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.initialize[unbounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Create an empty unbounded_string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -146,9 +153,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.free[unbounded_string]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">free</tt> <big>(</big><em>source : inout unbounded_string</em><big>)</big><a class="headerlink" href="#strings_unbounded.free[unbounded_string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Free allocated memory for source.</p>
+<dt id="extras.strings_unbounded.free[unbounded_string]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">free</tt> <big>(</big><em>source : inout unbounded_string</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.free[unbounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Free allocated memory for source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -163,9 +171,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.length[unbounded_string,natural]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">length</tt> <big>(</big><em>source : in unbounded_string</em>; <em>len : out natural</em><big>)</big><a class="headerlink" href="#strings_unbounded.length[unbounded_string,natural]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the length of a unbounded_string.</p>
+<dt id="extras.strings_unbounded.length[unbounded_string,natural]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">length</tt> <big>(</big><em>source : in unbounded_string</em>; <em>len : out natural</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.length[unbounded_string,natural]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the length of a unbounded_string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -181,9 +190,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.copy[unbounded_string,unbounded_string,integer]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">copy</tt> <big>(</big><em>source : in unbounded_string</em>; <em>dest : inout unbounded_string</em>; <em>max : in integer := -1</em><big>)</big><a class="headerlink" href="#strings_unbounded.copy[unbounded_string,unbounded_string,integer]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copy at most max characters from source to the unallocated dest.</p>
+<dt id="extras.strings_unbounded.copy[unbounded_string,unbounded_string,integer]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">copy</tt> <big>(</big><em>source : in unbounded_string</em>; <em>dest : inout unbounded_string</em>; <em>max : in integer := -1</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.copy[unbounded_string,unbounded_string,integer]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Copy at most max characters from source to the unallocated dest.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -200,9 +210,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.copy[string,unbounded_string,integer]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">copy</tt> <big>(</big><em>source : in string</em>; <em>dest : inout unbounded_string</em>; <em>max : in integer := -1</em><big>)</big><a class="headerlink" href="#strings_unbounded.copy[string,unbounded_string,integer]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copy at most max characters from source to the unallocated dest.</p>
+<dt id="extras.strings_unbounded.copy[string,unbounded_string,integer]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">copy</tt> <big>(</big><em>source : in string</em>; <em>dest : inout unbounded_string</em>; <em>max : in integer := -1</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.copy[string,unbounded_string,integer]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Copy at most max characters from source to the unallocated dest.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -219,9 +230,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.append[unbounded_string,unbounded_string]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>new_item : in unbounded_string</em><big>)</big><a class="headerlink" href="#strings_unbounded.append[unbounded_string,unbounded_string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Append unbounded_string new_item to source.</p>
+<dt id="extras.strings_unbounded.append[unbounded_string,unbounded_string]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>new_item : in unbounded_string</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.append[unbounded_string,unbounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Append unbounded_string new_item to source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -237,9 +249,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.append[unbounded_string,string]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>new_item : in string</em><big>)</big><a class="headerlink" href="#strings_unbounded.append[unbounded_string,string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Append string new_item to source.</p>
+<dt id="extras.strings_unbounded.append[unbounded_string,string]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>new_item : in string</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.append[unbounded_string,string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Append string new_item to source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -255,9 +268,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.append[unbounded_string,character]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>new_item : in character</em><big>)</big><a class="headerlink" href="#strings_unbounded.append[unbounded_string,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Append character new_item to source.</p>
+<dt id="extras.strings_unbounded.append[unbounded_string,character]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>new_item : in character</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.append[unbounded_string,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Append character new_item to source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -273,9 +287,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.element[unbounded_string,positive,character]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">element</tt> <big>(</big><em>source : in unbounded_string</em>; <em>index : in positive</em>; <em>el : out character</em><big>)</big><a class="headerlink" href="#strings_unbounded.element[unbounded_string,positive,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Lookup the character in source at index.</p>
+<dt id="extras.strings_unbounded.element[unbounded_string,positive,character]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">element</tt> <big>(</big><em>source : in unbounded_string</em>; <em>index : in positive</em>; <em>el : out character</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.element[unbounded_string,positive,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Lookup the character in source at index.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -292,9 +307,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.replace_element[unbounded_string,positive,character]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">replace_element</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>index : in positive</em>; <em>by : in character</em><big>)</big><a class="headerlink" href="#strings_unbounded.replace_element[unbounded_string,positive,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace the character in source at index with by.</p>
+<dt id="extras.strings_unbounded.replace_element[unbounded_string,positive,character]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">replace_element</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>index : in positive</em>; <em>by : in character</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.replace_element[unbounded_string,positive,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Replace the character in source at index with by.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -311,9 +327,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.slice[unbounded_string,positive,positive,unbounded_string]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">slice</tt> <big>(</big><em>source : in unbounded_string</em>; <em>low : in positive</em>; <em>high : in positive</em>; <em>result : inout unbounded_string</em><big>)</big><a class="headerlink" href="#strings_unbounded.slice[unbounded_string,positive,positive,unbounded_string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract a slice from source.</p>
+<dt id="extras.strings_unbounded.slice[unbounded_string,positive,positive,unbounded_string]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">slice</tt> <big>(</big><em>source : in unbounded_string</em>; <em>low : in positive</em>; <em>high : in positive</em>; <em>result : inout unbounded_string</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.slice[unbounded_string,positive,positive,unbounded_string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Extract a slice from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -331,9 +348,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.eq[unbounded_string,unbounded_string,boolean]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">eq</tt> <big>(</big><em>left : in unbounded_string</em>; <em>right : in unbounded_string</em>; <em>result : out boolean</em><big>)</big><a class="headerlink" href="#strings_unbounded.eq[unbounded_string,unbounded_string,boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test if left is identical to right.</p>
+<dt id="extras.strings_unbounded.eq[unbounded_string,unbounded_string,boolean]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">eq</tt> <big>(</big><em>left : in unbounded_string</em>; <em>right : in unbounded_string</em>; <em>result : out boolean</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.eq[unbounded_string,unbounded_string,boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Test if left is identical to right.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -350,9 +368,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.eq[unbounded_string,string,boolean]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">eq</tt> <big>(</big><em>left : in unbounded_string</em>; <em>right : in string</em>; <em>result : out boolean</em><big>)</big><a class="headerlink" href="#strings_unbounded.eq[unbounded_string,string,boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test if left is identical to right.</p>
+<dt id="extras.strings_unbounded.eq[unbounded_string,string,boolean]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">eq</tt> <big>(</big><em>left : in unbounded_string</em>; <em>right : in string</em>; <em>result : out boolean</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.eq[unbounded_string,string,boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Test if left is identical to right.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -369,9 +388,10 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.count[unbounded_string,string,natural]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">count</tt> <big>(</big><em>source : in unbounded_string</em>; <em>pattern : in string</em>; <em>val : out natural</em><big>)</big><a class="headerlink" href="#strings_unbounded.count[unbounded_string,string,natural]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Count the occurrences of pattern in source.</p>
+<dt id="extras.strings_unbounded.count[unbounded_string,string,natural]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">count</tt> <big>(</big><em>source : in unbounded_string</em>; <em>pattern : in string</em>; <em>val : out natural</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.count[unbounded_string,string,natural]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Count the occurrences of pattern in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -388,10 +408,11 @@ to simplify duplication of an existing unbounded string.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.delete[unbounded_string,positive,natural]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">delete</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>from : in positive</em>; <em>through : in natural</em><big>)</big><a class="headerlink" href="#strings_unbounded.delete[unbounded_string,positive,natural]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete a slice from source. If from is greater than through, source is
-unmodified.</p>
+<dt id="extras.strings_unbounded.delete[unbounded_string,positive,natural]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">delete</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>from : in positive</em>; <em>through : in natural</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.delete[unbounded_string,positive,natural]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Delete a slice from source. If from is greater than through, source is
+unmodified.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -408,10 +429,11 @@ unmodified.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.find_token[unbounded_string,character_set,membership,positive,natural]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">find_token</tt> <big>(</big><em>source : in unbounded_string</em>; <em>set : in character_set</em>; <em>test : in membership</em>; <em>first : out positive</em>; <em>last : out natural</em><big>)</big><a class="headerlink" href="#strings_unbounded.find_token[unbounded_string,character_set,membership,positive,natural]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the indices of a slice of source that satisfies the membership
-selection for the character set.</p>
+<dt id="extras.strings_unbounded.find_token[unbounded_string,character_set,membership,positive,natural]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">find_token</tt> <big>(</big><em>source : in unbounded_string</em>; <em>set : in character_set</em>; <em>test : in membership</em>; <em>first : out positive</em>; <em>last : out natural</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.find_token[unbounded_string,character_set,membership,positive,natural]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the indices of a slice of source that satisfies the membership
+selection for the character set.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -430,9 +452,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.head[unbounded_string,natural,character]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">head</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>count : in natural</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_unbounded.head[unbounded_string,natural,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the first count characters from source.</p>
+<dt id="extras.strings_unbounded.head[unbounded_string,natural,character]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">head</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>count : in natural</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.head[unbounded_string,natural,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the first count characters from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -449,9 +472,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.insert[unbounded_string,positive,string]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">insert</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>before : in positive</em>; <em>new_item : in string</em><big>)</big><a class="headerlink" href="#strings_unbounded.insert[unbounded_string,positive,string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert the string new_item before the selected index in source.</p>
+<dt id="extras.strings_unbounded.insert[unbounded_string,positive,string]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">insert</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>before : in positive</em>; <em>new_item : in string</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.insert[unbounded_string,positive,string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Insert the string new_item before the selected index in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -468,9 +492,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.overwrite[unbounded_string,positive,string]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>position : in positive</em>; <em>new_item : in string</em><big>)</big><a class="headerlink" href="#strings_unbounded.overwrite[unbounded_string,positive,string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Overwrite new_item into source starting at the selected position.</p>
+<dt id="extras.strings_unbounded.overwrite[unbounded_string,positive,string]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>position : in positive</em>; <em>new_item : in string</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.overwrite[unbounded_string,positive,string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Overwrite new_item into source starting at the selected position.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -487,9 +512,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.replace_slice[unbounded_string,positive,natural,string]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>low : in positive</em>; <em>high : in natural</em>; <em>by : in string</em><big>)</big><a class="headerlink" href="#strings_unbounded.replace_slice[unbounded_string,positive,natural,string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace a slice of the source string with the contents of by.</p>
+<dt id="extras.strings_unbounded.replace_slice[unbounded_string,positive,natural,string]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>low : in positive</em>; <em>high : in natural</em>; <em>by : in string</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.replace_slice[unbounded_string,positive,natural,string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Replace a slice of the source string with the contents of by.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -507,9 +533,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.tail[unbounded_string,natural,character]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">tail</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>count : in natural</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#strings_unbounded.tail[unbounded_string,natural,character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the last count characters from source.</p>
+<dt id="extras.strings_unbounded.tail[unbounded_string,natural,character]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">tail</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>count : in natural</em>; <em>pad : in character := ' '</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.tail[unbounded_string,natural,character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the last count characters from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -526,9 +553,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.translate[unbounded_string,character_mapping]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">translate</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>mapping : in character_mapping</em><big>)</big><a class="headerlink" href="#strings_unbounded.translate[unbounded_string,character_mapping]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a source string with the provided character mapping.</p>
+<dt id="extras.strings_unbounded.translate[unbounded_string,character_mapping]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">translate</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>mapping : in character_mapping</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.translate[unbounded_string,character_mapping]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a source string with the provided character mapping.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -544,9 +572,10 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.trim[unbounded_string,trim_end]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>side : in trim_end</em><big>)</big><a class="headerlink" href="#strings_unbounded.trim[unbounded_string,trim_end]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove space characters from leading, trailing, or both ends of source.</p>
+<dt id="extras.strings_unbounded.trim[unbounded_string,trim_end]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>side : in trim_end</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.trim[unbounded_string,trim_end]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Remove space characters from leading, trailing, or both ends of source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -562,10 +591,11 @@ selection for the character set.</p>
 </dd></dl>
 
 <dl class="procedure">
-<dt id="strings_unbounded.trim[unbounded_string,character_set,character_set]">
-<tt class="descclassname">strings_unbounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>left : in character_set</em>; <em>right : in character_set</em><big>)</big><a class="headerlink" href="#strings_unbounded.trim[unbounded_string,character_set,character_set]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove all leading characters in left and trailing characters in right
-from source.</p>
+<dt id="extras.strings_unbounded.trim[unbounded_string,character_set,character_set]">
+<tt class="descclassname">strings_unbounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout unbounded_string</em>; <em>left : in character_set</em>; <em>right : in character_set</em><big>)</big><a class="headerlink" href="#extras.strings_unbounded.trim[unbounded_string,character_set,character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Remove all leading characters in left and trailing characters in right
+from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -593,7 +623,7 @@ from source.</p>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -601,17 +631,19 @@ from source.</p>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="strings_maps_constants.html" title="previous chapter">strings_fixed_constants</a></li>
+      <li>Previous: <a href="strings_maps_constants.html" title="previous chapter">strings_maps_constants</a></li>
       <li>Next: <a href="synchronizing.html" title="next chapter">synchronizing</a></li>
   </ul></li>
 </ul>

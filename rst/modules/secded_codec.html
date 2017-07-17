@@ -45,13 +45,11 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/secded_codec.vhdl">extras/secded_codec.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><a class="reference internal" href="sizing.html"><em>sizing</em></a></li>
-<li><a class="reference internal" href="pipelining.html"><em>pipelining</em></a></li>
-<li><a class="reference internal" href="hamming_edac.html"><em>hamming_edac</em></a></li>
-<li><a class="reference internal" href="secded_edac.html"><em>secded_edac</em></a></li>
-<li><a class="reference internal" href="parity_ops.html"><em>parity_ops</em></a></li>
-</ul>
+<p><a class="reference internal" href="sizing.html"><em>sizing</em></a>,
+<a class="reference internal" href="pipelining.html"><em>pipelining</em></a>,
+<a class="reference internal" href="hamming_edac.html"><em>hamming_edac</em></a>,
+<a class="reference internal" href="secded_edac.html"><em>secded_edac</em></a>,
+<a class="reference internal" href="parity_ops.html"><em>parity_ops</em></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -64,17 +62,50 @@ single-bit errors and detecting double-bit errors.</p>
 internal logic. To be effective, you must activate the retiming feature of
 the synthesis tool being used. See the notes in <a class="reference internal" href="pipelining.html"><em>pipelining</em></a> for more
 information on how to accomplish this. The pipelining is controlled with
-the <tt class="docutils literal"><span class="pre">PIPELINE_STAGES</span></tt> generic.</p>
+the <tt class="docutils literal"><span class="pre">PIPELINE_STAGES</span></tt> generic. A value of 0 will disable pipelining.</p>
 <p>To facilitate testing, the codec includes an error generator that can
 insert single-bit and double-bit errors into the encoded output. When
 active, successive bits are flipped on each clock cycle. This feature
 provides for the testing of error handling logic in the decoding process.</p>
-<span class="target" id="package-secded_codec_pkg"></span></div>
+<span class="target" id="package-extras.secded_codec_pkg"></span></div>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<dl class="constant">
+<dt id="extras.secded_codec_pkg.CODEC_ENCODE">
+<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">CODEC_ENCODE</tt><a class="headerlink" href="#extras.secded_codec_pkg.CODEC_ENCODE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select encoding mode</p>
+</dd></dl>
+
+<dl class="constant">
+<dt id="extras.secded_codec_pkg.CODEC_DECODE">
+<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">CODEC_DECODE</tt><a class="headerlink" href="#extras.secded_codec_pkg.CODEC_DECODE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select decoding mode</p>
+</dd></dl>
+
+<dl class="constant">
+<dt id="extras.secded_codec_pkg.INSERT_NONE">
+<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">INSERT_NONE</tt><a class="headerlink" href="#extras.secded_codec_pkg.INSERT_NONE" title="Permalink to this definition">¶</a></dt>
+<dd><p>No error injection</p>
+</dd></dl>
+
+<dl class="constant">
+<dt id="extras.secded_codec_pkg.INSERT_SINGLE">
+<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">INSERT_SINGLE</tt><a class="headerlink" href="#extras.secded_codec_pkg.INSERT_SINGLE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single-bit error injection</p>
+</dd></dl>
+
+<dl class="constant">
+<dt id="extras.secded_codec_pkg.INSERT_DOUBLE">
+<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">INSERT_DOUBLE</tt><a class="headerlink" href="#extras.secded_codec_pkg.INSERT_DOUBLE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double-bit error injection</p>
+</dd></dl>
+
+</div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
 <h3>secded_codec<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-7de46ff3d69bc246b2f93cb58871a73bfe4ad44d.svg" type="image/svg+xml">
+<object data="../../_images/symbol-secded_codec_pkg-secded_codec.svg" type="image/svg+xml">
             <p class="warning">component secded_codec is
 generic (
   DATA_SIZE : positive;
@@ -103,8 +134,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="secded_codec_pkg.secded_codec">
-<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">secded_codec</tt><a class="headerlink" href="#secded_codec_pkg.secded_codec" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.secded_codec_pkg.secded_codec">
+<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">secded_codec</tt><a class="headerlink" href="#extras.secded_codec_pkg.secded_codec" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -147,7 +178,7 @@ end component;</p></object>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -155,10 +186,12 @@ end component;</p></object>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
@@ -175,6 +208,7 @@ end component;</p></object>
 <li><a class="reference internal" href="#">secded_codec</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
 <li><a class="reference internal" href="#components">Components</a><ul>
 <li><a class="reference internal" href="#id1">secded_codec</a></li>
 </ul>

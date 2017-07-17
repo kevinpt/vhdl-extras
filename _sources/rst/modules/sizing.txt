@@ -14,14 +14,14 @@ Description
 
 This package provides functions used to compute integer approximations
 of logarithms. The primary use of these functions is to determine the
-size of arrays using the :vhdl:func:`~sizing.bit_size[natural return natural]` and :vhdl:func:`~sizing.encoding_size[positive return natural]` functions. When put to
+size of arrays using the :vhdl:func:`~extras.sizing.bit_size[natural return natural]` and :vhdl:func:`~extras.sizing.encoding_size[positive return natural]` functions. When put to
 maximal use it is possible to create designs that eliminate hardcoded
 ranges and automatically resize their signals and variables by changing a
 few key constants or generics.
 
 These functions can be used in most synthesizers to compute ranges for
-arrays. The core functionality is provided in the :vhdl:func:`~sizing.ceil_log[positive,positive return natural]` and
-:vhdl:func:`~sizing.floor_log[positive,positive return natural]` subprograms. These compute the logarithm in any integer base.
+arrays. The core functionality is provided in the :vhdl:func:`~extras.sizing.ceil_log[positive,positive return natural]` and
+:vhdl:func:`~extras.sizing.floor_log[positive,positive return natural]` subprograms. These compute the logarithm in any integer base.
 For convenenience, base-2 functions are also provided along with the array
 sizing functions.
 

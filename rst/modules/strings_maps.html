@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
-    <link rel="next" title="strings_fixed_constants" href="strings_maps_constants.html" />
+    <link rel="next" title="strings_maps_constants" href="strings_maps_constants.html" />
     <link rel="prev" title="strings_fixed" href="strings_fixed.html" />
    
   
@@ -51,44 +51,50 @@
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides types and functions for manipulating character sets.
 It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span class="pre">Ada.Strings.Maps</span></tt>.</p>
-<span class="target" id="package-strings_maps"></span></div>
+<span class="target" id="package-extras.strings_maps"></span></div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
-<dt id="strings_maps.character_set">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">character_set</tt><a class="headerlink" href="#strings_maps.character_set" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.strings_maps.character_set">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">character_set</tt><a class="headerlink" href="#extras.strings_maps.character_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array of boolean flag bits indexed by <tt class="docutils literal"><span class="pre">character</span></tt>.</p>
+</dd></dl>
 
 <dl class="type">
-<dt id="strings_maps.character_range">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">character_range</tt><a class="headerlink" href="#strings_maps.character_range" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.strings_maps.character_range">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">character_range</tt><a class="headerlink" href="#extras.strings_maps.character_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inclusive range of characters within the Latin-1 set.</p>
+</dd></dl>
 
 <dl class="type">
-<dt id="strings_maps.character_ranges">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">character_ranges</tt><a class="headerlink" href="#strings_maps.character_ranges" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.strings_maps.character_ranges">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">character_ranges</tt><a class="headerlink" href="#extras.strings_maps.character_ranges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collection of character ranges.</p>
+</dd></dl>
 
 <dl class="type">
-<dt id="strings_maps.character_mapping">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">character_mapping</tt><a class="headerlink" href="#strings_maps.character_mapping" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.strings_maps.character_mapping">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">character_mapping</tt><a class="headerlink" href="#extras.strings_maps.character_mapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping from one character to another.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="subtypes">
 <h2>Subtypes<a class="headerlink" href="#subtypes" title="Permalink to this headline">¶</a></h2>
 <dl class="subtype">
-<dt id="strings_maps.character_sequence">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">character_sequence</tt><a class="headerlink" href="#strings_maps.character_sequence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.strings_maps.character_sequence">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">character_sequence</tt><a class="headerlink" href="#extras.strings_maps.character_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sequence of characters that compose a character set.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="strings_maps.to_set[character_ranges return character_set]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>ranges : character_ranges</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character_ranges return character_set]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert ranges to a character set</p>
+<dt id="extras.strings_maps.to_set[character_ranges return character_set]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>ranges : character_ranges</em><big>)</big> &rarr; character_set<a class="headerlink" href="#extras.strings_maps.to_set[character_ranges return character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert ranges to a character set</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -106,9 +112,10 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.to_set[character_range return character_set]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>span : character_range</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character_range return character_set]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert range to a character set</p>
+<dt id="extras.strings_maps.to_set[character_range return character_set]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>span : character_range</em><big>)</big> &rarr; character_set<a class="headerlink" href="#extras.strings_maps.to_set[character_range return character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert range to a character set</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -126,9 +133,10 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.to_ranges[character_set return character_ranges]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">to_ranges</tt> <big>(</big><em>set : character_set</em><big>)</big> &rarr; character_ranges<a class="headerlink" href="#strings_maps.to_ranges[character_set return character_ranges]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a character set into a list of ranges</p>
+<dt id="extras.strings_maps.to_ranges[character_set return character_ranges]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_ranges</tt> <big>(</big><em>set : character_set</em><big>)</big> &rarr; character_ranges<a class="headerlink" href="#extras.strings_maps.to_ranges[character_set return character_ranges]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a character set into a list of ranges</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -146,15 +154,16 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.&quot;-&quot;[None,character_set return character_set]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">&quot;-&quot;</tt> <big>(</big><em>left : None</em>; <em>right : character_set</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps."-"[None,character_set return character_set]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Difference between to character sets</p>
+<dt id="extras.strings_maps.&quot;-&quot;[character_set,character_set return character_set]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">&quot;-&quot;</tt> <big>(</big><em>left : character_set</em>; <em>right : character_set</em><big>)</big> &rarr; character_set<a class="headerlink" href="#extras.strings_maps."-"[character_set,character_set return character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Difference between to character sets</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>left</strong> (<em>None</em>) &#8211; Set to subtract from</li>
+<li><strong>left</strong> (<em>character_set</em>) &#8211; Set to subtract from</li>
 <li><strong>right</strong> (<em>character_set</em>) &#8211; Set to subtract from left</li>
 </ul>
 </td>
@@ -167,9 +176,10 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.is_in[character,character_set return boolean]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">is_in</tt> <big>(</big><em>element : character</em>; <em>set : character_set</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_maps.is_in[character,character_set return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test if a character is part of a character set</p>
+<dt id="extras.strings_maps.is_in[character,character_set return boolean]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">is_in</tt> <big>(</big><em>element : character</em>; <em>set : character_set</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.strings_maps.is_in[character,character_set return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Test if a character is part of a character set</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -188,9 +198,10 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.is_subset[character_set,character_set return boolean]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">is_subset</tt> <big>(</big><em>elements : character_set</em>; <em>set : character_set</em><big>)</big> &rarr; boolean<a class="headerlink" href="#strings_maps.is_subset[character_set,character_set return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test if a character set is a subset of a larget set</p>
+<dt id="extras.strings_maps.is_subset[character_set,character_set return boolean]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">is_subset</tt> <big>(</big><em>elements : character_set</em>; <em>set : character_set</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.strings_maps.is_subset[character_set,character_set return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Test if a character set is a subset of a larget set</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -209,9 +220,10 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.to_set[character_sequence return character_set]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>sequence : character_sequence</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character_sequence return character_set]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a character sequence into a set.</p>
+<dt id="extras.strings_maps.to_set[character_sequence return character_set]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>sequence : character_sequence</em><big>)</big> &rarr; character_set<a class="headerlink" href="#extras.strings_maps.to_set[character_sequence return character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a character sequence into a set.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -229,9 +241,10 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.to_set[character return character_set]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>singleton : character</em><big>)</big> &rarr; character_set<a class="headerlink" href="#strings_maps.to_set[character return character_set]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a character into a set.</p>
+<dt id="extras.strings_maps.to_set[character return character_set]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_set</tt> <big>(</big><em>singleton : character</em><big>)</big> &rarr; character_set<a class="headerlink" href="#extras.strings_maps.to_set[character return character_set]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a character into a set.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -249,9 +262,10 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.to_sequence[character_set return character_sequence]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">to_sequence</tt> <big>(</big><em>set : character_set</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#strings_maps.to_sequence[character_set return character_sequence]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a character set into a sequence string</p>
+<dt id="extras.strings_maps.to_sequence[character_set return character_sequence]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_sequence</tt> <big>(</big><em>set : character_set</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#extras.strings_maps.to_sequence[character_set return character_sequence]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a character set into a sequence string</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -269,9 +283,10 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.value[character_mapping,character return character]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">value</tt> <big>(</big><em>cmap : character_mapping</em>; <em>element : character</em><big>)</big> &rarr; character<a class="headerlink" href="#strings_maps.value[character_mapping,character return character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Look up the mapping for a character.</p>
+<dt id="extras.strings_maps.value[character_mapping,character return character]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">value</tt> <big>(</big><em>cmap : character_mapping</em>; <em>element : character</em><big>)</big> &rarr; character<a class="headerlink" href="#extras.strings_maps.value[character_mapping,character return character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Look up the mapping for a character.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -290,15 +305,16 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.to_mapping[None,character_sequence return character_mapping]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">to_mapping</tt> <big>(</big><em>from : None</em>; <em>to_seq : character_sequence</em><big>)</big> &rarr; character_mapping<a class="headerlink" href="#strings_maps.to_mapping[None,character_sequence return character_mapping]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a mapping from two sequences.</p>
+<dt id="extras.strings_maps.to_mapping[character_sequence,character_sequence return character_mapping]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_mapping</tt> <big>(</big><em>from : character_sequence</em>; <em>to_seq : character_sequence</em><big>)</big> &rarr; character_mapping<a class="headerlink" href="#extras.strings_maps.to_mapping[character_sequence,character_sequence return character_mapping]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Create a mapping from two sequences.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>from</strong> (<em>None</em>) &#8211; Sequence string to use for map indices</li>
+<li><strong>from</strong> (<em>character_sequence</em>) &#8211; Sequence string to use for map indices</li>
 <li><strong>to_seq</strong> (<em>character_sequence</em>) &#8211; Sequence string to use from map values</li>
 </ul>
 </td>
@@ -311,9 +327,10 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.to_domain[character_mapping return character_sequence]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">to_domain</tt> <big>(</big><em>cmap : character_mapping</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#strings_maps.to_domain[character_mapping return character_sequence]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the from sequence for a mapping.</p>
+<dt id="extras.strings_maps.to_domain[character_mapping return character_sequence]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_domain</tt> <big>(</big><em>cmap : character_mapping</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#extras.strings_maps.to_domain[character_mapping return character_sequence]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the from sequence for a mapping.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -331,9 +348,10 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 </dd></dl>
 
 <dl class="function">
-<dt id="strings_maps.to_range[character_mapping return character_sequence]">
-<tt class="descclassname">strings_maps.</tt><tt class="descname">to_range</tt> <big>(</big><em>cmap : character_mapping</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#strings_maps.to_range[character_mapping return character_sequence]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the to_seq sequence for a mapping.</p>
+<dt id="extras.strings_maps.to_range[character_mapping return character_sequence]">
+<tt class="descclassname">strings_maps.</tt><tt class="descname">to_range</tt> <big>(</big><em>cmap : character_mapping</em><big>)</big> &rarr; character_sequence<a class="headerlink" href="#extras.strings_maps.to_range[character_mapping return character_sequence]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Return the to_seq sequence for a mapping.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -362,7 +380,7 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -370,10 +388,12 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
@@ -381,7 +401,7 @@ It is a clone of the Ada&#8216;95 package <tt class="docutils literal"><span cla
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="strings_fixed.html" title="previous chapter">strings_fixed</a></li>
-      <li>Next: <a href="strings_maps_constants.html" title="next chapter">strings_fixed_constants</a></li>
+      <li>Next: <a href="strings_maps_constants.html" title="next chapter">strings_maps_constants</a></li>
   </ul></li>
 </ul>
 </div>

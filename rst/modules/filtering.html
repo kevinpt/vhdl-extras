@@ -1,0 +1,585 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>filtering &mdash; VHDL-extras 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="next" title="glitch_filtering" href="glitch_filtering.html" />
+    <link rel="prev" title="fifos" href="fifos.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="filtering">
+<h1>filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/filtering.vhdl">extras_2008/filtering.vhdl</a></p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="common_2008.html"><em>common_2008</em></a></p>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre>
+</pre></div>
+</div>
+<span class="target" id="package-extras_2008.filtering"></span></div>
+</div>
+<div class="section" id="subtypes">
+<h2>Subtypes<a class="headerlink" href="#subtypes" title="Permalink to this headline">¶</a></h2>
+<dl class="subtype">
+<dt id="extras_2008.filtering.attenuation_factor">
+<tt class="descclassname">filtering.</tt><tt class="descname">attenuation_factor</tt><a class="headerlink" href="#extras_2008.filtering.attenuation_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attenuation gain from 0.0 to 1.0.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="components">
+<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fir-filter">
+<h3>fir_filter<a class="headerlink" href="#fir-filter" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-filtering-fir_filter.svg" type="image/svg+xml">
+            <p class="warning">component fir_filter is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Coefficients : in signed_array;
+  --# {{data|}}
+  New_data : in std_ulogic;
+  Data_in : in signed;
+  Data_out : out signed
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras_2008.filtering.fir_filter">
+<tt class="descclassname">filtering.</tt><tt class="descname">fir_filter</tt><a class="headerlink" href="#extras_2008.filtering.fir_filter" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; None</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; None</li>
+<li><strong>Coefficients</strong> (<em>in signed_array</em>) &#8211; None</li>
+<li><strong>New_data</strong> (<em>in std_ulogic</em>) &#8211; None</li>
+<li><strong>Data_in</strong> (<em>in signed</em>) &#8211; None</li>
+<li><strong>Data_out</strong> (<em>out signed</em>) &#8211; None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fir-filter-2">
+<h3>fir_filter_2<a class="headerlink" href="#fir-filter-2" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-filtering-fir_filter_2.svg" type="image/svg+xml">
+            <p class="warning">component fir_filter_2 is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Coefficients : in signed_array;
+  --# {{data|Write port}}
+  Data_valid : in std_ulogic;
+  Data : in signed;
+  Busy : out std_ulogic;
+  --# {{Read port}}
+  Result_valid : out std_ulogic;
+  Result : out signed;
+  In_use : in std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras_2008.filtering.fir_filter_2">
+<tt class="descclassname">filtering.</tt><tt class="descname">fir_filter_2</tt><a class="headerlink" href="#extras_2008.filtering.fir_filter_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finite Impulse Response filter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Coefficients</strong> (<em>in signed_array</em>) &#8211; Filter tap coefficients</li>
+<li><strong>Data_valid</strong> (<em>in std_ulogic</em>) &#8211; Indicate when <tt class="docutils literal"><span class="pre">Data</span></tt> is valid</li>
+<li><strong>Data</strong> (<em>in signed</em>) &#8211; Data input to the filter</li>
+<li><strong>Busy</strong> (<em>out std_ulogic</em>) &#8211; Indicate when filter is ready to accept new data</li>
+<li><strong>Result_valid</strong> (<em>out std_ulogic</em>) &#8211; Indicates when a new filter result is valid</li>
+<li><strong>Result</strong> (<em>out signed</em>) &#8211; Filtered output</li>
+<li><strong>In_use</strong> (<em>in std_ulogic</em>) &#8211; Request to keep <tt class="docutils literal"><span class="pre">Result</span></tt> unchanged</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="lowpass-filter">
+<h3>lowpass_filter<a class="headerlink" href="#lowpass-filter" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-filtering-lowpass_filter.svg" type="image/svg+xml">
+            <p class="warning">component lowpass_filter is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic;
+  ALPHA : real;
+  REGISTERED_MULTIPLY : boolean
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{data|}}
+  Data : in signed;
+  Result : out signed
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras_2008.filtering.lowpass_filter">
+<tt class="descclassname">filtering.</tt><tt class="descname">lowpass_filter</tt><a class="headerlink" href="#extras_2008.filtering.lowpass_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>First order lowpass filter.
+This filter operates in two modes. When REGISTERED_MULTIPLY is false
+the filter processes a new data sample on every clock cycle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>ALPHA</strong> (<em>real</em>) &#8211; Alpha parameter computed with lowpass_alpha()</li>
+<li><strong>REGISTERED_MULTIPLY</strong> (<em>boolean</em>) &#8211; Control registration of internal mutiplier</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Data</strong> (<em>in signed</em>) &#8211; Data input to the filter</li>
+<li><strong>Result</strong> (<em>out signed</em>) &#8211; Filtered output</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="attenuate">
+<h3>attenuate<a class="headerlink" href="#attenuate" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-filtering-attenuate.svg" type="image/svg+xml">
+            <p class="warning">component attenuate is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Gain : in signed;
+  --# {{data|Write port}}
+  Data_valid : in std_ulogic;
+  Data : in signed;
+  --# {{Read port}}
+  Result_valid : out std_ulogic;
+  Result : out signed
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras_2008.filtering.attenuate">
+<tt class="descclassname">filtering.</tt><tt class="descname">attenuate</tt><a class="headerlink" href="#extras_2008.filtering.attenuate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale samples by an attenuation factor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Gain</strong> (<em>in signed</em>) &#8211; Attenuation factor</li>
+<li><strong>Data_valid</strong> (<em>in std_ulogic</em>) &#8211; Indicate when <tt class="docutils literal"><span class="pre">Data</span></tt> is valid</li>
+<li><strong>Data</strong> (<em>in signed</em>) &#8211; Data input to the filter</li>
+<li><strong>Result_valid</strong> (<em>out std_ulogic</em>) &#8211; Indicates when a new filter result is valid</li>
+<li><strong>Result</strong> (<em>out signed</em>) &#8211; Filtered output</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="sampler">
+<h3>sampler<a class="headerlink" href="#sampler" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-filtering-sampler.svg" type="image/svg+xml">
+            <p class="warning">component sampler is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{data|Write port}}
+  Data_valid : in std_ulogic;
+  Data : in std_ulogic;
+  --# {{Read port}}
+  Result_valid : out std_ulogic;
+  Result : out signed
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras_2008.filtering.sampler">
+<tt class="descclassname">filtering.</tt><tt class="descname">sampler</tt><a class="headerlink" href="#extras_2008.filtering.sampler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert binary data into numeric samples.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Data_valid</strong> (<em>in std_ulogic</em>) &#8211; Indicate when <tt class="docutils literal"><span class="pre">Data</span></tt> is valid</li>
+<li><strong>Data</strong> (<em>in std_ulogic</em>) &#8211; Data input to the filter</li>
+<li><strong>Result_valid</strong> (<em>out std_ulogic</em>) &#8211; Indicates when a new filter result is valid</li>
+<li><strong>Result</strong> (<em>out signed</em>) &#8211; Filtered output</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="sample-and-hold">
+<h3>sample_and_hold<a class="headerlink" href="#sample-and-hold" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-filtering-sample_and_hold.svg" type="image/svg+xml">
+            <p class="warning">component sample_and_hold is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{data|Write port}}
+  Data_valid : in std_ulogic;
+  Data : in signed;
+  Busy : out std_ulogic;
+  --# {{Read port}}
+  Result_valid : out std_ulogic;
+  Result : out signed;
+  In_use : in std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras_2008.filtering.sample_and_hold">
+<tt class="descclassname">filtering.</tt><tt class="descname">sample_and_hold</tt><a class="headerlink" href="#extras_2008.filtering.sample_and_hold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Capture and hold data samples.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Data_valid</strong> (<em>in std_ulogic</em>) &#8211; Indicate when <tt class="docutils literal"><span class="pre">Data</span></tt> is valid</li>
+<li><strong>Data</strong> (<em>in signed</em>) &#8211; Data input to the filter</li>
+<li><strong>Busy</strong> (<em>out std_ulogic</em>) &#8211; Indicate when filter is ready to accept new data</li>
+<li><strong>Result_valid</strong> (<em>out std_ulogic</em>) &#8211; Indicates when a new filter result is valid</li>
+<li><strong>Result</strong> (<em>out signed</em>) &#8211; Filtered output</li>
+<li><strong>In_use</strong> (<em>in std_ulogic</em>) &#8211; Request to keep <tt class="docutils literal"><span class="pre">Result</span></tt> unchanged</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="subprograms">
+<h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="extras_2008.filtering.attenuation_gain[attenuation_factor,positive return signed]">
+<tt class="descclassname">filtering.</tt><tt class="descname">attenuation_gain</tt> <big>(</big><em>Factor : attenuation_factor</em>; <em>Size : positive</em><big>)</big> &rarr; signed<a class="headerlink" href="#extras_2008.filtering.attenuation_gain[attenuation_factor,positive return signed]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert attenuation factor into a signed factor</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Factor</strong> (<em>attenuation_factor</em>) &#8211; Factor for gain value</li>
+<li><strong>Size</strong> (<em>positive</em>) &#8211; Number of bits in the result</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Signed value representing the Factor scaled to the range of Size.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="extras_2008.filtering.lowpass_alpha[real,real return real]">
+<tt class="descclassname">filtering.</tt><tt class="descname">lowpass_alpha</tt> <big>(</big><em>Tau : real</em>; <em>Sample_period : real</em><big>)</big> &rarr; real<a class="headerlink" href="#extras_2008.filtering.lowpass_alpha[real,real return real]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Compute the alpha value for a lowpass filter</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Tau</strong> (<em>real</em>) &#8211; Time constant</li>
+<li><strong>Sample_period</strong> (<em>real</em>) &#8211; Sample period of the filtered data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Alpha constant passed to the lowpass_filter component.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
+            </a></p>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
+
+
+
+<p class="blurb">Flexible VHDL library</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="fifos.html" title="previous chapter">fifos</a></li>
+      <li>Next: <a href="glitch_filtering.html" title="next chapter">glitch_filtering</a></li>
+  </ul></li>
+</ul>
+</div>
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">filtering</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#subtypes">Subtypes</a></li>
+<li><a class="reference internal" href="#components">Components</a><ul>
+<li><a class="reference internal" href="#fir-filter">fir_filter</a></li>
+<li><a class="reference internal" href="#fir-filter-2">fir_filter_2</a></li>
+<li><a class="reference internal" href="#lowpass-filter">lowpass_filter</a></li>
+<li><a class="reference internal" href="#attenuate">attenuate</a></li>
+<li><a class="reference internal" href="#sampler">sampler</a></li>
+<li><a class="reference internal" href="#sample-and-hold">sample_and_hold</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#subprograms">Subprograms</a></li>
+</ul>
+</li>
+</ul>
+<h3>Other projects</h3>
+
+<div id="proj_list">
+<p>
+<a href="http://kevinpt.github.io/opbasm/">Opbasm</a><br>
+<a href="http://kevinpt.github.io/ripyl/">Ripyl</a><br>
+<a href="http://code.google.com/p/vertcl">Vertcl</a><br>
+
+<a href="http://kevinpt.github.io/lecroy-colorizer/">Lecroy-colorizer</a>
+</p>
+</div>
+
+<script>
+$(function() { // Retrieve list of repositories from Github and dynamically insert them into sidebar
+
+if(!window.sessionStorage || !JSON) { return; } // Punt on crusty browsers (looking at you IE10)
+
+function JSONP( url, callback ) {
+	var id = ( 'jsonp' + Math.random() * new Date() ).replace('.', '');
+	var script = document.createElement('script');
+	script.src = url.replace( 'callback=?', 'callback=' + id );
+	document.body.appendChild( script );
+	window[ id ] = function( data ) {
+		if (callback) {
+			callback( data );
+		}
+	};
+}
+
+function insert_projects(projects) {
+    var links = [];
+    var cur_proj = "VHDL-extras".toLowerCase();
+    $.each(projects, function(key, value) {
+      if(key != cur_proj) {
+        var title = key.replace(/^./, function(match) {return match.toUpperCase()}); // Capitalize first char
+        links.push("<a href='"+ value +"'>" + title + "</a>");
+      }
+    });
+    
+    $("#proj_list").html("<p>"+ links.join("<br>") +"</p>");
+}
+
+var now = new Date().getTime();
+if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) { // Use cached values (5 min. expiry)
+  insert_projects(JSON.parse(sessionStorage.KTprojects));
+} else { // Retrieve current projects
+  JSONP("https://api.github.com/users/kevinpt/repos?type=owner&callback=?", function(response) {
+    var projects = {};
+    $.each(response.data, function(index, value) {
+      projects[value.name] = value.homepage;
+    });
+    
+    insert_projects(projects);
+    
+    // Store data in session cache
+    sessionStorage.KTprojects = JSON.stringify(projects);
+    var now = new Date().getTime();
+    sessionStorage.KTcacheTime = now;
+  });  
+}
+
+});
+</script>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2015, Kevin Thibedeau.
+      
+      |
+      <a href="../../_sources/rst/modules/filtering.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+
+
+  </body>
+</html>

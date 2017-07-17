@@ -48,8 +48,8 @@
 <h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h1>
 <p>You can use the VHDL-extras library files piecemeal with no tools other than the simulator or synthesizer you will process them with. If you wish to use the provided Modelsim build scripts you will need Modelsim, Python 2.x, sed, grep, and GNU make. To run the test suite you will need Python 2.7 and Modelsim. See the sections on <a class="reference internal" href="#installation"><em>Installation</em></a> and <a class="reference internal" href="#testing"><em>Testing</em></a> for more information on setting up the VHDL-extras library. You can get optional colorized output from the build and test scripts by installing the Python colorama package.</p>
 </div>
-<div class="section" id="the-code">
-<h1>The Code<a class="headerlink" href="#the-code" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="library-contents">
+<h1>Library contents<a class="headerlink" href="#library-contents" title="Permalink to this headline">¶</a></h1>
 <p>The VHDL-extras library contains the following packages:</p>
 <ul>
 <li><p class="first">Core packages</p>
@@ -59,6 +59,13 @@
 <p><a class="reference internal" href="rst/packages.html#synchronizing"><em>synchronizing</em></a> &#8211; Clock domain synchronizing components</p>
 <p><a class="reference internal" href="rst/packages.html#timing-ops"><em>timing_ops</em></a> &#8211; Conversions for time, frequency, and clock cycles</p>
 </div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Arithmetic</dt>
+<dd><p class="first"><a class="reference internal" href="rst/packages.html#id5"><em>arithmetic</em></a> &#8211; Pipelined adder</p>
+<p class="last"><a class="reference internal" href="rst/packages.html#bit-ops"><em>bit_ops</em></a> &#8211; Bitwise operations</p>
+</dd>
+</dl>
 </li>
 <li><dl class="first docutils">
 <dt>Error handling</dt>
@@ -234,7 +241,7 @@ of wider adoption of the latest standard.</p>
             <p class="logo"><a href="#">
               <img class="logo" src="_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="#">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="#">VHDL-extras</a></h1>-->
 
 
 
@@ -242,10 +249,12 @@ of wider adoption of the latest standard.</p>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
@@ -260,7 +269,7 @@ of wider adoption of the latest standard.</p>
   <ul>
 <li><a class="reference internal" href="#">VHDL-extras library documentation</a></li>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
-<li><a class="reference internal" href="#the-code">The Code</a></li>
+<li><a class="reference internal" href="#library-contents">Library contents</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#testing">Testing</a></li>
 <li><a class="reference internal" href="#using-the-library">Using the library</a></li>

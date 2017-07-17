@@ -92,21 +92,21 @@ intent of using 1-based ascending ranges for the arrays but any ranges
 will work correctly.</p>
 <p>A table of coefficients for maximal length polynomials covering 2 to
 100-bit LFSRs is provided in <tt class="docutils literal"><span class="pre">LFSR_COEFF_TABLE</span></tt>. You can use these to
-generate a <tt class="docutils literal"><span class="pre">Tap_map</span></tt> signal with the <a class="reference internal" href="#lfsr_ops.lfsr_taps[positive return std_ulogic_vector]" title="lfsr_ops.lfsr_taps[positive return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">lfsr_taps()</span></tt></a> function. You can build a
-<tt class="docutils literal"><span class="pre">Tap_map</span></tt> for any arbitrary set of coefficients with the <a class="reference internal" href="#lfsr_ops.to_tap_map[lfsr_coefficients,positive,boolean return std_ulogic_vector]" title="lfsr_ops.to_tap_map[lfsr_coefficients,positive,boolean return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">to_tap_map()</span></tt></a>
+generate a <tt class="docutils literal"><span class="pre">Tap_map</span></tt> signal with the <a class="reference internal" href="#extras.lfsr_ops.lfsr_taps[positive return std_ulogic_vector]" title="extras.lfsr_ops.lfsr_taps[positive return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">lfsr_taps()</span></tt></a> function. You can build a
+<tt class="docutils literal"><span class="pre">Tap_map</span></tt> for any arbitrary set of coefficients with the <a class="reference internal" href="#extras.lfsr_ops.to_tap_map[lfsr_coefficients,positive,boolean return std_ulogic_vector]" title="extras.lfsr_ops.to_tap_map[lfsr_coefficients,positive,boolean return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">to_tap_map()</span></tt></a>
 function. Since <tt class="docutils literal"><span class="pre">Tap_map</span></tt> is a signal it is possible to switch coefficient
 sets in the middle of operation if desired. If you implement it as a
 constant the LFSR will have it&#8217;s logic reduced to the optimal form in
 synthesis.</p>
-<p>In addition to the LFSR functions, a pair of components (<a class="reference internal" href="#lfsr_ops.fibonacci_lfsr" title="lfsr_ops.fibonacci_lfsr"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">fibonacci_lfsr</span></tt></a>
-and <a class="reference internal" href="#lfsr_ops.galois_lfsr" title="lfsr_ops.galois_lfsr"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">galois_lfsr</span></tt></a>) are available for use outside of a process. All
+<p>In addition to the LFSR functions, a pair of components (<a class="reference internal" href="#extras.lfsr_ops.fibonacci_lfsr" title="extras.lfsr_ops.fibonacci_lfsr"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">fibonacci_lfsr</span></tt></a>
+and <a class="reference internal" href="#extras.lfsr_ops.galois_lfsr" title="extras.lfsr_ops.galois_lfsr"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">galois_lfsr</span></tt></a>) are available for use outside of a process. All
 implementations have an <tt class="docutils literal"><span class="pre">INIT_ZERO</span></tt> generic that can be used to start
 an LFSR in the all 0&#8217;s state and set the <tt class="docutils literal"><span class="pre">Kind</span></tt> to &#8216;inverted&#8217;. When true the
 initial state switches from all 1&#8217;s to all 0&#8217;s and XORs are replaced with
 XNORs. The <tt class="docutils literal"><span class="pre">FULL_CYCLE</span></tt> generic activates the full cycle option described
 above.</p>
-<div class="section" id="ecample-usage">
-<h3>Ecample usage<a class="headerlink" href="#ecample-usage" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">state</span><span class="p">,</span> <span class="n">statec</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">1</span> <span class="k">to</span> <span class="mi">8</span><span class="p">);</span>
 
 <span class="c1">-- Get predefined maximal length polynomial</span>
@@ -140,26 +140,29 @@ above.</p>
 <span class="n">crc_taps</span> <span class="o">&lt;=</span> <span class="n">to_tap_map</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">crc_taps</span><span class="na">&#39;length</span><span class="p">);</span>
 </pre></div>
 </div>
-<span class="target" id="package-lfsr_ops"></span></div>
+<span class="target" id="package-extras.lfsr_ops"></span></div>
 </div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
-<dt id="lfsr_ops.lfsr_coefficients">
-<tt class="descclassname">lfsr_ops.</tt><tt class="descname">lfsr_coefficients</tt><a class="headerlink" href="#lfsr_ops.lfsr_coefficients" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.lfsr_ops.lfsr_coefficients">
+<tt class="descclassname">lfsr_ops.</tt><tt class="descname">lfsr_coefficients</tt><a class="headerlink" href="#extras.lfsr_ops.lfsr_coefficients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array of LFSR coefficients. Passed as an argument to
+<a class="reference internal" href="#extras.lfsr_ops.to_tap_map[lfsr_coefficients,positive,boolean return std_ulogic_vector]" title="extras.lfsr_ops.to_tap_map[lfsr_coefficients,positive,boolean return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">to_tap_map()</span></tt></a>.</p>
+</dd></dl>
 
 <dl class="type">
-<dt id="lfsr_ops.lfsr_kind">
-<tt class="descclassname">lfsr_ops.</tt><tt class="descname">lfsr_kind</tt><a class="headerlink" href="#lfsr_ops.lfsr_kind" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.lfsr_ops.lfsr_kind">
+<tt class="descclassname">lfsr_ops.</tt><tt class="descname">lfsr_kind</tt><a class="headerlink" href="#extras.lfsr_ops.lfsr_kind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type of LFSR: normal (init to 0&#8217;s) or inverted (init to 1&#8217;s).</p>
+</dd></dl>
 
 </div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="galois-lfsr">
 <h3>galois_lfsr<a class="headerlink" href="#galois-lfsr" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-116fe42d2e7c2c9168522f763c0a23815ffbf2cf.svg" type="image/svg+xml">
+<object data="../../_images/symbol-lfsr_ops-galois_lfsr.svg" type="image/svg+xml">
             <p class="warning">component galois_lfsr is
 generic (
   INIT_ZERO : boolean;
@@ -181,8 +184,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="lfsr_ops.galois_lfsr">
-<tt class="descclassname">lfsr_ops.</tt><tt class="descname">galois_lfsr</tt><a class="headerlink" href="#lfsr_ops.galois_lfsr" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.lfsr_ops.galois_lfsr">
+<tt class="descclassname">lfsr_ops.</tt><tt class="descname">galois_lfsr</tt><a class="headerlink" href="#extras.lfsr_ops.galois_lfsr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Galois LFSR. With Maximal length coefficients it will cycle through
 (2**n)-1 states when FULL_CYCLE = false, 2**n when true.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -212,7 +215,7 @@ end component;</p></object>
 </div>
 <div class="section" id="fibonacci-lfsr">
 <h3>fibonacci_lfsr<a class="headerlink" href="#fibonacci-lfsr" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-1f666130b92b47fa4da6e3ccda59405c9ef42a0e.svg" type="image/svg+xml">
+<object data="../../_images/symbol-lfsr_ops-fibonacci_lfsr.svg" type="image/svg+xml">
             <p class="warning">component fibonacci_lfsr is
 generic (
   INIT_ZERO : boolean;
@@ -234,8 +237,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="lfsr_ops.fibonacci_lfsr">
-<tt class="descclassname">lfsr_ops.</tt><tt class="descname">fibonacci_lfsr</tt><a class="headerlink" href="#lfsr_ops.fibonacci_lfsr" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.lfsr_ops.fibonacci_lfsr">
+<tt class="descclassname">lfsr_ops.</tt><tt class="descname">fibonacci_lfsr</tt><a class="headerlink" href="#extras.lfsr_ops.fibonacci_lfsr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fibonacci LFSR. With Maximal length coefficients it will cycle through
 (2**n)-1 states when FULL_CYCLE = false, 2**n states when true.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -267,10 +270,11 @@ end component;</p></object>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="lfsr_ops.to_tap_map[lfsr_coefficients,positive,boolean return std_ulogic_vector]">
-<tt class="descclassname">lfsr_ops.</tt><tt class="descname">to_tap_map</tt> <big>(</big><em>C : lfsr_coefficients</em>; <em>Map_length : positive</em>; <em>Reverse : boolean := false</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#lfsr_ops.to_tap_map[lfsr_coefficients,positive,boolean return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a coefficient list to an expanded vector with a &#8216;1&#8217; in the place.
-of each coefficient.</p>
+<dt id="extras.lfsr_ops.to_tap_map[lfsr_coefficients,positive,boolean return std_ulogic_vector]">
+<tt class="descclassname">lfsr_ops.</tt><tt class="descname">to_tap_map</tt> <big>(</big><em>C : lfsr_coefficients</em>; <em>Map_length : positive</em>; <em>Reverse : boolean := false</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.lfsr_ops.to_tap_map[lfsr_coefficients,positive,boolean return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a coefficient list to an expanded vector with a &#8216;1&#8217; in the place.
+of each coefficient.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -290,9 +294,10 @@ of each coefficient.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="lfsr_ops.lfsr_taps[positive return std_ulogic_vector]">
-<tt class="descclassname">lfsr_ops.</tt><tt class="descname">lfsr_taps</tt> <big>(</big><em>Size : positive</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#lfsr_ops.lfsr_taps[positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Lookup a predefined tap coefficients from the table.</p>
+<dt id="extras.lfsr_ops.lfsr_taps[positive return std_ulogic_vector]">
+<tt class="descclassname">lfsr_ops.</tt><tt class="descname">lfsr_taps</tt> <big>(</big><em>Size : positive</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.lfsr_ops.lfsr_taps[positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Lookup a predefined tap coefficients from the table.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -310,9 +315,10 @@ of each coefficient.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="lfsr_ops.next_galois_lfsr[std_ulogic_vector,std_ulogic_vector,lfsr_kind,boolean return std_ulogic_vector]">
-<tt class="descclassname">lfsr_ops.</tt><tt class="descname">next_galois_lfsr</tt> <big>(</big><em>State : std_ulogic_vector</em>; <em>Tap_map : std_ulogic_vector</em>; <em>Kind : lfsr_kind := normal</em>; <em>Full_cycle : boolean := false</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#lfsr_ops.next_galois_lfsr[std_ulogic_vector,std_ulogic_vector,lfsr_kind,boolean return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterate the next state in a Galois LFSR.</p>
+<dt id="extras.lfsr_ops.next_galois_lfsr[std_ulogic_vector,std_ulogic_vector,lfsr_kind,boolean return std_ulogic_vector]">
+<tt class="descclassname">lfsr_ops.</tt><tt class="descname">next_galois_lfsr</tt> <big>(</big><em>State : std_ulogic_vector</em>; <em>Tap_map : std_ulogic_vector</em>; <em>Kind : lfsr_kind := normal</em>; <em>Full_cycle : boolean := false</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.lfsr_ops.next_galois_lfsr[std_ulogic_vector,std_ulogic_vector,lfsr_kind,boolean return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Iterate the next state in a Galois LFSR.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -333,9 +339,10 @@ of each coefficient.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="lfsr_ops.next_fibonacci_lfsr[std_ulogic_vector,std_ulogic_vector,lfsr_kind,boolean return std_ulogic_vector]">
-<tt class="descclassname">lfsr_ops.</tt><tt class="descname">next_fibonacci_lfsr</tt> <big>(</big><em>State : std_ulogic_vector</em>; <em>Tap_map : std_ulogic_vector</em>; <em>Kind : lfsr_kind := normal</em>; <em>Full_cycle : boolean := false</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#lfsr_ops.next_fibonacci_lfsr[std_ulogic_vector,std_ulogic_vector,lfsr_kind,boolean return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterate the next state in a Fibonacci LFSR.</p>
+<dt id="extras.lfsr_ops.next_fibonacci_lfsr[std_ulogic_vector,std_ulogic_vector,lfsr_kind,boolean return std_ulogic_vector]">
+<tt class="descclassname">lfsr_ops.</tt><tt class="descname">next_fibonacci_lfsr</tt> <big>(</big><em>State : std_ulogic_vector</em>; <em>Tap_map : std_ulogic_vector</em>; <em>Kind : lfsr_kind := normal</em>; <em>Full_cycle : boolean := false</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.lfsr_ops.next_fibonacci_lfsr[std_ulogic_vector,std_ulogic_vector,lfsr_kind,boolean return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Iterate the next state in a Fibonacci LFSR.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -367,7 +374,7 @@ of each coefficient.</p>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -375,10 +382,12 @@ of each coefficient.</p>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
@@ -395,7 +404,7 @@ of each coefficient.</p>
 <li><a class="reference internal" href="#">lfsr_ops</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#description">Description</a><ul>
-<li><a class="reference internal" href="#ecample-usage">Ecample usage</a></li>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#types">Types</a></li>

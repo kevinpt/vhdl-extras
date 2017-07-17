@@ -53,23 +53,43 @@
 These memories share a <tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> generic which will optionally generate
 synchronous or asynchronous read ports for each instance. On Xilinx devices
 asynchronous read forces the synthesis of distributed RAM using LUTs rather
-than BRAMs. When <tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> is false the Read enable input is unused.</p>
+than BRAMs. When <tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> is false the Read enable input is unused and
+the read port clock can be tied to &#8216;0&#8217;.</p>
 <p>The ROM component gets its contents using synthesizable file IO to read a
 list of binary or hex values.</p>
-<span class="target" id="package-memory"></span></div>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<p>Create a 256-byte ROM with contents supplied by the binary image file &#8220;rom.img&#8221;:</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="n">r</span><span class="o">:</span> <span class="n">rom</span>
+  <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">ROM_FILE</span> <span class="o">=&gt;</span> <span class="s">&quot;rom.img&quot;</span><span class="p">,</span>
+    <span class="n">FORMAT</span> <span class="o">=&gt;</span> <span class="n">BINARY_TEXT</span><span class="p">,</span>
+    <span class="n">MEM_SIZE</span> <span class="o">=&gt;</span> <span class="mi">256</span>
+  <span class="p">)</span>
+  <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">Clock</span> <span class="o">=&gt;</span> <span class="n">clock</span><span class="p">,</span>
+    <span class="n">Re</span> <span class="o">=&gt;</span> <span class="n">re</span><span class="p">,</span>
+    <span class="n">Addr</span> <span class="o">=&gt;</span> <span class="n">addr</span><span class="p">,</span>
+    <span class="n">Data</span> <span class="o">=&gt;</span> <span class="n">data</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<span class="target" id="package-extras.memory"></span></div>
+</div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
-<dt id="memory.rom_format">
-<tt class="descclassname">memory.</tt><tt class="descname">rom_format</tt><a class="headerlink" href="#memory.rom_format" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.memory.rom_format">
+<tt class="descclassname">memory.</tt><tt class="descname">rom_format</tt><a class="headerlink" href="#extras.memory.rom_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data file format. Either binary or ASCII hex.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="dual-port-ram">
 <h3>dual_port_ram<a class="headerlink" href="#dual-port-ram" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-08db660d46284d60c2c43327cb976c8c55c7f7bd.svg" type="image/svg+xml">
+<object data="../../_images/symbol-memory-dual_port_ram.svg" type="image/svg+xml">
             <p class="warning">component dual_port_ram is
 generic (
   MEM_SIZE : positive;
@@ -92,8 +112,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="memory.dual_port_ram">
-<tt class="descclassname">memory.</tt><tt class="descname">dual_port_ram</tt><a class="headerlink" href="#memory.dual_port_ram" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.memory.dual_port_ram">
+<tt class="descclassname">memory.</tt><tt class="descname">dual_port_ram</tt><a class="headerlink" href="#extras.memory.dual_port_ram" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dual-ported RAM supporting writes and reads from separate clock domains.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -124,7 +144,7 @@ end component;</p></object>
 </div>
 <div class="section" id="rom">
 <h3>rom<a class="headerlink" href="#rom" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-5ad028d4b9155e896ac55ca7f862687df6c3af21.svg" type="image/svg+xml">
+<object data="../../_images/symbol-memory-rom.svg" type="image/svg+xml">
             <p class="warning">component rom is
 generic (
   ROM_FILE : string;
@@ -145,8 +165,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="memory.rom">
-<tt class="descclassname">memory.</tt><tt class="descname">rom</tt><a class="headerlink" href="#memory.rom" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.memory.rom">
+<tt class="descclassname">memory.</tt><tt class="descname">rom</tt><a class="headerlink" href="#extras.memory.rom" title="Permalink to this definition">¶</a></dt>
 <dd><p>A synthesizable ROM using a file to specify the contents.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -185,7 +205,7 @@ end component;</p></object>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -193,10 +213,12 @@ end component;</p></object>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
@@ -212,7 +234,10 @@ end component;</p></object>
   <ul>
 <li><a class="reference internal" href="#">memory</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#types">Types</a></li>
 <li><a class="reference internal" href="#components">Components</a><ul>
 <li><a class="reference internal" href="#dual-port-ram">dual_port_ram</a></li>

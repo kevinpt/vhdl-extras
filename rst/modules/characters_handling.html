@@ -27,7 +27,7 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="characters_latin_1" href="characters_latin_1.html" />
-    <link rel="prev" title="binaryio" href="binaryio.html" />
+    <link rel="prev" title="bit_ops" href="bit_ops.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -45,21 +45,22 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/characters_handling.vhdl">extras/characters_handling.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="strings_maps_constants.html"><em>strings_fixed_constants</em></a></p>
+<p><a class="reference internal" href="strings_maps_constants.html"><em>strings_maps_constants</em></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This is a package of functions that replicate the behavior of the Ada
-standard library package ada.characters.handling. Included are functions
+standard library package <tt class="docutils literal"><span class="pre">Ada.Characters.Handling</span></tt>. Included are functions
 to test for different character classifications and perform conversion
 of characters and strings to upper and lower case.</p>
-<span class="target" id="package-characters_handling"></span></div>
+<span class="target" id="package-extras.characters_handling"></span></div>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="characters_handling.Is_Alphanumeric[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Alphanumeric</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Alphanumeric[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Alphanumeric character test.</p>
+<dt id="extras.characters_handling.Is_Alphanumeric[character return boolean]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Alphanumeric</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.characters_handling.Is_Alphanumeric[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Alphanumeric character test.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -77,9 +78,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.Is_Letter[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Letter</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Letter[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Letter character test.</p>
+<dt id="extras.characters_handling.Is_Letter[character return boolean]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Letter</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.characters_handling.Is_Letter[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Letter character test.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -97,9 +99,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.Is_Control[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Control</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Control[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Control character test.</p>
+<dt id="extras.characters_handling.Is_Control[character return boolean]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Control</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.characters_handling.Is_Control[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Control character test.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -117,9 +120,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.Is_Digit[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Digit</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Digit[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Digit character test.</p>
+<dt id="extras.characters_handling.Is_Digit[character return boolean]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Digit</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.characters_handling.Is_Digit[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Digit character test.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -137,9 +141,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.Is_Hexadecimal_Digit[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Hexadecimal_Digit</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Hexadecimal_Digit[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Hexadecimal digit character test.</p>
+<dt id="extras.characters_handling.Is_Hexadecimal_Digit[character return boolean]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Hexadecimal_Digit</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.characters_handling.Is_Hexadecimal_Digit[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Hexadecimal digit character test.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -157,9 +162,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.Is_Basic[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Basic</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Basic[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Basic character test.</p>
+<dt id="extras.characters_handling.Is_Basic[character return boolean]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Basic</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.characters_handling.Is_Basic[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Basic character test.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -177,9 +183,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.Is_Graphic[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Graphic</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Graphic[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Graphic character test.</p>
+<dt id="extras.characters_handling.Is_Graphic[character return boolean]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Graphic</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.characters_handling.Is_Graphic[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Graphic character test.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -197,9 +204,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.Is_Lower[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Lower</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Lower[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Lower-case character test.</p>
+<dt id="extras.characters_handling.Is_Lower[character return boolean]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Lower</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.characters_handling.Is_Lower[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Lower-case character test.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -217,9 +225,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.Is_Upper[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Upper</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Upper[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Upper-case character test.</p>
+<dt id="extras.characters_handling.Is_Upper[character return boolean]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Upper</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.characters_handling.Is_Upper[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Upper-case character test.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -237,9 +246,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.Is_Special[character return boolean]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Special</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#characters_handling.Is_Special[character return boolean]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Special character test.</p>
+<dt id="extras.characters_handling.Is_Special[character return boolean]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">Is_Special</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.characters_handling.Is_Special[character return boolean]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Special character test.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -257,9 +267,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.To_Lower[character return character]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Lower</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#characters_handling.To_Lower[character return character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a character to lower-case.</p>
+<dt id="extras.characters_handling.To_Lower[character return character]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Lower</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#extras.characters_handling.To_Lower[character return character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a character to lower-case.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -277,9 +288,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.To_Lower[string return string]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Lower</tt> <big>(</big><em>Source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#characters_handling.To_Lower[string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a string to lower-case.</p>
+<dt id="extras.characters_handling.To_Lower[string return string]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Lower</tt> <big>(</big><em>Source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.characters_handling.To_Lower[string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a string to lower-case.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -297,9 +309,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.To_Upper[character return character]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Upper</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#characters_handling.To_Upper[character return character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a character to upper-case.</p>
+<dt id="extras.characters_handling.To_Upper[character return character]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Upper</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#extras.characters_handling.To_Upper[character return character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a character to upper-case.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -317,9 +330,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.To_Upper[string return string]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Upper</tt> <big>(</big><em>Source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#characters_handling.To_Upper[string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a string to upper-case.</p>
+<dt id="extras.characters_handling.To_Upper[string return string]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Upper</tt> <big>(</big><em>Source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.characters_handling.To_Upper[string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a string to upper-case.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -337,9 +351,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.To_Basic[character return character]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Basic</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#characters_handling.To_Basic[character return character]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a character to its basic (unaccented) form.</p>
+<dt id="extras.characters_handling.To_Basic[character return character]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Basic</tt> <big>(</big><em>Ch : character</em><big>)</big> &rarr; character<a class="headerlink" href="#extras.characters_handling.To_Basic[character return character]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a character to its basic (unaccented) form.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -357,9 +372,10 @@ of characters and strings to upper and lower case.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="characters_handling.To_Basic[string return string]">
-<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Basic</tt> <big>(</big><em>Source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#characters_handling.To_Basic[string return string]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a string to its basic (unaccented) form.</p>
+<dt id="extras.characters_handling.To_Basic[string return string]">
+<tt class="descclassname">characters_handling.</tt><tt class="descname">To_Basic</tt> <big>(</big><em>Source : string</em><big>)</big> &rarr; string<a class="headerlink" href="#extras.characters_handling.To_Basic[string return string]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Convert a string to its basic (unaccented) form.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -388,7 +404,7 @@ of characters and strings to upper and lower case.</p>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -396,17 +412,19 @@ of characters and strings to upper and lower case.</p>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="binaryio.html" title="previous chapter">binaryio</a></li>
+      <li>Previous: <a href="bit_ops.html" title="previous chapter">bit_ops</a></li>
       <li>Next: <a href="characters_latin_1.html" title="next chapter">characters_latin_1</a></li>
   </ul></li>
 </ul>

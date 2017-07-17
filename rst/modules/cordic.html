@@ -1,0 +1,779 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>cordic &mdash; VHDL-extras 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="next" title="crc_ops" href="crc_ops.html" />
+    <link rel="prev" title="common_2008" href="common_2008.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="cordic">
+<h1>cordic<a class="headerlink" href="#cordic" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/cordic.vhdl">extras/cordic.vhdl</a></p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="pipelining.html"><em>pipelining</em></a></p>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>This package provides components and procedures used to implement the CORDIC
+algorithm for rotations. A variety of implementations are provided to meet different
+design requirements. These implementations are flexible in all parameters and are not
+constrained by a fixed arctan table.</p>
+<p>A pair of procedures provide pure combinational CORDIC implementations:</p>
+<ul class="simple">
+<li>rotate procedure - Combinational CORDIC in rotation mode</li>
+<li>vector procedure - Combinational CORDIC in vectoring mode</li>
+</ul>
+<p>The CORDIC components provide both rotation or vectoring mode based on
+a Mode input:</p>
+<ul>
+<li><p class="first">cordic_sequential     - Iterative algorithm with minimal hardware</p>
+</li>
+<li><p class="first">cordic_pipelined      - One pipeline stage per iteration</p>
+</li>
+<li><dl class="first docutils">
+<dt>cordic_flex_pipelined - Selectable pipeline stages independent of</dt>
+<dd><p class="first last">the number of iterations</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>A set of wrapper components are provided to conveniently generate
+sin and cos:</p>
+<ul class="simple">
+<li>sincos_sequential - Iterative algorithm with minimal hardware</li>
+<li>sincos_pipelined  - One pipeline stage per iteration</li>
+</ul>
+<p>These CORDIC implementations take a common set of parameters. There are
+X, Y, and Z inputs defining the initial vector and angle value. The result
+is produced in a set of X, Y, and Z outputs. Depending on which CORDIC
+operation you are using, some inputs may be constants and some outputs
+may be ignored.</p>
+<p>The CORDIC algorithm performs pseudo-rotations that cause an unwanted growth
+in the length of the result vector. This growth is a gain parameter that
+approaches 1.647 but is dependent on the number of iterations performed. The
+<a class="reference internal" href="#extras.cordic.cordic_gain[positive return real]" title="extras.cordic.cordic_gain[positive return real]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">cordic_gain()</span></tt></a> function produces a real-valued gain for a specified number of
+iterations. This can be converted to a synthesizable integer constant with
+the following:</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="n">gain</span> <span class="o">:=</span> <span class="kt">integer</span><span class="p">(</span><span class="n">cordic_gain</span><span class="p">(</span><span class="n">ITERATIONS</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span> <span class="o">**</span> <span class="n">FRAC_BITS</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With some operations you can adjust the input vector by dividing by the gain
+ahead of time. In other cases you have to correct for the gain after the
+CORDIC operation. The gain from pseudo-rotation never affects the Z
+parameter.</p>
+<p>The following are some of the operations that can be performed with the
+CORDIC algorithm:</p>
+<p>sin and cos:</p>
+<blockquote>
+<div>X0 = 1/gain, Y0 = 0, Z0 = angle; rotate → sin(Z0) in Y, cos(Z0) in X</div></blockquote>
+<p>polar to rectangular:</p>
+<blockquote>
+<div>X0 = magnitude, Y0 = 0, Z0 = angle; rotate → gain*X in X, gain*Y in Y</div></blockquote>
+<p>arctan:</p>
+<blockquote>
+<div>Y0 = y, X0 = x, Z0 = 0; vector → arctan(Y0/X0) in Z</div></blockquote>
+<p>rectangular to polar:</p>
+<blockquote>
+<div>Y0 = y, X0 = x, Z0 = 0; vector → gain*magnitude in X, angle in Z</div></blockquote>
+<p>The X and Y parameters are represented as unconstrained signed vectors. You
+establish the precision of a CORDIC implementation by selecting the width of
+these vectors. The interpretation of these numbers does not affect the
+internal CORDIC implementation but most implementations will need them to be
+fixed point integers with the maximum number of fractional bits possible.
+When calculating sin and cos, the output is constrained to the range +/-1.0.
+Thus we only need to reserve two bits for the sign and integral portion of
+the numbers. The remaining bits can be fractional. Operations that work on
+larger vectors outside of the unit circle need to ensure that a sufficient
+number of integer bits are present to prevent overflow of X and Y.</p>
+<p>The angle parameter Z should be provided in units of binary-radians or brads.
+<span class="math">\(2\pi \text{ radians} = 2^\text{size} \text{ brads}\)</span> for &#8220;size&#8221; number of bits. This maps the entire
+binary range of Z to the unit circle. The Z parameter is represented by the
+signed type in all of these CORDIC implementations but it can be viewed as
+an unsigned value. Because of the circular mapping, signed and unsigned
+angles are equivalent. It is easiest to think of the angle Z as an integer
+without fractional bits like X and Y. There is no risk of overflowing Z
+becuase of the circular mapping.</p>
+<p>The circular CORDIC algorithm only converges between angles of +/- 99.7
+degrees. If you want to use angles covering all four quadrants you must
+condition the inputs to the CORDIC algorithm using the <a class="reference internal" href="#extras.cordic.adjust_angle[signed,signed,signed,signed,signed,signed]" title="extras.cordic.adjust_angle[signed,signed,signed,signed,signed,signed]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">adjust_angle()</span></tt></a>
+procedure. This will perform conditional negation on X and Y and flip the
+sign bit on Z to bring vectors in quadrants 2 and 3 (1-based) into quadrants
+1 and 4.</p>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<p>You can use the two functions <a class="reference internal" href="#extras.cordic.rotate[integer,signed,signed,signed,signed,signed,signed]" title="extras.cordic.rotate[integer,signed,signed,signed,signed,signed,signed]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">rotate()</span></tt></a> and
+<a class="reference internal" href="#extras.cordic.vector[integer,signed,signed,signed,signed,signed,signed]" title="extras.cordic.vector[integer,signed,signed,signed,signed,signed,signed]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">vector()</span></tt></a> to perform a single iteration cycle of CORDIC.
+This can be used for simulation purposes or wrapped in a registered process for specialized
+synthesis implementations. The entire CORDIC core will be synthesized as a combinational blob. You can use register retiming techniques to improve the performance.</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">signal</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Xr</span><span class="p">,</span> <span class="n">Yr</span><span class="p">,</span> <span class="n">Zr</span> <span class="o">:</span> <span class="n">signed</span><span class="p">(</span><span class="mi">9</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">constant</span> <span class="n">ITERATIONS</span> <span class="o">:</span> <span class="kt">integer</span> <span class="o">:</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">...</span>
+
+<span class="n">reg</span><span class="o">:</span> <span class="k">process</span><span class="p">(</span><span class="n">clock</span><span class="p">,</span> <span class="n">reset</span><span class="p">)</span> <span class="k">is</span>
+<span class="k">begin</span>
+  <span class="k">if</span> <span class="n">reset</span> <span class="o">=</span> <span class="sc">&#39;1&#39;</span> <span class="k">then</span>
+    <span class="n">Xr</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">);</span>
+    <span class="n">Yr</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">);</span>
+    <span class="n">Zr</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">);</span>
+  <span class="k">elsif</span> <span class="n">rising_edge</span><span class="p">(</span><span class="n">clock</span><span class="p">)</span> <span class="k">then</span>
+    <span class="n">rotate</span><span class="p">(</span><span class="n">ITERATIONS</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Xr</span><span class="p">,</span> <span class="n">Yr</span><span class="p">,</span> <span class="n">Zr</span><span class="p">);</span>
+  <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The components implemented in this package offer a number of different synthesizable CORDIC implementations and wrappers to generate Sine and Cosine waveforms.</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">constant</span> <span class="n">ITERATIONS</span> <span class="o">:</span> <span class="kt">positive</span> <span class="o">:=</span> <span class="mi">8</span><span class="p">;</span>
+
+<span class="c1">-- 1 sign bit + 1 integer bit + 8 fraction bits</span>
+<span class="k">signal</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Xr</span><span class="p">,</span> <span class="n">Yr</span><span class="p">,</span> <span class="n">Zr</span> <span class="o">:</span> <span class="n">signed</span><span class="p">(</span><span class="mi">9</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">-- Sequential implementation</span>
+<span class="n">cs</span><span class="o">:</span> <span class="n">cordic_sequential</span>
+  <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">SIZE</span>       <span class="o">=&gt;</span> <span class="n">X</span><span class="na">&#39;length</span><span class="p">,</span>
+    <span class="n">ITERATIONS</span> <span class="o">=&gt;</span> <span class="n">ITERATIONS</span>
+  <span class="p">)</span>
+  <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">Clock</span> <span class="o">=&gt;</span> <span class="n">clock</span><span class="p">,</span>
+    <span class="n">Reset</span> <span class="o">=&gt;</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="n">Data_valid</span>   <span class="o">=&gt;</span> <span class="n">data_valid</span><span class="p">,</span>
+    <span class="n">Busy</span>         <span class="o">=&gt;</span> <span class="n">busy</span><span class="p">,</span>
+    <span class="n">Result_valid</span> <span class="o">=&gt;</span> <span class="n">result_valid</span><span class="p">,</span>
+    <span class="n">Mode</span>         <span class="o">=&gt;</span> <span class="n">cordic_rotate</span><span class="p">,</span>
+
+    <span class="n">X</span> <span class="o">=&gt;</span> <span class="n">X</span><span class="p">,</span>
+    <span class="n">Y</span> <span class="o">=&gt;</span> <span class="n">Y</span><span class="p">,</span>
+    <span class="n">Z</span> <span class="o">=&gt;</span> <span class="n">Z</span><span class="p">,</span>
+
+    <span class="n">X_result</span> <span class="o">=&gt;</span> <span class="n">Xr</span><span class="p">,</span>
+    <span class="n">Y_result</span> <span class="o">=&gt;</span> <span class="n">Yr</span><span class="p">,</span>
+    <span class="n">Z_result</span> <span class="o">=&gt;</span> <span class="n">Zr</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<span class="target" id="package-extras.cordic"></span></div>
+</div>
+<div class="section" id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="extras.cordic.cordic_mode">
+<tt class="descclassname">cordic.</tt><tt class="descname">cordic_mode</tt><a class="headerlink" href="#extras.cordic.cordic_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotation or vector mode selection.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="components">
+<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cordic-pipelined">
+<h3>cordic_pipelined<a class="headerlink" href="#cordic-pipelined" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-cordic-cordic_pipelined.svg" type="image/svg+xml">
+            <p class="warning">component cordic_pipelined is
+generic (
+  SIZE : positive;
+  ITERATIONS : positive;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Mode : in cordic_mode;
+  --# {{data|}}
+  X : in signed(SIZE-1 downto 0);
+  Y : in signed(SIZE-1 downto 0);
+  Z : in signed(SIZE-1 downto 0);
+  X_result : out signed(SIZE-1 downto 0);
+  Y_result : out signed(SIZE-1 downto 0);
+  Z_result : out signed(SIZE-1 downto 0)
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.cordic.cordic_pipelined">
+<tt class="descclassname">cordic.</tt><tt class="descname">cordic_pipelined</tt><a class="headerlink" href="#extras.cordic.cordic_pipelined" title="Permalink to this definition">¶</a></dt>
+<dd><p>CORDIC with pipeline registers between each stage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>SIZE</strong> (<em>positive</em>) &#8211; Width of operands</li>
+<li><strong>ITERATIONS</strong> (<em>positive</em>) &#8211; Number of iterations for CORDIC algorithm</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Mode</strong> (<em>in cordic_mode</em>) &#8211; Rotation or vector mode selection</li>
+<li><strong>X</strong> (<em>in signed(SIZE-1 downto 0)</em>) &#8211; X coordinate</li>
+<li><strong>Y</strong> (<em>in signed(SIZE-1 downto 0)</em>) &#8211; Y coordinate</li>
+<li><strong>Z</strong> (<em>in signed(SIZE-1 downto 0)</em>) &#8211; Z coordinate (angle in brads)</li>
+<li><strong>X_result</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; X result</li>
+<li><strong>Y_result</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; Y result</li>
+<li><strong>Z_result</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; Z result</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="cordic-sequential">
+<h3>cordic_sequential<a class="headerlink" href="#cordic-sequential" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-cordic-cordic_sequential.svg" type="image/svg+xml">
+            <p class="warning">component cordic_sequential is
+generic (
+  SIZE : positive;
+  ITERATIONS : positive;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Data_valid : in std_ulogic;
+  Busy : out std_ulogic;
+  Result_valid : out std_ulogic;
+  Mode : in cordic_mode;
+  --# {{data|}}
+  X : in signed(SIZE-1 downto 0);
+  Y : in signed(SIZE-1 downto 0);
+  Z : in signed(SIZE-1 downto 0);
+  X_result : out signed(SIZE-1 downto 0);
+  Y_result : out signed(SIZE-1 downto 0);
+  Z_result : out signed(SIZE-1 downto 0)
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.cordic.cordic_sequential">
+<tt class="descclassname">cordic.</tt><tt class="descname">cordic_sequential</tt><a class="headerlink" href="#extras.cordic.cordic_sequential" title="Permalink to this definition">¶</a></dt>
+<dd><p>CORDIC with a single stage applied iteratively.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>SIZE</strong> (<em>positive</em>) &#8211; Width of operands</li>
+<li><strong>ITERATIONS</strong> (<em>positive</em>) &#8211; Number of iterations for CORDIC algorithm</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Data_valid</strong> (<em>in std_ulogic</em>) &#8211; Load new input data</li>
+<li><strong>Busy</strong> (<em>out std_ulogic</em>) &#8211; Generating new result</li>
+<li><strong>Result_valid</strong> (<em>out std_ulogic</em>) &#8211; Flag when result is valid</li>
+<li><strong>Mode</strong> (<em>in cordic_mode</em>) &#8211; Rotation or vector mode selection</li>
+<li><strong>X</strong> (<em>in signed(SIZE-1 downto 0)</em>) &#8211; X coordinate</li>
+<li><strong>Y</strong> (<em>in signed(SIZE-1 downto 0)</em>) &#8211; Y coordinate</li>
+<li><strong>Z</strong> (<em>in signed(SIZE-1 downto 0)</em>) &#8211; Z coordinate (angle in brads)</li>
+<li><strong>X_result</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; X result</li>
+<li><strong>Y_result</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; Y result</li>
+<li><strong>Z_result</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; Z result</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="cordic-flex-pipelined">
+<h3>cordic_flex_pipelined<a class="headerlink" href="#cordic-flex-pipelined" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-cordic-cordic_flex_pipelined.svg" type="image/svg+xml">
+            <p class="warning">component cordic_flex_pipelined is
+generic (
+  SIZE : positive;
+  ITERATIONS : positive;
+  PIPELINE_STAGES : natural;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Mode : in cordic_mode;
+  --# {{data|}}
+  X : in signed(SIZE-1 downto 0);
+  Y : in signed(SIZE-1 downto 0);
+  Z : in signed(SIZE-1 downto 0);
+  X_result : out signed(SIZE-1 downto 0);
+  Y_result : out signed(SIZE-1 downto 0);
+  Z_result : out signed(SIZE-1 downto 0)
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.cordic.cordic_flex_pipelined">
+<tt class="descclassname">cordic.</tt><tt class="descname">cordic_flex_pipelined</tt><a class="headerlink" href="#extras.cordic.cordic_flex_pipelined" title="Permalink to this definition">¶</a></dt>
+<dd><p>CORDIC with pipelining implemented with register retiming.
+This variant can be used to have more or fewer pipeline stages than
+the number of iterations to fine tune performance and resource usage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>SIZE</strong> (<em>positive</em>) &#8211; Width of operands</li>
+<li><strong>ITERATIONS</strong> (<em>positive</em>) &#8211; Number of iterations for CORDIC algorithm</li>
+<li><strong>PIPELINE_STAGES</strong> (<em>natural</em>) &#8211; Number of register stages</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Mode</strong> (<em>in cordic_mode</em>) &#8211; Rotation or vector mode selection</li>
+<li><strong>X</strong> (<em>in signed(SIZE-1 downto 0)</em>) &#8211; X coordinate</li>
+<li><strong>Y</strong> (<em>in signed(SIZE-1 downto 0)</em>) &#8211; Y coordinate</li>
+<li><strong>Z</strong> (<em>in signed(SIZE-1 downto 0)</em>) &#8211; Z coordinate (angle in brads)</li>
+<li><strong>X_result</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; X result</li>
+<li><strong>Y_result</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; Y result</li>
+<li><strong>Z_result</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; Z result</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="sincos-pipelined">
+<h3>sincos_pipelined<a class="headerlink" href="#sincos-pipelined" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-cordic-sincos_pipelined.svg" type="image/svg+xml">
+            <p class="warning">component sincos_pipelined is
+generic (
+  SIZE : positive;
+  ITERATIONS : positive;
+  FRAC_BITS : positive;
+  MAGNITUDE : real;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Angle : in signed(SIZE-1 downto 0);
+  --# {{data|}}
+  Sin : out signed(SIZE-1 downto 0);
+  Cos : out signed(SIZE-1 downto 0)
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.cordic.sincos_pipelined">
+<tt class="descclassname">cordic.</tt><tt class="descname">sincos_pipelined</tt><a class="headerlink" href="#extras.cordic.sincos_pipelined" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Sine and Cosine with a pipelined CORDIC implementation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>SIZE</strong> (<em>positive</em>) &#8211; Width of operands</li>
+<li><strong>ITERATIONS</strong> (<em>positive</em>) &#8211; Number of iterations for CORDIC algorithm</li>
+<li><strong>FRAC_BITS</strong> (<em>positive</em>) &#8211; Total fractional bits</li>
+<li><strong>MAGNITUDE</strong> (<em>real</em>) &#8211; Scale factor for vector length</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Angle</strong> (<em>in signed(SIZE-1 downto 0)</em>) &#8211; Angle in brads (2**SIZE brads = 2*pi radians)</li>
+<li><strong>Sin</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; Sine of Angle</li>
+<li><strong>Cos</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; Cosine of Angle</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="sincos-sequential">
+<h3>sincos_sequential<a class="headerlink" href="#sincos-sequential" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-cordic-sincos_sequential.svg" type="image/svg+xml">
+            <p class="warning">component sincos_sequential is
+generic (
+  SIZE : positive;
+  ITERATIONS : positive;
+  FRAC_BITS : positive;
+  MAGNITUDE : real;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Data_valid : in std_ulogic;
+  Busy : out std_ulogic;
+  Result_valid : out std_ulogic;
+  Angle : in signed(SIZE-1 downto 0);
+  --# {{data|}}
+  Sin : out signed(SIZE-1 downto 0);
+  Cos : out signed(SIZE-1 downto 0)
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.cordic.sincos_sequential">
+<tt class="descclassname">cordic.</tt><tt class="descname">sincos_sequential</tt><a class="headerlink" href="#extras.cordic.sincos_sequential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Sine and Cosine with a sequential CORDIC implementation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>SIZE</strong> (<em>positive</em>) &#8211; Width of operands</li>
+<li><strong>ITERATIONS</strong> (<em>positive</em>) &#8211; Number of iterations for CORDIC algorithm</li>
+<li><strong>FRAC_BITS</strong> (<em>positive</em>) &#8211; Total fractional bits</li>
+<li><strong>MAGNITUDE</strong> (<em>real</em>) &#8211; Scale factor for vector length</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Data_valid</strong> (<em>in std_ulogic</em>) &#8211; Load new input data</li>
+<li><strong>Busy</strong> (<em>out std_ulogic</em>) &#8211; Generating new result</li>
+<li><strong>Result_valid</strong> (<em>out std_ulogic</em>) &#8211; Flag when result is valid</li>
+<li><strong>Angle</strong> (<em>in signed(SIZE-1 downto 0)</em>) &#8211; Angle in brads (2**SIZE brads = 2*pi radians)</li>
+<li><strong>Sin</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; Sine of Angle</li>
+<li><strong>Cos</strong> (<em>out signed(SIZE-1 downto 0)</em>) &#8211; Cosine of Angle</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="subprograms">
+<h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="extras.cordic.cordic_gain[positive return real]">
+<tt class="descclassname">cordic.</tt><tt class="descname">cordic_gain</tt> <big>(</big><em>Iterations : positive</em><big>)</big> &rarr; real<a class="headerlink" href="#extras.cordic.cordic_gain[positive return real]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Compute vector length gain after applying CORDIC.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Iterations</strong> (<em>positive</em>) &#8211; Number of iterations</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Gain factor.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="extras.cordic.adjust_angle[signed,signed,signed,signed,signed,signed]">
+<tt class="descclassname">cordic.</tt><tt class="descname">adjust_angle</tt> <big>(</big><em>X : in signed</em>; <em>Y : in signed</em>; <em>Z : in signed</em>; <em>Xa : out signed</em>; <em>Ya : out signed</em>; <em>Za : out signed</em><big>)</big><a class="headerlink" href="#extras.cordic.adjust_angle[signed,signed,signed,signed,signed,signed]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Correct angle so that it lies in quadrant 1 or 4.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<em>in signed</em>) &#8211; X coordinate</li>
+<li><strong>Y</strong> (<em>in signed</em>) &#8211; Y coordinate</li>
+<li><strong>Z</strong> (<em>in signed</em>) &#8211; Z coordinate (angle)</li>
+<li><strong>Xa</strong> (<em>out signed</em>) &#8211; Adjusted X coordinate</li>
+<li><strong>Ya</strong> (<em>out signed</em>) &#8211; Adjusted Y coordinate</li>
+<li><strong>Za</strong> (<em>out signed</em>) &#8211; Adjusted Z coordinate (angle)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="extras.cordic.rotate[integer,signed,signed,signed,signed,signed,signed]">
+<tt class="descclassname">cordic.</tt><tt class="descname">rotate</tt> <big>(</big><em>iterations : in integer</em>; <em>X : in signed</em>; <em>Y : in signed</em>; <em>Z : in signed</em>; <em>Xr : out signed</em>; <em>Yr : out signed</em>; <em>Zr : out signed</em><big>)</big><a class="headerlink" href="#extras.cordic.rotate[integer,signed,signed,signed,signed,signed,signed]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Apply a single iteration of CORDIC rotation mode.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<em>in signed</em>) &#8211; X coordinate</li>
+<li><strong>Y</strong> (<em>in signed</em>) &#8211; Y coordinate</li>
+<li><strong>Z</strong> (<em>in signed</em>) &#8211; Z coordinate (angle)</li>
+<li><strong>Xr</strong> (<em>out signed</em>) &#8211; Rotated X coordinate</li>
+<li><strong>Yr</strong> (<em>out signed</em>) &#8211; Rotated Y coordinate</li>
+<li><strong>Zr</strong> (<em>out signed</em>) &#8211; Rotated Z coordinate (angle)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="procedure">
+<dt id="extras.cordic.vector[integer,signed,signed,signed,signed,signed,signed]">
+<tt class="descclassname">cordic.</tt><tt class="descname">vector</tt> <big>(</big><em>iterations : in integer</em>; <em>X : in signed</em>; <em>Y : in signed</em>; <em>Z : in signed</em>; <em>Xr : out signed</em>; <em>Yr : out signed</em>; <em>Zr : out signed</em><big>)</big><a class="headerlink" href="#extras.cordic.vector[integer,signed,signed,signed,signed,signed,signed]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Apply a single iteration of CORDIC vector mode.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<em>in signed</em>) &#8211; X coordinate</li>
+<li><strong>Y</strong> (<em>in signed</em>) &#8211; Y coordinate</li>
+<li><strong>Z</strong> (<em>in signed</em>) &#8211; Z coordinate (angle)</li>
+<li><strong>Xr</strong> (<em>out signed</em>) &#8211; Vectored X coordinate</li>
+<li><strong>Yr</strong> (<em>out signed</em>) &#8211; Vectored Y coordinate</li>
+<li><strong>Zr</strong> (<em>out signed</em>) &#8211; Vectored Z coordinate (angle)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="extras.cordic.effective_fractional_bits[positive,positive return real]">
+<tt class="descclassname">cordic.</tt><tt class="descname">effective_fractional_bits</tt> <big>(</big><em>Iterations : positive</em>; <em>Frac_bits : positive</em><big>)</big> &rarr; real<a class="headerlink" href="#extras.cordic.effective_fractional_bits[positive,positive return real]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Compute the number of usable fractional bits in CORDIC result.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Iterations</strong> (<em>positive</em>) &#8211; Number of CORDIC iterations</li>
+<li><strong>Frac_bits</strong> (<em>positive</em>) &#8211; Fractional bits in the input coordinates</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Effective number of fractional bits.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
+            </a></p>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
+
+
+
+<p class="blurb">Flexible VHDL library</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="common_2008.html" title="previous chapter">common_2008</a></li>
+      <li>Next: <a href="crc_ops.html" title="next chapter">crc_ops</a></li>
+  </ul></li>
+</ul>
+</div>
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">cordic</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#types">Types</a></li>
+<li><a class="reference internal" href="#components">Components</a><ul>
+<li><a class="reference internal" href="#cordic-pipelined">cordic_pipelined</a></li>
+<li><a class="reference internal" href="#cordic-sequential">cordic_sequential</a></li>
+<li><a class="reference internal" href="#cordic-flex-pipelined">cordic_flex_pipelined</a></li>
+<li><a class="reference internal" href="#sincos-pipelined">sincos_pipelined</a></li>
+<li><a class="reference internal" href="#sincos-sequential">sincos_sequential</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#subprograms">Subprograms</a></li>
+</ul>
+</li>
+</ul>
+<h3>Other projects</h3>
+
+<div id="proj_list">
+<p>
+<a href="http://kevinpt.github.io/opbasm/">Opbasm</a><br>
+<a href="http://kevinpt.github.io/ripyl/">Ripyl</a><br>
+<a href="http://code.google.com/p/vertcl">Vertcl</a><br>
+
+<a href="http://kevinpt.github.io/lecroy-colorizer/">Lecroy-colorizer</a>
+</p>
+</div>
+
+<script>
+$(function() { // Retrieve list of repositories from Github and dynamically insert them into sidebar
+
+if(!window.sessionStorage || !JSON) { return; } // Punt on crusty browsers (looking at you IE10)
+
+function JSONP( url, callback ) {
+	var id = ( 'jsonp' + Math.random() * new Date() ).replace('.', '');
+	var script = document.createElement('script');
+	script.src = url.replace( 'callback=?', 'callback=' + id );
+	document.body.appendChild( script );
+	window[ id ] = function( data ) {
+		if (callback) {
+			callback( data );
+		}
+	};
+}
+
+function insert_projects(projects) {
+    var links = [];
+    var cur_proj = "VHDL-extras".toLowerCase();
+    $.each(projects, function(key, value) {
+      if(key != cur_proj) {
+        var title = key.replace(/^./, function(match) {return match.toUpperCase()}); // Capitalize first char
+        links.push("<a href='"+ value +"'>" + title + "</a>");
+      }
+    });
+    
+    $("#proj_list").html("<p>"+ links.join("<br>") +"</p>");
+}
+
+var now = new Date().getTime();
+if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) { // Use cached values (5 min. expiry)
+  insert_projects(JSON.parse(sessionStorage.KTprojects));
+} else { // Retrieve current projects
+  JSONP("https://api.github.com/users/kevinpt/repos?type=owner&callback=?", function(response) {
+    var projects = {};
+    $.each(response.data, function(index, value) {
+      projects[value.name] = value.homepage;
+    });
+    
+    insert_projects(projects);
+    
+    // Store data in session cache
+    sessionStorage.KTprojects = JSON.stringify(projects);
+    var now = new Date().getTime();
+    sessionStorage.KTcacheTime = now;
+  });  
+}
+
+});
+</script>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2015, Kevin Thibedeau.
+      
+      |
+      <a href="../../_sources/rst/modules/cordic.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+
+
+  </body>
+</html>

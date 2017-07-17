@@ -50,10 +50,10 @@
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>This package provides a general purpose register file. This version is
-implemented in VHDL-93 syntax and the register width is fixed at 16-bits
-by default. This source must be modified to alter the size of the
-reg_word type if a register size other than 16-bits is needed. The
+<p>This package provides a general purpose register file. It is available in two variants.
+One is implemented in VHDL-93 syntax and the register width is fixed at 16-bits
+by default. The source must be modified to alter the size of the
+<tt class="docutils literal"><span class="pre">reg_word</span></tt> type if a register size other than 16-bits is needed. The
 implementation in <a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/reg_file_2008.vhdl">reg_file_2008</a> uses a generic package to avoid this if
 tool support for VHDL-2008 is available.</p>
 <p>The register file provides an addressable read write port for external
@@ -65,11 +65,9 @@ register are read directly from internal signals rather than registered
 bits. When set to &#8216;1&#8217; a bit is accessed from the <tt class="docutils literal"><span class="pre">Direct_read</span></tt> port input
 rather than the register file on a read operation. The masks permit mixing
 these bits with registered bits within the same register. Direct-read
-register bits can still be written but their contents can&#8217;t be read back.</p>
+register bits can still be written but their contents can&#8217;t be read back through the addressed port.</p>
 <p><tt class="docutils literal"><span class="pre">STROBE_BIT_MASK</span></tt> is an array of masks that establish which bits of each
-register are considered &#8220;strobe&#8221; bits. Strobe bits are self clearing
-when a &#8216;1&#8217; is written to them. There is no effect when &#8216;0&#8217; is written. They
-are used to initiate control actions from a momentary pulsed signal.</p>
+register are considered &#8220;strobe&#8221; bits. Strobe bits are used to initiate control actions from a momentary pulsed signal. They are self clearing when a &#8216;1&#8217; is written to them. The &#8216;1&#8217; bit is present for only one clock cycle. There is no effect when &#8216;0&#8217; is written.</p>
 <p>The <tt class="docutils literal"><span class="pre">REGISTER_INPUTS</span></tt> generic provides optional registration of the
 inputs on the external control port.</p>
 <div class="section" id="synthesis-note">
@@ -103,9 +101,9 @@ care should be taken when using this component in high speed designs.</p>
    <span class="mi">3</span>      <span class="o">=&gt;</span> <span class="mh">X&quot;00FF&quot;</span>
  <span class="p">);</span>
 
-<span class="k">signal</span> <span class="n">reg_sel</span> <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">bit_size</span><span class="p">(</span><span class="n">NUM_REGS</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
-<span class="k">signal</span> <span class="n">we</span>      <span class="o">:</span> <span class="kt">std_ulogic</span><span class="p">;</span>
-<span class="k">signal</span> <span class="n">wr_data</span><span class="p">,</span> <span class="n">rd_data</span> <span class="o">:</span> <span class="n">reg_word</span><span class="p">;</span>
+<span class="k">signal</span> <span class="n">reg_sel</span>     <span class="o">:</span> <span class="n">unsigned</span><span class="p">(</span><span class="n">bit_size</span><span class="p">(</span><span class="n">NUM_REGS</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">we</span>          <span class="o">:</span> <span class="kt">std_ulogic</span><span class="p">;</span>
+<span class="k">signal</span> <span class="n">wr_data</span><span class="p">,</span> <span class="n">rd_data</span>       <span class="o">:</span> <span class="n">reg_word</span><span class="p">;</span>
 <span class="k">signal</span> <span class="n">registers</span><span class="p">,</span> <span class="n">direct_read</span> <span class="o">:</span> <span class="n">my_reg_array</span><span class="p">;</span>
 <span class="k">signal</span> <span class="n">reg_written</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="n">my_reg_array</span><span class="na">&#39;range</span><span class="p">);</span>
 <span class="p">...</span>
@@ -142,29 +140,74 @@ care should be taken when using this component in high speed designs.</p>
 <span class="n">direct_read</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<span class="target" id="package-reg_file_pkg"></span></div>
+</div>
+<div class="section" id="vhdl-2008-example">
+<h3>VHDL-2008 example<a class="headerlink" href="#vhdl-2008-example" title="Permalink to this headline">¶</a></h3>
+<p>The VHDL-2008 version uses unconstrained arrays-of-arrays for the <tt class="docutils literal"><span class="pre">Registers</span></tt> and <tt class="docutils literal"><span class="pre">Direct_read</span></tt> signals. This permits you to use any word size without needing to modify the source of the register file. It is best to create subtypes to define the register word and array of words.</p>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="k">library</span> <span class="nn">extras_2008</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras_2008.reg_file_pkg.all</span><span class="p">;</span>
+<span class="k">library</span> <span class="nn">extras</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.sizing.bit_size</span><span class="p">;</span>
+
+<span class="c1">-- Create a register file with 12-bit registers</span>
+<span class="k">constant</span> <span class="n">NUM_REGS</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="k">subtype</span> <span class="n">my_reg_word</span> <span class="k">is</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="mi">11</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">subtype</span> <span class="n">my_reg_array</span> <span class="k">is</span> <span class="n">reg_array</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="n">NUM_REGS</span><span class="o">-</span><span class="mi">1</span><span class="p">)(</span><span class="n">my_reg_word</span><span class="na">&#39;range</span><span class="p">);</span>
+
+<span class="p">...</span>
+
+<span class="k">signal</span> <span class="n">registers</span><span class="p">,</span> <span class="n">direct_read</span> <span class="o">:</span> <span class="n">my_reg_array</span><span class="p">;</span>
+<span class="k">signal</span> <span class="n">reg_written</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span><span class="p">(</span><span class="n">my_reg_array</span><span class="na">&#39;range</span><span class="p">);</span>
+
+<span class="p">...</span>
+
+<span class="n">rf</span> <span class="o">:</span> <span class="n">reg_file</span>
+  <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">DIRECT_READ_BIT_MASK</span> <span class="o">=&gt;</span> <span class="n">DIRECT_READ_BIT_MASK</span><span class="p">,</span>
+    <span class="n">STROBE_BIT_MASK</span>      <span class="o">=&gt;</span> <span class="n">STROBE_BIT_MASK</span>
+  <span class="p">)</span>
+  <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">Clock</span> <span class="o">=&gt;</span> <span class="n">clock</span><span class="p">,</span>
+    <span class="n">Reset</span> <span class="o">=&gt;</span> <span class="n">reset</span><span class="p">,</span>
+
+    <span class="n">Clear</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span> <span class="c1">-- No need to clear the registers</span>
+
+    <span class="n">Reg_sel</span> <span class="o">=&gt;</span> <span class="n">reg_sel</span><span class="p">,</span>
+    <span class="n">We</span>      <span class="o">=&gt;</span> <span class="n">we</span><span class="p">,</span>
+    <span class="n">Wr_data</span> <span class="o">=&gt;</span> <span class="n">wr_data</span><span class="p">,</span>
+    <span class="n">Rd_data</span> <span class="o">=&gt;</span> <span class="n">rd_data</span><span class="p">,</span>
+
+    <span class="n">Registers</span>   <span class="o">=&gt;</span> <span class="n">registers</span><span class="p">,</span>
+    <span class="n">Direct_Read</span> <span class="o">=&gt;</span> <span class="n">direct_read</span><span class="p">,</span>
+    <span class="n">Reg_written</span> <span class="o">=&gt;</span> <span class="n">reg_written</span>
+  <span class="p">);</span>
+
+<span class="p">...</span>
+</pre></div>
+</div>
+<span class="target" id="package-extras.reg_file_pkg"></span></div>
 </div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
-<dt id="reg_file_pkg.reg_array">
-<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_array</tt><a class="headerlink" href="#reg_file_pkg.reg_array" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.reg_file_pkg.reg_array">
+<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_array</tt><a class="headerlink" href="#extras.reg_file_pkg.reg_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array of register words.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="subtypes">
 <h2>Subtypes<a class="headerlink" href="#subtypes" title="Permalink to this headline">¶</a></h2>
 <dl class="subtype">
-<dt id="reg_file_pkg.reg_word">
-<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_word</tt><a class="headerlink" href="#reg_file_pkg.reg_word" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="extras.reg_file_pkg.reg_word">
+<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_word</tt><a class="headerlink" href="#extras.reg_file_pkg.reg_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register word vector. Modify this to use different word sizes.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
 <h3>reg_file<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-0e715aeb151c2b5a97a18d94fb3a0efa85a6d339.svg" type="image/svg+xml">
+<object data="../../_images/symbol-reg_file_pkg-reg_file.svg" type="image/svg+xml">
             <p class="warning">component reg_file is
 generic (
   RESET_ACTIVE_LEVEL : std_ulogic;
@@ -193,8 +236,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="reg_file_pkg.reg_file">
-<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_file</tt><a class="headerlink" href="#reg_file_pkg.reg_file" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.reg_file_pkg.reg_file">
+<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_file</tt><a class="headerlink" href="#extras.reg_file_pkg.reg_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flexible register file with support for strobed outputs.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -228,6 +271,80 @@ end component;</p></object>
 
 </div>
 </div>
+<div class="section" id="vhdl-2008-variant">
+<h2>VHDL-2008 variant<a class="headerlink" href="#vhdl-2008-variant" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="package-extras_2008.reg_file_pkg"></span></div>
+<div class="section" id="id2">
+<h2>Components<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>reg_file<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-reg_file_pkg-reg_file.svg" type="image/svg+xml">
+            <p class="warning">component reg_file is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic;
+  DIRECT_READ_BIT_MASK : reg_array;
+  STROBE_BIT_MASK : reg_array;
+  REGISTER_INPUTS : boolean
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Clear : in std_ulogic;
+  --# {{data|Addressed port}}
+  Reg_sel : in unsigned;
+  We : in std_ulogic;
+  Wr_data : in reg_word;
+  Rd_data : out reg_word;
+  --# {{Registers}}
+  Registers : out reg_array;
+  Direct_read : in reg_array;
+  Reg_written : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras_2008.reg_file_pkg.reg_file">
+<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_file</tt><a class="headerlink" href="#extras_2008.reg_file_pkg.reg_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flexible register file with support for strobed outputs. This variant
+uses VHDL-2008 syntax to define the reg_array type as an unconstrained
+array-of-arrays. Any register width can be instantiated without needing
+to modify the library.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>DIRECT_READ_BIT_MASK</strong> (<em>reg_array</em>) &#8211; Masks indicating which register bits are directly read</li>
+<li><strong>STROBE_BIT_MASK</strong> (<em>reg_array</em>) &#8211; Masks indicating which register bits clear themselves after a write of &#8216;1&#8217;</li>
+<li><strong>REGISTER_INPUTS</strong> (<em>boolean</em>) &#8211; Register the input ports when true</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Clear</strong> (<em>in std_ulogic</em>) &#8211; Initialize all registers to &#8216;0&#8217;</li>
+<li><strong>Reg_sel</strong> (<em>in unsigned</em>) &#8211; Register address for write and read</li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; Write to selected register</li>
+<li><strong>Wr_data</strong> (<em>in reg_word</em>) &#8211; Write port</li>
+<li><strong>Rd_data</strong> (<em>out reg_word</em>) &#8211; Internal file contents</li>
+<li><strong>Registers</strong> (<em>out reg_array</em>) &#8211; Register file contents</li>
+<li><strong>Direct_read</strong> (<em>in reg_array</em>) &#8211; Read-only signals direct from external logic</li>
+<li><strong>Reg_written</strong> (<em>out std_ulogic_vector</em>) &#8211; Status flags indicating when each register is written</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
 </div>
 
 
@@ -239,7 +356,7 @@ end component;</p></object>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -247,10 +364,12 @@ end component;</p></object>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
@@ -269,12 +388,18 @@ end component;</p></object>
 <li><a class="reference internal" href="#description">Description</a><ul>
 <li><a class="reference internal" href="#synthesis-note">Synthesis note</a></li>
 <li><a class="reference internal" href="#example-usage">Example usage</a></li>
+<li><a class="reference internal" href="#vhdl-2008-example">VHDL-2008 example</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#types">Types</a></li>
 <li><a class="reference internal" href="#subtypes">Subtypes</a></li>
 <li><a class="reference internal" href="#components">Components</a><ul>
 <li><a class="reference internal" href="#id1">reg_file</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#vhdl-2008-variant">VHDL-2008 variant</a></li>
+<li><a class="reference internal" href="#id2">Components</a><ul>
+<li><a class="reference internal" href="#id3">reg_file</a></li>
 </ul>
 </li>
 </ul>

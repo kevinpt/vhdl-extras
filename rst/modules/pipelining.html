@@ -43,9 +43,10 @@
   <div class="section" id="pipelining">
 <h1>pipelining<a class="headerlink" href="#pipelining" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/pipelining.vhdl">extras/pipelining.vhdl</a></p>
+<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/pipelining_2008.vhdl">extras_2008/pipelining_2008.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>None</p>
+<p><a class="reference internal" href="common_2008.html"><em>common_2008</em></a> (for pipelining_2008)</p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -55,6 +56,7 @@ components can be placed after a section of combinational logic. With
 retiming activated in the synesis tool, the flip-flops will be distributed
 through the combinational logic to balance delays. The number of pipeline
 stages is controlled with the <tt class="docutils literal"><span class="pre">PIPELINE_STAGES</span></tt> generic.</p>
+<p>There are also components for general purpose delay lines with a fixed or variable number of stages. The VHDL-2008 package has a special <a class="reference internal" href="#extras_2008.pipelining.tapped_delay_line" title="extras_2008.pipelining.tapped_delay_line"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">tapped_delay_line</span></tt></a> component that presents all stage outputs at once.</p>
 <div class="section" id="retiming">
 <h3>Retiming<a class="headerlink" href="#retiming" title="Permalink to this headline">¶</a></h3>
 <p>Here are notes on how to activate retiming in various synthesis tools:</p>
@@ -78,13 +80,13 @@ then set the strategy to &#8220;Performance without IOB packing&#8221;.</dd>
 <dt>Synopsys DC Ultra</dt>
 <dd>Same as DC or use set_optimize_registers in conjunction with compile_ultra -retime</dd>
 </dl>
-<span class="target" id="package-pipelining"></span></div>
+<span class="target" id="package-extras.pipelining"></span></div>
 </div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="pipeline-ul">
 <h3>pipeline_ul<a class="headerlink" href="#pipeline-ul" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-26638352eeace3711717c7c839926e115ab17c82.svg" type="image/svg+xml">
+<object data="../../_images/symbol-pipelining-pipeline_ul.svg" type="image/svg+xml">
             <p class="warning">component pipeline_ul is
 generic (
   PIPELINE_STAGES : positive;
@@ -104,8 +106,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="pipelining.pipeline_ul">
-<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_ul</tt><a class="headerlink" href="#pipelining.pipeline_ul" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.pipelining.pipeline_ul">
+<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_ul</tt><a class="headerlink" href="#extras.pipelining.pipeline_ul" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pipeline registers for std_ulogic and std_logic.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -133,7 +135,7 @@ end component;</p></object>
 </div>
 <div class="section" id="pipeline-sulv">
 <h3>pipeline_sulv<a class="headerlink" href="#pipeline-sulv" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-12d37160e811886e634da5782b12aaba66b996d4.svg" type="image/svg+xml">
+<object data="../../_images/symbol-pipelining-pipeline_sulv.svg" type="image/svg+xml">
             <p class="warning">component pipeline_sulv is
 generic (
   PIPELINE_STAGES : positive;
@@ -153,8 +155,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="pipelining.pipeline_sulv">
-<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_sulv</tt><a class="headerlink" href="#pipelining.pipeline_sulv" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.pipelining.pipeline_sulv">
+<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_sulv</tt><a class="headerlink" href="#extras.pipelining.pipeline_sulv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pipeline registers for std_ulogic_vector.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -182,7 +184,7 @@ end component;</p></object>
 </div>
 <div class="section" id="pipeline-slv">
 <h3>pipeline_slv<a class="headerlink" href="#pipeline-slv" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-58efb00f87daf62dec92a9c895a8595a660cc235.svg" type="image/svg+xml">
+<object data="../../_images/symbol-pipelining-pipeline_slv.svg" type="image/svg+xml">
             <p class="warning">component pipeline_slv is
 generic (
   PIPELINE_STAGES : positive;
@@ -202,8 +204,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="pipelining.pipeline_slv">
-<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_slv</tt><a class="headerlink" href="#pipelining.pipeline_slv" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.pipelining.pipeline_slv">
+<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_slv</tt><a class="headerlink" href="#extras.pipelining.pipeline_slv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pipeline registers for std_logic_vector.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -231,7 +233,7 @@ end component;</p></object>
 </div>
 <div class="section" id="pipeline-u">
 <h3>pipeline_u<a class="headerlink" href="#pipeline-u" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-26352db54f8cfe55159ab443b6f492378f99a1c3.svg" type="image/svg+xml">
+<object data="../../_images/symbol-pipelining-pipeline_u.svg" type="image/svg+xml">
             <p class="warning">component pipeline_u is
 generic (
   PIPELINE_STAGES : positive;
@@ -251,8 +253,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="pipelining.pipeline_u">
-<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_u</tt><a class="headerlink" href="#pipelining.pipeline_u" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.pipelining.pipeline_u">
+<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_u</tt><a class="headerlink" href="#extras.pipelining.pipeline_u" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pipeline registers for unsigned.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -267,7 +269,7 @@ end component;</p></object>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
 <li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; </li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; None</li>
 <li><strong>Sig_in</strong> (<em>in unsigned</em>) &#8211; Signal from block to be pipelined</li>
 <li><strong>Sig_out</strong> (<em>out unsigned</em>) &#8211; Pipelined result</li>
 </ul>
@@ -280,7 +282,7 @@ end component;</p></object>
 </div>
 <div class="section" id="pipeline-s">
 <h3>pipeline_s<a class="headerlink" href="#pipeline-s" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-f5033ef8a36152c87f3e926e41c954e0bca6740f.svg" type="image/svg+xml">
+<object data="../../_images/symbol-pipelining-pipeline_s.svg" type="image/svg+xml">
             <p class="warning">component pipeline_s is
 generic (
   PIPELINE_STAGES : positive;
@@ -300,8 +302,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="pipelining.pipeline_s">
-<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_s</tt><a class="headerlink" href="#pipelining.pipeline_s" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.pipelining.pipeline_s">
+<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_s</tt><a class="headerlink" href="#extras.pipelining.pipeline_s" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pipeline registers for signed.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -327,6 +329,366 @@ end component;</p></object>
 </dd></dl>
 
 </div>
+<div class="section" id="fixed-delay-line">
+<h3>fixed_delay_line<a class="headerlink" href="#fixed-delay-line" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-pipelining-fixed_delay_line.svg" type="image/svg+xml">
+            <p class="warning">component fixed_delay_line is
+generic (
+  STAGES : natural
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  --# {{control|}}
+  Enable : in std_ulogic;
+  --# {{data|}}
+  Data_in : in std_ulogic;
+  Data_out : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.pipelining.fixed_delay_line">
+<tt class="descclassname">pipelining.</tt><tt class="descname">fixed_delay_line</tt><a class="headerlink" href="#extras.pipelining.fixed_delay_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fixed delay line for std_ulogic data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>STAGES</strong> (<em>natural</em>) &#8211; Number of delay stages (0 for short circuit)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
+<li><strong>Data_in</strong> (<em>in std_ulogic</em>) &#8211; Input data</li>
+<li><strong>Data_out</strong> (<em>out std_ulogic</em>) &#8211; Delayed output data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fixed-delay-line-sulv">
+<h3>fixed_delay_line_sulv<a class="headerlink" href="#fixed-delay-line-sulv" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-pipelining-fixed_delay_line_sulv.svg" type="image/svg+xml">
+            <p class="warning">component fixed_delay_line_sulv is
+generic (
+  STAGES : natural
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  --# {{control|}}
+  Enable : in std_ulogic;
+  --# {{data|}}
+  Data_in : in std_ulogic_vector;
+  Data_out : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.pipelining.fixed_delay_line_sulv">
+<tt class="descclassname">pipelining.</tt><tt class="descname">fixed_delay_line_sulv</tt><a class="headerlink" href="#extras.pipelining.fixed_delay_line_sulv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fixed delay line for std_ulogic_vector data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>STAGES</strong> (<em>natural</em>) &#8211; Number of delay stages (0 for short circuit)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
+<li><strong>Data_in</strong> (<em>in std_ulogic_vector</em>) &#8211; Input data</li>
+<li><strong>Data_out</strong> (<em>out std_ulogic_vector</em>) &#8211; Delayed output data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fixed-delay-line-signed">
+<h3>fixed_delay_line_signed<a class="headerlink" href="#fixed-delay-line-signed" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-pipelining-fixed_delay_line_signed.svg" type="image/svg+xml">
+            <p class="warning">component fixed_delay_line_signed is
+generic (
+  STAGES : natural
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  --# {{control|}}
+  Enable : in std_ulogic;
+  --# {{data|}}
+  Data_in : in signed;
+  Data_out : out signed
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.pipelining.fixed_delay_line_signed">
+<tt class="descclassname">pipelining.</tt><tt class="descname">fixed_delay_line_signed</tt><a class="headerlink" href="#extras.pipelining.fixed_delay_line_signed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fixed delay line for signed data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>STAGES</strong> (<em>natural</em>) &#8211; Number of delay stages (0 for short circuit)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
+<li><strong>Data_in</strong> (<em>in signed</em>) &#8211; Input data</li>
+<li><strong>Data_out</strong> (<em>out signed</em>) &#8211; Delayed output data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fixed-delay-line-unsigned">
+<h3>fixed_delay_line_unsigned<a class="headerlink" href="#fixed-delay-line-unsigned" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-pipelining-fixed_delay_line_unsigned.svg" type="image/svg+xml">
+            <p class="warning">component fixed_delay_line_unsigned is
+generic (
+  STAGES : natural
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  --# {{control|}}
+  Enable : in std_ulogic;
+  --# {{data|}}
+  Data_in : in unsigned;
+  Data_out : out unsigned
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.pipelining.fixed_delay_line_unsigned">
+<tt class="descclassname">pipelining.</tt><tt class="descname">fixed_delay_line_unsigned</tt><a class="headerlink" href="#extras.pipelining.fixed_delay_line_unsigned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fixed delay line for unsigned data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>STAGES</strong> (<em>natural</em>) &#8211; Number of delay stages (0 for short circuit)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
+<li><strong>Data_in</strong> (<em>in unsigned</em>) &#8211; Input data</li>
+<li><strong>Data_out</strong> (<em>out unsigned</em>) &#8211; Delayed output data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="dynamic-delay-line-sulv">
+<h3>dynamic_delay_line_sulv<a class="headerlink" href="#dynamic-delay-line-sulv" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-pipelining-dynamic_delay_line_sulv.svg" type="image/svg+xml">
+            <p class="warning">component dynamic_delay_line_sulv is
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  --# {{control|}}
+  Enable : in std_ulogic;
+  Address : in unsigned;
+  --# {{data|}}
+  Data_in : in std_ulogic_vector;
+  Data_out : out std_ulogic_vector
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.pipelining.dynamic_delay_line_sulv">
+<tt class="descclassname">pipelining.</tt><tt class="descname">dynamic_delay_line_sulv</tt><a class="headerlink" href="#extras.pipelining.dynamic_delay_line_sulv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fixed delay line for std_ulogic_vector data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
+<li><strong>Address</strong> (<em>in unsigned</em>) &#8211; Selected delay stage</li>
+<li><strong>Data_in</strong> (<em>in std_ulogic_vector</em>) &#8211; Input data</li>
+<li><strong>Data_out</strong> (<em>out std_ulogic_vector</em>) &#8211; Delayed output data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="dynamic-delay-line-signed">
+<h3>dynamic_delay_line_signed<a class="headerlink" href="#dynamic-delay-line-signed" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-pipelining-dynamic_delay_line_signed.svg" type="image/svg+xml">
+            <p class="warning">component dynamic_delay_line_signed is
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  --# {{control|}}
+  Enable : in std_ulogic;
+  Address : in unsigned;
+  --# {{data|}}
+  Data_in : in signed;
+  Data_out : out signed
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.pipelining.dynamic_delay_line_signed">
+<tt class="descclassname">pipelining.</tt><tt class="descname">dynamic_delay_line_signed</tt><a class="headerlink" href="#extras.pipelining.dynamic_delay_line_signed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fixed delay line for signed data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
+<li><strong>Address</strong> (<em>in unsigned</em>) &#8211; Selected delay stage</li>
+<li><strong>Data_in</strong> (<em>in signed</em>) &#8211; Input data</li>
+<li><strong>Data_out</strong> (<em>out signed</em>) &#8211; Delayed output data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="dynamic-delay-line-unsigned">
+<h3>dynamic_delay_line_unsigned<a class="headerlink" href="#dynamic-delay-line-unsigned" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-pipelining-dynamic_delay_line_unsigned.svg" type="image/svg+xml">
+            <p class="warning">component dynamic_delay_line_unsigned is
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  --# {{control|}}
+  Enable : in std_ulogic;
+  Address : in unsigned;
+  --# {{data|}}
+  Data_in : in unsigned;
+  Data_out : out unsigned
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.pipelining.dynamic_delay_line_unsigned">
+<tt class="descclassname">pipelining.</tt><tt class="descname">dynamic_delay_line_unsigned</tt><a class="headerlink" href="#extras.pipelining.dynamic_delay_line_unsigned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fixed delay line for unsigned data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
+<li><strong>Address</strong> (<em>in unsigned</em>) &#8211; Selected delay stage</li>
+<li><strong>Data_in</strong> (<em>in unsigned</em>) &#8211; Input data</li>
+<li><strong>Data_out</strong> (<em>out unsigned</em>) &#8211; Delayed output data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="vhdl-2008-variant">
+<h2>VHDL-2008 variant<a class="headerlink" href="#vhdl-2008-variant" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="package-extras_2008.pipelining"></span></div>
+<div class="section" id="id1">
+<h2>Components<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tapped-delay-line">
+<h3>tapped_delay_line<a class="headerlink" href="#tapped-delay-line" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-pipelining-tapped_delay_line.svg" type="image/svg+xml">
+            <p class="warning">component tapped_delay_line is
+generic (
+  RESET_ACTIVE_LEVEL : std_ulogic;
+  REGISTER_FIRST_STAGE : boolean
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Enable : in std_ulogic;
+  --# {{data|}}
+  Data : in std_ulogic_vector;
+  Taps : out sulv_array
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras_2008.pipelining.tapped_delay_line">
+<tt class="descclassname">pipelining.</tt><tt class="descname">tapped_delay_line</tt><a class="headerlink" href="#extras_2008.pipelining.tapped_delay_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vector delay line with an output for each stage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>REGISTER_FIRST_STAGE</strong> (<em>boolean</em>) &#8211; Register or pass through the first stage</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Enable delay line</li>
+<li><strong>Data</strong> (<em>in std_ulogic_vector</em>) &#8211; Input to the delay line</li>
+<li><strong>Taps</strong> (<em>out sulv_array</em>) &#8211; Taps from each stage</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 </div>
 </div>
 
@@ -339,7 +701,7 @@ end component;</p></object>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -347,10 +709,12 @@ end component;</p></object>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
@@ -376,6 +740,18 @@ end component;</p></object>
 <li><a class="reference internal" href="#pipeline-slv">pipeline_slv</a></li>
 <li><a class="reference internal" href="#pipeline-u">pipeline_u</a></li>
 <li><a class="reference internal" href="#pipeline-s">pipeline_s</a></li>
+<li><a class="reference internal" href="#fixed-delay-line">fixed_delay_line</a></li>
+<li><a class="reference internal" href="#fixed-delay-line-sulv">fixed_delay_line_sulv</a></li>
+<li><a class="reference internal" href="#fixed-delay-line-signed">fixed_delay_line_signed</a></li>
+<li><a class="reference internal" href="#fixed-delay-line-unsigned">fixed_delay_line_unsigned</a></li>
+<li><a class="reference internal" href="#dynamic-delay-line-sulv">dynamic_delay_line_sulv</a></li>
+<li><a class="reference internal" href="#dynamic-delay-line-signed">dynamic_delay_line_signed</a></li>
+<li><a class="reference internal" href="#dynamic-delay-line-unsigned">dynamic_delay_line_unsigned</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#vhdl-2008-variant">VHDL-2008 variant</a></li>
+<li><a class="reference internal" href="#id1">Components</a><ul>
+<li><a class="reference internal" href="#tapped-delay-line">tapped_delay_line</a></li>
 </ul>
 </li>
 </ul>

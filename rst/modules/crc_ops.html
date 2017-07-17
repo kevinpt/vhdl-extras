@@ -27,7 +27,7 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="ddfs" href="ddfs.html" />
-    <link rel="prev" title="characters_latin_1" href="characters_latin_1.html" />
+    <link rel="prev" title="cordic" href="cordic.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -69,8 +69,8 @@ Williams 1993. A CRC specification consists of the following parameters:</p>
 <dd>Determine bit order of final crc result</dd>
 </dl>
 </div></blockquote>
-<p>A CRC can be computed using a set of three functions <a class="reference internal" href="#crc_ops.init_crc[bit_vector return bit_vector]" title="crc_ops.init_crc[bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">init_crc()</span></tt></a>,
-<a class="reference internal" href="#crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]" title="crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">next_crc()</span></tt></a>, and <a class="reference internal" href="#crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]" title="crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">end_crc()</span></tt></a>.
+<p>A CRC can be computed using a set of three functions <a class="reference internal" href="#extras.crc_ops.init_crc[bit_vector return bit_vector]" title="extras.crc_ops.init_crc[bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">init_crc()</span></tt></a>,
+<a class="reference internal" href="#extras.crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]" title="extras.crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">next_crc()</span></tt></a>, and <a class="reference internal" href="#extras.crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]" title="extras.crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">end_crc()</span></tt></a>.
 All functions are assigned to a common variable/signal that maintans the shift
 register state between succesive calls. After initialization with <tt class="docutils literal"><span class="pre">init_crc</span></tt>, data
 is processed by repeated calls to <tt class="docutils literal"><span class="pre">next_crc</span></tt>. The width of the data vector is
@@ -80,6 +80,7 @@ all data has been passed through the CRC it is completed with a call to <tt clas
 produce the final CRC value.</p>
 <div class="section" id="example-usage">
 <h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<p>Compute CRC in a loop. This will synthesize into a combinational circuit.</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="c1">-- CRC-16-USB</span>
 <span class="k">constant</span> <span class="n">poly</span>        <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="mh">X&quot;8005&quot;</span><span class="p">;</span>
 <span class="k">constant</span> <span class="n">xor_in</span>      <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="mh">X&quot;FFFF&quot;</span><span class="p">;</span>
@@ -127,13 +128,13 @@ minimized if all of the CRC configuration parameters are constants.</p>
   <span class="p">);</span>
 </pre></div>
 </div>
-<span class="target" id="package-crc_ops"></span></div>
+<span class="target" id="package-extras.crc_ops"></span></div>
 </div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="crc">
 <h3>crc<a class="headerlink" href="#crc" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-fd97509e62e0270167596f19f96276282ef4beb4.svg" type="image/svg+xml">
+<object data="../../_images/symbol-crc_ops-crc.svg" type="image/svg+xml">
             <p class="warning">component crc is
 generic (
   RESET_ACTIVE_LEVEL : std_ulogic
@@ -159,8 +160,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="crc_ops.crc">
-<tt class="descclassname">crc_ops.</tt><tt class="descname">crc</tt><a class="headerlink" href="#crc_ops.crc" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.crc_ops.crc">
+<tt class="descclassname">crc_ops.</tt><tt class="descname">crc</tt><a class="headerlink" href="#extras.crc_ops.crc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate a CRC sequentially.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -195,9 +196,10 @@ end component;</p></object>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="crc_ops.init_crc[bit_vector return bit_vector]">
-<tt class="descclassname">crc_ops.</tt><tt class="descname">init_crc</tt> <big>(</big><em>Xor_in : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#crc_ops.init_crc[bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize CRC state.</p>
+<dt id="extras.crc_ops.init_crc[bit_vector return bit_vector]">
+<tt class="descclassname">crc_ops.</tt><tt class="descname">init_crc</tt> <big>(</big><em>Xor_in : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#extras.crc_ops.init_crc[bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Initialize CRC state.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -215,9 +217,10 @@ end component;</p></object>
 </dd></dl>
 
 <dl class="function">
-<dt id="crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]">
-<tt class="descclassname">crc_ops.</tt><tt class="descname">next_crc</tt> <big>(</big><em>Crc : bit_vector</em>; <em>Poly : bit_vector</em>; <em>Reflect_in : boolean</em>; <em>Data : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add new data to the CRC.</p>
+<dt id="extras.crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]">
+<tt class="descclassname">crc_ops.</tt><tt class="descname">next_crc</tt> <big>(</big><em>Crc : bit_vector</em>; <em>Poly : bit_vector</em>; <em>Reflect_in : boolean</em>; <em>Data : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#extras.crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Add new data to the CRC.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -238,9 +241,10 @@ end component;</p></object>
 </dd></dl>
 
 <dl class="function">
-<dt id="crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]">
-<tt class="descclassname">crc_ops.</tt><tt class="descname">end_crc</tt> <big>(</big><em>Crc : bit_vector</em>; <em>Reflect_out : boolean</em>; <em>Xor_out : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finalize the CRC.</p>
+<dt id="extras.crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]">
+<tt class="descclassname">crc_ops.</tt><tt class="descname">end_crc</tt> <big>(</big><em>Crc : bit_vector</em>; <em>Reflect_out : boolean</em>; <em>Xor_out : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#extras.crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Finalize the CRC.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -271,7 +275,7 @@ end component;</p></object>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -279,17 +283,19 @@ end component;</p></object>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="characters_latin_1.html" title="previous chapter">characters_latin_1</a></li>
+      <li>Previous: <a href="cordic.html" title="previous chapter">cordic</a></li>
       <li>Next: <a href="ddfs.html" title="next chapter">ddfs</a></li>
   </ul></li>
 </ul>

@@ -15,8 +15,8 @@ Description
 This package provides a number of synchronizer components for managing
 data transmission between clock domains.
 
-If you need to synchronize a vector of bits together you should use the :vhdl:entity:`~synchronizing.handshake_synchronizer` component. If you generate an array of
-:vhdl:entity:`~synchronizing.bit_synchronizer` components instead, there is a risk that some bits will take longer than others and invalid values will appear at the outputs. This is particularly problematic if the vector represents a numeric value. :vhdl:entity:`~synchronizing.bit_synchronizer` can be used safely in an array only if you know the input signal comes from an isochronous domain (same period, different phase).
+If you need to synchronize a vector of bits together you should use the :vhdl:entity:`~extras.synchronizing.handshake_synchronizer` component. If you generate an array of
+:vhdl:entity:`~extras.synchronizing.bit_synchronizer` components instead, there is a risk that some bits will take longer than others and invalid values will appear at the outputs. This is particularly problematic if the vector represents a numeric value. :vhdl:entity:`~extras.synchronizing.bit_synchronizer` can be used safely in an array only if you know the input signal comes from an isochronous domain (same period, different phase).
 
 Synthesis
 ~~~~~~~~~

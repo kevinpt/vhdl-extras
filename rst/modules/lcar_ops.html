@@ -27,7 +27,7 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
     <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
     <link rel="next" title="lfsr_ops" href="lfsr_ops.html" />
-    <link rel="prev" title="hamming_edac" href="hamming_edac.html" />
+    <link rel="prev" title="interrupt_ctl" href="interrupt_ctl.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -52,7 +52,7 @@
 <p>This package provides a component that implements the <a class="reference external" href="https://en.wikipedia.org/wiki/Elementary_cellular_automaton">Wolfram Linear
 Cellular Automata Register (LCAR)</a>
 as described in &#8220;Statistical Mechanics
-of Cellular Automata&#8221;, Wolfram 1983. The LCAR implemented in <a class="reference internal" href="#lcar_ops.wolfram_lcar" title="lcar_ops.wolfram_lcar"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">wolfram_lcar</span></tt></a>
+of Cellular Automata&#8221;, Wolfram 1983. The LCAR implemented in <a class="reference internal" href="#extras.lcar_ops.wolfram_lcar" title="extras.lcar_ops.wolfram_lcar"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">wolfram_lcar</span></tt></a>
 uses rules 90 and 150 for each cell as defined by an input <tt class="docutils literal"><span class="pre">Rule_map</span></tt> where
 a &#8216;0&#8217; indicates rule 90 and &#8216;1&#8217; indicates rule 150 for the corresponding
 cell in the State register.</p>
@@ -96,12 +96,12 @@ maximal length sequences.</p>
   <span class="p">);</span>
 </pre></div>
 </div>
-<span class="target" id="package-lcar_ops"></span></div>
+<span class="target" id="package-extras.lcar_ops"></span></div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="wolfram-lcar">
 <h3>wolfram_lcar<a class="headerlink" href="#wolfram-lcar" title="Permalink to this headline">¶</a></h3>
-<object data="../../_images/symbol-7b0642cc02409458737fee6c2e78734525d28b3c.svg" type="image/svg+xml">
+<object data="../../_images/symbol-lcar_ops-wolfram_lcar.svg" type="image/svg+xml">
             <p class="warning">component wolfram_lcar is
 generic (
   RESET_ACTIVE_LEVEL : std_ulogic
@@ -123,8 +123,8 @@ end component;</p></object>
 <div class="line"><br /></div>
 </div>
 <dl class="entity">
-<dt id="lcar_ops.wolfram_lcar">
-<tt class="descclassname">lcar_ops.</tt><tt class="descname">wolfram_lcar</tt><a class="headerlink" href="#lcar_ops.wolfram_lcar" title="Permalink to this definition">¶</a></dt>
+<dt id="extras.lcar_ops.wolfram_lcar">
+<tt class="descclassname">lcar_ops.</tt><tt class="descname">wolfram_lcar</tt><a class="headerlink" href="#extras.lcar_ops.wolfram_lcar" title="Permalink to this definition">¶</a></dt>
 <dd><p>General purpose implementation of a rule 150/90 LCAR.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -155,17 +155,18 @@ end component;</p></object>
 <div class="section" id="subprograms">
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="lcar_ops.next_wolfram_lcar[None,std_ulogic_vector,None,std_ulogic return std_ulogic_vector]">
-<tt class="descclassname">lcar_ops.</tt><tt class="descname">next_wolfram_lcar</tt> <big>(</big><em>State : None</em>; <em>Rule_map : std_ulogic_vector</em>; <em>Left_in : None</em>; <em>Right_in : std_ulogic := '0'</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#lcar_ops.next_wolfram_lcar[None,std_ulogic_vector,None,std_ulogic return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine the next state of the LCAR defined by the Rule_map.</p>
+<dt id="extras.lcar_ops.next_wolfram_lcar[std_ulogic_vector,std_ulogic_vector,std_ulogic,std_ulogic return std_ulogic_vector]">
+<tt class="descclassname">lcar_ops.</tt><tt class="descname">next_wolfram_lcar</tt> <big>(</big><em>State : std_ulogic_vector</em>; <em>Rule_map : std_ulogic_vector</em>; <em>Left_in : std_ulogic := '0'</em>; <em>Right_in : std_ulogic := '0'</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.lcar_ops.next_wolfram_lcar[std_ulogic_vector,std_ulogic_vector,std_ulogic,std_ulogic return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Determine the next state of the LCAR defined by the Rule_map.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>State</strong> (<em>None</em>) &#8211; Current state of the LCAR cells</li>
+<li><strong>State</strong> (<em>std_ulogic_vector</em>) &#8211; Current state of the LCAR cells</li>
 <li><strong>Rule_map</strong> (<em>std_ulogic_vector</em>) &#8211; Rules for each cell; &#8216;1&#8217; -&gt; 150, &#8216;0&#8217; -&gt; 90</li>
-<li><strong>Left_in</strong> (<em>None</em>) &#8211; Left side input to LCAR</li>
+<li><strong>Left_in</strong> (<em>std_ulogic</em>) &#8211; Left side input to LCAR</li>
 <li><strong>Right_in</strong> (<em>std_ulogic</em>) &#8211; Right side input to LCAR</li>
 </ul>
 </td>
@@ -178,9 +179,10 @@ end component;</p></object>
 </dd></dl>
 
 <dl class="function">
-<dt id="lcar_ops.lcar_rule[positive return std_ulogic_vector]">
-<tt class="descclassname">lcar_ops.</tt><tt class="descname">lcar_rule</tt> <big>(</big><em>Size : positive</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#lcar_ops.lcar_rule[positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
-<dd><p>Lookup a predefined rule set from the table.</p>
+<dt id="extras.lcar_ops.lcar_rule[positive return std_ulogic_vector]">
+<tt class="descclassname">lcar_ops.</tt><tt class="descname">lcar_rule</tt> <big>(</big><em>Size : positive</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.lcar_ops.lcar_rule[positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Lookup a predefined rule set from the table.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -209,7 +211,7 @@ end component;</p></object>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
 
 
 
@@ -217,17 +219,19 @@ end component;</p></object>
 
 
 
+
 <p>
-<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large"
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
   allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
 </p>
+
 
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="hamming_edac.html" title="previous chapter">hamming_edac</a></li>
+      <li>Previous: <a href="interrupt_ctl.html" title="previous chapter">interrupt_ctl</a></li>
       <li>Next: <a href="lfsr_ops.html" title="next chapter">lfsr_ops</a></li>
   </ul></li>
 </ul>
