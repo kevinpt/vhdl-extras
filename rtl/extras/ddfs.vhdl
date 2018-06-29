@@ -189,7 +189,6 @@ package ddfs_pkg is
 
   --## Compute the factor used to generate dynamic increment values.
   --# Args:
-  --#  The result is a fixed point integer.
   --#  Sys_freq:      Clock frequency of the system
   --#  Size:          Size of the DDFS counter
   --#  Fraction_bits: Number of fraction bits
@@ -271,8 +270,8 @@ package ddfs_pkg is
       
       --# {{control|}}
       Enable     : in std_ulogic := '1'; --# Enable the DDFS counter
-      Load_phase : in std_ulogic;        --# Load a new phase angle
-      New_phase  : in unsigned;          --# Phase angle to load
+      Load_phase : in std_ulogic := '0'; --# Load a new phase angle
+      New_phase  : in unsigned   := "0"; --# Phase angle to load
 
       Increment : in unsigned;      --# Value controlling the synthesized frequency
 
@@ -297,8 +296,8 @@ package ddfs_pkg is
 
       --# {{control|}}
       Enable     : in std_ulogic := '1'; --# Enable the DDFS counter
-      Load_phase : in std_ulogic;        --# Load a new phase angle
-      New_phase  : in unsigned;          --# Phase angle to load
+      Load_phase : in std_ulogic := '0'; --# Load a new phase angle
+      New_phase  : in unsigned   := "0"; --# Phase angle to load
 
       Increment  : in unsigned;          --# Value controlling the synthesized frequency
 
@@ -507,7 +506,7 @@ package body ddfs_pkg is
     if size <= p'length then
       -- Slice off lower bits
       result := p(p'high downto p'high-(size-1));
-    else
+    else -- Result is larger
       -- Left justify phase in result
       result(result'high downto result'high - p'length + 1) := p;
     end if;
@@ -545,8 +544,8 @@ entity ddfs is
     Reset : in std_ulogic;
     
     Enable     : in std_ulogic := '1';
-    Load_phase : in std_ulogic;
-    New_phase  : in unsigned;
+      Load_phase : in std_ulogic := '0';
+      New_phase  : in unsigned   := "0";
 
     Increment : in unsigned;      -- Value controlling the synthesized frequency
 
@@ -624,8 +623,8 @@ entity ddfs_pipelined is
 
     --# {{control|}}
     Enable     : in std_ulogic := '1'; --# Enable the DDFS counter
-    Load_phase : in std_ulogic;        --# Load a new phase angle
-    New_phase  : in unsigned;          --# Phase angle to load
+    Load_phase : in std_ulogic := '0'; --# Load a new phase angle
+    New_phase  : in unsigned   := "0"; --# Phase angle to load
 
     Increment  : in unsigned;          --# Value controlling the synthesized frequency
 
