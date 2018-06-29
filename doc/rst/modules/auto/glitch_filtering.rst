@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/glitch_filtering.vhdl on 2017-07-03 00:37:38.400889
+.. Generated from ../rtl/extras/glitch_filtering.vhdl on 2017-08-02 00:26:37.888949
 .. vhdl:package:: extras.glitch_filtering
 
 
@@ -10,6 +10,7 @@ glitch_filter
 ~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: glitch_filtering-glitch_filter
 
   component glitch_filter is
   generic (
@@ -52,6 +53,7 @@ dynamic_glitch_filter
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: glitch_filtering-dynamic_glitch_filter
 
   component dynamic_glitch_filter is
   generic (
@@ -95,6 +97,7 @@ array_glitch_filter
 ~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: glitch_filtering-array_glitch_filter
 
   component array_glitch_filter is
   generic (
@@ -137,6 +140,7 @@ dynamic_array_glitch_filter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: glitch_filtering-dynamic_array_glitch_filter
 
   component dynamic_array_glitch_filter is
   generic (

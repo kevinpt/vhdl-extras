@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/lfsr_ops.vhdl on 2017-07-03 00:37:38.655736
+.. Generated from ../rtl/extras/lfsr_ops.vhdl on 2017-08-02 00:26:38.181267
 .. vhdl:package:: extras.lfsr_ops
 
 
@@ -23,6 +23,7 @@ galois_lfsr
 ~~~~~~~~~~~
 
 .. symbolator::
+  :name: lfsr_ops-galois_lfsr
 
   component galois_lfsr is
   generic (
@@ -72,6 +73,7 @@ fibonacci_lfsr
 ~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: lfsr_ops-fibonacci_lfsr
 
   component fibonacci_lfsr is
   generic (

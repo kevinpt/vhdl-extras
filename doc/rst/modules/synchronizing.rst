@@ -13,7 +13,14 @@ Description
 -----------
 
 This package provides a number of synchronizer components for managing
-data transmission between clock domains.
+data transmission between clock domains. There are three entities provided:
+
+* :vhdl:entity:`~extras.synchronizing.bit_synchronizer` -- Suitable for synchronizing individual bit-wide signals
+* :vhdl:entity:`~extras.synchronizing.reset_synchronizer` -- A special synchronizer for generating asyncronous resets that are synchronously released
+* :vhdl:entity:`~extras.synchronizing.handshake_synchronizer` -- A synchronizer using the four-phase protocol to transfer vectors between domains
+
+``bit_synchronizer`` and ``reset_synchronizer`` have a configurable number of stages with a default of 2.
+
 
 If you need to synchronize a vector of bits together you should use the :vhdl:entity:`~extras.synchronizing.handshake_synchronizer` component. If you generate an array of
 :vhdl:entity:`~extras.synchronizing.bit_synchronizer` components instead, there is a risk that some bits will take longer than others and invalid values will appear at the outputs. This is particularly problematic if the vector represents a numeric value. :vhdl:entity:`~extras.synchronizing.bit_synchronizer` can be used safely in an array only if you know the input signal comes from an isochronous domain (same period, different phase).

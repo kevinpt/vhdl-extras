@@ -16,6 +16,7 @@ wide array of applications.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-pipeline_ul
 
   component pipeline_ul is
   generic (
@@ -60,6 +61,7 @@ A set of functions for computing integer logarithms and for determining the size
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: synchronising-handshake_synchronizer
 
   component handshake_synchronizer is
   generic (
@@ -175,6 +177,7 @@ Packages for performing error detection and correction.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: crc_ops-crc
 
   component crc is
   generic (
@@ -289,6 +292,7 @@ Single Error Correction, Double Error Detection implemented with extended Hammin
 
 
 .. symbolator::
+  :name: secded_codec-secded_codec
 
   component secded_codec is
   generic (
@@ -331,6 +335,7 @@ Packages for encoding data into alternate forms.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: bcd_conversion-binary_to_bcd
 
   component binary_to_bcd is
   generic (
@@ -375,6 +380,7 @@ result must be multiplied by 4 to get the length of a packed BCD array.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: gray_code-gray_counter
 
   component gray_counter is
   generic (
@@ -453,6 +459,7 @@ Packages with internal memories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: fifos-fifo
 
   component fifo is
   generic (
@@ -499,6 +506,7 @@ status flags. The FIFOs have the following differences:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: memory-dual_port_ram
 
   component dual_port_ram is
   generic (
@@ -529,6 +537,7 @@ This package provides general purpose components for inferred dual-ported RAM an
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: reg_file-reg_file
 
   component reg_file is
   generic (
@@ -572,6 +581,7 @@ structures for creating randomized output.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: lcar_ops-wolfram_lcar
 
   component wolfram_lcar is
   generic (
@@ -602,6 +612,7 @@ maximal length sequences of up to 100 bits.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: lfsr_ops-fibonacci_lfsr
 
   component fibonacci_lfsr is
   generic (
@@ -768,6 +779,7 @@ to procedures without having to maintain a separate file handle.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: ddfs-ddfs
 
   component ddfs is
   generic (
@@ -799,6 +811,7 @@ A set of functions for implementing Direct Digital Frequency Synthesizers.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: glitch_filtering-glitch_filter
 
   component glitch_filter is
   generic (

@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/crc_ops.vhdl on 2017-07-03 00:37:38.847226
+.. Generated from ../rtl/extras/crc_ops.vhdl on 2017-08-02 00:26:38.383136
 .. vhdl:package:: extras.crc_ops
 
 
@@ -10,6 +10,7 @@ crc
 ~~~
 
 .. symbolator::
+  :name: crc_ops-crc
 
   component crc is
   generic (

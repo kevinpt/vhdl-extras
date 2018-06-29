@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/pipelining.vhdl on 2017-07-03 00:37:38.633186
+.. Generated from ../rtl/extras/pipelining.vhdl on 2017-08-02 00:26:38.158752
 .. vhdl:package:: extras.pipelining
 
 
@@ -10,6 +10,7 @@ pipeline_ul
 ~~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-pipeline_ul
 
   component pipeline_ul is
   generic (
@@ -54,6 +55,7 @@ pipeline_sulv
 ~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-pipeline_sulv
 
   component pipeline_sulv is
   generic (
@@ -98,6 +100,7 @@ pipeline_slv
 ~~~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-pipeline_slv
 
   component pipeline_slv is
   generic (
@@ -142,6 +145,7 @@ pipeline_u
 ~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-pipeline_u
 
   component pipeline_u is
   generic (
@@ -186,6 +190,7 @@ pipeline_s
 ~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-pipeline_s
 
   component pipeline_s is
   generic (
@@ -230,6 +235,7 @@ fixed_delay_line
 ~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-fixed_delay_line
 
   component fixed_delay_line is
   generic (
@@ -269,6 +275,7 @@ fixed_delay_line_sulv
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-fixed_delay_line_sulv
 
   component fixed_delay_line_sulv is
   generic (
@@ -308,6 +315,7 @@ fixed_delay_line_signed
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-fixed_delay_line_signed
 
   component fixed_delay_line_signed is
   generic (
@@ -347,6 +355,7 @@ fixed_delay_line_unsigned
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-fixed_delay_line_unsigned
 
   component fixed_delay_line_unsigned is
   generic (
@@ -386,6 +395,7 @@ dynamic_delay_line_sulv
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-dynamic_delay_line_sulv
 
   component dynamic_delay_line_sulv is
   port (
@@ -422,6 +432,7 @@ dynamic_delay_line_signed
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-dynamic_delay_line_signed
 
   component dynamic_delay_line_signed is
   port (
@@ -458,6 +469,7 @@ dynamic_delay_line_unsigned
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: pipelining-dynamic_delay_line_unsigned
 
   component dynamic_delay_line_unsigned is
   port (

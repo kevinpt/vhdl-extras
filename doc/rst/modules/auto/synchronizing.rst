@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/synchronizing.vhdl on 2017-07-03 00:37:38.599606
+.. Generated from ../rtl/extras/synchronizing.vhdl on 2017-08-02 00:26:38.123486
 .. vhdl:package:: extras.synchronizing
 
 
@@ -10,6 +10,7 @@ bit_synchronizer
 ~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: synchronizing-bit_synchronizer
 
   component bit_synchronizer is
   generic (
@@ -52,6 +53,7 @@ reset_synchronizer
 ~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: synchronizing-reset_synchronizer
 
   component reset_synchronizer is
   generic (
@@ -92,6 +94,7 @@ handshake_synchronizer
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: synchronizing-handshake_synchronizer
 
   component handshake_synchronizer is
   generic (

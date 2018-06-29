@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/fifos.vhdl on 2017-07-03 00:37:38.266480
+.. Generated from ../rtl/extras/fifos.vhdl on 2017-08-02 00:26:37.750141
 .. vhdl:package:: extras.fifos
 
 
@@ -10,6 +10,7 @@ simple_fifo
 ~~~~~~~~~~~
 
 .. symbolator::
+  :name: fifos-simple_fifo
 
   component simple_fifo is
   generic (
@@ -80,6 +81,7 @@ fifo
 ~~~~
 
 .. symbolator::
+  :name: fifos-fifo
 
   component fifo is
   generic (
@@ -155,6 +157,7 @@ packet_fifo
 ~~~~~~~~~~~
 
 .. symbolator::
+  :name: fifos-packet_fifo
 
   component packet_fifo is
   generic (

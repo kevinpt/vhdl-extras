@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/secded_codec.vhdl on 2017-07-03 00:37:38.462908
+.. Generated from ../rtl/extras/secded_codec.vhdl on 2017-08-02 00:26:37.981619
 .. vhdl:package:: extras.secded_codec_pkg
 
 
@@ -34,6 +34,7 @@ secded_codec
 ~~~~~~~~~~~~
 
 .. symbolator::
+  :name: secded_codec_pkg-secded_codec
 
   component secded_codec is
   generic (

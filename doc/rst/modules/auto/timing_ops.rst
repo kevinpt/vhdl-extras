@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/timing_ops.vhdl on 2017-07-03 00:37:38.494088
+.. Generated from ../rtl/extras/timing_ops.vhdl on 2017-08-02 00:26:38.013241
 .. vhdl:package:: extras.timing_ops
 
 

@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/bit_ops.vhdl on 2017-07-03 00:37:38.686526
+.. Generated from ../rtl/extras/bit_ops.vhdl on 2017-08-02 00:26:38.213920
 .. vhdl:package:: extras.bit_ops
 
 
@@ -18,6 +18,7 @@ count_ones
 ~~~~~~~~~~
 
 .. symbolator::
+  :name: bit_ops-count_ones
 
   component count_ones is
   port (
@@ -43,6 +44,7 @@ count_ones_chunked
 ~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: bit_ops-count_ones_chunked
 
   component count_ones_chunked is
   generic (
@@ -74,6 +76,7 @@ count_ones_sequential
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: bit_ops-count_ones_sequential
 
   component count_ones_sequential is
   generic (

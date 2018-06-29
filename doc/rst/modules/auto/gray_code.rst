@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/gray_code.vhdl on 2017-07-03 00:37:38.867643
+.. Generated from ../rtl/extras/gray_code.vhdl on 2017-08-02 00:26:38.404926
 .. vhdl:package:: extras.gray_code
 
 
@@ -10,6 +10,7 @@ gray_counter
 ~~~~~~~~~~~~
 
 .. symbolator::
+  :name: gray_code-gray_counter
 
   component gray_counter is
   generic (

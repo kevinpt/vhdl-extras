@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/interrupt_ctl.vhdl on 2017-07-03 00:37:38.837035
+.. Generated from ../rtl/extras/interrupt_ctl.vhdl on 2017-08-02 00:26:38.372356
 .. vhdl:package:: extras.interrupt_ctl_pkg
 
 
@@ -10,6 +10,7 @@ interrupt_ctl
 ~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: interrupt_ctl_pkg-interrupt_ctl
 
   component interrupt_ctl is
   generic (

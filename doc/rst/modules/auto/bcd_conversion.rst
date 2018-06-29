@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/bcd_conversion.vhdl on 2017-07-03 00:37:38.804230
+.. Generated from ../rtl/extras/bcd_conversion.vhdl on 2017-08-02 00:26:38.337644
 .. vhdl:package:: extras.bcd_conversion
 
 
@@ -10,6 +10,7 @@ binary_to_bcd
 ~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: bcd_conversion-binary_to_bcd
 
   component binary_to_bcd is
   generic (
@@ -61,6 +62,7 @@ bcd_to_binary
 ~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: bcd_conversion-bcd_to_binary
 
   component bcd_to_binary is
   generic (

@@ -23,7 +23,9 @@ These functions can be used in most synthesizers to compute ranges for
 arrays. The core functionality is provided in the :vhdl:func:`~extras.sizing.ceil_log[positive,positive return natural]` and
 :vhdl:func:`~extras.sizing.floor_log[positive,positive return natural]` subprograms. These compute the logarithm in any integer base.
 For convenenience, base-2 functions are also provided along with the array
-sizing functions.
+sizing functions. See the :doc:`bcd_conversion` implementation
+of :vhdl:func:`~extras.bcd_conversion.decimal_size` for a practical
+example of computing integer logs in base-10 using this package.
 
 Example usage
 ~~~~~~~~~~~~~

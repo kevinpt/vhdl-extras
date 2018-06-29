@@ -48,27 +48,43 @@ produce the final CRC value.
 Example usage
 ~~~~~~~~~~~~~
 
-Compute CRC in a loop. This will synthesize into a combinational circuit.
+Implementing a CRC without depending on an external generator tool is easy and flexible by
+iteratively computing the CRC in a loop. This will synthesize into a combinational circuit:
 
 .. code-block:: vhdl
 
-  -- CRC-16-USB
-  constant poly        : bit_vector := X"8005";
-  constant xor_in      : bit_vector := X"FFFF";
-  constant xor_out     : bit_vector := X"FFFF";
-  constant reflect_in  : boolean := true;
-  constant reflect_out : boolean := true;
+    -- CRC-16-USB
+    constant poly        : bit_vector := X"8005";
+    constant xor_in      : bit_vector := X"FFFF";
+    constant xor_out     : bit_vector := X"FFFF";
+    constant reflect_in  : boolean := true;
+    constant reflect_out : boolean := true;
 
-  subtype word is bit_vector(7 downto 0);
-  type word_vec is array( natural range <> ) of word;
-  variable data : word_vec(0 to 9);
-  variable crc : bit_vector(poly'range);
-  ...
-  crc := init_crc(xor_in);
-  for i in data'range loop
-    crc := next_crc(crc, poly, reflect_in, data(i));
-  end loop;
-  crc := end_crc(crc, reflect_out, xor_out);
+    -- Implement CRC-16 with byte-wide inputs:
+    subtype word is bit_vector(7 downto 0);
+    type word_vec is array( natural range <> ) of word;
+    variable data : word_vec(0 to 9);
+    variable crc  : bit_vector(poly'range);
+    ...
+    crc := init_crc(xor_in);
+    for i in data'range loop
+      crc := next_crc(crc, poly, reflect_in, data(i));
+    end loop;
+    crc := end_crc(crc, reflect_out, xor_out);
+
+    -- Implement CRC-16 with nibble-wide inputs:
+    subtype nibble is bit_vector(3 downto 0);
+    type nibble_vec is array( natural range <> ) of nibble;
+    variable data : nibble_vec(0 to 9);
+    variable crc  : bit_vector(poly'range);
+    ...
+    crc := init_crc(xor_in);
+    for i in data'range loop
+      crc := next_crc(crc, poly, reflect_in, data(i));
+    end loop;
+    crc := end_crc(crc, reflect_out, xor_out);
+
+
 
 A synthesizable component is provided to serve as a guide to using these
 functions in practical designs. The input data port has been left unconstrained
@@ -99,6 +115,8 @@ minimized if all of the CRC configuration parameters are constants.
       Data     => nibble,
       Checksum => checksum
     );    
+
+
 
     
    

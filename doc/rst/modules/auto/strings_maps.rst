@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/strings_maps.vhdl on 2017-07-03 00:37:38.674627
+.. Generated from ../rtl/extras/strings_maps.vhdl on 2017-08-02 00:26:38.200781
 .. vhdl:package:: extras.strings_maps
 
 

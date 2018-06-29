@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/muxing.vhdl on 2017-07-03 00:37:38.857423
+.. Generated from ../rtl/extras/muxing.vhdl on 2017-08-02 00:26:38.393986
 .. vhdl:package:: extras.muxing
 
 

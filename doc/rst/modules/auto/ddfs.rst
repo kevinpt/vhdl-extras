@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/ddfs.vhdl on 2017-07-03 00:37:38.549083
+.. Generated from ../rtl/extras/ddfs.vhdl on 2017-08-02 00:26:38.071989
 .. vhdl:package:: extras.ddfs_pkg
 
 
@@ -10,6 +10,7 @@ ddfs
 ~~~~
 
 .. symbolator::
+  :name: ddfs_pkg-ddfs
 
   component ddfs is
   generic (
@@ -64,6 +65,7 @@ ddfs_pipelined
 ~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: ddfs_pkg-ddfs_pipelined
 
   component ddfs_pipelined is
   generic (
@@ -203,7 +205,6 @@ Subprograms
 
    Compute the factor used to generate dynamic increment values.
   
-  :param The result is a fixed point integer.:
   :param Sys_freq: Clock frequency of the system
   :type Sys_freq: real
   :param Size: Size of the DDFS counter

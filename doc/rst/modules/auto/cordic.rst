@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/cordic.vhdl on 2017-07-03 00:37:38.353128
+.. Generated from ../rtl/extras/cordic.vhdl on 2017-08-02 00:26:37.839517
 .. vhdl:package:: extras.cordic
 
 
@@ -18,6 +18,7 @@ cordic_pipelined
 ~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: cordic-cordic_pipelined
 
   component cordic_pipelined is
   generic (
@@ -78,6 +79,7 @@ cordic_sequential
 ~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: cordic-cordic_sequential
 
   component cordic_sequential is
   generic (
@@ -147,6 +149,7 @@ cordic_flex_pipelined
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: cordic-cordic_flex_pipelined
 
   component cordic_flex_pipelined is
   generic (
@@ -212,6 +215,7 @@ sincos_pipelined
 ~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: cordic-sincos_pipelined
 
   component sincos_pipelined is
   generic (
@@ -266,6 +270,7 @@ sincos_sequential
 ~~~~~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: cordic-sincos_sequential
 
   component sincos_sequential is
   generic (

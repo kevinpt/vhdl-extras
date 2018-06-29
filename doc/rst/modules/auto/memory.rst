@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/memory.vhdl on 2017-07-03 00:37:38.558809
+.. Generated from ../rtl/extras/memory.vhdl on 2017-08-02 00:26:38.082354
 .. vhdl:package:: extras.memory
 
 
@@ -18,6 +18,7 @@ dual_port_ram
 ~~~~~~~~~~~~~
 
 .. symbolator::
+  :name: memory-dual_port_ram
 
   component dual_port_ram is
   generic (
@@ -71,6 +72,7 @@ rom
 ~~~
 
 .. symbolator::
+  :name: memory-rom
 
   component rom is
   generic (

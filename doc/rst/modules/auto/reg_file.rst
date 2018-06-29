@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/reg_file.vhdl on 2017-07-03 00:37:38.188072
+.. Generated from ../rtl/extras/reg_file.vhdl on 2017-08-02 00:26:37.667782
 .. vhdl:package:: extras.reg_file_pkg
 
 
@@ -26,6 +26,7 @@ reg_file
 ~~~~~~~~
 
 .. symbolator::
+  :name: reg_file_pkg-reg_file
 
   component reg_file is
   generic (
