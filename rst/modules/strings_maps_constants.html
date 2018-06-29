@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>strings_maps_constants &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>strings_maps_constants &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="strings_unbounded" href="strings_unbounded.html" />
     <link rel="prev" title="strings_maps" href="strings_maps.html" />
    
@@ -38,118 +37,118 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="strings-maps-constants">
 <h1>strings_maps_constants<a class="headerlink" href="#strings-maps-constants" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_maps_constants.vhdl">extras/strings_maps_constants.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="strings_maps.html"><em>strings_maps</em></a>,
-<a class="reference internal" href="characters_latin_1.html"><em>characters_latin_1</em></a></p>
+<p><a class="reference internal" href="strings_maps.html"><span class="doc">strings_maps</span></a>,
+<a class="reference internal" href="characters_latin_1.html"><span class="doc">characters_latin_1</span></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides constants for various character sets from the range
 of Latin-1 and mappings for upper case, lower case, and basic (unaccented)
-characters. It is a clone of the Ada&#8216;95 package
-<tt class="docutils literal"><span class="pre">Ada.Strings.Maps.Constants</span></tt>.</p>
+characters. It is a clone of the Ada‘95 package
+<code class="docutils literal"><span class="pre">Ada.Strings.Maps.Constants</span></code>.</p>
 <span class="target" id="package-extras.strings_maps_constants"></span></div>
 <div class="section" id="constants">
 <h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
 <dl class="constant">
 <dt id="extras.strings_maps_constants.NULL_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">NULL_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.NULL_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">NULL_SET</code><a class="headerlink" href="#extras.strings_maps_constants.NULL_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>No characters.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.IDENTITY">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">IDENTITY</tt><a class="headerlink" href="#extras.strings_maps_constants.IDENTITY" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">IDENTITY</code><a class="headerlink" href="#extras.strings_maps_constants.IDENTITY" title="Permalink to this definition">¶</a></dt>
 <dd><p>Map all characters to themselves.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.CONTROL_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">CONTROL_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.CONTROL_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">CONTROL_SET</code><a class="headerlink" href="#extras.strings_maps_constants.CONTROL_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Control characters.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.GRAPHIC_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">GRAPHIC_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.GRAPHIC_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">GRAPHIC_SET</code><a class="headerlink" href="#extras.strings_maps_constants.GRAPHIC_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Graphical characters.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.LETTER_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">LETTER_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.LETTER_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">LETTER_SET</code><a class="headerlink" href="#extras.strings_maps_constants.LETTER_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Letters only.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.LOWER_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">LOWER_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.LOWER_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">LOWER_SET</code><a class="headerlink" href="#extras.strings_maps_constants.LOWER_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lower-case letters.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.UPPER_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">UPPER_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.UPPER_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">UPPER_SET</code><a class="headerlink" href="#extras.strings_maps_constants.UPPER_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Upper-case letters.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.BASIC_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">BASIC_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.BASIC_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">BASIC_SET</code><a class="headerlink" href="#extras.strings_maps_constants.BASIC_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plain and accented letters.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.DECIMAL_DIGIT_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">DECIMAL_DIGIT_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.DECIMAL_DIGIT_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">DECIMAL_DIGIT_SET</code><a class="headerlink" href="#extras.strings_maps_constants.DECIMAL_DIGIT_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Digits 0-9.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.HEXADECIMAL_DIGIT_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">HEXADECIMAL_DIGIT_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.HEXADECIMAL_DIGIT_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">HEXADECIMAL_DIGIT_SET</code><a class="headerlink" href="#extras.strings_maps_constants.HEXADECIMAL_DIGIT_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hex digits 0-9 and A-F.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.ALPHANUMERIC_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">ALPHANUMERIC_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.ALPHANUMERIC_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">ALPHANUMERIC_SET</code><a class="headerlink" href="#extras.strings_maps_constants.ALPHANUMERIC_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Letters and numbers.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.SPECIAL_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">SPECIAL_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.SPECIAL_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">SPECIAL_SET</code><a class="headerlink" href="#extras.strings_maps_constants.SPECIAL_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Punctuation symbols.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.ISO_646_SET">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">ISO_646_SET</tt><a class="headerlink" href="#extras.strings_maps_constants.ISO_646_SET" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">ISO_646_SET</code><a class="headerlink" href="#extras.strings_maps_constants.ISO_646_SET" title="Permalink to this definition">¶</a></dt>
 <dd><p>ASCII subset of Latin-1.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.LOWER_CASE_MAP">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">LOWER_CASE_MAP</tt><a class="headerlink" href="#extras.strings_maps_constants.LOWER_CASE_MAP" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">LOWER_CASE_MAP</code><a class="headerlink" href="#extras.strings_maps_constants.LOWER_CASE_MAP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Map letters to lower-case.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.UPPER_CASE_MAP">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">UPPER_CASE_MAP</tt><a class="headerlink" href="#extras.strings_maps_constants.UPPER_CASE_MAP" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">UPPER_CASE_MAP</code><a class="headerlink" href="#extras.strings_maps_constants.UPPER_CASE_MAP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Map letters to upper-case.</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.strings_maps_constants.BASIC_MAP">
-<tt class="descclassname">strings_maps_constants.</tt><tt class="descname">BASIC_MAP</tt><a class="headerlink" href="#extras.strings_maps_constants.BASIC_MAP" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_maps_constants.</code><code class="descname">BASIC_MAP</code><a class="headerlink" href="#extras.strings_maps_constants.BASIC_MAP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Map accented characters to their basic form.</p>
 </dd></dl>
 
@@ -160,7 +159,7 @@ characters. It is a clone of the Ada&#8216;95 package
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -262,17 +261,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -281,10 +277,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/strings_maps_constants.txt"
+      <a href="../../_sources/rst/modules/strings_maps_constants.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

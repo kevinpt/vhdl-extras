@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>pipelining &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>pipelining &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="random" href="random.html" />
     <link rel="prev" title="parity_ops" href="parity_ops.html" />
    
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="pipelining">
 <h1>pipelining<a class="headerlink" href="#pipelining" title="Permalink to this headline">¶</a></h1>
@@ -46,7 +45,7 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/pipelining_2008.vhdl">extras_2008/pipelining_2008.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="common_2008.html"><em>common_2008</em></a> (for pipelining_2008)</p>
+<p><a class="reference internal" href="common_2008.html"><span class="doc">common_2008</span></a> (for pipelining_2008)</p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -55,8 +54,8 @@ be used as placeholders for register retiming during synthesis. These
 components can be placed after a section of combinational logic. With
 retiming activated in the synesis tool, the flip-flops will be distributed
 through the combinational logic to balance delays. The number of pipeline
-stages is controlled with the <tt class="docutils literal"><span class="pre">PIPELINE_STAGES</span></tt> generic.</p>
-<p>There are also components for general purpose delay lines with a fixed or variable number of stages. The VHDL-2008 package has a special <a class="reference internal" href="#extras_2008.pipelining.tapped_delay_line" title="extras_2008.pipelining.tapped_delay_line"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">tapped_delay_line</span></tt></a> component that presents all stage outputs at once.</p>
+stages is controlled with the <code class="docutils literal"><span class="pre">PIPELINE_STAGES</span></code> generic.</p>
+<p>There are also components for general purpose delay lines with a fixed or variable number of stages. The VHDL-2008 package has a special <a class="reference internal" href="#extras_2008.pipelining.tapped_delay_line" title="extras_2008.pipelining.tapped_delay_line"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">tapped_delay_line</span></code></a> component that presents all stage outputs at once.</p>
 <div class="section" id="retiming">
 <h3>Retiming<a class="headerlink" href="#retiming" title="Permalink to this headline">¶</a></h3>
 <p>Here are notes on how to activate retiming in various synthesis tools:</p>
@@ -64,17 +63,17 @@ stages is controlled with the <tt class="docutils literal"><span class="pre">PIP
 <dt>Xilinx ISE</dt>
 <dd>register_balancing attributes are implemented in the design.
 In Project|Design Goals &amp; Strategies set the Design Goal to
-&#8220;Timing Performance&#8221;. The generic <tt class="docutils literal"><span class="pre">ATTR_REG_BALANCING</span></tt> is
+“Timing Performance”. The generic <code class="docutils literal"><span class="pre">ATTR_REG_BALANCING</span></code> is
 avaiable on each entity to control the direction of register
-balancing. Valid values are &#8220;yes&#8221;, &#8220;no&#8221;, &#8220;forward&#8221;, and
-&#8220;backward&#8221;. If the pipeline stages connect directly to I/O
-then set the strategy to &#8220;Performance without IOB packing&#8221;.</dd>
+balancing. Valid values are “yes”, “no”, “forward”, and
+“backward”. If the pipeline stages connect directly to I/O
+then set the strategy to “Performance without IOB packing”.</dd>
 <dt>Xilinx Vivado</dt>
 <dd>phys_opt_design -retime</dd>
 <dt>Synplify Pro</dt>
 <dd>syn_allow_retiming attributes are implemented in the design</dd>
 <dt>Altera Quartus II</dt>
-<dd>Enable &#8220;Perform register retiming&#8221; in Assignments|Settings|Physical Synthesis Optimizations</dd>
+<dd>Enable “Perform register retiming” in Assignments|Settings|Physical Synthesis Optimizations</dd>
 <dt>Synopsys Design Compiler</dt>
 <dd>Use the optimize_registers command</dd>
 <dt>Synopsys DC Ultra</dt>
@@ -107,24 +106,24 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.pipeline_ul">
-<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_ul</tt><a class="headerlink" href="#extras.pipelining.pipeline_ul" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">pipeline_ul</code><a class="headerlink" href="#extras.pipelining.pipeline_ul" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pipeline registers for std_ulogic and std_logic.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) &#8211; Number of pipeline stages to insert</li>
-<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) &#8211; Control propagation direction (Xilinx only)</li>
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) – Number of pipeline stages to insert</li>
+<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) – Control propagation direction (Xilinx only)</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Sig_in</strong> (<em>in std_ulogic</em>) &#8211; Signal from block to be pipelined</li>
-<li><strong>Sig_out</strong> (<em>out std_ulogic</em>) &#8211; Pipelined result</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Sig_in</strong> (<em>in std_ulogic</em>) – Signal from block to be pipelined</li>
+<li><strong>Sig_out</strong> (<em>out std_ulogic</em>) – Pipelined result</li>
 </ul>
 </td>
 </tr>
@@ -156,24 +155,24 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.pipeline_sulv">
-<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_sulv</tt><a class="headerlink" href="#extras.pipelining.pipeline_sulv" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">pipeline_sulv</code><a class="headerlink" href="#extras.pipelining.pipeline_sulv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pipeline registers for std_ulogic_vector.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) &#8211; Number of pipeline stages to insert</li>
-<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) &#8211; Control propagation direction (Xilinx only)</li>
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) – Number of pipeline stages to insert</li>
+<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) – Control propagation direction (Xilinx only)</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Sig_in</strong> (<em>in std_ulogic_vector</em>) &#8211; Signal from block to be pipelined</li>
-<li><strong>Sig_out</strong> (<em>out std_ulogic_vector</em>) &#8211; Pipelined result</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Sig_in</strong> (<em>in std_ulogic_vector</em>) – Signal from block to be pipelined</li>
+<li><strong>Sig_out</strong> (<em>out std_ulogic_vector</em>) – Pipelined result</li>
 </ul>
 </td>
 </tr>
@@ -205,24 +204,24 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.pipeline_slv">
-<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_slv</tt><a class="headerlink" href="#extras.pipelining.pipeline_slv" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">pipeline_slv</code><a class="headerlink" href="#extras.pipelining.pipeline_slv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pipeline registers for std_logic_vector.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) &#8211; Number of pipeline stages to insert</li>
-<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) &#8211; Control propagation direction (Xilinx only)</li>
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) – Number of pipeline stages to insert</li>
+<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) – Control propagation direction (Xilinx only)</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Sig_in</strong> (<em>in std_logic_vector</em>) &#8211; Signal from block to be pipelined</li>
-<li><strong>Sig_out</strong> (<em>out std_logic_vector</em>) &#8211; Pipelined result</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Sig_in</strong> (<em>in std_logic_vector</em>) – Signal from block to be pipelined</li>
+<li><strong>Sig_out</strong> (<em>out std_logic_vector</em>) – Pipelined result</li>
 </ul>
 </td>
 </tr>
@@ -254,24 +253,24 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.pipeline_u">
-<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_u</tt><a class="headerlink" href="#extras.pipelining.pipeline_u" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">pipeline_u</code><a class="headerlink" href="#extras.pipelining.pipeline_u" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pipeline registers for unsigned.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) &#8211; Number of pipeline stages to insert</li>
-<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) &#8211; Control propagation direction (Xilinx only)</li>
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) – Number of pipeline stages to insert</li>
+<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) – Control propagation direction (Xilinx only)</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; None</li>
-<li><strong>Sig_in</strong> (<em>in unsigned</em>) &#8211; Signal from block to be pipelined</li>
-<li><strong>Sig_out</strong> (<em>out unsigned</em>) &#8211; Pipelined result</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – None</li>
+<li><strong>Sig_in</strong> (<em>in unsigned</em>) – Signal from block to be pipelined</li>
+<li><strong>Sig_out</strong> (<em>out unsigned</em>) – Pipelined result</li>
 </ul>
 </td>
 </tr>
@@ -303,24 +302,24 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.pipeline_s">
-<tt class="descclassname">pipelining.</tt><tt class="descname">pipeline_s</tt><a class="headerlink" href="#extras.pipelining.pipeline_s" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">pipeline_s</code><a class="headerlink" href="#extras.pipelining.pipeline_s" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pipeline registers for signed.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) &#8211; Number of pipeline stages to insert</li>
-<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) &#8211; Control propagation direction (Xilinx only)</li>
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>PIPELINE_STAGES</strong> (<em>positive</em>) – Number of pipeline stages to insert</li>
+<li><strong>ATTR_REG_BALANCING</strong> (<em>string</em>) – Control propagation direction (Xilinx only)</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Sig_in</strong> (<em>in signed</em>) &#8211; Signal from block to be pipelined</li>
-<li><strong>Sig_out</strong> (<em>out signed</em>) &#8211; Pipelined result</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Sig_in</strong> (<em>in signed</em>) – Signal from block to be pipelined</li>
+<li><strong>Sig_out</strong> (<em>out signed</em>) – Pipelined result</li>
 </ul>
 </td>
 </tr>
@@ -351,22 +350,22 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.fixed_delay_line">
-<tt class="descclassname">pipelining.</tt><tt class="descname">fixed_delay_line</tt><a class="headerlink" href="#extras.pipelining.fixed_delay_line" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">fixed_delay_line</code><a class="headerlink" href="#extras.pipelining.fixed_delay_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fixed delay line for std_ulogic data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>STAGES</strong> (<em>natural</em>) &#8211; Number of delay stages (0 for short circuit)</li>
+<li><strong>STAGES</strong> (<em>natural</em>) – Number of delay stages (0 for short circuit)</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
-<li><strong>Data_in</strong> (<em>in std_ulogic</em>) &#8211; Input data</li>
-<li><strong>Data_out</strong> (<em>out std_ulogic</em>) &#8211; Delayed output data</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) – Synchronous enable</li>
+<li><strong>Data_in</strong> (<em>in std_ulogic</em>) – Input data</li>
+<li><strong>Data_out</strong> (<em>out std_ulogic</em>) – Delayed output data</li>
 </ul>
 </td>
 </tr>
@@ -397,22 +396,22 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.fixed_delay_line_sulv">
-<tt class="descclassname">pipelining.</tt><tt class="descname">fixed_delay_line_sulv</tt><a class="headerlink" href="#extras.pipelining.fixed_delay_line_sulv" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">fixed_delay_line_sulv</code><a class="headerlink" href="#extras.pipelining.fixed_delay_line_sulv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fixed delay line for std_ulogic_vector data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>STAGES</strong> (<em>natural</em>) &#8211; Number of delay stages (0 for short circuit)</li>
+<li><strong>STAGES</strong> (<em>natural</em>) – Number of delay stages (0 for short circuit)</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
-<li><strong>Data_in</strong> (<em>in std_ulogic_vector</em>) &#8211; Input data</li>
-<li><strong>Data_out</strong> (<em>out std_ulogic_vector</em>) &#8211; Delayed output data</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) – Synchronous enable</li>
+<li><strong>Data_in</strong> (<em>in std_ulogic_vector</em>) – Input data</li>
+<li><strong>Data_out</strong> (<em>out std_ulogic_vector</em>) – Delayed output data</li>
 </ul>
 </td>
 </tr>
@@ -443,22 +442,22 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.fixed_delay_line_signed">
-<tt class="descclassname">pipelining.</tt><tt class="descname">fixed_delay_line_signed</tt><a class="headerlink" href="#extras.pipelining.fixed_delay_line_signed" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">fixed_delay_line_signed</code><a class="headerlink" href="#extras.pipelining.fixed_delay_line_signed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fixed delay line for signed data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>STAGES</strong> (<em>natural</em>) &#8211; Number of delay stages (0 for short circuit)</li>
+<li><strong>STAGES</strong> (<em>natural</em>) – Number of delay stages (0 for short circuit)</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
-<li><strong>Data_in</strong> (<em>in signed</em>) &#8211; Input data</li>
-<li><strong>Data_out</strong> (<em>out signed</em>) &#8211; Delayed output data</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) – Synchronous enable</li>
+<li><strong>Data_in</strong> (<em>in signed</em>) – Input data</li>
+<li><strong>Data_out</strong> (<em>out signed</em>) – Delayed output data</li>
 </ul>
 </td>
 </tr>
@@ -489,22 +488,22 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.fixed_delay_line_unsigned">
-<tt class="descclassname">pipelining.</tt><tt class="descname">fixed_delay_line_unsigned</tt><a class="headerlink" href="#extras.pipelining.fixed_delay_line_unsigned" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">fixed_delay_line_unsigned</code><a class="headerlink" href="#extras.pipelining.fixed_delay_line_unsigned" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fixed delay line for unsigned data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>STAGES</strong> (<em>natural</em>) &#8211; Number of delay stages (0 for short circuit)</li>
+<li><strong>STAGES</strong> (<em>natural</em>) – Number of delay stages (0 for short circuit)</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
-<li><strong>Data_in</strong> (<em>in unsigned</em>) &#8211; Input data</li>
-<li><strong>Data_out</strong> (<em>out unsigned</em>) &#8211; Delayed output data</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) – Synchronous enable</li>
+<li><strong>Data_in</strong> (<em>in unsigned</em>) – Input data</li>
+<li><strong>Data_out</strong> (<em>out unsigned</em>) – Delayed output data</li>
 </ul>
 </td>
 </tr>
@@ -533,18 +532,18 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.dynamic_delay_line_sulv">
-<tt class="descclassname">pipelining.</tt><tt class="descname">dynamic_delay_line_sulv</tt><a class="headerlink" href="#extras.pipelining.dynamic_delay_line_sulv" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">dynamic_delay_line_sulv</code><a class="headerlink" href="#extras.pipelining.dynamic_delay_line_sulv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fixed delay line for std_ulogic_vector data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
-<li><strong>Address</strong> (<em>in unsigned</em>) &#8211; Selected delay stage</li>
-<li><strong>Data_in</strong> (<em>in std_ulogic_vector</em>) &#8211; Input data</li>
-<li><strong>Data_out</strong> (<em>out std_ulogic_vector</em>) &#8211; Delayed output data</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) – Synchronous enable</li>
+<li><strong>Address</strong> (<em>in unsigned</em>) – Selected delay stage</li>
+<li><strong>Data_in</strong> (<em>in std_ulogic_vector</em>) – Input data</li>
+<li><strong>Data_out</strong> (<em>out std_ulogic_vector</em>) – Delayed output data</li>
 </ul>
 </td>
 </tr>
@@ -573,18 +572,18 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.dynamic_delay_line_signed">
-<tt class="descclassname">pipelining.</tt><tt class="descname">dynamic_delay_line_signed</tt><a class="headerlink" href="#extras.pipelining.dynamic_delay_line_signed" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">dynamic_delay_line_signed</code><a class="headerlink" href="#extras.pipelining.dynamic_delay_line_signed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fixed delay line for signed data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
-<li><strong>Address</strong> (<em>in unsigned</em>) &#8211; Selected delay stage</li>
-<li><strong>Data_in</strong> (<em>in signed</em>) &#8211; Input data</li>
-<li><strong>Data_out</strong> (<em>out signed</em>) &#8211; Delayed output data</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) – Synchronous enable</li>
+<li><strong>Address</strong> (<em>in unsigned</em>) – Selected delay stage</li>
+<li><strong>Data_in</strong> (<em>in signed</em>) – Input data</li>
+<li><strong>Data_out</strong> (<em>out signed</em>) – Delayed output data</li>
 </ul>
 </td>
 </tr>
@@ -613,18 +612,18 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.pipelining.dynamic_delay_line_unsigned">
-<tt class="descclassname">pipelining.</tt><tt class="descname">dynamic_delay_line_unsigned</tt><a class="headerlink" href="#extras.pipelining.dynamic_delay_line_unsigned" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">dynamic_delay_line_unsigned</code><a class="headerlink" href="#extras.pipelining.dynamic_delay_line_unsigned" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fixed delay line for unsigned data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
-<li><strong>Address</strong> (<em>in unsigned</em>) &#8211; Selected delay stage</li>
-<li><strong>Data_in</strong> (<em>in unsigned</em>) &#8211; Input data</li>
-<li><strong>Data_out</strong> (<em>out unsigned</em>) &#8211; Delayed output data</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) – Synchronous enable</li>
+<li><strong>Address</strong> (<em>in unsigned</em>) – Selected delay stage</li>
+<li><strong>Data_in</strong> (<em>in unsigned</em>) – Input data</li>
+<li><strong>Data_out</strong> (<em>out unsigned</em>) – Delayed output data</li>
 </ul>
 </td>
 </tr>
@@ -663,24 +662,24 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras_2008.pipelining.tapped_delay_line">
-<tt class="descclassname">pipelining.</tt><tt class="descname">tapped_delay_line</tt><a class="headerlink" href="#extras_2008.pipelining.tapped_delay_line" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pipelining.</code><code class="descname">tapped_delay_line</code><a class="headerlink" href="#extras_2008.pipelining.tapped_delay_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Vector delay line with an output for each stage.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
-<li><strong>REGISTER_FIRST_STAGE</strong> (<em>boolean</em>) &#8211; Register or pass through the first stage</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
+<li><strong>REGISTER_FIRST_STAGE</strong> (<em>boolean</em>) – Register or pass through the first stage</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Enable delay line</li>
-<li><strong>Data</strong> (<em>in std_ulogic_vector</em>) &#8211; Input to the delay line</li>
-<li><strong>Taps</strong> (<em>out sulv_array</em>) &#8211; Taps from each stage</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) – Enable delay line</li>
+<li><strong>Data</strong> (<em>in std_ulogic_vector</em>) – Input to the delay line</li>
+<li><strong>Taps</strong> (<em>out sulv_array</em>) – Taps from each stage</li>
 </ul>
 </td>
 </tr>
@@ -696,7 +695,7 @@ end component;</p></object>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -820,17 +819,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -839,10 +835,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/pipelining.txt"
+      <a href="../../_sources/rst/modules/pipelining.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

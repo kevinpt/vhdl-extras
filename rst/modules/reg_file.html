@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>reg_file &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>reg_file &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="secded_codec" href="secded_codec.html" />
     <link rel="prev" title="random" href="random.html" />
    
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="reg-file">
 <h1>reg_file<a class="headerlink" href="#reg-file" title="Permalink to this headline">¶</a></h1>
@@ -46,29 +45,29 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/reg_file_2008.vhdl">extras_2008/reg_file_2008.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="muxing.html"><em>muxing</em></a></p>
+<p><a class="reference internal" href="muxing.html"><span class="doc">muxing</span></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides a general purpose register file. It is available in two variants.
 One is implemented in VHDL-93 syntax and the register width is fixed at 16-bits
 by default. The source must be modified to alter the size of the
-<tt class="docutils literal"><span class="pre">reg_word</span></tt> type if a register size other than 16-bits is needed. The
+<code class="docutils literal"><span class="pre">reg_word</span></code> type if a register size other than 16-bits is needed. The
 implementation in <a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/reg_file_2008.vhdl">reg_file_2008</a> uses a generic package to avoid this if
 tool support for VHDL-2008 is available.</p>
 <p>The register file provides an addressable read write port for external
 access as well as a set of signals that allow simultaneous access to
 registers for internal logic. The register file has a number of special
 behaviors controlled by generics.</p>
-<p><tt class="docutils literal"><span class="pre">DIRECT_READ_BIT_MASK</span></tt> is an array of masks that establish which bits of each
+<p><code class="docutils literal"><span class="pre">DIRECT_READ_BIT_MASK</span></code> is an array of masks that establish which bits of each
 register are read directly from internal signals rather than registered
-bits. When set to &#8216;1&#8217; a bit is accessed from the <tt class="docutils literal"><span class="pre">Direct_read</span></tt> port input
+bits. When set to ‘1’ a bit is accessed from the <code class="docutils literal"><span class="pre">Direct_read</span></code> port input
 rather than the register file on a read operation. The masks permit mixing
 these bits with registered bits within the same register. Direct-read
-register bits can still be written but their contents can&#8217;t be read back through the addressed port.</p>
-<p><tt class="docutils literal"><span class="pre">STROBE_BIT_MASK</span></tt> is an array of masks that establish which bits of each
-register are considered &#8220;strobe&#8221; bits. Strobe bits are used to initiate control actions from a momentary pulsed signal. They are self clearing when a &#8216;1&#8217; is written to them. The &#8216;1&#8217; bit is present for only one clock cycle. There is no effect when &#8216;0&#8217; is written.</p>
-<p>The <tt class="docutils literal"><span class="pre">REGISTER_INPUTS</span></tt> generic provides optional registration of the
+register bits can still be written but their contents can’t be read back through the addressed port.</p>
+<p><code class="docutils literal"><span class="pre">STROBE_BIT_MASK</span></code> is an array of masks that establish which bits of each
+register are considered “strobe” bits. Strobe bits are used to initiate control actions from a momentary pulsed signal. They are self clearing when a ‘1’ is written to them. The ‘1’ bit is present for only one clock cycle. There is no effect when ‘0’ is written.</p>
+<p>The <code class="docutils literal"><span class="pre">REGISTER_INPUTS</span></code> generic provides optional registration of the
 inputs on the external control port.</p>
 <div class="section" id="synthesis-note">
 <h3>Synthesis note<a class="headerlink" href="#synthesis-note" title="Permalink to this headline">¶</a></h3>
@@ -143,7 +142,7 @@ care should be taken when using this component in high speed designs.</p>
 </div>
 <div class="section" id="vhdl-2008-example">
 <h3>VHDL-2008 example<a class="headerlink" href="#vhdl-2008-example" title="Permalink to this headline">¶</a></h3>
-<p>The VHDL-2008 version uses unconstrained arrays-of-arrays for the <tt class="docutils literal"><span class="pre">Registers</span></tt> and <tt class="docutils literal"><span class="pre">Direct_read</span></tt> signals. This permits you to use any word size without needing to modify the source of the register file. It is best to create subtypes to define the register word and array of words.</p>
+<p>The VHDL-2008 version uses unconstrained arrays-of-arrays for the <code class="docutils literal"><span class="pre">Registers</span></code> and <code class="docutils literal"><span class="pre">Direct_read</span></code> signals. This permits you to use any word size without needing to modify the source of the register file. It is best to create subtypes to define the register word and array of words.</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">library</span> <span class="nn">extras_2008</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras_2008.reg_file_pkg.all</span><span class="p">;</span>
 <span class="k">library</span> <span class="nn">extras</span><span class="p">;</span> <span class="k">use</span> <span class="nn">extras.sizing.bit_size</span><span class="p">;</span>
 
@@ -189,7 +188,7 @@ care should be taken when using this component in high speed designs.</p>
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="extras.reg_file_pkg.reg_array">
-<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_array</tt><a class="headerlink" href="#extras.reg_file_pkg.reg_array" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reg_file_pkg.</code><code class="descname">reg_array</code><a class="headerlink" href="#extras.reg_file_pkg.reg_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Array of register words.</p>
 </dd></dl>
 
@@ -198,7 +197,7 @@ care should be taken when using this component in high speed designs.</p>
 <h2>Subtypes<a class="headerlink" href="#subtypes" title="Permalink to this headline">¶</a></h2>
 <dl class="subtype">
 <dt id="extras.reg_file_pkg.reg_word">
-<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_word</tt><a class="headerlink" href="#extras.reg_file_pkg.reg_word" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reg_file_pkg.</code><code class="descname">reg_word</code><a class="headerlink" href="#extras.reg_file_pkg.reg_word" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register word vector. Modify this to use different word sizes.</p>
 </dd></dl>
 
@@ -237,31 +236,31 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.reg_file_pkg.reg_file">
-<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_file</tt><a class="headerlink" href="#extras.reg_file_pkg.reg_file" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reg_file_pkg.</code><code class="descname">reg_file</code><a class="headerlink" href="#extras.reg_file_pkg.reg_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flexible register file with support for strobed outputs.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
-<li><strong>DIRECT_READ_BIT_MASK</strong> (<em>reg_array</em>) &#8211; Masks indicating which register bits are directly read</li>
-<li><strong>STROBE_BIT_MASK</strong> (<em>reg_array</em>) &#8211; Masks indicating which register bits clear themselves after a write of &#8216;1&#8217;</li>
-<li><strong>REGISTER_INPUTS</strong> (<em>boolean</em>) &#8211; Register the input ports when true</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
+<li><strong>DIRECT_READ_BIT_MASK</strong> (<em>reg_array</em>) – Masks indicating which register bits are directly read</li>
+<li><strong>STROBE_BIT_MASK</strong> (<em>reg_array</em>) – Masks indicating which register bits clear themselves after a write of ‘1’</li>
+<li><strong>REGISTER_INPUTS</strong> (<em>boolean</em>) – Register the input ports when true</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Clear</strong> (<em>in std_ulogic</em>) &#8211; Initialize all registers to &#8216;0&#8217;</li>
-<li><strong>Reg_sel</strong> (<em>in unsigned</em>) &#8211; Register address for write and read</li>
-<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; Write to selected register</li>
-<li><strong>Wr_data</strong> (<em>in reg_word</em>) &#8211; Write port</li>
-<li><strong>Rd_data</strong> (<em>out reg_word</em>) &#8211; Read port</li>
-<li><strong>Registers</strong> (<em>out reg_array</em>) &#8211; Register file contents</li>
-<li><strong>Direct_read</strong> (<em>in reg_array</em>) &#8211; Read-only signals direct from external logic</li>
-<li><strong>Reg_written</strong> (<em>out std_ulogic_vector</em>) &#8211; Status flags indicating when each register is written</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Clear</strong> (<em>in std_ulogic</em>) – Initialize all registers to ‘0’</li>
+<li><strong>Reg_sel</strong> (<em>in unsigned</em>) – Register address for write and read</li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) – Write to selected register</li>
+<li><strong>Wr_data</strong> (<em>in reg_word</em>) – Write port</li>
+<li><strong>Rd_data</strong> (<em>out reg_word</em>) – Read port</li>
+<li><strong>Registers</strong> (<em>out reg_array</em>) – Register file contents</li>
+<li><strong>Direct_read</strong> (<em>in reg_array</em>) – Read-only signals direct from external logic</li>
+<li><strong>Reg_written</strong> (<em>out std_ulogic_vector</em>) – Status flags indicating when each register is written</li>
 </ul>
 </td>
 </tr>
@@ -308,7 +307,7 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras_2008.reg_file_pkg.reg_file">
-<tt class="descclassname">reg_file_pkg.</tt><tt class="descname">reg_file</tt><a class="headerlink" href="#extras_2008.reg_file_pkg.reg_file" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reg_file_pkg.</code><code class="descname">reg_file</code><a class="headerlink" href="#extras_2008.reg_file_pkg.reg_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flexible register file with support for strobed outputs. This variant
 uses VHDL-2008 syntax to define the reg_array type as an unconstrained
 array-of-arrays. Any register width can be instantiated without needing
@@ -318,24 +317,24 @@ to modify the library.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
-<li><strong>DIRECT_READ_BIT_MASK</strong> (<em>reg_array</em>) &#8211; Masks indicating which register bits are directly read</li>
-<li><strong>STROBE_BIT_MASK</strong> (<em>reg_array</em>) &#8211; Masks indicating which register bits clear themselves after a write of &#8216;1&#8217;</li>
-<li><strong>REGISTER_INPUTS</strong> (<em>boolean</em>) &#8211; Register the input ports when true</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
+<li><strong>DIRECT_READ_BIT_MASK</strong> (<em>reg_array</em>) – Masks indicating which register bits are directly read</li>
+<li><strong>STROBE_BIT_MASK</strong> (<em>reg_array</em>) – Masks indicating which register bits clear themselves after a write of ‘1’</li>
+<li><strong>REGISTER_INPUTS</strong> (<em>boolean</em>) – Register the input ports when true</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Clear</strong> (<em>in std_ulogic</em>) &#8211; Initialize all registers to &#8216;0&#8217;</li>
-<li><strong>Reg_sel</strong> (<em>in unsigned</em>) &#8211; Register address for write and read</li>
-<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; Write to selected register</li>
-<li><strong>Wr_data</strong> (<em>in reg_word</em>) &#8211; Write port</li>
-<li><strong>Rd_data</strong> (<em>out reg_word</em>) &#8211; Internal file contents</li>
-<li><strong>Registers</strong> (<em>out reg_array</em>) &#8211; Register file contents</li>
-<li><strong>Direct_read</strong> (<em>in reg_array</em>) &#8211; Read-only signals direct from external logic</li>
-<li><strong>Reg_written</strong> (<em>out std_ulogic_vector</em>) &#8211; Status flags indicating when each register is written</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Clear</strong> (<em>in std_ulogic</em>) – Initialize all registers to ‘0’</li>
+<li><strong>Reg_sel</strong> (<em>in unsigned</em>) – Register address for write and read</li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) – Write to selected register</li>
+<li><strong>Wr_data</strong> (<em>in reg_word</em>) – Write port</li>
+<li><strong>Rd_data</strong> (<em>out reg_word</em>) – Internal file contents</li>
+<li><strong>Registers</strong> (<em>out reg_array</em>) – Register file contents</li>
+<li><strong>Direct_read</strong> (<em>in reg_array</em>) – Read-only signals direct from external logic</li>
+<li><strong>Reg_written</strong> (<em>out std_ulogic_vector</em>) – Status flags indicating when each register is written</li>
 </ul>
 </td>
 </tr>
@@ -351,7 +350,7 @@ to modify the library.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -468,17 +467,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -487,10 +483,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/reg_file.txt"
+      <a href="../../_sources/rst/modules/reg_file.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

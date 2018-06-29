@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>sizing &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>sizing &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="strings" href="strings.html" />
     <link rel="prev" title="secded_edac" href="secded_edac.html" />
    
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="sizing">
 <h1>sizing<a class="headerlink" href="#sizing" title="Permalink to this headline">¶</a></h1>
@@ -51,15 +50,17 @@
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides functions used to compute integer approximations
 of logarithms. The primary use of these functions is to determine the
-size of arrays using the <a class="reference internal" href="#extras.sizing.bit_size[natural return natural]" title="extras.sizing.bit_size[natural return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">bit_size()</span></tt></a> and <a class="reference internal" href="#extras.sizing.encoding_size[positive return natural]" title="extras.sizing.encoding_size[positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">encoding_size()</span></tt></a> functions. When put to
+size of arrays using the <a class="reference internal" href="#extras.sizing.bit_size[natural return natural]" title="extras.sizing.bit_size[natural return natural]"><code class="xref vhdl vhdl-func docutils literal"><span class="pre">bit_size()</span></code></a> and <a class="reference internal" href="#extras.sizing.encoding_size[positive return natural]" title="extras.sizing.encoding_size[positive return natural]"><code class="xref vhdl vhdl-func docutils literal"><span class="pre">encoding_size()</span></code></a> functions. When put to
 maximal use it is possible to create designs that eliminate hardcoded
 ranges and automatically resize their signals and variables by changing a
 few key constants or generics.</p>
 <p>These functions can be used in most synthesizers to compute ranges for
-arrays. The core functionality is provided in the <a class="reference internal" href="#extras.sizing.ceil_log[positive,positive return natural]" title="extras.sizing.ceil_log[positive,positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">ceil_log()</span></tt></a> and
-<a class="reference internal" href="#extras.sizing.floor_log[positive,positive return natural]" title="extras.sizing.floor_log[positive,positive return natural]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">floor_log()</span></tt></a> subprograms. These compute the logarithm in any integer base.
+arrays. The core functionality is provided in the <a class="reference internal" href="#extras.sizing.ceil_log[positive,positive return natural]" title="extras.sizing.ceil_log[positive,positive return natural]"><code class="xref vhdl vhdl-func docutils literal"><span class="pre">ceil_log()</span></code></a> and
+<a class="reference internal" href="#extras.sizing.floor_log[positive,positive return natural]" title="extras.sizing.floor_log[positive,positive return natural]"><code class="xref vhdl vhdl-func docutils literal"><span class="pre">floor_log()</span></code></a> subprograms. These compute the logarithm in any integer base.
 For convenenience, base-2 functions are also provided along with the array
-sizing functions.</p>
+sizing functions. See the <a class="reference internal" href="bcd_conversion.html"><span class="doc">bcd_conversion</span></a> implementation
+of <a class="reference internal" href="bcd_conversion.html#extras.bcd_conversion.decimal_size[natural return natural]" title="extras.bcd_conversion.decimal_size[natural return natural]"><code class="xref vhdl vhdl-func docutils literal"><span class="pre">decimal_size()</span></code></a> for a practical
+example of computing integer logs in base-10 using this package.</p>
 <div class="section" id="example-usage">
 <h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">constant</span> <span class="n">MAX_COUNT</span>  <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">1000</span><span class="p">;</span>
@@ -76,7 +77,7 @@ sizing functions.</p>
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="extras.sizing.floor_log[positive,positive return natural]">
-<tt class="descclassname">sizing.</tt><tt class="descname">floor_log</tt> <big>(</big><em>n : positive</em>; <em>b : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.sizing.floor_log[positive,positive return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sizing.</code><code class="descname">floor_log</code> <span class="sig-paren">(</span><em>n : positive</em>; <em>b : positive</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras.sizing.floor_log[positive,positive return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Compute the integer result of the function floor(log(n)).</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -84,8 +85,8 @@ sizing functions.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong> (<em>positive</em>) &#8211; Number to take logarithm of</li>
-<li><strong>b</strong> (<em>positive</em>) &#8211; Base for the logarithm</li>
+<li><strong>n</strong> (<em>positive</em>) – Number to take logarithm of</li>
+<li><strong>b</strong> (<em>positive</em>) – Base for the logarithm</li>
 </ul>
 </td>
 </tr>
@@ -102,7 +103,7 @@ sizing functions.</p>
 
 <dl class="function">
 <dt id="extras.sizing.ceil_log[positive,positive return natural]">
-<tt class="descclassname">sizing.</tt><tt class="descname">ceil_log</tt> <big>(</big><em>n : positive</em>; <em>b : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.sizing.ceil_log[positive,positive return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sizing.</code><code class="descname">ceil_log</code> <span class="sig-paren">(</span><em>n : positive</em>; <em>b : positive</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras.sizing.ceil_log[positive,positive return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Compute the integer result of the function ceil(log(n)) where b is the base.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -110,8 +111,8 @@ sizing functions.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong> (<em>positive</em>) &#8211; Number to take logarithm of</li>
-<li><strong>b</strong> (<em>positive</em>) &#8211; Base for the logarithm</li>
+<li><strong>n</strong> (<em>positive</em>) – Number to take logarithm of</li>
+<li><strong>b</strong> (<em>positive</em>) – Base for the logarithm</li>
 </ul>
 </td>
 </tr>
@@ -128,7 +129,7 @@ sizing functions.</p>
 
 <dl class="function">
 <dt id="extras.sizing.floor_log2[positive return natural]">
-<tt class="descclassname">sizing.</tt><tt class="descname">floor_log2</tt> <big>(</big><em>n : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.sizing.floor_log2[positive return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sizing.</code><code class="descname">floor_log2</code> <span class="sig-paren">(</span><em>n : positive</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras.sizing.floor_log2[positive return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Compute the integer result of the function floor(log2(n)).</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -136,7 +137,7 @@ sizing functions.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong> (<em>positive</em>) &#8211; Number to take logarithm of</li>
+<li><strong>n</strong> (<em>positive</em>) – Number to take logarithm of</li>
 </ul>
 </td>
 </tr>
@@ -149,7 +150,7 @@ sizing functions.</p>
 
 <dl class="function">
 <dt id="extras.sizing.ceil_log2[positive return natural]">
-<tt class="descclassname">sizing.</tt><tt class="descname">ceil_log2</tt> <big>(</big><em>n : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.sizing.ceil_log2[positive return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sizing.</code><code class="descname">ceil_log2</code> <span class="sig-paren">(</span><em>n : positive</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras.sizing.ceil_log2[positive return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Compute the integer result of the function ceil(log2(n)).</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -157,7 +158,7 @@ sizing functions.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong> (<em>positive</em>) &#8211; Number to take logarithm of</li>
+<li><strong>n</strong> (<em>positive</em>) – Number to take logarithm of</li>
 </ul>
 </td>
 </tr>
@@ -170,7 +171,7 @@ sizing functions.</p>
 
 <dl class="function">
 <dt id="extras.sizing.bit_size[natural return natural]">
-<tt class="descclassname">sizing.</tt><tt class="descname">bit_size</tt> <big>(</big><em>n : natural</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.sizing.bit_size[natural return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sizing.</code><code class="descname">bit_size</code> <span class="sig-paren">(</span><em>n : natural</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras.sizing.bit_size[natural return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Compute the total number of bits needed to represent a number in binary.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -178,7 +179,7 @@ sizing functions.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong> (<em>natural</em>) &#8211; Number to compute size from</li>
+<li><strong>n</strong> (<em>natural</em>) – Number to compute size from</li>
 </ul>
 </td>
 </tr>
@@ -191,7 +192,7 @@ sizing functions.</p>
 
 <dl class="function">
 <dt id="extras.sizing.encoding_size[positive return natural]">
-<tt class="descclassname">sizing.</tt><tt class="descname">encoding_size</tt> <big>(</big><em>n : positive</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.sizing.encoding_size[positive return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sizing.</code><code class="descname">encoding_size</code> <span class="sig-paren">(</span><em>n : positive</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras.sizing.encoding_size[positive return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Compute the number of bits needed to encode n items.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -199,7 +200,7 @@ sizing functions.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong> (<em>positive</em>) &#8211; Number to compute size from</li>
+<li><strong>n</strong> (<em>positive</em>) – Number to compute size from</li>
 </ul>
 </td>
 </tr>
@@ -212,16 +213,16 @@ sizing functions.</p>
 
 <dl class="function">
 <dt id="extras.sizing.signed_size[integer return natural]">
-<tt class="descclassname">sizing.</tt><tt class="descname">signed_size</tt> <big>(</big><em>n : integer</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras.sizing.signed_size[integer return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sizing.</code><code class="descname">signed_size</code> <span class="sig-paren">(</span><em>n : integer</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras.sizing.signed_size[integer return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div>Compute the total number of bits to represent a 2&#8217;s complement signed
+<div>Compute the total number of bits to represent a 2’s complement signed
 integer in binary.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong> (<em>integer</em>) &#8211; Number to compute size from</li>
+<li><strong>n</strong> (<em>integer</em>) – Number to compute size from</li>
 </ul>
 </td>
 </tr>
@@ -239,7 +240,7 @@ integer in binary.</div></blockquote>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -344,17 +345,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -363,10 +361,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/sizing.txt"
+      <a href="../../_sources/rst/modules/sizing.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

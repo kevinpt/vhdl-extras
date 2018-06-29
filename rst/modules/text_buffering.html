@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>text_buffering &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>text_buffering &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="timing_ops" href="timing_ops.html" />
     <link rel="prev" title="synchronizing" href="synchronizing.html" />
    
@@ -38,14 +37,14 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="text-buffering">
 <h1>text_buffering<a class="headerlink" href="#text-buffering" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/text_buffering.vhdl">extras/text_buffering.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="strings_unbounded.html"><em>strings_unbounded</em></a></p>
+<p><a class="reference internal" href="strings_unbounded.html"><span class="doc">strings_unbounded</span></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -82,19 +81,19 @@ to procedures without having to maintain a separate file handle.</p>
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="extras.text_buffering.buffer_line_acc">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">buffer_line_acc</tt><a class="headerlink" href="#extras.text_buffering.buffer_line_acc" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">buffer_line_acc</code><a class="headerlink" href="#extras.text_buffering.buffer_line_acc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pointer to next node in list.</p>
 </dd></dl>
 
 <dl class="type">
 <dt id="extras.text_buffering.buffer_line">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">buffer_line</tt><a class="headerlink" href="#extras.text_buffering.buffer_line" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">buffer_line</code><a class="headerlink" href="#extras.text_buffering.buffer_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Linked list node of text lines.</p>
 </dd></dl>
 
 <dl class="type">
 <dt id="extras.text_buffering.text_buffer">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">text_buffer</tt><a class="headerlink" href="#extras.text_buffering.text_buffer" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">text_buffer</code><a class="headerlink" href="#extras.text_buffering.text_buffer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Buffer of text lines.</p>
 </dd></dl>
 
@@ -103,7 +102,7 @@ to procedures without having to maintain a separate file handle.</p>
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="procedure">
 <dt id="extras.text_buffering.load_buffer[text,text_buffer]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">load_buffer</tt> <big>(</big><em>Fh : text</em>; <em>Buf : out text_buffer</em><big>)</big><a class="headerlink" href="#extras.text_buffering.load_buffer[text,text_buffer]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">load_buffer</code> <span class="sig-paren">(</span><em>Fh : text</em>; <em>Buf : out text_buffer</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.load_buffer[text,text_buffer]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Load a text file object into a buffer.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -111,8 +110,8 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Fh</strong> (<em>None text</em>) &#8211; File handle</li>
-<li><strong>Buf</strong> (<em>out text_buffer</em>) &#8211; Buffer created from file contents</li>
+<li><strong>Fh</strong> (<em>None text</em>) – File handle</li>
+<li><strong>Buf</strong> (<em>out text_buffer</em>) – Buffer created from file contents</li>
 </ul>
 </td>
 </tr>
@@ -122,7 +121,7 @@ to procedures without having to maintain a separate file handle.</p>
 
 <dl class="procedure">
 <dt id="extras.text_buffering.load_buffer[string,text_buffer]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">load_buffer</tt> <big>(</big><em>Fname : in string</em>; <em>Buf : out text_buffer</em><big>)</big><a class="headerlink" href="#extras.text_buffering.load_buffer[string,text_buffer]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">load_buffer</code> <span class="sig-paren">(</span><em>Fname : in string</em>; <em>Buf : out text_buffer</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.load_buffer[string,text_buffer]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Load a file into a buffer.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -130,8 +129,8 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Fname</strong> (<em>in string</em>) &#8211; Name of text file to read</li>
-<li><strong>Buf</strong> (<em>out text_buffer</em>) &#8211; Buffer created from file contents</li>
+<li><strong>Fname</strong> (<em>in string</em>) – Name of text file to read</li>
+<li><strong>Buf</strong> (<em>out text_buffer</em>) – Buffer created from file contents</li>
 </ul>
 </td>
 </tr>
@@ -141,7 +140,7 @@ to procedures without having to maintain a separate file handle.</p>
 
 <dl class="procedure">
 <dt id="extras.text_buffering.append_file[text,text_buffer]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">append_file</tt> <big>(</big><em>Fh : text</em>; <em>Buf : inout text_buffer</em><big>)</big><a class="headerlink" href="#extras.text_buffering.append_file[text,text_buffer]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">append_file</code> <span class="sig-paren">(</span><em>Fh : text</em>; <em>Buf : inout text_buffer</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.append_file[text,text_buffer]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append a text file object to an existing buffer.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -149,8 +148,8 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Fh</strong> (<em>None text</em>) &#8211; File handle</li>
-<li><strong>Buf</strong> (<em>inout text_buffer</em>) &#8211; Buffer to append onto</li>
+<li><strong>Fh</strong> (<em>None text</em>) – File handle</li>
+<li><strong>Buf</strong> (<em>inout text_buffer</em>) – Buffer to append onto</li>
 </ul>
 </td>
 </tr>
@@ -160,7 +159,7 @@ to procedures without having to maintain a separate file handle.</p>
 
 <dl class="procedure">
 <dt id="extras.text_buffering.append_file[string,text_buffer]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">append_file</tt> <big>(</big><em>Fname : in string</em>; <em>Buf : inout text_buffer</em><big>)</big><a class="headerlink" href="#extras.text_buffering.append_file[string,text_buffer]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">append_file</code> <span class="sig-paren">(</span><em>Fname : in string</em>; <em>Buf : inout text_buffer</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.append_file[string,text_buffer]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append a text file to an existing buffer.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -168,8 +167,8 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Fname</strong> (<em>in string</em>) &#8211; Name of text file to read</li>
-<li><strong>Buf</strong> (<em>inout text_buffer</em>) &#8211; Buffer to append onto</li>
+<li><strong>Fname</strong> (<em>in string</em>) – Name of text file to read</li>
+<li><strong>Buf</strong> (<em>inout text_buffer</em>) – Buffer to append onto</li>
 </ul>
 </td>
 </tr>
@@ -179,7 +178,7 @@ to procedures without having to maintain a separate file handle.</p>
 
 <dl class="procedure">
 <dt id="extras.text_buffering.append[unbounded_string,text_buffer]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">append</tt> <big>(</big><em>One_line : in unbounded_string</em>; <em>Buf : inout text_buffer</em><big>)</big><a class="headerlink" href="#extras.text_buffering.append[unbounded_string,text_buffer]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">append</code> <span class="sig-paren">(</span><em>One_line : in unbounded_string</em>; <em>Buf : inout text_buffer</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.append[unbounded_string,text_buffer]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append an unbounded string to a buffer.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -187,8 +186,8 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>One_line</strong> (<em>in unbounded_string</em>) &#8211; String to append</li>
-<li><strong>Buf</strong> (<em>inout text_buffer</em>) &#8211; Buffer to append onto</li>
+<li><strong>One_line</strong> (<em>in unbounded_string</em>) – String to append</li>
+<li><strong>Buf</strong> (<em>inout text_buffer</em>) – Buffer to append onto</li>
 </ul>
 </td>
 </tr>
@@ -198,7 +197,7 @@ to procedures without having to maintain a separate file handle.</p>
 
 <dl class="procedure">
 <dt id="extras.text_buffering.append[string,text_buffer]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">append</tt> <big>(</big><em>One_line : in string</em>; <em>Buf : inout text_buffer</em><big>)</big><a class="headerlink" href="#extras.text_buffering.append[string,text_buffer]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">append</code> <span class="sig-paren">(</span><em>One_line : in string</em>; <em>Buf : inout text_buffer</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.append[string,text_buffer]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append a string to a buffer</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -206,8 +205,8 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>One_line</strong> (<em>in string</em>) &#8211; String to append</li>
-<li><strong>Buf</strong> (<em>inout text_buffer</em>) &#8211; Buffer to append onto</li>
+<li><strong>One_line</strong> (<em>in string</em>) – String to append</li>
+<li><strong>Buf</strong> (<em>inout text_buffer</em>) – Buffer to append onto</li>
 </ul>
 </td>
 </tr>
@@ -217,7 +216,7 @@ to procedures without having to maintain a separate file handle.</p>
 
 <dl class="procedure">
 <dt id="extras.text_buffering.write[text,text_buffer]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">write</tt> <big>(</big><em>Fh : text</em>; <em>Buf : in text_buffer</em><big>)</big><a class="headerlink" href="#extras.text_buffering.write[text,text_buffer]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">write</code> <span class="sig-paren">(</span><em>Fh : text</em>; <em>Buf : in text_buffer</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.write[text,text_buffer]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Write a buffer to a text file object.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -225,8 +224,8 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Fh</strong> (<em>None text</em>) &#8211; File handle</li>
-<li><strong>Buf</strong> (<em>in text_buffer</em>) &#8211; Buffer to write into the file</li>
+<li><strong>Fh</strong> (<em>None text</em>) – File handle</li>
+<li><strong>Buf</strong> (<em>in text_buffer</em>) – Buffer to write into the file</li>
 </ul>
 </td>
 </tr>
@@ -236,7 +235,7 @@ to procedures without having to maintain a separate file handle.</p>
 
 <dl class="procedure">
 <dt id="extras.text_buffering.write[string,text_buffer]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">write</tt> <big>(</big><em>Fname : string</em>; <em>Buf : in text_buffer</em><big>)</big><a class="headerlink" href="#extras.text_buffering.write[string,text_buffer]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">write</code> <span class="sig-paren">(</span><em>Fname : string</em>; <em>Buf : in text_buffer</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.write[string,text_buffer]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Write a buffer to a text file.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -244,8 +243,8 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Fname</strong> (<em>None string</em>) &#8211; Name of text file to write</li>
-<li><strong>Buf</strong> (<em>in text_buffer</em>) &#8211; Buffer to write into the file</li>
+<li><strong>Fname</strong> (<em>None string</em>) – Name of text file to write</li>
+<li><strong>Buf</strong> (<em>in text_buffer</em>) – Buffer to write into the file</li>
 </ul>
 </td>
 </tr>
@@ -255,7 +254,7 @@ to procedures without having to maintain a separate file handle.</p>
 
 <dl class="procedure">
 <dt id="extras.text_buffering.nextline[text_buffer,unbounded_string]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">nextline</tt> <big>(</big><em>Buf : inout text_buffer</em>; <em>Tl : inout unbounded_string</em><big>)</big><a class="headerlink" href="#extras.text_buffering.nextline[text_buffer,unbounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">nextline</code> <span class="sig-paren">(</span><em>Buf : inout text_buffer</em>; <em>Tl : inout unbounded_string</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.nextline[text_buffer,unbounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Retrieve the current line from a buffer.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -263,8 +262,8 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Buf</strong> (<em>inout text_buffer</em>) &#8211; Buffer to get line from</li>
-<li><strong>Tl</strong> (<em>inout unbounded_string</em>) &#8211; Current line in the buffer</li>
+<li><strong>Buf</strong> (<em>inout text_buffer</em>) – Buffer to get line from</li>
+<li><strong>Tl</strong> (<em>inout unbounded_string</em>) – Current line in the buffer</li>
 </ul>
 </td>
 </tr>
@@ -274,7 +273,7 @@ to procedures without having to maintain a separate file handle.</p>
 
 <dl class="procedure">
 <dt id="extras.text_buffering.setline[text_buffer,positive]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">setline</tt> <big>(</big><em>Buf : inout text_buffer</em>; <em>N : in positive</em><big>)</big><a class="headerlink" href="#extras.text_buffering.setline[text_buffer,positive]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">setline</code> <span class="sig-paren">(</span><em>Buf : inout text_buffer</em>; <em>N : in positive</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.setline[text_buffer,positive]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Move to a specific line in the buffer.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -282,8 +281,8 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Buf</strong> (<em>inout text_buffer</em>) &#8211; Buffer to seek into</li>
-<li><strong>N</strong> (<em>in positive</em>) &#8211; Line number (zero based)</li>
+<li><strong>Buf</strong> (<em>inout text_buffer</em>) – Buffer to seek into</li>
+<li><strong>N</strong> (<em>in positive</em>) – Line number (zero based)</li>
 </ul>
 </td>
 </tr>
@@ -293,7 +292,7 @@ to procedures without having to maintain a separate file handle.</p>
 
 <dl class="procedure">
 <dt id="extras.text_buffering.endbuffer[text_buffer,boolean]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">endbuffer</tt> <big>(</big><em>Buf : in text_buffer</em>; <em>At_end : out boolean</em><big>)</big><a class="headerlink" href="#extras.text_buffering.endbuffer[text_buffer,boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">endbuffer</code> <span class="sig-paren">(</span><em>Buf : in text_buffer</em>; <em>At_end : out boolean</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.endbuffer[text_buffer,boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Check if the end of the buffer has been reached.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -301,8 +300,8 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Buf</strong> (<em>in text_buffer</em>) &#8211; Buffer to test</li>
-<li><strong>At_end</strong> (<em>out boolean</em>) &#8211; true when the buffer line pointer is at the end</li>
+<li><strong>Buf</strong> (<em>in text_buffer</em>) – Buffer to test</li>
+<li><strong>At_end</strong> (<em>out boolean</em>) – true when the buffer line pointer is at the end</li>
 </ul>
 </td>
 </tr>
@@ -312,7 +311,7 @@ to procedures without having to maintain a separate file handle.</p>
 
 <dl class="procedure">
 <dt id="extras.text_buffering.free[text_buffer]">
-<tt class="descclassname">text_buffering.</tt><tt class="descname">free</tt> <big>(</big><em>Buf : inout text_buffer</em><big>)</big><a class="headerlink" href="#extras.text_buffering.free[text_buffer]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">text_buffering.</code><code class="descname">free</code> <span class="sig-paren">(</span><em>Buf : inout text_buffer</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.text_buffering.free[text_buffer]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Deallocate the buffer contents</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -320,7 +319,7 @@ to procedures without having to maintain a separate file handle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Buf</strong> (<em>inout text_buffer</em>) &#8211; Buffer to free</li>
+<li><strong>Buf</strong> (<em>inout text_buffer</em>) – Buffer to free</li>
 </ul>
 </td>
 </tr>
@@ -335,7 +334,7 @@ to procedures without having to maintain a separate file handle.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -441,17 +440,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -460,10 +456,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/text_buffering.txt"
+      <a href="../../_sources/rst/modules/text_buffering.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

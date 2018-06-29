@@ -1,33 +1,32 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>parity_ops &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>parity_ops &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="pipelining" href="pipelining.html" />
-    <link rel="prev" title="muxing" href="muxing.html" />
+    <link rel="prev" title="oscillator" href="oscillator.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="parity-ops">
 <h1>parity_ops<a class="headerlink" href="#parity-ops" title="Permalink to this headline">¶</a></h1>
@@ -55,7 +54,7 @@
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="extras.parity_ops.parity_kind">
-<tt class="descclassname">parity_ops.</tt><tt class="descname">parity_kind</tt><a class="headerlink" href="#extras.parity_ops.parity_kind" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">parity_ops.</code><code class="descname">parity_kind</code><a class="headerlink" href="#extras.parity_ops.parity_kind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Identify the type of parity</p>
 </dd></dl>
 
@@ -64,7 +63,7 @@
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="extras.parity_ops.parity[parity_kind,std_ulogic_vector return std_ulogic]">
-<tt class="descclassname">parity_ops.</tt><tt class="descname">parity</tt> <big>(</big><em>Ptype : parity_kind</em>; <em>Val : std_ulogic_vector</em><big>)</big> &rarr; std_ulogic<a class="headerlink" href="#extras.parity_ops.parity[parity_kind,std_ulogic_vector return std_ulogic]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">parity_ops.</code><code class="descname">parity</code> <span class="sig-paren">(</span><em>Ptype : parity_kind</em>; <em>Val : std_ulogic_vector</em><span class="sig-paren">)</span> &#x2192; std_ulogic<a class="headerlink" href="#extras.parity_ops.parity[parity_kind,std_ulogic_vector return std_ulogic]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Compute parity.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -72,8 +71,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Ptype</strong> (<em>parity_kind</em>) &#8211; Type of parity; odd or even</li>
-<li><strong>Val</strong> (<em>std_ulogic_vector</em>) &#8211; Value to generate parity for</li>
+<li><strong>Ptype</strong> (<em>parity_kind</em>) – Type of parity; odd or even</li>
+<li><strong>Val</strong> (<em>std_ulogic_vector</em>) – Value to generate parity for</li>
 </ul>
 </td>
 </tr>
@@ -86,7 +85,7 @@
 
 <dl class="function">
 <dt id="extras.parity_ops.check_parity[parity_kind,std_ulogic_vector,std_ulogic return boolean]">
-<tt class="descclassname">parity_ops.</tt><tt class="descname">check_parity</tt> <big>(</big><em>Ptype : parity_kind</em>; <em>Val : std_ulogic_vector</em>; <em>Parity_bit : std_ulogic</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.parity_ops.check_parity[parity_kind,std_ulogic_vector,std_ulogic return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">parity_ops.</code><code class="descname">check_parity</code> <span class="sig-paren">(</span><em>Ptype : parity_kind</em>; <em>Val : std_ulogic_vector</em>; <em>Parity_bit : std_ulogic</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras.parity_ops.check_parity[parity_kind,std_ulogic_vector,std_ulogic return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Check parity for an error.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -94,9 +93,9 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Ptype</strong> (<em>parity_kind</em>) &#8211; Type of parity; odd or even</li>
-<li><strong>Val</strong> (<em>std_ulogic_vector</em>) &#8211; Value to test parity for</li>
-<li><strong>Parity_bit</strong> (<em>std_ulogic</em>) &#8211; Parity bit to check</li>
+<li><strong>Ptype</strong> (<em>parity_kind</em>) – Type of parity; odd or even</li>
+<li><strong>Val</strong> (<em>std_ulogic_vector</em>) – Value to test parity for</li>
+<li><strong>Parity_bit</strong> (<em>std_ulogic</em>) – Parity bit to check</li>
 </ul>
 </td>
 </tr>
@@ -114,7 +113,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -139,7 +138,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="muxing.html" title="previous chapter">muxing</a></li>
+      <li>Previous: <a href="oscillator.html" title="previous chapter">oscillator</a></li>
       <li>Next: <a href="pipelining.html" title="next chapter">pipelining</a></li>
   </ul></li>
 </ul>
@@ -217,17 +216,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -236,10 +232,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/parity_ops.txt"
+      <a href="../../_sources/rst/modules/parity_ops.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

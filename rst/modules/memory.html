@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>memory &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>memory &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="muxing" href="muxing.html" />
     <link rel="prev" title="lfsr_ops" href="lfsr_ops.html" />
    
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="memory">
 <h1>memory<a class="headerlink" href="#memory" title="Permalink to this headline">¶</a></h1>
@@ -50,16 +49,16 @@
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides general purpose components for inferred RAM and ROM.
-These memories share a <tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> generic which will optionally generate
+These memories share a <code class="docutils literal"><span class="pre">SYNC_READ</span></code> generic which will optionally generate
 synchronous or asynchronous read ports for each instance. On Xilinx devices
 asynchronous read forces the synthesis of distributed RAM using LUTs rather
-than BRAMs. When <tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> is false the Read enable input is unused and
-the read port clock can be tied to &#8216;0&#8217;.</p>
+than BRAMs. When <code class="docutils literal"><span class="pre">SYNC_READ</span></code> is false the Read enable input is unused and
+the read port clock can be tied to ‘0’.</p>
 <p>The ROM component gets its contents using synthesizable file IO to read a
 list of binary or hex values.</p>
 <div class="section" id="example-usage">
 <h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
-<p>Create a 256-byte ROM with contents supplied by the binary image file &#8220;rom.img&#8221;:</p>
+<p>Create a 256-byte ROM with contents supplied by the binary image file “rom.img”:</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="n">r</span><span class="o">:</span> <span class="n">rom</span>
   <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
     <span class="n">ROM_FILE</span> <span class="o">=&gt;</span> <span class="s">&quot;rom.img&quot;</span><span class="p">,</span>
@@ -80,7 +79,7 @@ list of binary or hex values.</p>
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="extras.memory.rom_format">
-<tt class="descclassname">memory.</tt><tt class="descname">rom_format</tt><a class="headerlink" href="#extras.memory.rom_format" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">memory.</code><code class="descname">rom_format</code><a class="headerlink" href="#extras.memory.rom_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Data file format. Either binary or ASCII hex.</p>
 </dd></dl>
 
@@ -113,27 +112,27 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.memory.dual_port_ram">
-<tt class="descclassname">memory.</tt><tt class="descname">dual_port_ram</tt><a class="headerlink" href="#extras.memory.dual_port_ram" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">memory.</code><code class="descname">dual_port_ram</code><a class="headerlink" href="#extras.memory.dual_port_ram" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dual-ported RAM supporting writes and reads from separate clock domains.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; Number or words in memory</li>
-<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; Register outputs of read port memory</li>
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) – Number or words in memory</li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) – Register outputs of read port memory</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Wr_clock</strong> (<em>in std_ulogic</em>) &#8211; Write port clock</li>
-<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; Write enable</li>
-<li><strong>Wr_addr</strong> (<em>in natural</em>) &#8211; Write port address</li>
-<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) &#8211; Write port data</li>
-<li><strong>Rd_clock</strong> (<em>in std_ulogic</em>) &#8211; Read port clock</li>
-<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; Read enable</li>
-<li><strong>Rd_addr</strong> (<em>in natural</em>) &#8211; Read port address</li>
-<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) &#8211; Read port data</li>
+<li><strong>Wr_clock</strong> (<em>in std_ulogic</em>) – Write port clock</li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) – Write enable</li>
+<li><strong>Wr_addr</strong> (<em>in natural</em>) – Write port address</li>
+<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) – Write port data</li>
+<li><strong>Rd_clock</strong> (<em>in std_ulogic</em>) – Read port clock</li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) – Read enable</li>
+<li><strong>Rd_addr</strong> (<em>in natural</em>) – Read port address</li>
+<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) – Read port data</li>
 </ul>
 </td>
 </tr>
@@ -166,25 +165,25 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.memory.rom">
-<tt class="descclassname">memory.</tt><tt class="descname">rom</tt><a class="headerlink" href="#extras.memory.rom" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">memory.</code><code class="descname">rom</code><a class="headerlink" href="#extras.memory.rom" title="Permalink to this definition">¶</a></dt>
 <dd><p>A synthesizable ROM using a file to specify the contents.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>ROM_FILE</strong> (<em>string</em>) &#8211; Name of file with ROM data</li>
-<li><strong>FORMAT</strong> (<em>rom_format</em>) &#8211; File encoding</li>
-<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; Number or words in memory</li>
-<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; Register outputs of read port memory</li>
+<li><strong>ROM_FILE</strong> (<em>string</em>) – Name of file with ROM data</li>
+<li><strong>FORMAT</strong> (<em>rom_format</em>) – File encoding</li>
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) – Number or words in memory</li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) – Register outputs of read port memory</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; Read enable</li>
-<li><strong>Addr</strong> (<em>in natural</em>) &#8211; Read address</li>
-<li><strong>Data</strong> (<em>out std_ulogic_vector</em>) &#8211; Data at current address</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) – Read enable</li>
+<li><strong>Addr</strong> (<em>in natural</em>) – Read address</li>
+<li><strong>Data</strong> (<em>out std_ulogic_vector</em>) – Data at current address</li>
 </ul>
 </td>
 </tr>
@@ -200,7 +199,7 @@ end component;</p></object>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -310,17 +309,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -329,10 +325,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/memory.txt"
+      <a href="../../_sources/rst/modules/memory.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

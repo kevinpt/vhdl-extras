@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>strings_bounded &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>strings_bounded &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="strings_fixed" href="strings_fixed.html" />
     <link rel="prev" title="strings" href="strings.html" />
    
@@ -38,28 +37,28 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="strings-bounded">
 <h1>strings_bounded<a class="headerlink" href="#strings-bounded" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/strings_bounded.vhdl">extras_2008/strings_bounded.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="strings.html"><em>strings</em></a>,
-<a class="reference internal" href="strings_maps.html"><em>strings_maps</em></a>,
-<a class="reference internal" href="strings_maps_constants.html"><em>strings_maps_constants</em></a>,
-<a class="reference internal" href="strings_fixed.html"><em>strings_fixed</em></a></p>
+<p><a class="reference internal" href="strings.html"><span class="doc">strings</span></a>,
+<a class="reference internal" href="strings_maps.html"><span class="doc">strings_maps</span></a>,
+<a class="reference internal" href="strings_maps_constants.html"><span class="doc">strings_maps_constants</span></a>,
+<a class="reference internal" href="strings_fixed.html"><span class="doc">strings_fixed</span></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides a string library for operating on bounded length
-strings. This is a clone of the Ada&#8216;95 library <tt class="docutils literal"><span class="pre">Ada.Strings.Bounded</span></tt>. It
+strings. This is a clone of the Ada‘95 library <code class="docutils literal"><span class="pre">Ada.Strings.Bounded</span></code>. It
 is a nearly complete implementation with only the procedures taking
 character mapping functions omitted because of VHDL limitations.
 This package requires support for VHDL-2008 package generics. The
 maximum size of a bounded string is established by instantiating a new
-package with the <tt class="docutils literal"><span class="pre">MAX</span></tt> generic set to the desired size.</p>
-<p>Unlike <a class="reference internal" href="strings_fixed.html"><em>fixed length strings</em></a> which must always be
+package with the <code class="docutils literal"><span class="pre">MAX</span></code> generic set to the desired size.</p>
+<p>Unlike <a class="reference internal" href="strings_fixed.html"><span class="doc">fixed length strings</span></a> which must always be
 padded to their full length, bounded strings can have any length up to the
 maximum set when the package is instantiated.</p>
 <div class="section" id="example-usage">
@@ -85,7 +84,7 @@ maximum set when the package is instantiated.</p>
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="extras_2008.strings_bounded.bounded_string">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">bounded_string</tt><a class="headerlink" href="#extras_2008.strings_bounded.bounded_string" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">bounded_string</code><a class="headerlink" href="#extras_2008.strings_bounded.bounded_string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bounded string object.</p>
 </dd></dl>
 
@@ -94,8 +93,8 @@ maximum set when the package is instantiated.</p>
 <h2>Subtypes<a class="headerlink" href="#subtypes" title="Permalink to this headline">¶</a></h2>
 <dl class="subtype">
 <dt id="extras_2008.strings_bounded.length_range">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">length_range</tt><a class="headerlink" href="#extras_2008.strings_bounded.length_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>String length constrained to maximum length set by the <tt class="docutils literal"><span class="pre">MAX</span></tt> package generic.</p>
+<code class="descclassname">strings_bounded.</code><code class="descname">length_range</code><a class="headerlink" href="#extras_2008.strings_bounded.length_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>String length constrained to maximum length set by the <code class="docutils literal"><span class="pre">MAX</span></code> package generic.</p>
 </dd></dl>
 
 </div>
@@ -103,7 +102,7 @@ maximum set when the package is instantiated.</p>
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="extras_2008.strings_bounded.length[bounded_string return length_range]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">length</tt> <big>(</big><em>source : bounded_string</em><big>)</big> &rarr; length_range<a class="headerlink" href="#extras_2008.strings_bounded.length[bounded_string return length_range]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">length</code> <span class="sig-paren">(</span><em>source : bounded_string</em><span class="sig-paren">)</span> &#x2192; length_range<a class="headerlink" href="#extras_2008.strings_bounded.length[bounded_string return length_range]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Return the length of a bounded_string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -111,7 +110,7 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to check length of</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to check length of</li>
 </ul>
 </td>
 </tr>
@@ -124,7 +123,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.to_bounded_string[string,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">to_bounded_string</tt> <big>(</big><em>source : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.to_bounded_string[string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">to_bounded_string</code> <span class="sig-paren">(</span><em>source : string</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.to_bounded_string[string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert a string to bounded_string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -132,8 +131,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>string</em>) &#8211; String to convert</li>
-<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+<li><strong>source</strong> (<em>string</em>) – String to convert</li>
+<li><strong>drop</strong> (<em>truncation</em>) – Truncation behavior for longer strings</li>
 </ul>
 </td>
 </tr>
@@ -146,7 +145,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.to_string[bounded_string return string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">to_string</tt> <big>(</big><em>source : bounded_string</em><big>)</big> &rarr; string<a class="headerlink" href="#extras_2008.strings_bounded.to_string[bounded_string return string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">to_string</code> <span class="sig-paren">(</span><em>source : bounded_string</em><span class="sig-paren">)</span> &#x2192; string<a class="headerlink" href="#extras_2008.strings_bounded.to_string[bounded_string return string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert a bounded_string to string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -154,7 +153,7 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to convert</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to convert</li>
 </ul>
 </td>
 </tr>
@@ -167,7 +166,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.append[bounded_string,bounded_string,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>l : bounded_string</em>; <em>r : bounded_string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">append</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : bounded_string</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append two bounded_strings.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -175,9 +174,9 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; Left string</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
-<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – Left string</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Right string</li>
+<li><strong>drop</strong> (<em>truncation</em>) – Truncation behavior for longer strings</li>
 </ul>
 </td>
 </tr>
@@ -190,7 +189,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.append[bounded_string,string,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">append</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : string</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append a string to a bounded_string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -198,9 +197,9 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; Left string</li>
-<li><strong>r</strong> (<em>string</em>) &#8211; Right string</li>
-<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – Left string</li>
+<li><strong>r</strong> (<em>string</em>) – Right string</li>
+<li><strong>drop</strong> (<em>truncation</em>) – Truncation behavior for longer strings</li>
 </ul>
 </td>
 </tr>
@@ -213,7 +212,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.append[string,bounded_string,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.append[string,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">append</code> <span class="sig-paren">(</span><em>l : string</em>; <em>r : bounded_string</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.append[string,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append a bounded_string to a string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -221,9 +220,9 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>string</em>) &#8211; Left string</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
-<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+<li><strong>l</strong> (<em>string</em>) – Left string</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Right string</li>
+<li><strong>drop</strong> (<em>truncation</em>) – Truncation behavior for longer strings</li>
 </ul>
 </td>
 </tr>
@@ -236,7 +235,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.append[bounded_string,character,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>l : bounded_string</em>; <em>r : character</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">append</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : character</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append a character to a bounded_string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -244,9 +243,9 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; Left string</li>
-<li><strong>r</strong> (<em>character</em>) &#8211; Right character</li>
-<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – Left string</li>
+<li><strong>r</strong> (<em>character</em>) – Right character</li>
+<li><strong>drop</strong> (<em>truncation</em>) – Truncation behavior for longer strings</li>
 </ul>
 </td>
 </tr>
@@ -259,7 +258,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.append[character,bounded_string,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>l : character</em>; <em>r : bounded_string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.append[character,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">append</code> <span class="sig-paren">(</span><em>l : character</em>; <em>r : bounded_string</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.append[character,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append a bounded_string to a character.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -267,9 +266,9 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>character</em>) &#8211; Left character</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
-<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior for longer strings</li>
+<li><strong>l</strong> (<em>character</em>) – Left character</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Right string</li>
+<li><strong>drop</strong> (<em>truncation</em>) – Truncation behavior for longer strings</li>
 </ul>
 </td>
 </tr>
@@ -282,7 +281,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.append[bounded_string,bounded_string,truncation]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout bounded_string</em>; <em>new_item : in bounded_string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,bounded_string,truncation]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">append</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>new_item : in bounded_string</em>; <em>drop : in truncation := error</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,bounded_string,truncation]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append a bounded_string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -290,9 +289,9 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to append onto</li>
-<li><strong>new_item</strong> (<em>in bounded_string</em>) &#8211; String to append</li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation behavior for longer strings</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to append onto</li>
+<li><strong>new_item</strong> (<em>in bounded_string</em>) – String to append</li>
+<li><strong>drop</strong> (<em>in truncation</em>) – Truncation behavior for longer strings</li>
 </ul>
 </td>
 </tr>
@@ -302,7 +301,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.append[bounded_string,string,truncation]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout bounded_string</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">append</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,string,truncation]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append a string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -310,9 +309,9 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to append onto</li>
-<li><strong>new_item</strong> (<em>in string</em>) &#8211; String to append</li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation behavior for longer strings</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to append onto</li>
+<li><strong>new_item</strong> (<em>in string</em>) – String to append</li>
+<li><strong>drop</strong> (<em>in truncation</em>) – Truncation behavior for longer strings</li>
 </ul>
 </td>
 </tr>
@@ -322,7 +321,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.append[bounded_string,character,truncation]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">append</tt> <big>(</big><em>source : inout bounded_string</em>; <em>new_item : in character</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,character,truncation]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">append</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>new_item : in character</em>; <em>drop : in truncation := error</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.append[bounded_string,character,truncation]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Append a character.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -330,9 +329,9 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to append onto</li>
-<li><strong>new_item</strong> (<em>in character</em>) &#8211; Character to append</li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation behavior for longer strings</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to append onto</li>
+<li><strong>new_item</strong> (<em>in character</em>) – Character to append</li>
+<li><strong>drop</strong> (<em>in truncation</em>) – Truncation behavior for longer strings</li>
 </ul>
 </td>
 </tr>
@@ -342,7 +341,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&amp;&quot;[bounded_string,bounded_string return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&amp;&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : bounded_string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."&"[bounded_string,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&amp;&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."&"[bounded_string,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Concatenate two strings.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -350,8 +349,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; Left string</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – Left string</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Right string</li>
 </ul>
 </td>
 </tr>
@@ -364,7 +363,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&amp;&quot;[bounded_string,string return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&amp;&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."&"[bounded_string,string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&amp;&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : string</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."&"[bounded_string,string return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Concatenate a string to a bounded_string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -372,8 +371,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; Left string</li>
-<li><strong>r</strong> (<em>string</em>) &#8211; Right string</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – Left string</li>
+<li><strong>r</strong> (<em>string</em>) – Right string</li>
 </ul>
 </td>
 </tr>
@@ -386,7 +385,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&amp;&quot;[string,bounded_string return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&amp;&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."&"[string,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&amp;&quot;</code> <span class="sig-paren">(</span><em>l : string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."&"[string,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Concatenate a bounded_string to a string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -394,8 +393,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>string</em>) &#8211; Left string</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
+<li><strong>l</strong> (<em>string</em>) – Left string</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Right string</li>
 </ul>
 </td>
 </tr>
@@ -408,7 +407,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&amp;&quot;[bounded_string,character return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&amp;&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : character</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."&"[bounded_string,character return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&amp;&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : character</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."&"[bounded_string,character return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Concatenate a character to a string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -416,8 +415,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; Left string</li>
-<li><strong>r</strong> (<em>character</em>) &#8211; Right character</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – Left string</li>
+<li><strong>r</strong> (<em>character</em>) – Right character</li>
 </ul>
 </td>
 </tr>
@@ -430,7 +429,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&amp;&quot;[character,bounded_string return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&amp;&quot;</tt> <big>(</big><em>l : character</em>; <em>r : bounded_string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."&"[character,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&amp;&quot;</code> <span class="sig-paren">(</span><em>l : character</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."&"[character,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Concatenate a string to a character.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -438,8 +437,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>character</em>) &#8211; Left character</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Right string</li>
+<li><strong>l</strong> (<em>character</em>) – Left character</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Right string</li>
 </ul>
 </td>
 </tr>
@@ -452,7 +451,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.element[bounded_string,positive return character]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">element</tt> <big>(</big><em>source : bounded_string</em>; <em>index : positive</em><big>)</big> &rarr; character<a class="headerlink" href="#extras_2008.strings_bounded.element[bounded_string,positive return character]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">element</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>index : positive</em><span class="sig-paren">)</span> &#x2192; character<a class="headerlink" href="#extras_2008.strings_bounded.element[bounded_string,positive return character]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Return the character at the index position.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -460,8 +459,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to index into</li>
-<li><strong>index</strong> (<em>positive</em>) &#8211; Position of the character in the string</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to index into</li>
+<li><strong>index</strong> (<em>positive</em>) – Position of the character in the string</li>
 </ul>
 </td>
 </tr>
@@ -474,7 +473,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.replace_element[bounded_string,positive,character]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">replace_element</tt> <big>(</big><em>source : inout bounded_string</em>; <em>index : in positive</em>; <em>by : in character</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.replace_element[bounded_string,positive,character]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">replace_element</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>index : in positive</em>; <em>by : in character</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.replace_element[bounded_string,positive,character]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Replace the character at the index position.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -482,9 +481,9 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to have element replaced</li>
-<li><strong>index</strong> (<em>in positive</em>) &#8211; Index position to insert new character</li>
-<li><strong>by</strong> (<em>in character</em>) &#8211; Character to place in the string</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to have element replaced</li>
+<li><strong>index</strong> (<em>in positive</em>) – Index position to insert new character</li>
+<li><strong>by</strong> (<em>in character</em>) – Character to place in the string</li>
 </ul>
 </td>
 </tr>
@@ -494,7 +493,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.slice[bounded_string,positive,natural return string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">slice</tt> <big>(</big><em>source : bounded_string</em>; <em>low : positive</em>; <em>high : natural</em><big>)</big> &rarr; string<a class="headerlink" href="#extras_2008.strings_bounded.slice[bounded_string,positive,natural return string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">slice</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>low : positive</em>; <em>high : natural</em><span class="sig-paren">)</span> &#x2192; string<a class="headerlink" href="#extras_2008.strings_bounded.slice[bounded_string,positive,natural return string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Return a sliced range of a bounded_string.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -502,9 +501,9 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to slice</li>
-<li><strong>low</strong> (<em>positive</em>) &#8211; low index of slice (inclusive)</li>
-<li><strong>high</strong> (<em>natural</em>) &#8211; high index of slice (inclusive)</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to slice</li>
+<li><strong>low</strong> (<em>positive</em>) – low index of slice (inclusive)</li>
+<li><strong>high</strong> (<em>natural</em>) – high index of slice (inclusive)</li>
 </ul>
 </td>
 </tr>
@@ -517,7 +516,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;=&quot;[bounded_string,bounded_string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;=&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded."="[bounded_string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;=&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded."="[bounded_string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test two bounded strings for equality.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -525,8 +524,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -539,7 +538,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;=&quot;[bounded_string,string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;=&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded."="[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;=&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded."="[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test a bounded_string and plain string for equality.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -547,8 +546,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -561,7 +560,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;=&quot;[string,bounded_string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;=&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded."="[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;=&quot;</code> <span class="sig-paren">(</span><em>l : string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded."="[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test a plain string and a bounded_string for equality.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -569,8 +568,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -583,7 +582,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&lt;&quot;[bounded_string,bounded_string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<"[bounded_string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&lt;&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<"[bounded_string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test two bounded_strings for one lexicographically before the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -591,8 +590,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -605,7 +604,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&lt;&quot;[bounded_string,string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<"[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&lt;&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<"[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test a bounded_string and a plain string for one lexicographically before the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -613,8 +612,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -627,7 +626,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&lt;&quot;[string,bounded_string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<"[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&lt;&quot;</code> <span class="sig-paren">(</span><em>l : string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<"[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test a plain string and a bounded_string for one lexicographically before the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -635,8 +634,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -649,7 +648,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&lt;=&quot;[bounded_string,bounded_string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;=&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<="[bounded_string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&lt;=&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<="[bounded_string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test two bounded_strings for equality or one lexicographically before the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -657,8 +656,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -671,7 +670,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&lt;=&quot;[bounded_string,string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;=&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<="[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&lt;=&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<="[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test a bounded_string and a plain string for equality or one lexicographically before the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -679,8 +678,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -693,7 +692,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&lt;=&quot;[string,bounded_string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&lt;=&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<="[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&lt;=&quot;</code> <span class="sig-paren">(</span><em>l : string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded."<="[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test a plain string and a bounded_string for equality or one lexicographically before the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -701,8 +700,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -715,7 +714,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&gt;&quot;[bounded_string,bounded_string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">"[bounded_string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&gt;&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">"[bounded_string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test two bounded_strings for one lexicographically after the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -723,8 +722,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -737,7 +736,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&gt;&quot;[bounded_string,string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">"[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&gt;&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">"[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test a bounded_string and a plain string for one lexicographically after the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -745,8 +744,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -759,7 +758,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&gt;&quot;[string,bounded_string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">"[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&gt;&quot;</code> <span class="sig-paren">(</span><em>l : string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">"[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test a plain string and a bounded_string for one lexicographically after the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -767,8 +766,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -781,7 +780,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&gt;=&quot;[bounded_string,bounded_string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;=&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">="[bounded_string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&gt;=&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">="[bounded_string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test two bounded_strings for equality or one lexicographically after the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -789,8 +788,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -803,7 +802,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&gt;=&quot;[bounded_string,string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;=&quot;</tt> <big>(</big><em>l : bounded_string</em>; <em>r : string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">="[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&gt;=&quot;</code> <span class="sig-paren">(</span><em>l : bounded_string</em>; <em>r : string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">="[bounded_string,string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test a bounded_string and a plain string for equality or one lexicographically after the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -811,8 +810,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>bounded_string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>bounded_string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -825,7 +824,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;&gt;=&quot;[string,bounded_string return boolean]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;&gt;=&quot;</tt> <big>(</big><em>l : string</em>; <em>r : bounded_string</em><big>)</big> &rarr; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">="[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;&gt;=&quot;</code> <span class="sig-paren">(</span><em>l : string</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras_2008.strings_bounded.">="[string,bounded_string return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Test a plain string and a bounded_string for equality or one lexicographically after the other.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -833,8 +832,8 @@ maximum set when the package is instantiated.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>l</strong> (<em>string</em>) &#8211; First string to compare</li>
-<li><strong>r</strong> (<em>bounded_string</em>) &#8211; Second string to compare</li>
+<li><strong>l</strong> (<em>string</em>) – First string to compare</li>
+<li><strong>r</strong> (<em>bounded_string</em>) – Second string to compare</li>
 </ul>
 </td>
 </tr>
@@ -847,7 +846,7 @@ maximum set when the package is instantiated.</p>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.index[bounded_string,string,direction,character_mapping return natural]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">index</tt> <big>(</big><em>source : bounded_string</em>; <em>pattern : string</em>; <em>going : direction := forward</em>; <em>mapping : character_mapping := IDENTITY</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras_2008.strings_bounded.index[bounded_string,string,direction,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">index</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>pattern : string</em>; <em>going : direction := forward</em>; <em>mapping : character_mapping := IDENTITY</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras_2008.strings_bounded.index[bounded_string,string,direction,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Find the index of the first occurance of pattern in source from the
 beginning or end.</div></blockquote>
@@ -856,10 +855,10 @@ beginning or end.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to index into</li>
-<li><strong>pattern</strong> (<em>string</em>) &#8211; Pattern to search for</li>
-<li><strong>going</strong> (<em>direction</em>) &#8211; Search direction</li>
-<li><strong>mapping</strong> (<em>character_mapping</em>) &#8211; Optional character mapping applied before the search</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to index into</li>
+<li><strong>pattern</strong> (<em>string</em>) – Pattern to search for</li>
+<li><strong>going</strong> (<em>direction</em>) – Search direction</li>
+<li><strong>mapping</strong> (<em>character_mapping</em>) – Optional character mapping applied before the search</li>
 </ul>
 </td>
 </tr>
@@ -872,7 +871,7 @@ beginning or end.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.index[bounded_string,character_set,membership,direction return natural]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">index</tt> <big>(</big><em>source : bounded_string</em>; <em>set : character_set</em>; <em>test : membership := inside</em>; <em>going : direction := forward</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras_2008.strings_bounded.index[bounded_string,character_set,membership,direction return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">index</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>set : character_set</em>; <em>test : membership := inside</em>; <em>going : direction := forward</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras_2008.strings_bounded.index[bounded_string,character_set,membership,direction return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Find the index of first occurance of a character from set in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -880,10 +879,10 @@ beginning or end.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to search</li>
-<li><strong>set</strong> (<em>character_set</em>) &#8211; Character set to search for</li>
-<li><strong>test</strong> (<em>membership</em>) &#8211; Check for characters inside or outside the set</li>
-<li><strong>going</strong> (<em>direction</em>) &#8211; Search direction</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to search</li>
+<li><strong>set</strong> (<em>character_set</em>) – Character set to search for</li>
+<li><strong>test</strong> (<em>membership</em>) – Check for characters inside or outside the set</li>
+<li><strong>going</strong> (<em>direction</em>) – Search direction</li>
 </ul>
 </td>
 </tr>
@@ -896,7 +895,7 @@ beginning or end.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.index_non_blank[bounded_string,direction return natural]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">index_non_blank</tt> <big>(</big><em>source : bounded_string</em>; <em>going : direction := forward</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras_2008.strings_bounded.index_non_blank[bounded_string,direction return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">index_non_blank</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>going : direction := forward</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras_2008.strings_bounded.index_non_blank[bounded_string,direction return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Find the index of the first non-space character in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -904,8 +903,8 @@ beginning or end.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to search</li>
-<li><strong>going</strong> (<em>direction</em>) &#8211; Search direction</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to search</li>
+<li><strong>going</strong> (<em>direction</em>) – Search direction</li>
 </ul>
 </td>
 </tr>
@@ -918,7 +917,7 @@ beginning or end.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.count[bounded_string,string,character_mapping return natural]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">count</tt> <big>(</big><em>source : bounded_string</em>; <em>pattern : string</em>; <em>mapping : character_mapping := IDENTITY</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras_2008.strings_bounded.count[bounded_string,string,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">count</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>pattern : string</em>; <em>mapping : character_mapping := IDENTITY</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras_2008.strings_bounded.count[bounded_string,string,character_mapping return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Count the occurrences of pattern in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -926,8 +925,8 @@ beginning or end.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to count patterns in</li>
-<li><strong>pattern</strong> (<em>string</em>) &#8211; Pattern to count in source string</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to count patterns in</li>
+<li><strong>pattern</strong> (<em>string</em>) – Pattern to count in source string</li>
 </ul>
 </td>
 </tr>
@@ -940,7 +939,7 @@ beginning or end.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.count[bounded_string,character_set return natural]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">count</tt> <big>(</big><em>source : bounded_string</em>; <em>set : character_set</em><big>)</big> &rarr; natural<a class="headerlink" href="#extras_2008.strings_bounded.count[bounded_string,character_set return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">count</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>set : character_set</em><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras_2008.strings_bounded.count[bounded_string,character_set return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Count the occurrences of characters from set in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -948,8 +947,8 @@ beginning or end.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to count characters in</li>
-<li><strong>set</strong> (<em>character_set</em>) &#8211; Character set to count</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to count characters in</li>
+<li><strong>set</strong> (<em>character_set</em>) – Character set to count</li>
 </ul>
 </td>
 </tr>
@@ -962,7 +961,7 @@ beginning or end.</div></blockquote>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.find_token[bounded_string,character_set,membership,positive,natural]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">find_token</tt> <big>(</big><em>source : in bounded_string</em>; <em>set : in character_set</em>; <em>test : in membership</em>; <em>first : out positive</em>; <em>last : out natural</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.find_token[bounded_string,character_set,membership,positive,natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">find_token</code> <span class="sig-paren">(</span><em>source : in bounded_string</em>; <em>set : in character_set</em>; <em>test : in membership</em>; <em>first : out positive</em>; <em>last : out natural</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.find_token[bounded_string,character_set,membership,positive,natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Return the indices of a slice of source that satisfies the membership
 selection for the character set.</div></blockquote>
@@ -971,11 +970,11 @@ selection for the character set.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>in bounded_string</em>) &#8211; String to search for the token</li>
-<li><strong>set</strong> (<em>in character_set</em>) &#8211; Character set for the token</li>
-<li><strong>test</strong> (<em>in membership</em>) &#8211; Check for characters inside or outside the set</li>
-<li><strong>first</strong> (<em>out positive</em>) &#8211; Start index of the token</li>
-<li><strong>last</strong> (<em>out natural</em>) &#8211; End index of the token or 0 if not found</li>
+<li><strong>source</strong> (<em>in bounded_string</em>) – String to search for the token</li>
+<li><strong>set</strong> (<em>in character_set</em>) – Character set for the token</li>
+<li><strong>test</strong> (<em>in membership</em>) – Check for characters inside or outside the set</li>
+<li><strong>first</strong> (<em>out positive</em>) – Start index of the token</li>
+<li><strong>last</strong> (<em>out natural</em>) – End index of the token or 0 if not found</li>
 </ul>
 </td>
 </tr>
@@ -985,7 +984,7 @@ selection for the character set.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.translate[bounded_string,character_mapping return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">translate</tt> <big>(</big><em>source : bounded_string</em>; <em>mapping : character_mapping</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.translate[bounded_string,character_mapping return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">translate</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>mapping : character_mapping</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.translate[bounded_string,character_mapping return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert a source string with the provided character mapping.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -993,8 +992,8 @@ selection for the character set.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to translate</li>
-<li><strong>mapping</strong> (<em>character_mapping</em>) &#8211; Mapping to apply</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to translate</li>
+<li><strong>mapping</strong> (<em>character_mapping</em>) – Mapping to apply</li>
 </ul>
 </td>
 </tr>
@@ -1007,7 +1006,7 @@ selection for the character set.</div></blockquote>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.translate[bounded_string,character_mapping]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">translate</tt> <big>(</big><em>source : inout bounded_string</em>; <em>mapping : in character_mapping</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.translate[bounded_string,character_mapping]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">translate</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>mapping : in character_mapping</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.translate[bounded_string,character_mapping]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert a source string with the provided character mapping.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1015,8 +1014,8 @@ selection for the character set.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to translate</li>
-<li><strong>mapping</strong> (<em>in character_mapping</em>) &#8211; Mapping to apply</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to translate</li>
+<li><strong>mapping</strong> (<em>in character_mapping</em>) – Mapping to apply</li>
 </ul>
 </td>
 </tr>
@@ -1026,7 +1025,7 @@ selection for the character set.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.replace_slice[bounded_string,positive,natural,string,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : bounded_string</em>; <em>low : positive</em>; <em>high : natural</em>; <em>by : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.replace_slice[bounded_string,positive,natural,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">replace_slice</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>low : positive</em>; <em>high : natural</em>; <em>by : string</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.replace_slice[bounded_string,positive,natural,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Replace a slice of the source string with the contents of by.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1034,10 +1033,10 @@ selection for the character set.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to replace</li>
-<li><strong>low</strong> (<em>positive</em>) &#8211; Start of the slice (inclusive)</li>
-<li><strong>high</strong> (<em>natural</em>) &#8211; End of the slice (inclusive)</li>
-<li><strong>by</strong> (<em>string</em>) &#8211; String to insert into slice position</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to replace</li>
+<li><strong>low</strong> (<em>positive</em>) – Start of the slice (inclusive)</li>
+<li><strong>high</strong> (<em>natural</em>) – End of the slice (inclusive)</li>
+<li><strong>by</strong> (<em>string</em>) – String to insert into slice position</li>
 </ul>
 </td>
 </tr>
@@ -1050,7 +1049,7 @@ selection for the character set.</div></blockquote>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.replace_slice[bounded_string,positive,natural,string,truncation]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">replace_slice</tt> <big>(</big><em>source : inout bounded_string</em>; <em>low : in positive</em>; <em>high : in natural</em>; <em>by : in string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.replace_slice[bounded_string,positive,natural,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">replace_slice</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>low : in positive</em>; <em>high : in natural</em>; <em>by : in string</em>; <em>drop : in truncation := error</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.replace_slice[bounded_string,positive,natural,string,truncation]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Replace a slice of the source string with the contents of by.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1058,13 +1057,13 @@ selection for the character set.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to replace</li>
-<li><strong>low</strong> (<em>in positive</em>) &#8211; Start of the slice (inclusive)</li>
-<li><strong>high</strong> (<em>in natural</em>) &#8211; End of the slice (inclusive)</li>
-<li><strong>by</strong> (<em>in string</em>) &#8211; String to insert into slice position</li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation mode</li>
-<li><strong>justify</strong> &#8211; Alignment mode</li>
-<li><strong>pad</strong> &#8211; Padding character when result is shorter than original string</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to replace</li>
+<li><strong>low</strong> (<em>in positive</em>) – Start of the slice (inclusive)</li>
+<li><strong>high</strong> (<em>in natural</em>) – End of the slice (inclusive)</li>
+<li><strong>by</strong> (<em>in string</em>) – String to insert into slice position</li>
+<li><strong>drop</strong> (<em>in truncation</em>) – Truncation mode</li>
+<li><strong>justify</strong> – Alignment mode</li>
+<li><strong>pad</strong> – Padding character when result is shorter than original string</li>
 </ul>
 </td>
 </tr>
@@ -1074,7 +1073,7 @@ selection for the character set.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.insert[bounded_string,positive,string,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">insert</tt> <big>(</big><em>source : bounded_string</em>; <em>before : positive</em>; <em>new_item : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.insert[bounded_string,positive,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">insert</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>before : positive</em>; <em>new_item : string</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.insert[bounded_string,positive,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Insert the string new_item before the selected index in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1082,9 +1081,9 @@ selection for the character set.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to insert into</li>
-<li><strong>before</strong> (<em>positive</em>) &#8211; Index position for insertion</li>
-<li><strong>new_item</strong> (<em>string</em>) &#8211; String to insert</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to insert into</li>
+<li><strong>before</strong> (<em>positive</em>) – Index position for insertion</li>
+<li><strong>new_item</strong> (<em>string</em>) – String to insert</li>
 </ul>
 </td>
 </tr>
@@ -1097,7 +1096,7 @@ selection for the character set.</div></blockquote>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.insert[bounded_string,positive,string,truncation]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">insert</tt> <big>(</big><em>source : inout bounded_string</em>; <em>before : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.insert[bounded_string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">insert</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>before : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.insert[bounded_string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Insert the string new_item before the selected index in source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1105,10 +1104,10 @@ selection for the character set.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to insert into</li>
-<li><strong>before</strong> (<em>in positive</em>) &#8211; Index position for insertion</li>
-<li><strong>new_item</strong> (<em>in string</em>) &#8211; String to insert</li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation mode</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to insert into</li>
+<li><strong>before</strong> (<em>in positive</em>) – Index position for insertion</li>
+<li><strong>new_item</strong> (<em>in string</em>) – String to insert</li>
+<li><strong>drop</strong> (<em>in truncation</em>) – Truncation mode</li>
 </ul>
 </td>
 </tr>
@@ -1118,7 +1117,7 @@ selection for the character set.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.overwrite[bounded_string,positive,string,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : bounded_string</em>; <em>position : positive</em>; <em>new_item : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.overwrite[bounded_string,positive,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">overwrite</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>position : positive</em>; <em>new_item : string</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.overwrite[bounded_string,positive,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Overwrite new_item into source starting at the selected position.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1126,9 +1125,9 @@ selection for the character set.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to overwrite</li>
-<li><strong>position</strong> (<em>positive</em>) &#8211; Index position for overwrite</li>
-<li><strong>new_item</strong> (<em>string</em>) &#8211; String to write into source</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to overwrite</li>
+<li><strong>position</strong> (<em>positive</em>) – Index position for overwrite</li>
+<li><strong>new_item</strong> (<em>string</em>) – String to write into source</li>
 </ul>
 </td>
 </tr>
@@ -1141,7 +1140,7 @@ selection for the character set.</div></blockquote>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.overwrite[bounded_string,positive,string,truncation]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">overwrite</tt> <big>(</big><em>source : inout bounded_string</em>; <em>position : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.overwrite[bounded_string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">overwrite</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>position : in positive</em>; <em>new_item : in string</em>; <em>drop : in truncation := error</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.overwrite[bounded_string,positive,string,truncation]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Overwrite new_item into source starting at the selected position.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1149,10 +1148,10 @@ selection for the character set.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to overwrite</li>
-<li><strong>position</strong> (<em>in positive</em>) &#8211; Index position for overwrite</li>
-<li><strong>new_item</strong> (<em>in string</em>) &#8211; String to write into source</li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation mode</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to overwrite</li>
+<li><strong>position</strong> (<em>in positive</em>) – Index position for overwrite</li>
+<li><strong>new_item</strong> (<em>in string</em>) – String to write into source</li>
+<li><strong>drop</strong> (<em>in truncation</em>) – Truncation mode</li>
 </ul>
 </td>
 </tr>
@@ -1162,7 +1161,7 @@ selection for the character set.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.delete[bounded_string,positive,natural return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">delete</tt> <big>(</big><em>source : bounded_string</em>; <em>from : positive</em>; <em>through : natural</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.delete[bounded_string,positive,natural return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">delete</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>from : positive</em>; <em>through : natural</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.delete[bounded_string,positive,natural return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Delete a slice from source. If from is greater than through, source is
 unmodified.</div></blockquote>
@@ -1171,9 +1170,9 @@ unmodified.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to delete a slice from</li>
-<li><strong>from</strong> (<em>positive</em>) &#8211; Start index (inclusive)</li>
-<li><strong>through</strong> (<em>natural</em>) &#8211; End index (inclusive)</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to delete a slice from</li>
+<li><strong>from</strong> (<em>positive</em>) – Start index (inclusive)</li>
+<li><strong>through</strong> (<em>natural</em>) – End index (inclusive)</li>
 </ul>
 </td>
 </tr>
@@ -1186,7 +1185,7 @@ unmodified.</div></blockquote>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.delete[bounded_string,positive,natural]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">delete</tt> <big>(</big><em>source : inout bounded_string</em>; <em>from : in positive</em>; <em>through : in natural</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.delete[bounded_string,positive,natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">delete</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>from : in positive</em>; <em>through : in natural</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.delete[bounded_string,positive,natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Delete a slice from source. If from is greater than through, source is
 unmodified.</div></blockquote>
@@ -1195,11 +1194,11 @@ unmodified.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to delete a slice from</li>
-<li><strong>from</strong> (<em>in positive</em>) &#8211; Start index (inclusive)</li>
-<li><strong>through</strong> (<em>in natural</em>) &#8211; End index (inclusive)</li>
-<li><strong>justify</strong> &#8211; Position of shortened result in string</li>
-<li><strong>pad</strong> &#8211; Character to use as padding for shortened string</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to delete a slice from</li>
+<li><strong>from</strong> (<em>in positive</em>) – Start index (inclusive)</li>
+<li><strong>through</strong> (<em>in natural</em>) – End index (inclusive)</li>
+<li><strong>justify</strong> – Position of shortened result in string</li>
+<li><strong>pad</strong> – Character to use as padding for shortened string</li>
 </ul>
 </td>
 </tr>
@@ -1209,7 +1208,7 @@ unmodified.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.trim[bounded_string,trim_end return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : bounded_string</em>; <em>side : trim_end</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.trim[bounded_string,trim_end return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">trim</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>side : trim_end</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.trim[bounded_string,trim_end return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Remove space characters from leading, trailing, or both ends of source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1217,8 +1216,8 @@ unmodified.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to trim</li>
-<li><strong>side</strong> (<em>trim_end</em>) &#8211; Which end to trim</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to trim</li>
+<li><strong>side</strong> (<em>trim_end</em>) – Which end to trim</li>
 </ul>
 </td>
 </tr>
@@ -1231,7 +1230,7 @@ unmodified.</div></blockquote>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.trim[bounded_string,trim_end]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout bounded_string</em>; <em>side : in trim_end</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.trim[bounded_string,trim_end]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">trim</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>side : in trim_end</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.trim[bounded_string,trim_end]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Remove space characters from leading, trailing, or both ends of source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1239,8 +1238,8 @@ unmodified.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to trim</li>
-<li><strong>side</strong> (<em>in trim_end</em>) &#8211; Which end to trim</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to trim</li>
+<li><strong>side</strong> (<em>in trim_end</em>) – Which end to trim</li>
 </ul>
 </td>
 </tr>
@@ -1250,7 +1249,7 @@ unmodified.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.trim[bounded_string,character_set,character_set return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : bounded_string</em>; <em>left : character_set</em>; <em>right : character_set</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.trim[bounded_string,character_set,character_set return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">trim</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>left : character_set</em>; <em>right : character_set</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.trim[bounded_string,character_set,character_set return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Remove all leading characters in left and trailing characters in right
 from source.</div></blockquote>
@@ -1259,9 +1258,9 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to trim</li>
-<li><strong>left</strong> (<em>character_set</em>) &#8211; Index position for start trim</li>
-<li><strong>right</strong> (<em>character_set</em>) &#8211; Index position for end trim</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to trim</li>
+<li><strong>left</strong> (<em>character_set</em>) – Index position for start trim</li>
+<li><strong>right</strong> (<em>character_set</em>) – Index position for end trim</li>
 </ul>
 </td>
 </tr>
@@ -1274,7 +1273,7 @@ from source.</div></blockquote>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.trim[bounded_string,character_set,character_set]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">trim</tt> <big>(</big><em>source : inout bounded_string</em>; <em>left : in character_set</em>; <em>right : in character_set</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.trim[bounded_string,character_set,character_set]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">trim</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>left : in character_set</em>; <em>right : in character_set</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.trim[bounded_string,character_set,character_set]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Remove all leading characters in left and trailing characters in right
 from source.</div></blockquote>
@@ -1283,9 +1282,9 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to trim</li>
-<li><strong>left</strong> (<em>in character_set</em>) &#8211; Index position for start trim</li>
-<li><strong>right</strong> (<em>in character_set</em>) &#8211; Index position for end trim</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to trim</li>
+<li><strong>left</strong> (<em>in character_set</em>) – Index position for start trim</li>
+<li><strong>right</strong> (<em>in character_set</em>) – Index position for end trim</li>
 </ul>
 </td>
 </tr>
@@ -1295,7 +1294,7 @@ from source.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.head[bounded_string,natural,character,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">head</tt> <big>(</big><em>source : bounded_string</em>; <em>count : natural</em>; <em>pad : character := ' '</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.head[bounded_string,natural,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">head</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>count : natural</em>; <em>pad : character := ' '</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.head[bounded_string,natural,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Return the first count characters from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1303,10 +1302,10 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to slice from</li>
-<li><strong>count</strong> (<em>natural</em>) &#8211; Number of characters to take from the start of source</li>
-<li><strong>pad</strong> (<em>character</em>) &#8211; Characters to pad with if source length is less than count</li>
-<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to slice from</li>
+<li><strong>count</strong> (<em>natural</em>) – Number of characters to take from the start of source</li>
+<li><strong>pad</strong> (<em>character</em>) – Characters to pad with if source length is less than count</li>
+<li><strong>drop</strong> (<em>truncation</em>) – Truncation behavior</li>
 </ul>
 </td>
 </tr>
@@ -1319,7 +1318,7 @@ from source.</div></blockquote>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.head[bounded_string,natural,character,truncation]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">head</tt> <big>(</big><em>source : inout bounded_string</em>; <em>count : in natural</em>; <em>pad : in character := ' '</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.head[bounded_string,natural,character,truncation]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">head</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>count : in natural</em>; <em>pad : in character := ' '</em>; <em>drop : in truncation := error</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.head[bounded_string,natural,character,truncation]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Return the first count characters from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1327,10 +1326,10 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to slice from</li>
-<li><strong>count</strong> (<em>in natural</em>) &#8211; Number of characters to take from the start of source</li>
-<li><strong>pad</strong> (<em>in character</em>) &#8211; Characters to pad with if source length is less than count</li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation behavior</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to slice from</li>
+<li><strong>count</strong> (<em>in natural</em>) – Number of characters to take from the start of source</li>
+<li><strong>pad</strong> (<em>in character</em>) – Characters to pad with if source length is less than count</li>
+<li><strong>drop</strong> (<em>in truncation</em>) – Truncation behavior</li>
 </ul>
 </td>
 </tr>
@@ -1340,7 +1339,7 @@ from source.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.tail[bounded_string,natural,character,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">tail</tt> <big>(</big><em>source : bounded_string</em>; <em>count : natural</em>; <em>pad : character := ' '</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.tail[bounded_string,natural,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">tail</code> <span class="sig-paren">(</span><em>source : bounded_string</em>; <em>count : natural</em>; <em>pad : character := ' '</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.tail[bounded_string,natural,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Return the last count characters from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1348,10 +1347,10 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>source</strong> (<em>bounded_string</em>) &#8211; String to slice from</li>
-<li><strong>count</strong> (<em>natural</em>) &#8211; Number of characters to take from the end of source</li>
-<li><strong>pad</strong> (<em>character</em>) &#8211; Characters to pad with if source length is less than count</li>
-<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior</li>
+<li><strong>source</strong> (<em>bounded_string</em>) – String to slice from</li>
+<li><strong>count</strong> (<em>natural</em>) – Number of characters to take from the end of source</li>
+<li><strong>pad</strong> (<em>character</em>) – Characters to pad with if source length is less than count</li>
+<li><strong>drop</strong> (<em>truncation</em>) – Truncation behavior</li>
 </ul>
 </td>
 </tr>
@@ -1364,7 +1363,7 @@ from source.</div></blockquote>
 
 <dl class="procedure">
 <dt id="extras_2008.strings_bounded.tail[bounded_string,natural,character,truncation]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">tail</tt> <big>(</big><em>source : inout bounded_string</em>; <em>count : in natural</em>; <em>pad : in character := ' '</em>; <em>drop : in truncation := error</em><big>)</big><a class="headerlink" href="#extras_2008.strings_bounded.tail[bounded_string,natural,character,truncation]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">tail</code> <span class="sig-paren">(</span><em>source : inout bounded_string</em>; <em>count : in natural</em>; <em>pad : in character := ' '</em>; <em>drop : in truncation := error</em><span class="sig-paren">)</span><a class="headerlink" href="#extras_2008.strings_bounded.tail[bounded_string,natural,character,truncation]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Return the last count characters from source.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1372,10 +1371,10 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>source</strong> (<em>inout bounded_string</em>) &#8211; String to slice from</li>
-<li><strong>count</strong> (<em>in natural</em>) &#8211; Number of characters to take from the end of source</li>
-<li><strong>pad</strong> (<em>in character</em>) &#8211; Characters to pad with if source length is less than count</li>
-<li><strong>drop</strong> (<em>in truncation</em>) &#8211; Truncation behavior</li>
+<li><strong>source</strong> (<em>inout bounded_string</em>) – String to slice from</li>
+<li><strong>count</strong> (<em>in natural</em>) – Number of characters to take from the end of source</li>
+<li><strong>pad</strong> (<em>in character</em>) – Characters to pad with if source length is less than count</li>
+<li><strong>drop</strong> (<em>in truncation</em>) – Truncation behavior</li>
 </ul>
 </td>
 </tr>
@@ -1385,7 +1384,7 @@ from source.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;*&quot;[natural,character return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>l : natural</em>; <em>r : character</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."*"[natural,character return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;*&quot;</code> <span class="sig-paren">(</span><em>l : natural</em>; <em>r : character</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."*"[natural,character return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Replicate a character left number of times.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1393,8 +1392,8 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>left</strong> &#8211; Number of times to repeat the right operand</li>
-<li><strong>right</strong> &#8211; Character to repeat in string</li>
+<li><strong>left</strong> – Number of times to repeat the right operand</li>
+<li><strong>right</strong> – Character to repeat in string</li>
 </ul>
 </td>
 </tr>
@@ -1407,7 +1406,7 @@ from source.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;*&quot;[natural,string return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>l : natural</em>; <em>r : string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."*"[natural,string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;*&quot;</code> <span class="sig-paren">(</span><em>l : natural</em>; <em>r : string</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."*"[natural,string return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Replicate a string left number of times.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1415,8 +1414,8 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>left</strong> &#8211; Number of times to repeat the right operand</li>
-<li><strong>right</strong> &#8211; String to repeat in result string</li>
+<li><strong>left</strong> – Number of times to repeat the right operand</li>
+<li><strong>right</strong> – String to repeat in result string</li>
 </ul>
 </td>
 </tr>
@@ -1429,7 +1428,7 @@ from source.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.&quot;*&quot;[natural,bounded_string return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">&quot;*&quot;</tt> <big>(</big><em>l : natural</em>; <em>r : bounded_string</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."*"[natural,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">&quot;*&quot;</code> <span class="sig-paren">(</span><em>l : natural</em>; <em>r : bounded_string</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded."*"[natural,bounded_string return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Replicate a bounded_string left number of times.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1437,8 +1436,8 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>left</strong> &#8211; Number of times to repeat the right operand</li>
-<li><strong>right</strong> &#8211; String to repeat in result string</li>
+<li><strong>left</strong> – Number of times to repeat the right operand</li>
+<li><strong>right</strong> – String to repeat in result string</li>
 </ul>
 </td>
 </tr>
@@ -1451,7 +1450,7 @@ from source.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.replicate[natural,character,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">replicate</tt> <big>(</big><em>count : natural</em>; <em>item : character</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.replicate[natural,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">replicate</code> <span class="sig-paren">(</span><em>count : natural</em>; <em>item : character</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.replicate[natural,character,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Replicate a character count number of times.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1459,9 +1458,9 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>count</strong> (<em>natural</em>) &#8211; Number of times to repeat the item operand</li>
-<li><strong>item</strong> (<em>character</em>) &#8211; Character to repeat in string</li>
-<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior</li>
+<li><strong>count</strong> (<em>natural</em>) – Number of times to repeat the item operand</li>
+<li><strong>item</strong> (<em>character</em>) – Character to repeat in string</li>
+<li><strong>drop</strong> (<em>truncation</em>) – Truncation behavior</li>
 </ul>
 </td>
 </tr>
@@ -1474,7 +1473,7 @@ from source.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.replicate[natural,string,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">replicate</tt> <big>(</big><em>count : natural</em>; <em>item : string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.replicate[natural,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">replicate</code> <span class="sig-paren">(</span><em>count : natural</em>; <em>item : string</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.replicate[natural,string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Replicate a string count number of times.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1482,9 +1481,9 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>count</strong> (<em>natural</em>) &#8211; Number of times to repeat the item operand</li>
-<li><strong>item</strong> (<em>string</em>) &#8211; String to repeat in result string</li>
-<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior</li>
+<li><strong>count</strong> (<em>natural</em>) – Number of times to repeat the item operand</li>
+<li><strong>item</strong> (<em>string</em>) – String to repeat in result string</li>
+<li><strong>drop</strong> (<em>truncation</em>) – Truncation behavior</li>
 </ul>
 </td>
 </tr>
@@ -1497,7 +1496,7 @@ from source.</div></blockquote>
 
 <dl class="function">
 <dt id="extras_2008.strings_bounded.replicate[natural,bounded_string,truncation return bounded_string]">
-<tt class="descclassname">strings_bounded.</tt><tt class="descname">replicate</tt> <big>(</big><em>count : natural</em>; <em>item : bounded_string</em>; <em>drop : truncation := error</em><big>)</big> &rarr; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.replicate[natural,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings_bounded.</code><code class="descname">replicate</code> <span class="sig-paren">(</span><em>count : natural</em>; <em>item : bounded_string</em>; <em>drop : truncation := error</em><span class="sig-paren">)</span> &#x2192; bounded_string<a class="headerlink" href="#extras_2008.strings_bounded.replicate[natural,bounded_string,truncation return bounded_string]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Replicate a bounded_string count number of times.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1505,9 +1504,9 @@ from source.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>count</strong> (<em>natural</em>) &#8211; Number of times to repeat the item operand</li>
-<li><strong>item</strong> (<em>bounded_string</em>) &#8211; String to repeat in result string</li>
-<li><strong>drop</strong> (<em>truncation</em>) &#8211; Truncation behavior</li>
+<li><strong>count</strong> (<em>natural</em>) – Number of times to repeat the item operand</li>
+<li><strong>item</strong> (<em>bounded_string</em>) – String to repeat in result string</li>
+<li><strong>drop</strong> (<em>truncation</em>) – Truncation behavior</li>
 </ul>
 </td>
 </tr>
@@ -1525,7 +1524,7 @@ from source.</div></blockquote>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -1632,17 +1631,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1651,10 +1647,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/strings_bounded.txt"
+      <a href="../../_sources/rst/modules/strings_bounded.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

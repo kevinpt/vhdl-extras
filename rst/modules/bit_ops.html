@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>bit_ops &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>bit_ops &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="characters_handling" href="characters_handling.html" />
     <link rel="prev" title="binaryio" href="binaryio.html" />
    
@@ -38,14 +37,14 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="bit-ops">
 <h1>bit_ops<a class="headerlink" href="#bit-ops" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/bit_ops.vhdl">extras/bit_ops.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="sizing.html"><em>sizing</em></a></p>
+<p><a class="reference internal" href="sizing.html"><span class="doc">sizing</span></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -98,7 +97,7 @@ characteristics.</p>
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="extras.bit_ops.natural_vector">
-<tt class="descclassname">bit_ops.</tt><tt class="descname">natural_vector</tt><a class="headerlink" href="#extras.bit_ops.natural_vector" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">bit_ops.</code><code class="descname">natural_vector</code><a class="headerlink" href="#extras.bit_ops.natural_vector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Vector of natural numbers.</p>
 </dd></dl>
 
@@ -120,15 +119,15 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.bit_ops.count_ones">
-<tt class="descclassname">bit_ops.</tt><tt class="descname">count_ones</tt><a class="headerlink" href="#extras.bit_ops.count_ones" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">bit_ops.</code><code class="descname">count_ones</code><a class="headerlink" href="#extras.bit_ops.count_ones" title="Permalink to this definition">¶</a></dt>
 <dd><p>Count the number of set bits in a vector.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Value</strong> (<em>in unsigned</em>) &#8211; Vector to count set bits</li>
-<li><strong>Ones_count</strong> (<em>out unsigned</em>) &#8211; Number of set bits in <tt class="docutils literal"><span class="pre">Value</span></tt></li>
+<li><strong>Value</strong> (<em>in unsigned</em>) – Vector to count set bits</li>
+<li><strong>Ones_count</strong> (<em>out unsigned</em>) – Number of set bits in <code class="docutils literal"><span class="pre">Value</span></code></li>
 </ul>
 </td>
 </tr>
@@ -155,20 +154,20 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.bit_ops.count_ones_chunked">
-<tt class="descclassname">bit_ops.</tt><tt class="descname">count_ones_chunked</tt><a class="headerlink" href="#extras.bit_ops.count_ones_chunked" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">bit_ops.</code><code class="descname">count_ones_chunked</code><a class="headerlink" href="#extras.bit_ops.count_ones_chunked" title="Permalink to this definition">¶</a></dt>
 <dd><p>Count the number of set bits in a vector with a reduced constant table.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>TABLE_BITS</strong> (<em>positive</em>) &#8211; Number of bits for constant table</li>
+<li><strong>TABLE_BITS</strong> (<em>positive</em>) – Number of bits for constant table</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Value</strong> (<em>in unsigned</em>) &#8211; Vector to count set bits</li>
-<li><strong>Ones_count</strong> (<em>out unsigned</em>) &#8211; Number of set bits in <tt class="docutils literal"><span class="pre">Value</span></tt></li>
+<li><strong>Value</strong> (<em>in unsigned</em>) – Vector to count set bits</li>
+<li><strong>Ones_count</strong> (<em>out unsigned</em>) – Number of set bits in <code class="docutils literal"><span class="pre">Value</span></code></li>
 </ul>
 </td>
 </tr>
@@ -203,26 +202,26 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.bit_ops.count_ones_sequential">
-<tt class="descclassname">bit_ops.</tt><tt class="descname">count_ones_sequential</tt><a class="headerlink" href="#extras.bit_ops.count_ones_sequential" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">bit_ops.</code><code class="descname">count_ones_sequential</code><a class="headerlink" href="#extras.bit_ops.count_ones_sequential" title="Permalink to this definition">¶</a></dt>
 <dd><p>Count the number of set bits in a vector with a reduced constant table.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>TABLE_BITS</strong> (<em>positive</em>) &#8211; Number of bits for constant table</li>
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>TABLE_BITS</strong> (<em>positive</em>) – Number of bits for constant table</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Start</strong> (<em>in std_ulogic</em>) &#8211; Start counting</li>
-<li><strong>Busy</strong> (<em>out std_ulogic</em>) &#8211; Count is in progress</li>
-<li><strong>Done</strong> (<em>out std_ulogic</em>) &#8211; Count is done</li>
-<li><strong>Value</strong> (<em>in unsigned</em>) &#8211; Vector to count set bits</li>
-<li><strong>Ones_count</strong> (<em>out unsigned</em>) &#8211; Number of set bits in <tt class="docutils literal"><span class="pre">Value</span></tt></li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Start</strong> (<em>in std_ulogic</em>) – Start counting</li>
+<li><strong>Busy</strong> (<em>out std_ulogic</em>) – Count is in progress</li>
+<li><strong>Done</strong> (<em>out std_ulogic</em>) – Count is done</li>
+<li><strong>Value</strong> (<em>in unsigned</em>) – Vector to count set bits</li>
+<li><strong>Ones_count</strong> (<em>out unsigned</em>) – Number of set bits in <code class="docutils literal"><span class="pre">Value</span></code></li>
 </ul>
 </td>
 </tr>
@@ -236,7 +235,7 @@ end component;</p></object>
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="extras.bit_ops.gen_count_ones_table[positive return natural_vector]">
-<tt class="descclassname">bit_ops.</tt><tt class="descname">gen_count_ones_table</tt> <big>(</big><em>Size : positive</em><big>)</big> &rarr; natural_vector<a class="headerlink" href="#extras.bit_ops.gen_count_ones_table[positive return natural_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">bit_ops.</code><code class="descname">gen_count_ones_table</code> <span class="sig-paren">(</span><em>Size : positive</em><span class="sig-paren">)</span> &#x2192; natural_vector<a class="headerlink" href="#extras.bit_ops.gen_count_ones_table[positive return natural_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Create a precomputed table of bit counts.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -244,7 +243,7 @@ end component;</p></object>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Size</strong> (<em>positive</em>) &#8211; Number of bits in vector</li>
+<li><strong>Size</strong> (<em>positive</em>) – Number of bits in vector</li>
 </ul>
 </td>
 </tr>
@@ -262,7 +261,7 @@ end component;</p></object>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -374,17 +373,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -393,10 +389,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/bit_ops.txt"
+      <a href="../../_sources/rst/modules/bit_ops.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

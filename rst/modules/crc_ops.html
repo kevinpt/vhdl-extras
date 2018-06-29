@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>crc_ops &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>crc_ops &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="ddfs" href="ddfs.html" />
     <link rel="prev" title="cordic" href="cordic.html" />
    
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="crc-ops">
 <h1>crc_ops<a class="headerlink" href="#crc-ops" title="Permalink to this headline">¶</a></h1>
@@ -53,14 +52,14 @@
 of a set of functions that can be used to iteratively process successive
 data vectors as well an an entity that combines the functions into a
 synthesizable form. The CRC can be readily specified using the Rocksoft
-notation described in <a class="reference external" href="http://www.zlib.net/crc_v3.txt">&#8220;A Painless Guide to CRC Error Detection Algorithms&#8221;</a>,
+notation described in <a class="reference external" href="http://www.zlib.net/crc_v3.txt">“A Painless Guide to CRC Error Detection Algorithms”</a>,
 Williams 1993. A CRC specification consists of the following parameters:</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>Poly</dt>
 <dd>The generator polynomial</dd>
 <dt>Xor_in</dt>
-<dd>The initialization vector &#8220;xored&#8221; with an all-&#8216;0&#8217;s shift register</dd>
+<dd>The initialization vector “xored” with an all-‘0’s shift register</dd>
 <dt>Xor_out</dt>
 <dd>A vector xored with the shift register to produce the final value</dd>
 <dt>Reflect_in</dt>
@@ -69,18 +68,19 @@ Williams 1993. A CRC specification consists of the following parameters:</p>
 <dd>Determine bit order of final crc result</dd>
 </dl>
 </div></blockquote>
-<p>A CRC can be computed using a set of three functions <a class="reference internal" href="#extras.crc_ops.init_crc[bit_vector return bit_vector]" title="extras.crc_ops.init_crc[bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">init_crc()</span></tt></a>,
-<a class="reference internal" href="#extras.crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]" title="extras.crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">next_crc()</span></tt></a>, and <a class="reference internal" href="#extras.crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]" title="extras.crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">end_crc()</span></tt></a>.
+<p>A CRC can be computed using a set of three functions <a class="reference internal" href="#extras.crc_ops.init_crc[bit_vector return bit_vector]" title="extras.crc_ops.init_crc[bit_vector return bit_vector]"><code class="xref vhdl vhdl-func docutils literal"><span class="pre">init_crc()</span></code></a>,
+<a class="reference internal" href="#extras.crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]" title="extras.crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]"><code class="xref vhdl vhdl-func docutils literal"><span class="pre">next_crc()</span></code></a>, and <a class="reference internal" href="#extras.crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]" title="extras.crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]"><code class="xref vhdl vhdl-func docutils literal"><span class="pre">end_crc()</span></code></a>.
 All functions are assigned to a common variable/signal that maintans the shift
-register state between succesive calls. After initialization with <tt class="docutils literal"><span class="pre">init_crc</span></tt>, data
-is processed by repeated calls to <tt class="docutils literal"><span class="pre">next_crc</span></tt>. The width of the data vector is
+register state between succesive calls. After initialization with <code class="docutils literal"><span class="pre">init_crc</span></code>, data
+is processed by repeated calls to <code class="docutils literal"><span class="pre">next_crc</span></code>. The width of the data vector is
 unconstrained allowing you to process bits in chunks of any desired size. Using
 a 1-bit array for data is equivalent to a bit-serial CRC implementation. When
-all data has been passed through the CRC it is completed with a call to <tt class="docutils literal"><span class="pre">end_crc</span></tt> to
+all data has been passed through the CRC it is completed with a call to <code class="docutils literal"><span class="pre">end_crc</span></code> to
 produce the final CRC value.</p>
 <div class="section" id="example-usage">
 <h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
-<p>Compute CRC in a loop. This will synthesize into a combinational circuit.</p>
+<p>Implementing a CRC without depending on an external generator tool is easy and flexible by
+iteratively computing the CRC in a loop. This will synthesize into a combinational circuit:</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="c1">-- CRC-16-USB</span>
 <span class="k">constant</span> <span class="n">poly</span>        <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="mh">X&quot;8005&quot;</span><span class="p">;</span>
 <span class="k">constant</span> <span class="n">xor_in</span>      <span class="o">:</span> <span class="kt">bit_vector</span> <span class="o">:=</span> <span class="mh">X&quot;FFFF&quot;</span><span class="p">;</span>
@@ -88,10 +88,23 @@ produce the final CRC value.</p>
 <span class="k">constant</span> <span class="n">reflect_in</span>  <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">;</span>
 <span class="k">constant</span> <span class="n">reflect_out</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">;</span>
 
+<span class="c1">-- Implement CRC-16 with byte-wide inputs:</span>
 <span class="k">subtype</span> <span class="n">word</span> <span class="k">is</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
 <span class="k">type</span> <span class="n">word_vec</span> <span class="k">is</span> <span class="k">array</span><span class="p">(</span> <span class="kt">natural</span> <span class="k">range</span> <span class="o">&lt;&gt;</span> <span class="p">)</span> <span class="k">of</span> <span class="n">word</span><span class="p">;</span>
 <span class="k">variable</span> <span class="n">data</span> <span class="o">:</span> <span class="n">word_vec</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">9</span><span class="p">);</span>
-<span class="k">variable</span> <span class="n">crc</span> <span class="o">:</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="n">poly</span><span class="na">&#39;range</span><span class="p">);</span>
+<span class="k">variable</span> <span class="n">crc</span>  <span class="o">:</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="n">poly</span><span class="na">&#39;range</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">crc</span> <span class="o">:=</span> <span class="n">init_crc</span><span class="p">(</span><span class="n">xor_in</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">data</span><span class="na">&#39;range</span> <span class="k">loop</span>
+  <span class="n">crc</span> <span class="o">:=</span> <span class="n">next_crc</span><span class="p">(</span><span class="n">crc</span><span class="p">,</span> <span class="n">poly</span><span class="p">,</span> <span class="n">reflect_in</span><span class="p">,</span> <span class="n">data</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+<span class="n">crc</span> <span class="o">:=</span> <span class="n">end_crc</span><span class="p">(</span><span class="n">crc</span><span class="p">,</span> <span class="n">reflect_out</span><span class="p">,</span> <span class="n">xor_out</span><span class="p">);</span>
+
+<span class="c1">-- Implement CRC-16 with nibble-wide inputs:</span>
+<span class="k">subtype</span> <span class="n">nibble</span> <span class="k">is</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">type</span> <span class="n">nibble_vec</span> <span class="k">is</span> <span class="k">array</span><span class="p">(</span> <span class="kt">natural</span> <span class="k">range</span> <span class="o">&lt;&gt;</span> <span class="p">)</span> <span class="k">of</span> <span class="n">nibble</span><span class="p">;</span>
+<span class="k">variable</span> <span class="n">data</span> <span class="o">:</span> <span class="n">nibble_vec</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">9</span><span class="p">);</span>
+<span class="k">variable</span> <span class="n">crc</span>  <span class="o">:</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="n">poly</span><span class="na">&#39;range</span><span class="p">);</span>
 <span class="p">...</span>
 <span class="n">crc</span> <span class="o">:=</span> <span class="n">init_crc</span><span class="p">(</span><span class="n">xor_in</span><span class="p">);</span>
 <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">data</span><span class="na">&#39;range</span> <span class="k">loop</span>
@@ -161,29 +174,29 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.crc_ops.crc">
-<tt class="descclassname">crc_ops.</tt><tt class="descname">crc</tt><a class="headerlink" href="#extras.crc_ops.crc" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">crc_ops.</code><code class="descname">crc</code><a class="headerlink" href="#extras.crc_ops.crc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate a CRC sequentially.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Poly</strong> (<em>in std_ulogic_vector</em>) &#8211; Polynomial</li>
-<li><strong>Xor_in</strong> (<em>in std_ulogic_vector</em>) &#8211; Invert (XOR) initial state</li>
-<li><strong>Xor_out</strong> (<em>in std_ulogic_vector</em>) &#8211; Invert (XOR) final state</li>
-<li><strong>Reflect_in</strong> (<em>in boolean</em>) &#8211; Swap input bit order</li>
-<li><strong>Reflect_out</strong> (<em>in boolean</em>) &#8211; Swap output bit order</li>
-<li><strong>Initialize</strong> (<em>in std_ulogic</em>) &#8211; Reset the CRC state</li>
-<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Indicates data is valid for next CRC update</li>
-<li><strong>Data</strong> (<em>in std_ulogic_vector</em>) &#8211; New data (can be any width needed)</li>
-<li><strong>Checksum</strong> (<em>out std_ulogic_vector</em>) &#8211; Computed CRC</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Poly</strong> (<em>in std_ulogic_vector</em>) – Polynomial</li>
+<li><strong>Xor_in</strong> (<em>in std_ulogic_vector</em>) – Invert (XOR) initial state</li>
+<li><strong>Xor_out</strong> (<em>in std_ulogic_vector</em>) – Invert (XOR) final state</li>
+<li><strong>Reflect_in</strong> (<em>in boolean</em>) – Swap input bit order</li>
+<li><strong>Reflect_out</strong> (<em>in boolean</em>) – Swap output bit order</li>
+<li><strong>Initialize</strong> (<em>in std_ulogic</em>) – Reset the CRC state</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) – Indicates data is valid for next CRC update</li>
+<li><strong>Data</strong> (<em>in std_ulogic_vector</em>) – New data (can be any width needed)</li>
+<li><strong>Checksum</strong> (<em>out std_ulogic_vector</em>) – Computed CRC</li>
 </ul>
 </td>
 </tr>
@@ -197,7 +210,7 @@ end component;</p></object>
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="extras.crc_ops.init_crc[bit_vector return bit_vector]">
-<tt class="descclassname">crc_ops.</tt><tt class="descname">init_crc</tt> <big>(</big><em>Xor_in : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#extras.crc_ops.init_crc[bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">crc_ops.</code><code class="descname">init_crc</code> <span class="sig-paren">(</span><em>Xor_in : bit_vector</em><span class="sig-paren">)</span> &#x2192; bit_vector<a class="headerlink" href="#extras.crc_ops.init_crc[bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Initialize CRC state.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -205,7 +218,7 @@ end component;</p></object>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Xor_in</strong> (<em>bit_vector</em>) &#8211; Apply XOR to initial &#8216;0&#8217; state</li>
+<li><strong>Xor_in</strong> (<em>bit_vector</em>) – Apply XOR to initial ‘0’ state</li>
 </ul>
 </td>
 </tr>
@@ -218,7 +231,7 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="extras.crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]">
-<tt class="descclassname">crc_ops.</tt><tt class="descname">next_crc</tt> <big>(</big><em>Crc : bit_vector</em>; <em>Poly : bit_vector</em>; <em>Reflect_in : boolean</em>; <em>Data : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#extras.crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">crc_ops.</code><code class="descname">next_crc</code> <span class="sig-paren">(</span><em>Crc : bit_vector</em>; <em>Poly : bit_vector</em>; <em>Reflect_in : boolean</em>; <em>Data : bit_vector</em><span class="sig-paren">)</span> &#x2192; bit_vector<a class="headerlink" href="#extras.crc_ops.next_crc[bit_vector,bit_vector,boolean,bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Add new data to the CRC.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -226,10 +239,10 @@ end component;</p></object>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Crc</strong> (<em>bit_vector</em>) &#8211; Current CRC state</li>
-<li><strong>Poly</strong> (<em>bit_vector</em>) &#8211; Polynomial for the CRC</li>
-<li><strong>Reflect_in</strong> (<em>boolean</em>) &#8211; Reverse bits of Data when true</li>
-<li><strong>Data</strong> (<em>bit_vector</em>) &#8211; Next data word to add to CRC</li>
+<li><strong>Crc</strong> (<em>bit_vector</em>) – Current CRC state</li>
+<li><strong>Poly</strong> (<em>bit_vector</em>) – Polynomial for the CRC</li>
+<li><strong>Reflect_in</strong> (<em>boolean</em>) – Reverse bits of Data when true</li>
+<li><strong>Data</strong> (<em>bit_vector</em>) – Next data word to add to CRC</li>
 </ul>
 </td>
 </tr>
@@ -242,7 +255,7 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="extras.crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]">
-<tt class="descclassname">crc_ops.</tt><tt class="descname">end_crc</tt> <big>(</big><em>Crc : bit_vector</em>; <em>Reflect_out : boolean</em>; <em>Xor_out : bit_vector</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#extras.crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">crc_ops.</code><code class="descname">end_crc</code> <span class="sig-paren">(</span><em>Crc : bit_vector</em>; <em>Reflect_out : boolean</em>; <em>Xor_out : bit_vector</em><span class="sig-paren">)</span> &#x2192; bit_vector<a class="headerlink" href="#extras.crc_ops.end_crc[bit_vector,boolean,bit_vector return bit_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Finalize the CRC.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -250,9 +263,9 @@ end component;</p></object>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Crc</strong> (<em>bit_vector</em>) &#8211; Current CRC state</li>
-<li><strong>Reflect_out</strong> (<em>boolean</em>) &#8211; Reverse bits of result wien true</li>
-<li><strong>Xor_out</strong> (<em>bit_vector</em>) &#8211; Apply XOR to final state (inversion)</li>
+<li><strong>Crc</strong> (<em>bit_vector</em>) – Current CRC state</li>
+<li><strong>Reflect_out</strong> (<em>boolean</em>) – Reverse bits of result when true</li>
+<li><strong>Xor_out</strong> (<em>bit_vector</em>) – Apply XOR to final state (inversion)</li>
 </ul>
 </td>
 </tr>
@@ -270,7 +283,7 @@ end component;</p></object>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -379,17 +392,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -398,10 +408,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/crc_ops.txt"
+      <a href="../../_sources/rst/modules/crc_ops.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

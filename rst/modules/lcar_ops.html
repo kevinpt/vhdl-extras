@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>lcar_ops &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>lcar_ops &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="lfsr_ops" href="lfsr_ops.html" />
     <link rel="prev" title="interrupt_ctl" href="interrupt_ctl.html" />
    
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="lcar-ops">
 <h1>lcar_ops<a class="headerlink" href="#lcar-ops" title="Permalink to this headline">¶</a></h1>
@@ -51,18 +50,18 @@
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides a component that implements the <a class="reference external" href="https://en.wikipedia.org/wiki/Elementary_cellular_automaton">Wolfram Linear
 Cellular Automata Register (LCAR)</a>
-as described in &#8220;Statistical Mechanics
-of Cellular Automata&#8221;, Wolfram 1983. The LCAR implemented in <a class="reference internal" href="#extras.lcar_ops.wolfram_lcar" title="extras.lcar_ops.wolfram_lcar"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">wolfram_lcar</span></tt></a>
-uses rules 90 and 150 for each cell as defined by an input <tt class="docutils literal"><span class="pre">Rule_map</span></tt> where
-a &#8216;0&#8217; indicates rule 90 and &#8216;1&#8217; indicates rule 150 for the corresponding
+as described in “Statistical Mechanics
+of Cellular Automata”, Wolfram 1983. The LCAR implemented in <a class="reference internal" href="#extras.lcar_ops.wolfram_lcar" title="extras.lcar_ops.wolfram_lcar"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">wolfram_lcar</span></code></a>
+uses rules 90 and 150 for each cell as defined by an input <code class="docutils literal"><span class="pre">Rule_map</span></code> where
+a ‘0’ indicates rule 90 and ‘1’ indicates rule 150 for the corresponding
 cell in the State register.</p>
 <p>The LCAR using rules 90 and 150 can produce output equivalent to maximal
 length LFSRs but with the advantage of less correlation between bits of
 the state register. This makes the LCAR more suitable for pseudo-random
-number generation. The predefined <tt class="docutils literal"><span class="pre">LCAR_*</span></tt> constants provide rule maps for
+number generation. The predefined <code class="docutils literal"><span class="pre">LCAR_*</span></code> constants provide rule maps for
 maximal length sequences.</p>
 <p>For basic pseudo-random state generation it is sufficient to tie the
-<tt class="docutils literal"><span class="pre">Left_in</span></tt> and <tt class="docutils literal"><span class="pre">Right_in</span></tt> inputs to &#8216;0&#8217;.</p>
+<code class="docutils literal"><span class="pre">Left_in</span></code> and <code class="docutils literal"><span class="pre">Right_in</span></code> inputs to ‘0’.</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">library</span> <span class="nn">extras</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">extras.lcar_ops.all</span><span class="p">;</span>
 
@@ -124,25 +123,25 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.lcar_ops.wolfram_lcar">
-<tt class="descclassname">lcar_ops.</tt><tt class="descname">wolfram_lcar</tt><a class="headerlink" href="#extras.lcar_ops.wolfram_lcar" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lcar_ops.</code><code class="descname">wolfram_lcar</code><a class="headerlink" href="#extras.lcar_ops.wolfram_lcar" title="Permalink to this definition">¶</a></dt>
 <dd><p>General purpose implementation of a rule 150/90 LCAR.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Enable</strong> (<em>in std_ulogic</em>) &#8211; Synchronous enable</li>
-<li><strong>Rule_map</strong> (<em>in std_ulogic_vector</em>) &#8211; Rules for each cell &#8216;1&#8217; -&gt; 150, &#8216;0&#8217; -&gt; 90</li>
-<li><strong>Left_in</strong> (<em>in std_ulogic</em>) &#8211; Left side input to LCAR</li>
-<li><strong>Right_in</strong> (<em>in std_ulogic</em>) &#8211; Right side input to LCAR</li>
-<li><strong>State</strong> (<em>out std_ulogic_vector</em>) &#8211; The state of each cell</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Enable</strong> (<em>in std_ulogic</em>) – Synchronous enable</li>
+<li><strong>Rule_map</strong> (<em>in std_ulogic_vector</em>) – Rules for each cell ‘1’ -&gt; 150, ‘0’ -&gt; 90</li>
+<li><strong>Left_in</strong> (<em>in std_ulogic</em>) – Left side input to LCAR</li>
+<li><strong>Right_in</strong> (<em>in std_ulogic</em>) – Right side input to LCAR</li>
+<li><strong>State</strong> (<em>out std_ulogic_vector</em>) – The state of each cell</li>
 </ul>
 </td>
 </tr>
@@ -156,7 +155,7 @@ end component;</p></object>
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="extras.lcar_ops.next_wolfram_lcar[std_ulogic_vector,std_ulogic_vector,std_ulogic,std_ulogic return std_ulogic_vector]">
-<tt class="descclassname">lcar_ops.</tt><tt class="descname">next_wolfram_lcar</tt> <big>(</big><em>State : std_ulogic_vector</em>; <em>Rule_map : std_ulogic_vector</em>; <em>Left_in : std_ulogic := '0'</em>; <em>Right_in : std_ulogic := '0'</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.lcar_ops.next_wolfram_lcar[std_ulogic_vector,std_ulogic_vector,std_ulogic,std_ulogic return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lcar_ops.</code><code class="descname">next_wolfram_lcar</code> <span class="sig-paren">(</span><em>State : std_ulogic_vector</em>; <em>Rule_map : std_ulogic_vector</em>; <em>Left_in : std_ulogic := '0'</em>; <em>Right_in : std_ulogic := '0'</em><span class="sig-paren">)</span> &#x2192; std_ulogic_vector<a class="headerlink" href="#extras.lcar_ops.next_wolfram_lcar[std_ulogic_vector,std_ulogic_vector,std_ulogic,std_ulogic return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Determine the next state of the LCAR defined by the Rule_map.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -164,10 +163,10 @@ end component;</p></object>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>State</strong> (<em>std_ulogic_vector</em>) &#8211; Current state of the LCAR cells</li>
-<li><strong>Rule_map</strong> (<em>std_ulogic_vector</em>) &#8211; Rules for each cell; &#8216;1&#8217; -&gt; 150, &#8216;0&#8217; -&gt; 90</li>
-<li><strong>Left_in</strong> (<em>std_ulogic</em>) &#8211; Left side input to LCAR</li>
-<li><strong>Right_in</strong> (<em>std_ulogic</em>) &#8211; Right side input to LCAR</li>
+<li><strong>State</strong> (<em>std_ulogic_vector</em>) – Current state of the LCAR cells</li>
+<li><strong>Rule_map</strong> (<em>std_ulogic_vector</em>) – Rules for each cell; ‘1’ -&gt; 150, ‘0’ -&gt; 90</li>
+<li><strong>Left_in</strong> (<em>std_ulogic</em>) – Left side input to LCAR</li>
+<li><strong>Right_in</strong> (<em>std_ulogic</em>) – Right side input to LCAR</li>
 </ul>
 </td>
 </tr>
@@ -180,7 +179,7 @@ end component;</p></object>
 
 <dl class="function">
 <dt id="extras.lcar_ops.lcar_rule[positive return std_ulogic_vector]">
-<tt class="descclassname">lcar_ops.</tt><tt class="descname">lcar_rule</tt> <big>(</big><em>Size : positive</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.lcar_ops.lcar_rule[positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lcar_ops.</code><code class="descname">lcar_rule</code> <span class="sig-paren">(</span><em>Size : positive</em><span class="sig-paren">)</span> &#x2192; std_ulogic_vector<a class="headerlink" href="#extras.lcar_ops.lcar_rule[positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Lookup a predefined rule set from the table.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -188,7 +187,7 @@ end component;</p></object>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Size</strong> (<em>positive</em>) &#8211; Number of LCAR cells</li>
+<li><strong>Size</strong> (<em>positive</em>) – Number of LCAR cells</li>
 </ul>
 </td>
 </tr>
@@ -206,7 +205,7 @@ end component;</p></object>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -312,17 +311,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -331,10 +327,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/lcar_ops.txt"
+      <a href="../../_sources/rst/modules/lcar_ops.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

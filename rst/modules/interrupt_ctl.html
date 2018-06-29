@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>interrupt_ctl &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>interrupt_ctl &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="lcar_ops" href="lcar_ops.html" />
     <link rel="prev" title="hamming_edac" href="hamming_edac.html" />
    
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="interrupt-ctl">
 <h1>interrupt_ctl<a class="headerlink" href="#interrupt-ctl" title="Permalink to this headline">¶</a></h1>
@@ -123,27 +122,27 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.interrupt_ctl_pkg.interrupt_ctl">
-<tt class="descclassname">interrupt_ctl_pkg.</tt><tt class="descname">interrupt_ctl</tt><a class="headerlink" href="#extras.interrupt_ctl_pkg.interrupt_ctl" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">interrupt_ctl_pkg.</code><code class="descname">interrupt_ctl</code><a class="headerlink" href="#extras.interrupt_ctl_pkg.interrupt_ctl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Priority interrupt controller.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Int_mask</strong> (<em>in std_ulogic_vector</em>) &#8211; Set bits correspond to active interrupts</li>
-<li><strong>Int_request</strong> (<em>in std_ulogic_vector</em>) &#8211; Controls used to activate new interrupts</li>
-<li><strong>Pending</strong> (<em>out std_ulogic_vector</em>) &#8211; Set bits indicate which interrupts are pending</li>
-<li><strong>Current</strong> (<em>out std_ulogic_vector</em>) &#8211; Single set bit for the active interrupt</li>
-<li><strong>Interrupt</strong> (<em>out std_ulogic</em>) &#8211; Flag indicating when an interrupt is pending</li>
-<li><strong>Acknowledge</strong> (<em>in std_ulogic</em>) &#8211; Clear the active interupt</li>
-<li><strong>Clear_pending</strong> (<em>in std_ulogic</em>) &#8211; Clear all pending interrupts</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Int_mask</strong> (<em>in std_ulogic_vector</em>) – Set bits correspond to active interrupts</li>
+<li><strong>Int_request</strong> (<em>in std_ulogic_vector</em>) – Controls used to activate new interrupts</li>
+<li><strong>Pending</strong> (<em>out std_ulogic_vector</em>) – Set bits indicate which interrupts are pending</li>
+<li><strong>Current</strong> (<em>out std_ulogic_vector</em>) – Single set bit for the active interrupt</li>
+<li><strong>Interrupt</strong> (<em>out std_ulogic</em>) – Flag indicating when an interrupt is pending</li>
+<li><strong>Acknowledge</strong> (<em>in std_ulogic</em>) – Clear the active interupt</li>
+<li><strong>Clear_pending</strong> (<em>in std_ulogic</em>) – Clear all pending interrupts</li>
 </ul>
 </td>
 </tr>
@@ -159,7 +158,7 @@ end component;</p></object>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -267,17 +266,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -286,10 +282,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/interrupt_ctl.txt"
+      <a href="../../_sources/rst/modules/interrupt_ctl.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

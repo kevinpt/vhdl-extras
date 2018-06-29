@@ -1,32 +1,31 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>muxing &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>muxing &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
-    <link rel="next" title="parity_ops" href="parity_ops.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="oscillator" href="oscillator.html" />
     <link rel="prev" title="memory" href="memory.html" />
    
   
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="muxing">
 <h1>muxing<a class="headerlink" href="#muxing" title="Permalink to this headline">¶</a></h1>
@@ -46,12 +45,12 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/muxing_2008.vhdl">extras_2008/muxing_2008.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="common_2008.html"><em>common_2008</em></a> (for muxing_2008)</p>
+<p><a class="reference internal" href="common_2008.html"><span class="doc">common_2008</span></a> (for muxing_2008)</p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>A set of routines for creating parameterized multiplexers, decoders,
-and demultiplexers. The VHDL-2008 version has an additional <a class="reference internal" href="#extras_2008.muxing.mux[sulv_array,unsigned return std_ulogic_vector]" title="extras_2008.muxing.mux[sulv_array,unsigned return std_ulogic_vector]"><tt class="xref vhdl vhdl-func docutils literal"><span class="pre">mux()</span></tt></a>
+and demultiplexers. The VHDL-2008 version has an additional <a class="reference internal" href="#extras_2008.muxing.mux[sulv_array,unsigned return std_ulogic_vector]" title="extras_2008.muxing.mux[sulv_array,unsigned return std_ulogic_vector]"><code class="xref vhdl vhdl-func docutils literal"><span class="pre">mux()</span></code></a>
 function that can select from multi-bit inputs implemented in
 VHDL-2008 syntax.</p>
 <div class="section" id="example-usage">
@@ -88,7 +87,7 @@ VHDL-2008 syntax.</p>
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="extras.muxing.decode[unsigned return std_ulogic_vector]">
-<tt class="descclassname">muxing.</tt><tt class="descname">decode</tt> <big>(</big><em>Sel : unsigned</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.muxing.decode[unsigned return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">muxing.</code><code class="descname">decode</code> <span class="sig-paren">(</span><em>Sel : unsigned</em><span class="sig-paren">)</span> &#x2192; std_ulogic_vector<a class="headerlink" href="#extras.muxing.decode[unsigned return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Decoder with variable sized output (power of 2).</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -96,7 +95,7 @@ VHDL-2008 syntax.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Numeric value to decode (range 0 to 2**Sel&#8217;length-1)</li>
+<li><strong>Sel</strong> (<em>unsigned</em>) – Numeric value to decode (range 0 to 2**Sel’length-1)</li>
 </ul>
 </td>
 </tr>
@@ -109,7 +108,7 @@ VHDL-2008 syntax.</p>
 
 <dl class="function">
 <dt id="extras.muxing.decode[unsigned,positive return std_ulogic_vector]">
-<tt class="descclassname">muxing.</tt><tt class="descname">decode</tt> <big>(</big><em>Sel : unsigned</em>; <em>Size : positive</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.muxing.decode[unsigned,positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">muxing.</code><code class="descname">decode</code> <span class="sig-paren">(</span><em>Sel : unsigned</em>; <em>Size : positive</em><span class="sig-paren">)</span> &#x2192; std_ulogic_vector<a class="headerlink" href="#extras.muxing.decode[unsigned,positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Decoder with variable sized output (user specified).</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -117,8 +116,8 @@ VHDL-2008 syntax.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Numeric value to decode (range 0 to Size-1)</li>
-<li><strong>Size</strong> (<em>positive</em>) &#8211; Number of bits in result (leftmost bits)</li>
+<li><strong>Sel</strong> (<em>unsigned</em>) – Numeric value to decode (range 0 to Size-1)</li>
+<li><strong>Size</strong> (<em>positive</em>) – Number of bits in result (leftmost bits)</li>
 </ul>
 </td>
 </tr>
@@ -131,7 +130,7 @@ VHDL-2008 syntax.</p>
 
 <dl class="function">
 <dt id="extras.muxing.mux[std_ulogic_vector,unsigned return std_ulogic]">
-<tt class="descclassname">muxing.</tt><tt class="descname">mux</tt> <big>(</big><em>Inputs : std_ulogic_vector</em>; <em>Sel : unsigned</em><big>)</big> &rarr; std_ulogic<a class="headerlink" href="#extras.muxing.mux[std_ulogic_vector,unsigned return std_ulogic]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">muxing.</code><code class="descname">mux</code> <span class="sig-paren">(</span><em>Inputs : std_ulogic_vector</em>; <em>Sel : unsigned</em><span class="sig-paren">)</span> &#x2192; std_ulogic<a class="headerlink" href="#extras.muxing.mux[std_ulogic_vector,unsigned return std_ulogic]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Multiplexer with variable sized inputs.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -139,8 +138,8 @@ VHDL-2008 syntax.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) &#8211; Inputs to select from</li>
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Input to select</li>
+<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) – Inputs to select from</li>
+<li><strong>Sel</strong> (<em>unsigned</em>) – Input to select</li>
 </ul>
 </td>
 </tr>
@@ -153,7 +152,7 @@ VHDL-2008 syntax.</p>
 
 <dl class="function">
 <dt id="extras.muxing.mux[std_ulogic_vector,std_ulogic_vector return std_ulogic]">
-<tt class="descclassname">muxing.</tt><tt class="descname">mux</tt> <big>(</big><em>Inputs : std_ulogic_vector</em>; <em>One_hot_sel : std_ulogic_vector</em><big>)</big> &rarr; std_ulogic<a class="headerlink" href="#extras.muxing.mux[std_ulogic_vector,std_ulogic_vector return std_ulogic]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">muxing.</code><code class="descname">mux</code> <span class="sig-paren">(</span><em>Inputs : std_ulogic_vector</em>; <em>One_hot_sel : std_ulogic_vector</em><span class="sig-paren">)</span> &#x2192; std_ulogic<a class="headerlink" href="#extras.muxing.mux[std_ulogic_vector,std_ulogic_vector return std_ulogic]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Multiplexer with variable sized inputs using external decoder.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -161,8 +160,8 @@ VHDL-2008 syntax.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) &#8211; Inputs to select from</li>
-<li><strong>One_hot_sel</strong> (<em>std_ulogic_vector</em>) &#8211; Input to select (generated by decode())</li>
+<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) – Inputs to select from</li>
+<li><strong>One_hot_sel</strong> (<em>std_ulogic_vector</em>) – Input to select (generated by decode())</li>
 </ul>
 </td>
 </tr>
@@ -175,7 +174,7 @@ VHDL-2008 syntax.</p>
 
 <dl class="function">
 <dt id="extras.muxing.demux[std_ulogic,unsigned,positive return std_ulogic_vector]">
-<tt class="descclassname">muxing.</tt><tt class="descname">demux</tt> <big>(</big><em>Input : std_ulogic</em>; <em>Sel : unsigned</em>; <em>Size : positive</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras.muxing.demux[std_ulogic,unsigned,positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">muxing.</code><code class="descname">demux</code> <span class="sig-paren">(</span><em>Input : std_ulogic</em>; <em>Sel : unsigned</em>; <em>Size : positive</em><span class="sig-paren">)</span> &#x2192; std_ulogic_vector<a class="headerlink" href="#extras.muxing.demux[std_ulogic,unsigned,positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Demultiplexer with variable sized inputs.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -183,9 +182,9 @@ VHDL-2008 syntax.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Input</strong> (<em>std_ulogic</em>) &#8211; Bit to demultiplex</li>
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Position of Bit in result</li>
-<li><strong>Size</strong> (<em>positive</em>) &#8211; Length of the result</li>
+<li><strong>Input</strong> (<em>std_ulogic</em>) – Bit to demultiplex</li>
+<li><strong>Sel</strong> (<em>unsigned</em>) – Position of Bit in result</li>
+<li><strong>Size</strong> (<em>positive</em>) – Length of the result</li>
 </ul>
 </td>
 </tr>
@@ -204,7 +203,7 @@ VHDL-2008 syntax.</p>
 <h2>Subprograms<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="extras_2008.muxing.decode[unsigned return std_ulogic_vector]">
-<tt class="descclassname">muxing.</tt><tt class="descname">decode</tt> <big>(</big><em>Sel : unsigned</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras_2008.muxing.decode[unsigned return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">muxing.</code><code class="descname">decode</code> <span class="sig-paren">(</span><em>Sel : unsigned</em><span class="sig-paren">)</span> &#x2192; std_ulogic_vector<a class="headerlink" href="#extras_2008.muxing.decode[unsigned return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Decoder with variable sized output (power of 2).</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -212,7 +211,7 @@ VHDL-2008 syntax.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Numeric value to decode (range 0 to 2**Sel&#8217;length-1)</li>
+<li><strong>Sel</strong> (<em>unsigned</em>) – Numeric value to decode (range 0 to 2**Sel’length-1)</li>
 </ul>
 </td>
 </tr>
@@ -225,7 +224,7 @@ VHDL-2008 syntax.</p>
 
 <dl class="function">
 <dt id="extras_2008.muxing.decode[unsigned,positive return std_ulogic_vector]">
-<tt class="descclassname">muxing.</tt><tt class="descname">decode</tt> <big>(</big><em>Sel : unsigned</em>; <em>Size : positive</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras_2008.muxing.decode[unsigned,positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">muxing.</code><code class="descname">decode</code> <span class="sig-paren">(</span><em>Sel : unsigned</em>; <em>Size : positive</em><span class="sig-paren">)</span> &#x2192; std_ulogic_vector<a class="headerlink" href="#extras_2008.muxing.decode[unsigned,positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Decoder with variable sized output (user specified).</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -233,8 +232,8 @@ VHDL-2008 syntax.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Numeric value to decode (range 0 to Size-1)</li>
-<li><strong>Size</strong> (<em>positive</em>) &#8211; Number of bits in result (leftmost bits)</li>
+<li><strong>Sel</strong> (<em>unsigned</em>) – Numeric value to decode (range 0 to Size-1)</li>
+<li><strong>Size</strong> (<em>positive</em>) – Number of bits in result (leftmost bits)</li>
 </ul>
 </td>
 </tr>
@@ -247,7 +246,7 @@ VHDL-2008 syntax.</p>
 
 <dl class="function">
 <dt id="extras_2008.muxing.mux[std_ulogic_vector,unsigned return std_ulogic]">
-<tt class="descclassname">muxing.</tt><tt class="descname">mux</tt> <big>(</big><em>Inputs : std_ulogic_vector</em>; <em>Sel : unsigned</em><big>)</big> &rarr; std_ulogic<a class="headerlink" href="#extras_2008.muxing.mux[std_ulogic_vector,unsigned return std_ulogic]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">muxing.</code><code class="descname">mux</code> <span class="sig-paren">(</span><em>Inputs : std_ulogic_vector</em>; <em>Sel : unsigned</em><span class="sig-paren">)</span> &#x2192; std_ulogic<a class="headerlink" href="#extras_2008.muxing.mux[std_ulogic_vector,unsigned return std_ulogic]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Multiplexer with variable sized inputs.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -255,8 +254,8 @@ VHDL-2008 syntax.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) &#8211; Inputs to select from</li>
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Input to select</li>
+<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) – Inputs to select from</li>
+<li><strong>Sel</strong> (<em>unsigned</em>) – Input to select</li>
 </ul>
 </td>
 </tr>
@@ -269,7 +268,7 @@ VHDL-2008 syntax.</p>
 
 <dl class="function">
 <dt id="extras_2008.muxing.mux[std_ulogic_vector,std_ulogic_vector return std_ulogic]">
-<tt class="descclassname">muxing.</tt><tt class="descname">mux</tt> <big>(</big><em>Inputs : std_ulogic_vector</em>; <em>One_hot_sel : std_ulogic_vector</em><big>)</big> &rarr; std_ulogic<a class="headerlink" href="#extras_2008.muxing.mux[std_ulogic_vector,std_ulogic_vector return std_ulogic]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">muxing.</code><code class="descname">mux</code> <span class="sig-paren">(</span><em>Inputs : std_ulogic_vector</em>; <em>One_hot_sel : std_ulogic_vector</em><span class="sig-paren">)</span> &#x2192; std_ulogic<a class="headerlink" href="#extras_2008.muxing.mux[std_ulogic_vector,std_ulogic_vector return std_ulogic]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Multiplexer with variable sized inputs using external decoder.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -277,8 +276,8 @@ VHDL-2008 syntax.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) &#8211; Inputs to select from</li>
-<li><strong>One_hot_sel</strong> (<em>std_ulogic_vector</em>) &#8211; Input to select (generated by decode())</li>
+<li><strong>Inputs</strong> (<em>std_ulogic_vector</em>) – Inputs to select from</li>
+<li><strong>One_hot_sel</strong> (<em>std_ulogic_vector</em>) – Input to select (generated by decode())</li>
 </ul>
 </td>
 </tr>
@@ -291,7 +290,7 @@ VHDL-2008 syntax.</p>
 
 <dl class="function">
 <dt id="extras_2008.muxing.demux[std_ulogic,unsigned,positive return std_ulogic_vector]">
-<tt class="descclassname">muxing.</tt><tt class="descname">demux</tt> <big>(</big><em>Input : std_ulogic</em>; <em>Sel : unsigned</em>; <em>Size : positive</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras_2008.muxing.demux[std_ulogic,unsigned,positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">muxing.</code><code class="descname">demux</code> <span class="sig-paren">(</span><em>Input : std_ulogic</em>; <em>Sel : unsigned</em>; <em>Size : positive</em><span class="sig-paren">)</span> &#x2192; std_ulogic_vector<a class="headerlink" href="#extras_2008.muxing.demux[std_ulogic,unsigned,positive return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Demultiplexer with variable sized inputs.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -299,9 +298,9 @@ VHDL-2008 syntax.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Input</strong> (<em>std_ulogic</em>) &#8211; Bit to demultiplex</li>
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Position of Bit in result</li>
-<li><strong>Size</strong> (<em>positive</em>) &#8211; Length of the result</li>
+<li><strong>Input</strong> (<em>std_ulogic</em>) – Bit to demultiplex</li>
+<li><strong>Sel</strong> (<em>unsigned</em>) – Position of Bit in result</li>
+<li><strong>Size</strong> (<em>positive</em>) – Length of the result</li>
 </ul>
 </td>
 </tr>
@@ -314,7 +313,7 @@ VHDL-2008 syntax.</p>
 
 <dl class="function">
 <dt id="extras_2008.muxing.mux[sulv_array,unsigned return std_ulogic_vector]">
-<tt class="descclassname">muxing.</tt><tt class="descname">mux</tt> <big>(</big><em>Inputs : sulv_array</em>; <em>Sel : unsigned</em><big>)</big> &rarr; std_ulogic_vector<a class="headerlink" href="#extras_2008.muxing.mux[sulv_array,unsigned return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">muxing.</code><code class="descname">mux</code> <span class="sig-paren">(</span><em>Inputs : sulv_array</em>; <em>Sel : unsigned</em><span class="sig-paren">)</span> &#x2192; std_ulogic_vector<a class="headerlink" href="#extras_2008.muxing.mux[sulv_array,unsigned return std_ulogic_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Multiplexer with variable sized, multi-bit inputs.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -322,8 +321,8 @@ VHDL-2008 syntax.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Inputs</strong> (<em>sulv_array</em>) &#8211; Inputs to select from</li>
-<li><strong>Sel</strong> (<em>unsigned</em>) &#8211; Input to select</li>
+<li><strong>Inputs</strong> (<em>sulv_array</em>) – Inputs to select from</li>
+<li><strong>Sel</strong> (<em>unsigned</em>) – Input to select</li>
 </ul>
 </td>
 </tr>
@@ -341,7 +340,7 @@ VHDL-2008 syntax.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -367,7 +366,7 @@ VHDL-2008 syntax.</p>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="memory.html" title="previous chapter">memory</a></li>
-      <li>Next: <a href="parity_ops.html" title="next chapter">parity_ops</a></li>
+      <li>Next: <a href="oscillator.html" title="next chapter">oscillator</a></li>
   </ul></li>
 </ul>
 </div>
@@ -448,17 +447,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -467,10 +463,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/muxing.txt"
+      <a href="../../_sources/rst/modules/muxing.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

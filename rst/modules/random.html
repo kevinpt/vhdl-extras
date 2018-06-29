@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>random &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>random &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="reg_file" href="reg_file.html" />
     <link rel="prev" title="pipelining" href="pipelining.html" />
    
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="random">
 <h1>random<a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h1>
@@ -46,21 +45,21 @@
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras_2008/random_20xx.vhdl">extras_2008/random_20xx.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="timing_ops.html"><em>timing_ops</em></a></p>
+<p><a class="reference internal" href="timing_ops.html"><span class="doc">timing_ops</span></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides a general set of pseudo-random number functions.
-It is implemented as a wrapper around the <tt class="docutils literal"><span class="pre">ieee.math_real.uniform</span></tt>
+It is implemented as a wrapper around the <code class="docutils literal"><span class="pre">ieee.math_real.uniform</span></code>
 procedure and is only suitable for simulation not synthesis. See the
-<a class="reference internal" href="lcar_ops.html"><em>LCAR</em></a> and <a class="reference internal" href="lfsr_ops.html"><em>LFSR</em></a> packages for synthesizable random generators.</p>
+<a class="reference internal" href="lcar_ops.html"><span class="doc">LCAR</span></a> and <a class="reference internal" href="lfsr_ops.html"><span class="doc">LFSR</span></a> packages for synthesizable random generators.</p>
 <p>This package makes use of shared variables to keep track of the PRNG
 state more conveniently than calling uniform directly. Because
 VHDL-2002 broke forward compatability of shared variables there are
 two versions of this package. One (random.vhdl) is for VHDL-93 using
 the classic shared variable mechanism. The other (random_20xx.vhdl)
 is for VHDL-2002 and later using a protected type to manage the
-PRNG state. Both files define a package named &#8220;random&#8221; and only one
+PRNG state. Both files define a package named “random” and only one
 can be in use at any time. The user visible subprograms are the same
 in both implementations.</p>
 <p>The package provides a number of overloaded subprograms for generating
@@ -87,7 +86,7 @@ random numbers of various types.</p>
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="procedure">
 <dt id="extras.random.seed[positive]">
-<tt class="descclassname">random.</tt><tt class="descname">seed</tt> <big>(</big><em>S : in positive</em><big>)</big><a class="headerlink" href="#extras.random.seed[positive]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">random.</code><code class="descname">seed</code> <span class="sig-paren">(</span><em>S : in positive</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.random.seed[positive]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Seed the PRNG with a number.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -95,7 +94,7 @@ random numbers of various types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>S</strong> (<em>in positive</em>) &#8211; Seed value</li>
+<li><strong>S</strong> (<em>in positive</em>) – Seed value</li>
 </ul>
 </td>
 </tr>
@@ -105,7 +104,7 @@ random numbers of various types.</p>
 
 <dl class="procedure">
 <dt id="extras.random.seed[positive,positive]">
-<tt class="descclassname">random.</tt><tt class="descname">seed</tt> <big>(</big><em>S1 : in positive</em>; <em>S2 : in positive</em><big>)</big><a class="headerlink" href="#extras.random.seed[positive,positive]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">random.</code><code class="descname">seed</code> <span class="sig-paren">(</span><em>S1 : in positive</em>; <em>S2 : in positive</em><span class="sig-paren">)</span><a class="headerlink" href="#extras.random.seed[positive,positive]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Seed the PRNG with s1 and s2. This offers more
 random initialization than the one argument version
@@ -115,8 +114,8 @@ of seed.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>S1</strong> (<em>in positive</em>) &#8211; Seed value 1</li>
-<li><strong>S2</strong> (<em>in positive</em>) &#8211; Seed value 2</li>
+<li><strong>S1</strong> (<em>in positive</em>) – Seed value 1</li>
+<li><strong>S2</strong> (<em>in positive</em>) – Seed value 2</li>
 </ul>
 </td>
 </tr>
@@ -126,7 +125,7 @@ of seed.</div></blockquote>
 
 <dl class="function">
 <dt id="extras.random.random[ return real]">
-<tt class="descclassname">random.</tt><tt class="descname">random</tt><big>(</big><big>)</big> &rarr; real<a class="headerlink" href="#extras.random.random[ return real]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">random.</code><code class="descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; real<a class="headerlink" href="#extras.random.random[ return real]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Generate a random real.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -141,7 +140,7 @@ of seed.</div></blockquote>
 
 <dl class="function">
 <dt id="extras.random.random[ return natural]">
-<tt class="descclassname">random.</tt><tt class="descname">random</tt><big>(</big><big>)</big> &rarr; natural<a class="headerlink" href="#extras.random.random[ return natural]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">random.</code><code class="descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; natural<a class="headerlink" href="#extras.random.random[ return natural]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Generate a random natural.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -156,7 +155,7 @@ of seed.</div></blockquote>
 
 <dl class="function">
 <dt id="extras.random.random[ return boolean]">
-<tt class="descclassname">random.</tt><tt class="descname">random</tt><big>(</big><big>)</big> &rarr; boolean<a class="headerlink" href="#extras.random.random[ return boolean]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">random.</code><code class="descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; boolean<a class="headerlink" href="#extras.random.random[ return boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Generate a random boolean.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -171,7 +170,7 @@ of seed.</div></blockquote>
 
 <dl class="function">
 <dt id="extras.random.random[ return character]">
-<tt class="descclassname">random.</tt><tt class="descname">random</tt><big>(</big><big>)</big> &rarr; character<a class="headerlink" href="#extras.random.random[ return character]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">random.</code><code class="descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; character<a class="headerlink" href="#extras.random.random[ return character]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Generate a random character.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -186,7 +185,7 @@ of seed.</div></blockquote>
 
 <dl class="function">
 <dt id="extras.random.random[positive return bit_vector]">
-<tt class="descclassname">random.</tt><tt class="descname">random</tt> <big>(</big><em>Size : positive</em><big>)</big> &rarr; bit_vector<a class="headerlink" href="#extras.random.random[positive return bit_vector]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">random.</code><code class="descname">random</code> <span class="sig-paren">(</span><em>Size : positive</em><span class="sig-paren">)</span> &#x2192; bit_vector<a class="headerlink" href="#extras.random.random[positive return bit_vector]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Generate a random bit_vector of size bits.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -194,7 +193,7 @@ of seed.</div></blockquote>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Size</strong> (<em>positive</em>) &#8211; Length of the random result</li>
+<li><strong>Size</strong> (<em>positive</em>) – Length of the random result</li>
 </ul>
 </td>
 </tr>
@@ -207,17 +206,17 @@ of seed.</div></blockquote>
 
 <dl class="function">
 <dt id="extras.random.randint[integer,integer return integer]">
-<tt class="descclassname">random.</tt><tt class="descname">randint</tt> <big>(</big><em>Min : integer</em>; <em>Max : integer</em><big>)</big> &rarr; integer<a class="headerlink" href="#extras.random.randint[integer,integer return integer]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">random.</code><code class="descname">randint</code> <span class="sig-paren">(</span><em>Min : integer</em>; <em>Max : integer</em><span class="sig-paren">)</span> &#x2192; integer<a class="headerlink" href="#extras.random.randint[integer,integer return integer]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Generate a random integer between Min and Max inclusive.
-Note that the span Max - Min must be less than integer&#8217;high.</div></blockquote>
+Note that the span Max - Min must be less than integer’high.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Min</strong> (<em>integer</em>) &#8211; Minimum value</li>
-<li><strong>Max</strong> (<em>integer</em>) &#8211; Maximum value</li>
+<li><strong>Min</strong> (<em>integer</em>) – Minimum value</li>
+<li><strong>Max</strong> (<em>integer</em>) – Maximum value</li>
 </ul>
 </td>
 </tr>
@@ -230,17 +229,17 @@ Note that the span Max - Min must be less than integer&#8217;high.</div></blockq
 
 <dl class="function">
 <dt id="extras.random.randtime[time,time return time]">
-<tt class="descclassname">random.</tt><tt class="descname">randtime</tt> <big>(</big><em>Min : time</em>; <em>Max : time</em><big>)</big> &rarr; time<a class="headerlink" href="#extras.random.randtime[time,time return time]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">random.</code><code class="descname">randtime</code> <span class="sig-paren">(</span><em>Min : time</em>; <em>Max : time</em><span class="sig-paren">)</span> &#x2192; time<a class="headerlink" href="#extras.random.randtime[time,time return time]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Generate a random time between Min and Max inclusive.
-Note that the span Max - Min must be less than time&#8217;high.</div></blockquote>
+Note that the span Max - Min must be less than time’high.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Min</strong> (<em>time</em>) &#8211; Minimum value</li>
-<li><strong>Max</strong> (<em>time</em>) &#8211; Maximum value</li>
+<li><strong>Min</strong> (<em>time</em>) – Minimum value</li>
+<li><strong>Max</strong> (<em>time</em>) – Maximum value</li>
 </ul>
 </td>
 </tr>
@@ -258,7 +257,7 @@ Note that the span Max - Min must be less than time&#8217;high.</div></blockquot
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -363,17 +362,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -382,10 +378,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/random.txt"
+      <a href="../../_sources/rst/modules/random.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>secded_codec &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>secded_codec &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="secded_edac" href="secded_edac.html" />
     <link rel="prev" title="reg_file" href="reg_file.html" />
    
@@ -38,18 +37,18 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="secded-codec">
 <h1>secded_codec<a class="headerlink" href="#secded-codec" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/secded_codec.vhdl">extras/secded_codec.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="sizing.html"><em>sizing</em></a>,
-<a class="reference internal" href="pipelining.html"><em>pipelining</em></a>,
-<a class="reference internal" href="hamming_edac.html"><em>hamming_edac</em></a>,
-<a class="reference internal" href="secded_edac.html"><em>secded_edac</em></a>,
-<a class="reference internal" href="parity_ops.html"><em>parity_ops</em></a></p>
+<p><a class="reference internal" href="sizing.html"><span class="doc">sizing</span></a>,
+<a class="reference internal" href="pipelining.html"><span class="doc">pipelining</span></a>,
+<a class="reference internal" href="hamming_edac.html"><span class="doc">hamming_edac</span></a>,
+<a class="reference internal" href="secded_edac.html"><span class="doc">secded_edac</span></a>,
+<a class="reference internal" href="parity_ops.html"><span class="doc">parity_ops</span></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -60,9 +59,9 @@ input and output registers. The SECDED logic is capable of correcting
 single-bit errors and detecting double-bit errors.</p>
 <p>Optional pipelining is available to reduce the maximum delay through the
 internal logic. To be effective, you must activate the retiming feature of
-the synthesis tool being used. See the notes in <a class="reference internal" href="pipelining.html"><em>pipelining</em></a> for more
+the synthesis tool being used. See the notes in <a class="reference internal" href="pipelining.html"><span class="doc">pipelining</span></a> for more
 information on how to accomplish this. The pipelining is controlled with
-the <tt class="docutils literal"><span class="pre">PIPELINE_STAGES</span></tt> generic. A value of 0 will disable pipelining.</p>
+the <code class="docutils literal"><span class="pre">PIPELINE_STAGES</span></code> generic. A value of 0 will disable pipelining.</p>
 <p>To facilitate testing, the codec includes an error generator that can
 insert single-bit and double-bit errors into the encoded output. When
 active, successive bits are flipped on each clock cycle. This feature
@@ -72,31 +71,31 @@ provides for the testing of error handling logic in the decoding process.</p>
 <h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
 <dl class="constant">
 <dt id="extras.secded_codec_pkg.CODEC_ENCODE">
-<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">CODEC_ENCODE</tt><a class="headerlink" href="#extras.secded_codec_pkg.CODEC_ENCODE" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">secded_codec_pkg.</code><code class="descname">CODEC_ENCODE</code><a class="headerlink" href="#extras.secded_codec_pkg.CODEC_ENCODE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select encoding mode</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.secded_codec_pkg.CODEC_DECODE">
-<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">CODEC_DECODE</tt><a class="headerlink" href="#extras.secded_codec_pkg.CODEC_DECODE" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">secded_codec_pkg.</code><code class="descname">CODEC_DECODE</code><a class="headerlink" href="#extras.secded_codec_pkg.CODEC_DECODE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select decoding mode</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.secded_codec_pkg.INSERT_NONE">
-<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">INSERT_NONE</tt><a class="headerlink" href="#extras.secded_codec_pkg.INSERT_NONE" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">secded_codec_pkg.</code><code class="descname">INSERT_NONE</code><a class="headerlink" href="#extras.secded_codec_pkg.INSERT_NONE" title="Permalink to this definition">¶</a></dt>
 <dd><p>No error injection</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.secded_codec_pkg.INSERT_SINGLE">
-<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">INSERT_SINGLE</tt><a class="headerlink" href="#extras.secded_codec_pkg.INSERT_SINGLE" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">secded_codec_pkg.</code><code class="descname">INSERT_SINGLE</code><a class="headerlink" href="#extras.secded_codec_pkg.INSERT_SINGLE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Single-bit error injection</p>
 </dd></dl>
 
 <dl class="constant">
 <dt id="extras.secded_codec_pkg.INSERT_DOUBLE">
-<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">INSERT_DOUBLE</tt><a class="headerlink" href="#extras.secded_codec_pkg.INSERT_DOUBLE" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">secded_codec_pkg.</code><code class="descname">INSERT_DOUBLE</code><a class="headerlink" href="#extras.secded_codec_pkg.INSERT_DOUBLE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Double-bit error injection</p>
 </dd></dl>
 
@@ -135,29 +134,29 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.secded_codec_pkg.secded_codec">
-<tt class="descclassname">secded_codec_pkg.</tt><tt class="descname">secded_codec</tt><a class="headerlink" href="#extras.secded_codec_pkg.secded_codec" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">secded_codec_pkg.</code><code class="descname">secded_codec</code><a class="headerlink" href="#extras.secded_codec_pkg.secded_codec" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>DATA_SIZE</strong> (<em>positive</em>) &#8211; Size of the <tt class="docutils literal"><span class="pre">Data</span></tt> input</li>
-<li><strong>PIPELINE_STAGES</strong> (<em>natural</em>) &#8211; Number of pipeline stages appended to end</li>
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>DATA_SIZE</strong> (<em>positive</em>) – Size of the <code class="docutils literal"><span class="pre">Data</span></code> input</li>
+<li><strong>PIPELINE_STAGES</strong> (<em>natural</em>) – Number of pipeline stages appended to end</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Codec_mode</strong> (<em>in std_ulogic</em>) &#8211; OPerating mode: &#8216;0&#8217; = encode, &#8216;1&#8217; = decode</li>
-<li><strong>Insert_error</strong> (<em>in std_ulogic_vector(1 downto 0)</em>) &#8211; Error injection</li>
-<li><strong>Data</strong> (<em>in std_ulogic_vector(DATA_SIZE-1 downto 0)</em>) &#8211; Data to encode</li>
-<li><strong>Encoded_data</strong> (<em>out ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right)</em>) &#8211; Data message with  SECDED parity</li>
-<li><strong>Ecc_data</strong> (<em>in ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right)</em>) &#8211; Received data</li>
-<li><strong>Decoded_data</strong> (<em>out std_ulogic_vector(DATA_SIZE-1 downto 0)</em>) &#8211; Received data with errors corrected</li>
-<li><strong>Single_bit_error</strong> (<em>out std_ulogic</em>) &#8211; &#8216;1&#8217; when a single-bit error is detected (automatically corrected)</li>
-<li><strong>Double_bit_error</strong> (<em>out std_ulogic</em>) &#8211; &#8216;1&#8217; when a double-bit error is detected</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Codec_mode</strong> (<em>in std_ulogic</em>) – OPerating mode: ‘0’ = encode, ‘1’ = decode</li>
+<li><strong>Insert_error</strong> (<em>in std_ulogic_vector(1 downto 0)</em>) – Error injection</li>
+<li><strong>Data</strong> (<em>in std_ulogic_vector(DATA_SIZE-1 downto 0)</em>) – Data to encode</li>
+<li><strong>Encoded_data</strong> (<em>out ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right)</em>) – Data message with  SECDED parity</li>
+<li><strong>Ecc_data</strong> (<em>in ecc_vector(DATA_SIZE-1 downto secded_indices(DATA_SIZE).right)</em>) – Received data</li>
+<li><strong>Decoded_data</strong> (<em>out std_ulogic_vector(DATA_SIZE-1 downto 0)</em>) – Received data with errors corrected</li>
+<li><strong>Single_bit_error</strong> (<em>out std_ulogic</em>) – ‘1’ when a single-bit error is detected (automatically corrected)</li>
+<li><strong>Double_bit_error</strong> (<em>out std_ulogic</em>) – ‘1’ when a double-bit error is detected</li>
 </ul>
 </td>
 </tr>
@@ -173,7 +172,7 @@ end component;</p></object>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -279,17 +278,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -298,10 +294,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/secded_codec.txt"
+      <a href="../../_sources/rst/modules/secded_codec.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

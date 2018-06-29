@@ -1,0 +1,498 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>oscillator &#8212; VHDL-extras 1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="parity_ops" href="parity_ops.html" />
+    <link rel="prev" title="muxing" href="muxing.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="oscillator">
+<h1>oscillator<a class="headerlink" href="#oscillator" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/oscillator.vhdl">extras/oscillator.vhdl</a></p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="ddfs.html"><span class="doc">ddfs</span></a>,
+<a class="reference internal" href="cordic.html"><span class="doc">cordic</span></a>,
+<a class="reference internal" href="sizing.html"><span class="doc">sizing</span></a>,
+<a class="reference internal" href="timing_ops.html"><span class="doc">timing_ops</span></a></p>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>This package provides a set of components that implement arbitrary
+sinusoidal frequency generators. They come in two variants. One generates
+a fixed frequency that is specified at elaboration time as a generic
+parameter. The other generates a dynamic frequency that can be altered
+at run time. Each of these oscillator variants comes in two versions. One
+is based around a pipelined CORDIC unit that produces new valid output on
+every clock cycle. The other uses a more compact sequential CORDIC
+implementation that takes multiple clock cycles to produce each output.</p>
+<p>All oscillators output sine, cosine, the current phase angle, and a generated
+clock at the target frequency.</p>
+<div class="section" id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl"><div class="highlight"><pre><span class="n">TODO</span>
+</pre></div>
+</div>
+<span class="target" id="package-extras.oscillator"></span></div>
+</div>
+<div class="section" id="components">
+<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fixed-oscillator">
+<h3>fixed_oscillator<a class="headerlink" href="#fixed-oscillator" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-oscillator-fixed_oscillator.svg" type="image/svg+xml">
+            <p class="warning">component fixed_oscillator is
+generic (
+  SYS_CLOCK_FREQ : frequency;
+  OUTPUT_FREQ : frequency;
+  TOLERANCE : real;
+  SIZE : positive;
+  ITERATIONS : positive;
+  MAGNITUDE : real;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Load_phase : in std_ulogic;
+  New_phase : in unsigned;
+  --# {{data|}}
+  Sin : out signed(SIZE-1 downto 0);
+  Cos : out signed(SIZE-1 downto 0);
+  Angle : out signed(SIZE-1 downto 0);
+  Synth_clock : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.oscillator.fixed_oscillator">
+<code class="descclassname">oscillator.</code><code class="descname">fixed_oscillator</code><a class="headerlink" href="#extras.oscillator.fixed_oscillator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Oscillator with a fixed frequency output.
+Samples are generated on every clock cycle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>SYS_CLOCK_FREQ</strong> (<em>frequency</em>) – System clock frequency</li>
+<li><strong>OUTPUT_FREQ</strong> (<em>frequency</em>) – Generated frequency</li>
+<li><strong>TOLERANCE</strong> (<em>real</em>) – Error tolerance</li>
+<li><strong>SIZE</strong> (<em>positive</em>) – Width of operands</li>
+<li><strong>ITERATIONS</strong> (<em>positive</em>) – Number of iterations for CORDIC algorithm</li>
+<li><strong>MAGNITUDE</strong> (<em>real</em>) – Scale factor for Sin and Cos</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Load_phase</strong> (<em>in std_ulogic</em>) – Load a new phase angle</li>
+<li><strong>New_phase</strong> (<em>in unsigned</em>) – Phase angle to load</li>
+<li><strong>Sin</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Sine output</li>
+<li><strong>Cos</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Cosine output</li>
+<li><strong>Angle</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Phase angle in brads</li>
+<li><strong>Synth_clock</strong> (<em>out std_ulogic</em>) – Generated clock</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fixed-oscillator-sequential">
+<h3>fixed_oscillator_sequential<a class="headerlink" href="#fixed-oscillator-sequential" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-oscillator-fixed_oscillator_sequential.svg" type="image/svg+xml">
+            <p class="warning">component fixed_oscillator_sequential is
+generic (
+  SYS_CLOCK_FREQ : frequency;
+  OUTPUT_FREQ : frequency;
+  TOLERANCE : real;
+  SIZE : positive;
+  ITERATIONS : positive;
+  MAGNITUDE : real;
+  CAPTURE_RESULT : boolean;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Load_phase : in std_ulogic;
+  New_phase : in unsigned;
+  Result_valid : out std_ulogic;
+  --# {{data|}}
+  Sin : out signed(SIZE-1 downto 0);
+  Cos : out signed(SIZE-1 downto 0);
+  Angle : out signed(SIZE-1 downto 0);
+  Synth_clock : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.oscillator.fixed_oscillator_sequential">
+<code class="descclassname">oscillator.</code><code class="descname">fixed_oscillator_sequential</code><a class="headerlink" href="#extras.oscillator.fixed_oscillator_sequential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Oscillator with a fixed frequency output.
+Samples are generated on after every ITERATIONS clock cycles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>SYS_CLOCK_FREQ</strong> (<em>frequency</em>) – System clock frequency</li>
+<li><strong>OUTPUT_FREQ</strong> (<em>frequency</em>) – Generated frequency</li>
+<li><strong>TOLERANCE</strong> (<em>real</em>) – Error tolerance</li>
+<li><strong>SIZE</strong> (<em>positive</em>) – Width of operands</li>
+<li><strong>ITERATIONS</strong> (<em>positive</em>) – Number of iterations for CORDIC algorithm</li>
+<li><strong>MAGNITUDE</strong> (<em>real</em>) – Scale factor for Sin and Cos</li>
+<li><strong>CAPTURE_RESULT</strong> (<em>boolean</em>) – Register outputs when valid</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Load_phase</strong> (<em>in std_ulogic</em>) – Load a new phase angle</li>
+<li><strong>New_phase</strong> (<em>in unsigned</em>) – Phase angle to load</li>
+<li><strong>Result_valid</strong> (<em>out std_ulogic</em>) – New samples are ready</li>
+<li><strong>Sin</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Sine output</li>
+<li><strong>Cos</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Cosine output</li>
+<li><strong>Angle</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Phase angle in brads</li>
+<li><strong>Synth_clock</strong> (<em>out std_ulogic</em>) – Generated clock</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="dynamic-oscillator">
+<h3>dynamic_oscillator<a class="headerlink" href="#dynamic-oscillator" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-oscillator-dynamic_oscillator.svg" type="image/svg+xml">
+            <p class="warning">component dynamic_oscillator is
+generic (
+  SYS_CLOCK_FREQ : real;
+  MIN_TGT_FREQ : natural;
+  TOLERANCE : real;
+  SIZE : natural;
+  ITERATIONS : positive;
+  MAGNITUDE : real;
+  FREQ_SCALE : natural;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Load_phase : in std_ulogic;
+  New_phase : in unsigned;
+  Dyn_freq : in unsigned;
+  --# {{data|}}
+  Sin : out signed(SIZE-1 downto 0);
+  Cos : out signed(SIZE-1 downto 0);
+  Angle : out signed(SIZE-1 downto 0);
+  Synth_clock : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.oscillator.dynamic_oscillator">
+<code class="descclassname">oscillator.</code><code class="descname">dynamic_oscillator</code><a class="headerlink" href="#extras.oscillator.dynamic_oscillator" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>SYS_CLOCK_FREQ</strong> (<em>real</em>) – System clock frequency</li>
+<li><strong>MIN_TGT_FREQ</strong> (<em>natural</em>) – Lowest supported output frequency</li>
+<li><strong>TOLERANCE</strong> (<em>real</em>) – Error tolerance</li>
+<li><strong>SIZE</strong> (<em>natural</em>) – Width of operands</li>
+<li><strong>ITERATIONS</strong> (<em>positive</em>) – Number of iterations for CORDIC algorithm</li>
+<li><strong>MAGNITUDE</strong> (<em>real</em>) – Scale factor for Sin and Cos magnitude</li>
+<li><strong>FREQ_SCALE</strong> (<em>natural</em>) – Scale factor for target frequency</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Load_phase</strong> (<em>in std_ulogic</em>) – Load a new phase angle</li>
+<li><strong>New_phase</strong> (<em>in unsigned</em>) – Phase angle to load</li>
+<li><strong>Dyn_freq</strong> (<em>in unsigned</em>) – Dynamic frequency in FIXME</li>
+<li><strong>Sin</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Sine output</li>
+<li><strong>Cos</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Cosine output</li>
+<li><strong>Angle</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Phase angle in brads</li>
+<li><strong>Synth_clock</strong> (<em>out std_ulogic</em>) – Generated clock</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="dynamic-oscillator-sequential">
+<h3>dynamic_oscillator_sequential<a class="headerlink" href="#dynamic-oscillator-sequential" title="Permalink to this headline">¶</a></h3>
+<object data="../../_images/symbol-oscillator-dynamic_oscillator_sequential.svg" type="image/svg+xml">
+            <p class="warning">component dynamic_oscillator_sequential is
+generic (
+  SYS_CLOCK_FREQ : real;
+  MIN_TGT_FREQ : natural;
+  TOLERANCE : real;
+  SIZE : natural;
+  ITERATIONS : positive;
+  MAGNITUDE : real;
+  FREQ_SCALE : natural;
+  CAPTURE_RESULT : boolean;
+  RESET_ACTIVE_LEVEL : std_ulogic
+);
+port (
+  --# {{clocks|}}
+  Clock : in std_ulogic;
+  Reset : in std_ulogic;
+  --# {{control|}}
+  Load_phase : in std_ulogic;
+  New_phase : in unsigned;
+  Dyn_freq : in unsigned;
+  --# {{data|}}
+  Sin : out signed(SIZE-1 downto 0);
+  Cos : out signed(SIZE-1 downto 0);
+  Angle : out signed(SIZE-1 downto 0);
+  Synth_clock : out std_ulogic
+);
+end component;</p></object>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="entity">
+<dt id="extras.oscillator.dynamic_oscillator_sequential">
+<code class="descclassname">oscillator.</code><code class="descname">dynamic_oscillator_sequential</code><a class="headerlink" href="#extras.oscillator.dynamic_oscillator_sequential" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
+<li><strong>SYS_CLOCK_FREQ</strong> (<em>real</em>) – System clock frequency</li>
+<li><strong>MIN_TGT_FREQ</strong> (<em>natural</em>) – Lowest supported output frequency</li>
+<li><strong>TOLERANCE</strong> (<em>real</em>) – Error tolerance</li>
+<li><strong>SIZE</strong> (<em>natural</em>) – Width of operands</li>
+<li><strong>ITERATIONS</strong> (<em>positive</em>) – Number of iterations for CORDIC algorithm</li>
+<li><strong>MAGNITUDE</strong> (<em>real</em>) – Scale factor for Sin and Cos magnitude</li>
+<li><strong>FREQ_SCALE</strong> (<em>natural</em>) – Scale factor for target frequency</li>
+<li><strong>CAPTURE_RESULT</strong> (<em>boolean</em>) – Register outputs when valid</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Load_phase</strong> (<em>in std_ulogic</em>) – Load a new phase angle</li>
+<li><strong>New_phase</strong> (<em>in unsigned</em>) – Phase angle to load</li>
+<li><strong>Dyn_freq</strong> (<em>in unsigned</em>) – Dynamic frequency in FIXME</li>
+<li><strong>Sin</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Sine output</li>
+<li><strong>Cos</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Cosine output</li>
+<li><strong>Angle</strong> (<em>out signed(SIZE-1 downto 0)</em>) – Phase angle in brads</li>
+<li><strong>Synth_clock</strong> (<em>out std_ulogic</em>) – Generated clock</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
+            </a></p>
+<!--<h1 class="logo"><a href="../../index.html">VHDL-extras</a></h1>-->
+
+
+
+<p class="blurb">Flexible VHDL library</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=kevinpt&repo=vhdl-extras&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="muxing.html" title="previous chapter">muxing</a></li>
+      <li>Next: <a href="parity_ops.html" title="next chapter">parity_ops</a></li>
+  </ul></li>
+</ul>
+</div>
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">oscillator</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#components">Components</a><ul>
+<li><a class="reference internal" href="#fixed-oscillator">fixed_oscillator</a></li>
+<li><a class="reference internal" href="#fixed-oscillator-sequential">fixed_oscillator_sequential</a></li>
+<li><a class="reference internal" href="#dynamic-oscillator">dynamic_oscillator</a></li>
+<li><a class="reference internal" href="#dynamic-oscillator-sequential">dynamic_oscillator_sequential</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Other projects</h3>
+
+<div id="proj_list">
+<p>
+<a href="http://kevinpt.github.io/opbasm/">Opbasm</a><br>
+<a href="http://kevinpt.github.io/ripyl/">Ripyl</a><br>
+<a href="http://code.google.com/p/vertcl">Vertcl</a><br>
+
+<a href="http://kevinpt.github.io/lecroy-colorizer/">Lecroy-colorizer</a>
+</p>
+</div>
+
+<script>
+$(function() { // Retrieve list of repositories from Github and dynamically insert them into sidebar
+
+if(!window.sessionStorage || !JSON) { return; } // Punt on crusty browsers (looking at you IE10)
+
+function JSONP( url, callback ) {
+	var id = ( 'jsonp' + Math.random() * new Date() ).replace('.', '');
+	var script = document.createElement('script');
+	script.src = url.replace( 'callback=?', 'callback=' + id );
+	document.body.appendChild( script );
+	window[ id ] = function( data ) {
+		if (callback) {
+			callback( data );
+		}
+	};
+}
+
+function insert_projects(projects) {
+    var links = [];
+    var cur_proj = "VHDL-extras".toLowerCase();
+    $.each(projects, function(key, value) {
+      if(key != cur_proj) {
+        var title = key.replace(/^./, function(match) {return match.toUpperCase()}); // Capitalize first char
+        links.push("<a href='"+ value +"'>" + title + "</a>");
+      }
+    });
+    
+    $("#proj_list").html("<p>"+ links.join("<br>") +"</p>");
+}
+
+var now = new Date().getTime();
+if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) { // Use cached values (5 min. expiry)
+  insert_projects(JSON.parse(sessionStorage.KTprojects));
+} else { // Retrieve current projects
+  JSONP("https://api.github.com/users/kevinpt/repos?type=owner&callback=?", function(response) {
+    var projects = {};
+    $.each(response.data, function(index, value) {
+      projects[value.name] = value.homepage;
+    });
+    
+    insert_projects(projects);
+    
+    // Store data in session cache
+    sessionStorage.KTprojects = JSON.stringify(projects);
+    var now = new Date().getTime();
+    sessionStorage.KTcacheTime = now;
+  });  
+}
+
+});
+</script>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2017, Kevin Thibedeau.
+      
+      |
+      <a href="../../_sources/rst/modules/oscillator.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+
+
+  </body>
+</html>

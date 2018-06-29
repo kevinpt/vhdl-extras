@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>common_2008 &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>common_2008 &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="cordic" href="cordic.html" />
     <link rel="prev" title="characters_latin_1" href="characters_latin_1.html" />
    
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="common-2008">
 <h1>common_2008<a class="headerlink" href="#common-2008" title="Permalink to this headline">¶</a></h1>
@@ -58,25 +57,25 @@ components that need to make use of fully unconstrained types.</p>
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="extras_2008.common.sulv_array">
-<tt class="descclassname">common.</tt><tt class="descname">sulv_array</tt><a class="headerlink" href="#extras_2008.common.sulv_array" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">sulv_array</code><a class="headerlink" href="#extras_2008.common.sulv_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Array of std_ulogic_vector.</p>
 </dd></dl>
 
 <dl class="type">
 <dt id="extras_2008.common.slv_array">
-<tt class="descclassname">common.</tt><tt class="descname">slv_array</tt><a class="headerlink" href="#extras_2008.common.slv_array" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">slv_array</code><a class="headerlink" href="#extras_2008.common.slv_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Array of std_logic_vector.</p>
 </dd></dl>
 
 <dl class="type">
 <dt id="extras_2008.common.unsigned_array">
-<tt class="descclassname">common.</tt><tt class="descname">unsigned_array</tt><a class="headerlink" href="#extras_2008.common.unsigned_array" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">unsigned_array</code><a class="headerlink" href="#extras_2008.common.unsigned_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Array of unsigned.</p>
 </dd></dl>
 
 <dl class="type">
 <dt id="extras_2008.common.signed_array">
-<tt class="descclassname">common.</tt><tt class="descname">signed_array</tt><a class="headerlink" href="#extras_2008.common.signed_array" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">signed_array</code><a class="headerlink" href="#extras_2008.common.signed_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Array of signed.</p>
 </dd></dl>
 
@@ -85,7 +84,7 @@ components that need to make use of fully unconstrained types.</p>
 <h2>Subprograms<a class="headerlink" href="#subprograms" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="extras_2008.common.to_slv_array[sulv_array return slv_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_slv_array</tt> <big>(</big><em>A : sulv_array</em><big>)</big> &rarr; slv_array<a class="headerlink" href="#extras_2008.common.to_slv_array[sulv_array return slv_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_slv_array</code> <span class="sig-paren">(</span><em>A : sulv_array</em><span class="sig-paren">)</span> &#x2192; slv_array<a class="headerlink" href="#extras_2008.common.to_slv_array[sulv_array return slv_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert std_ulogic_vector array to std_logic_vector array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -93,7 +92,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>sulv_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>sulv_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -106,7 +105,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_sulv_array[slv_array return sulv_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_sulv_array</tt> <big>(</big><em>A : slv_array</em><big>)</big> &rarr; sulv_array<a class="headerlink" href="#extras_2008.common.to_sulv_array[slv_array return sulv_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_sulv_array</code> <span class="sig-paren">(</span><em>A : slv_array</em><span class="sig-paren">)</span> &#x2192; sulv_array<a class="headerlink" href="#extras_2008.common.to_sulv_array[slv_array return sulv_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert std_logic_vector array to std_ulogic_vector array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -114,7 +113,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>slv_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>slv_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -127,7 +126,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_unsigned_array[sulv_array return unsigned_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_unsigned_array</tt> <big>(</big><em>A : sulv_array</em><big>)</big> &rarr; unsigned_array<a class="headerlink" href="#extras_2008.common.to_unsigned_array[sulv_array return unsigned_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_unsigned_array</code> <span class="sig-paren">(</span><em>A : sulv_array</em><span class="sig-paren">)</span> &#x2192; unsigned_array<a class="headerlink" href="#extras_2008.common.to_unsigned_array[sulv_array return unsigned_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert std_ulogic_vector array to unsigned array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -135,7 +134,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>sulv_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>sulv_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -148,7 +147,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_sulv_array[unsigned_array return sulv_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_sulv_array</tt> <big>(</big><em>A : unsigned_array</em><big>)</big> &rarr; sulv_array<a class="headerlink" href="#extras_2008.common.to_sulv_array[unsigned_array return sulv_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_sulv_array</code> <span class="sig-paren">(</span><em>A : unsigned_array</em><span class="sig-paren">)</span> &#x2192; sulv_array<a class="headerlink" href="#extras_2008.common.to_sulv_array[unsigned_array return sulv_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert unsigned array to std_ulogic_vector array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -156,7 +155,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>unsigned_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>unsigned_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -169,7 +168,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_signed_array[sulv_array return signed_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_signed_array</tt> <big>(</big><em>A : sulv_array</em><big>)</big> &rarr; signed_array<a class="headerlink" href="#extras_2008.common.to_signed_array[sulv_array return signed_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_signed_array</code> <span class="sig-paren">(</span><em>A : sulv_array</em><span class="sig-paren">)</span> &#x2192; signed_array<a class="headerlink" href="#extras_2008.common.to_signed_array[sulv_array return signed_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert std_ulogic_vector array to signed array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -177,7 +176,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>sulv_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>sulv_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -190,7 +189,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_sulv_array[signed_array return sulv_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_sulv_array</tt> <big>(</big><em>A : signed_array</em><big>)</big> &rarr; sulv_array<a class="headerlink" href="#extras_2008.common.to_sulv_array[signed_array return sulv_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_sulv_array</code> <span class="sig-paren">(</span><em>A : signed_array</em><span class="sig-paren">)</span> &#x2192; sulv_array<a class="headerlink" href="#extras_2008.common.to_sulv_array[signed_array return sulv_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert signed array to std_ulogic_vector array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -198,7 +197,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>signed_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>signed_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -211,7 +210,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_unsigned_array[slv_array return unsigned_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_unsigned_array</tt> <big>(</big><em>A : slv_array</em><big>)</big> &rarr; unsigned_array<a class="headerlink" href="#extras_2008.common.to_unsigned_array[slv_array return unsigned_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_unsigned_array</code> <span class="sig-paren">(</span><em>A : slv_array</em><span class="sig-paren">)</span> &#x2192; unsigned_array<a class="headerlink" href="#extras_2008.common.to_unsigned_array[slv_array return unsigned_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert std_logic_vector array to unsigned array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -219,7 +218,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>slv_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>slv_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -232,7 +231,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_slv_array[unsigned_array return slv_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_slv_array</tt> <big>(</big><em>A : unsigned_array</em><big>)</big> &rarr; slv_array<a class="headerlink" href="#extras_2008.common.to_slv_array[unsigned_array return slv_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_slv_array</code> <span class="sig-paren">(</span><em>A : unsigned_array</em><span class="sig-paren">)</span> &#x2192; slv_array<a class="headerlink" href="#extras_2008.common.to_slv_array[unsigned_array return slv_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert unsigned array to std_logic_vector array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -240,7 +239,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>unsigned_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>unsigned_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -253,7 +252,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_signed_array[slv_array return signed_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_signed_array</tt> <big>(</big><em>A : slv_array</em><big>)</big> &rarr; signed_array<a class="headerlink" href="#extras_2008.common.to_signed_array[slv_array return signed_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_signed_array</code> <span class="sig-paren">(</span><em>A : slv_array</em><span class="sig-paren">)</span> &#x2192; signed_array<a class="headerlink" href="#extras_2008.common.to_signed_array[slv_array return signed_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert std_logic_vector array to signed array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -261,7 +260,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>slv_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>slv_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -274,7 +273,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_slv_array[signed_array return slv_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_slv_array</tt> <big>(</big><em>A : signed_array</em><big>)</big> &rarr; slv_array<a class="headerlink" href="#extras_2008.common.to_slv_array[signed_array return slv_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_slv_array</code> <span class="sig-paren">(</span><em>A : signed_array</em><span class="sig-paren">)</span> &#x2192; slv_array<a class="headerlink" href="#extras_2008.common.to_slv_array[signed_array return slv_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert signed array to std_logic_vector array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -282,7 +281,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>signed_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>signed_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -295,7 +294,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_signed_array[unsigned_array return signed_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_signed_array</tt> <big>(</big><em>A : unsigned_array</em><big>)</big> &rarr; signed_array<a class="headerlink" href="#extras_2008.common.to_signed_array[unsigned_array return signed_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_signed_array</code> <span class="sig-paren">(</span><em>A : unsigned_array</em><span class="sig-paren">)</span> &#x2192; signed_array<a class="headerlink" href="#extras_2008.common.to_signed_array[unsigned_array return signed_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert unsigned array to signed array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -303,7 +302,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>unsigned_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>unsigned_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -316,7 +315,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_unsigned_array[signed_array return unsigned_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_unsigned_array</tt> <big>(</big><em>A : signed_array</em><big>)</big> &rarr; unsigned_array<a class="headerlink" href="#extras_2008.common.to_unsigned_array[signed_array return unsigned_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_unsigned_array</code> <span class="sig-paren">(</span><em>A : signed_array</em><span class="sig-paren">)</span> &#x2192; unsigned_array<a class="headerlink" href="#extras_2008.common.to_unsigned_array[signed_array return unsigned_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert signed array to unsigned array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -324,7 +323,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>signed_array</em>) &#8211; Array to convert</li>
+<li><strong>A</strong> (<em>signed_array</em>) – Array to convert</li>
 </ul>
 </td>
 </tr>
@@ -337,7 +336,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_sulv_array[std_ulogic_vector return sulv_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_sulv_array</tt> <big>(</big><em>A : std_ulogic_vector</em><big>)</big> &rarr; sulv_array<a class="headerlink" href="#extras_2008.common.to_sulv_array[std_ulogic_vector return sulv_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_sulv_array</code> <span class="sig-paren">(</span><em>A : std_ulogic_vector</em><span class="sig-paren">)</span> &#x2192; sulv_array<a class="headerlink" href="#extras_2008.common.to_sulv_array[std_ulogic_vector return sulv_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert a scaler std_ulogic_vector to a single element std_ulogic_vector array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -345,7 +344,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>std_ulogic_vector</em>) &#8211; Vector</li>
+<li><strong>A</strong> (<em>std_ulogic_vector</em>) – Vector</li>
 </ul>
 </td>
 </tr>
@@ -358,7 +357,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_slv_array[std_logic_vector return slv_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_slv_array</tt> <big>(</big><em>A : std_logic_vector</em><big>)</big> &rarr; slv_array<a class="headerlink" href="#extras_2008.common.to_slv_array[std_logic_vector return slv_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_slv_array</code> <span class="sig-paren">(</span><em>A : std_logic_vector</em><span class="sig-paren">)</span> &#x2192; slv_array<a class="headerlink" href="#extras_2008.common.to_slv_array[std_logic_vector return slv_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert a scaler std_logic_vector to a single element std_logic_vector array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -366,7 +365,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>std_logic_vector</em>) &#8211; Vector</li>
+<li><strong>A</strong> (<em>std_logic_vector</em>) – Vector</li>
 </ul>
 </td>
 </tr>
@@ -379,7 +378,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_unsigned_array[unsigned return unsigned_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_unsigned_array</tt> <big>(</big><em>A : unsigned</em><big>)</big> &rarr; unsigned_array<a class="headerlink" href="#extras_2008.common.to_unsigned_array[unsigned return unsigned_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_unsigned_array</code> <span class="sig-paren">(</span><em>A : unsigned</em><span class="sig-paren">)</span> &#x2192; unsigned_array<a class="headerlink" href="#extras_2008.common.to_unsigned_array[unsigned return unsigned_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert a scaler unsigned to a single element unsigned array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -387,7 +386,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>unsigned</em>) &#8211; Vector</li>
+<li><strong>A</strong> (<em>unsigned</em>) – Vector</li>
 </ul>
 </td>
 </tr>
@@ -400,7 +399,7 @@ components that need to make use of fully unconstrained types.</p>
 
 <dl class="function">
 <dt id="extras_2008.common.to_signed_array[signed return signed_array]">
-<tt class="descclassname">common.</tt><tt class="descname">to_signed_array</tt> <big>(</big><em>A : signed</em><big>)</big> &rarr; signed_array<a class="headerlink" href="#extras_2008.common.to_signed_array[signed return signed_array]" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">common.</code><code class="descname">to_signed_array</code> <span class="sig-paren">(</span><em>A : signed</em><span class="sig-paren">)</span> &#x2192; signed_array<a class="headerlink" href="#extras_2008.common.to_signed_array[signed return signed_array]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Convert a scaler signed to a single element signed array.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -408,7 +407,7 @@ components that need to make use of fully unconstrained types.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>signed</em>) &#8211; Vector</li>
+<li><strong>A</strong> (<em>signed</em>) – Vector</li>
 </ul>
 </td>
 </tr>
@@ -426,7 +425,7 @@ components that need to make use of fully unconstrained types.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -529,17 +528,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -548,10 +544,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/common_2008.txt"
+      <a href="../../_sources/rst/modules/common_2008.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

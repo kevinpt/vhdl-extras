@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>strings &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>strings &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="strings_bounded" href="strings_bounded.html" />
     <link rel="prev" title="sizing" href="sizing.html" />
    
@@ -38,7 +37,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="strings">
 <h1>strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h1>
@@ -50,38 +49,38 @@
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides common data types for the strings_fixed and
-strings_unbounded libraries. It is based on the equivalent Ada&#8216;95 package
-<tt class="docutils literal"><span class="pre">Ada.Strings</span></tt>.</p>
+strings_unbounded libraries. It is based on the equivalent Ada‘95 package
+<code class="docutils literal"><span class="pre">Ada.Strings</span></code>.</p>
 <span class="target" id="package-extras.strings"></span></div>
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="extras.strings.alignment">
-<tt class="descclassname">strings.</tt><tt class="descname">alignment</tt><a class="headerlink" href="#extras.strings.alignment" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings.</code><code class="descname">alignment</code><a class="headerlink" href="#extras.strings.alignment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Horizontal alignment.</p>
 </dd></dl>
 
 <dl class="type">
 <dt id="extras.strings.truncation">
-<tt class="descclassname">strings.</tt><tt class="descname">truncation</tt><a class="headerlink" href="#extras.strings.truncation" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings.</code><code class="descname">truncation</code><a class="headerlink" href="#extras.strings.truncation" title="Permalink to this definition">¶</a></dt>
 <dd><p>End to truncate when result is too long.</p>
 </dd></dl>
 
 <dl class="type">
 <dt id="extras.strings.membership">
-<tt class="descclassname">strings.</tt><tt class="descname">membership</tt><a class="headerlink" href="#extras.strings.membership" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings.</code><code class="descname">membership</code><a class="headerlink" href="#extras.strings.membership" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inside or outside of a character set.</p>
 </dd></dl>
 
 <dl class="type">
 <dt id="extras.strings.direction">
-<tt class="descclassname">strings.</tt><tt class="descname">direction</tt><a class="headerlink" href="#extras.strings.direction" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings.</code><code class="descname">direction</code><a class="headerlink" href="#extras.strings.direction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scan direction.</p>
 </dd></dl>
 
 <dl class="type">
 <dt id="extras.strings.trim_end">
-<tt class="descclassname">strings.</tt><tt class="descname">trim_end</tt><a class="headerlink" href="#extras.strings.trim_end" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">strings.</code><code class="descname">trim_end</code><a class="headerlink" href="#extras.strings.trim_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>End to trim off.</p>
 </dd></dl>
 
@@ -92,7 +91,7 @@ strings_unbounded libraries. It is based on the equivalent Ada&#8216;95 package
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -194,17 +193,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -213,10 +209,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/strings.txt"
+      <a href="../../_sources/rst/modules/strings.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>fifos &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>fifos &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="filtering" href="filtering.html" />
     <link rel="prev" title="ddfs" href="ddfs.html" />
    
@@ -38,16 +37,16 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="fifos">
 <h1>fifos<a class="headerlink" href="#fifos" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/fifos.vhdl">extras/fifos.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="memory.html"><em>memory</em></a>,
-<a class="reference internal" href="sizing.html"><em>sizing</em></a>,
-<a class="reference internal" href="synchronizing.html"><em>synchronizing</em></a></p>
+<p><a class="reference internal" href="memory.html"><span class="doc">memory</span></a>,
+<a class="reference internal" href="sizing.html"><span class="doc">sizing</span></a>,
+<a class="reference internal" href="synchronizing.html"><span class="doc">synchronizing</span></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
@@ -55,24 +54,24 @@
 variants. All use the same basic interface for the read/write ports and
 status flags. The FIFOs have the following differences:</p>
 <dl class="docutils">
-<dt><a class="reference internal" href="#extras.fifos.simple_fifo" title="extras.fifos.simple_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">simple_fifo</span></tt></a></dt>
+<dt><a class="reference internal" href="#extras.fifos.simple_fifo" title="extras.fifos.simple_fifo"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">simple_fifo</span></code></a></dt>
 <dd>Basic minimal FIFO for use in a single clock domain. This
 component lacks the synchronizing logic needed for the
 other two FIFOs and will synthesize more compactly.</dd>
-<dt><a class="reference internal" href="#extras.fifos.fifo" title="extras.fifos.fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">fifo</span></tt></a></dt>
+<dt><a class="reference internal" href="#extras.fifos.fifo" title="extras.fifos.fifo"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">fifo</span></code></a></dt>
 <dd>General FIFO with separate domains for read and write ports.</dd>
-<dt><a class="reference internal" href="#extras.fifos.packet_fifo" title="extras.fifos.packet_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">packet_fifo</span></tt></a></dt>
-<dd>Extension of <tt class="docutils literal"><span class="pre">fifo</span></tt> component with ability to discard
+<dt><a class="reference internal" href="#extras.fifos.packet_fifo" title="extras.fifos.packet_fifo"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">packet_fifo</span></code></a></dt>
+<dd>Extension of <code class="docutils literal"><span class="pre">fifo</span></code> component with ability to discard
 written data before it is read. Useful for managing
 packetized protocols with error detection at the end.</dd>
 </dl>
-<p>All of these FIFOs use the <a class="reference internal" href="memory.html#extras.memory.dual_port_ram" title="extras.memory.dual_port_ram"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">dual_port_ram</span></tt></a> component from the memory package.
+<p>All of these FIFOs use the <a class="reference internal" href="memory.html#extras.memory.dual_port_ram" title="extras.memory.dual_port_ram"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">dual_port_ram</span></code></a> component from the memory package.
 Reads can be performed concurrently with writes. The dual_port_ram
-<tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> generic is provided on the FIFO components to select between
-synchronous or asynchronous read ports. When <tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> is false,
+<code class="docutils literal"><span class="pre">SYNC_READ</span></code> generic is provided on the FIFO components to select between
+synchronous or asynchronous read ports. When <code class="docutils literal"><span class="pre">SYNC_READ</span></code> is false,
 distributed memory will be synthesized rather than RAM primitives. The
-read port will update one cycle earlier than when <tt class="docutils literal"><span class="pre">SYNC_READ</span></tt> is true.</p>
-<p>The <tt class="docutils literal"><span class="pre">MEM_SIZE</span></tt> generic is used to set the number of words stored in the
+read port will update one cycle earlier than when <code class="docutils literal"><span class="pre">SYNC_READ</span></code> is true.</p>
+<p>The <code class="docutils literal"><span class="pre">MEM_SIZE</span></code> generic is used to set the number of words stored in the
 FIFO. The read and write ports are unconstrained arrays. The size of
 the words is established by the signals attached to the ports.</p>
 <p>The FIFOs have the following status flags:</p>
@@ -83,26 +82,26 @@ the words is established by the signals attached to the ports.</p>
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>Empty</td>
-<td>&#8216;1&#8217; when FIFO is empty</td>
+<td>‘1’ when FIFO is empty</td>
 </tr>
 <tr class="row-even"><td>Full</td>
-<td>&#8216;1&#8217; when FIFO is full</td>
+<td>‘1’ when FIFO is full</td>
 </tr>
 <tr class="row-odd"><td>Almost_empty</td>
-<td>&#8216;1&#8217; when there are less than <tt class="docutils literal"><span class="pre">Almost_empty_thresh</span></tt>
-words in the FIFO. &#8216;0&#8217; when completely empty.</td>
+<td>‘1’ when there are less than <code class="docutils literal"><span class="pre">Almost_empty_thresh</span></code>
+words in the FIFO. ‘0’ when completely empty.</td>
 </tr>
 <tr class="row-even"><td>Almost_full</td>
-<td>&#8216;1&#8217; when there are less than <tt class="docutils literal"><span class="pre">Almost_full_thresh</span></tt>
-unused words in the FIFO. &#8216;0&#8217; when completely full.</td>
+<td>‘1’ when there are less than <code class="docutils literal"><span class="pre">Almost_full_thresh</span></code>
+unused words in the FIFO. ‘0’ when completely full.</td>
 </tr>
 </tbody>
 </table>
 <p>Note that the almost empty and full flags are kept inactive when the
 empty or full conditions are true.</p>
-<p>For the dual clock domain FIFOs, the <tt class="docutils literal"><span class="pre">Full</span></tt> and <tt class="docutils literal"><span class="pre">Almost_full</span></tt> flags are
-registered on the write port clock domain. The <tt class="docutils literal"><span class="pre">Empty</span></tt> and <tt class="docutils literal"><span class="pre">Almost_empty</span></tt>
-flags are registered on the read port clock domain. If the <tt class="docutils literal"><span class="pre">Almost_*</span></tt>
+<p>For the dual clock domain FIFOs, the <code class="docutils literal"><span class="pre">Full</span></code> and <code class="docutils literal"><span class="pre">Almost_full</span></code> flags are
+registered on the write port clock domain. The <code class="docutils literal"><span class="pre">Empty</span></code> and <code class="docutils literal"><span class="pre">Almost_empty</span></code>
+flags are registered on the read port clock domain. If the <code class="docutils literal"><span class="pre">Almost_*</span></code>
 thresholds are connected to signals they will need to be registered
 in their corresponding domains.</p>
 <p>Writes and reads can be performed continuously on successive cycles
@@ -120,22 +119,22 @@ cross-domain flag updates that <em>deassert</em> the flags. Assertion of the
 flags will not be delayed. i.e. a read when the FIFO contains one entry
 will assert the Empty flag one cycle later. Likewise, a write when the
 FIFO has one empty entry left will assert the Full flag one cycle later.</p>
-<p>The <a class="reference internal" href="#extras.fifos.simple_fifo" title="extras.fifos.simple_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">simple_fifo</span></tt></a> component always updates all of its status flags on the
+<p>The <a class="reference internal" href="#extras.fifos.simple_fifo" title="extras.fifos.simple_fifo"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">simple_fifo</span></code></a> component always updates all of its status flags on the
 cycle after a read or write regardless of whether thay are asserted or
 deasserted.</p>
-<p>The <tt class="docutils literal"><span class="pre">Almost_*</span></tt> flags use more complex comparison logic than the <tt class="docutils literal"><span class="pre">Full</span></tt> and
-<tt class="docutils literal"><span class="pre">Empty</span> <span class="pre">flags</span></tt>. You can save some synthesized logic and boost clock speeds by
+<p>The <code class="docutils literal"><span class="pre">Almost_*</span></code> flags use more complex comparison logic than the <code class="docutils literal"><span class="pre">Full</span></code> and
+<code class="docutils literal"><span class="pre">Empty</span> <span class="pre">flags</span></code>. You can save some synthesized logic and boost clock speeds by
 leaving them unconnected (open) if they are not needed in a design.
 Similarly, if the thresholds are connected to constants rather than
 signals, the comparison logic will be reduced during synthesis.</p>
-<p>The <a class="reference internal" href="#extras.fifos.packet_fifo" title="extras.fifos.packet_fifo"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">packet_fifo</span></tt></a> component has two additional control signals <tt class="docutils literal"><span class="pre">Keep</span></tt> and
-<tt class="docutils literal"><span class="pre">Discard</span></tt>. When writing to the FIFO, the internal address pointers are
-not updated on the read port domain until <tt class="docutils literal"><span class="pre">Keep</span></tt> is pulsed high. If written
-data is not needed it can be dropped by pulsing <tt class="docutils literal"><span class="pre">Discard</span></tt> high. It is not
-possible to discard data once <tt class="docutils literal"><span class="pre">Keep</span></tt> has been applied. Reads can be
-performed concurrently with writes but the <tt class="docutils literal"><span class="pre">Empty</span></tt> flag will activate if
+<p>The <a class="reference internal" href="#extras.fifos.packet_fifo" title="extras.fifos.packet_fifo"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">packet_fifo</span></code></a> component has two additional control signals <code class="docutils literal"><span class="pre">Keep</span></code> and
+<code class="docutils literal"><span class="pre">Discard</span></code>. When writing to the FIFO, the internal address pointers are
+not updated on the read port domain until <code class="docutils literal"><span class="pre">Keep</span></code> is pulsed high. If written
+data is not needed it can be dropped by pulsing <code class="docutils literal"><span class="pre">Discard</span></code> high. It is not
+possible to discard data once <code class="docutils literal"><span class="pre">Keep</span></code> has been applied. Reads can be
+performed concurrently with writes but the <code class="docutils literal"><span class="pre">Empty</span></code> flag will activate if
 previously kept data is consumed even if new data has been written but
-not yet retained with <tt class="docutils literal"><span class="pre">Keep</span></tt>.</p>
+not yet retained with <code class="docutils literal"><span class="pre">Keep</span></code>.</p>
 <span class="target" id="package-extras.fifos"></span></div>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
@@ -172,32 +171,32 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.fifos.simple_fifo">
-<tt class="descclassname">fifos.</tt><tt class="descname">simple_fifo</tt><a class="headerlink" href="#extras.fifos.simple_fifo" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fifos.</code><code class="descname">simple_fifo</code><a class="headerlink" href="#extras.fifos.simple_fifo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Basic FIFO implementatioin for use on a single clock domain.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
-<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; Number or words in FIFO</li>
-<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; Register outputs of read port memory</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) – Number or words in FIFO</li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) – Register outputs of read port memory</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; Write enable</li>
-<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) &#8211; Write data into FIFO</li>
-<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; Read enable</li>
-<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) &#8211; Read data from FIFO</li>
-<li><strong>Empty</strong> (<em>out std_ulogic</em>) &#8211; Empty flag</li>
-<li><strong>Full</strong> (<em>out std_ulogic</em>) &#8211; Full flag</li>
-<li><strong>Almost_empty_thresh</strong> (<em>in natural</em>) &#8211; Capacity level when almost empty</li>
-<li><strong>Almost_full_thresh</strong> (<em>in natural</em>) &#8211; Capacity level when almost full</li>
-<li><strong>Almost_empty</strong> (<em>out std_ulogic</em>) &#8211; Almost empty flag</li>
-<li><strong>Almost_full</strong> (<em>out std_ulogic</em>) &#8211; Almost full flag</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) – Write enable</li>
+<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) – Write data into FIFO</li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) – Read enable</li>
+<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) – Read data from FIFO</li>
+<li><strong>Empty</strong> (<em>out std_ulogic</em>) – Empty flag</li>
+<li><strong>Full</strong> (<em>out std_ulogic</em>) – Full flag</li>
+<li><strong>Almost_empty_thresh</strong> (<em>in natural</em>) – Capacity level when almost empty</li>
+<li><strong>Almost_full_thresh</strong> (<em>in natural</em>) – Capacity level when almost full</li>
+<li><strong>Almost_empty</strong> (<em>out std_ulogic</em>) – Almost empty flag</li>
+<li><strong>Almost_full</strong> (<em>out std_ulogic</em>) – Almost full flag</li>
 </ul>
 </td>
 </tr>
@@ -240,34 +239,34 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.fifos.fifo">
-<tt class="descclassname">fifos.</tt><tt class="descname">fifo</tt><a class="headerlink" href="#extras.fifos.fifo" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fifos.</code><code class="descname">fifo</code><a class="headerlink" href="#extras.fifos.fifo" title="Permalink to this definition">¶</a></dt>
 <dd><p>General purpose FIFO best used to transfer data across clock domains.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
-<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; Number or words in FIFO</li>
-<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; Register outputs of read port memory</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) – Number or words in FIFO</li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) – Register outputs of read port memory</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Wr_clock</strong> (<em>in std_ulogic</em>) &#8211; Write port clock</li>
-<li><strong>Wr_reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous write port reset</li>
-<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; Write enable</li>
-<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) &#8211; Write data into FIFO</li>
-<li><strong>Rd_clock</strong> (<em>in std_ulogic</em>) &#8211; Read port clock</li>
-<li><strong>Rd_reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous read port reset</li>
-<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; Read enable</li>
-<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) &#8211; Read data from FIFO</li>
-<li><strong>Empty</strong> (<em>out std_ulogic</em>) &#8211; Empty flag</li>
-<li><strong>Full</strong> (<em>out std_ulogic</em>) &#8211; Full flag</li>
-<li><strong>Almost_empty_thresh</strong> (<em>in natural</em>) &#8211; Capacity level when almost empty</li>
-<li><strong>Almost_full_thresh</strong> (<em>in natural</em>) &#8211; Capacity level when almost full</li>
-<li><strong>Almost_empty</strong> (<em>out std_ulogic</em>) &#8211; Almost empty flag</li>
-<li><strong>Almost_full</strong> (<em>out std_ulogic</em>) &#8211; Almost full flag</li>
+<li><strong>Wr_clock</strong> (<em>in std_ulogic</em>) – Write port clock</li>
+<li><strong>Wr_reset</strong> (<em>in std_ulogic</em>) – Asynchronous write port reset</li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) – Write enable</li>
+<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) – Write data into FIFO</li>
+<li><strong>Rd_clock</strong> (<em>in std_ulogic</em>) – Read port clock</li>
+<li><strong>Rd_reset</strong> (<em>in std_ulogic</em>) – Asynchronous read port reset</li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) – Read enable</li>
+<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) – Read data from FIFO</li>
+<li><strong>Empty</strong> (<em>out std_ulogic</em>) – Empty flag</li>
+<li><strong>Full</strong> (<em>out std_ulogic</em>) – Full flag</li>
+<li><strong>Almost_empty_thresh</strong> (<em>in natural</em>) – Capacity level when almost empty</li>
+<li><strong>Almost_full_thresh</strong> (<em>in natural</em>) – Capacity level when almost full</li>
+<li><strong>Almost_empty</strong> (<em>out std_ulogic</em>) – Almost empty flag</li>
+<li><strong>Almost_full</strong> (<em>out std_ulogic</em>) – Almost full flag</li>
 </ul>
 </td>
 </tr>
@@ -312,7 +311,7 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.fifos.packet_fifo">
-<tt class="descclassname">fifos.</tt><tt class="descname">packet_fifo</tt><a class="headerlink" href="#extras.fifos.packet_fifo" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fifos.</code><code class="descname">packet_fifo</code><a class="headerlink" href="#extras.fifos.packet_fifo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a dual port FIFO with the ability to drop partially accumulated data. This permits
 you to take in data that may be corrupted and drop it if a trailing checksum or CRC is not valid.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -320,29 +319,29 @@ you to take in data that may be corrupted and drop it if a trailing checksum or 
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
-<li><strong>MEM_SIZE</strong> (<em>positive</em>) &#8211; Number or words in FIFO</li>
-<li><strong>SYNC_READ</strong> (<em>boolean</em>) &#8211; Register outputs of read port memory</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
+<li><strong>MEM_SIZE</strong> (<em>positive</em>) – Number or words in FIFO</li>
+<li><strong>SYNC_READ</strong> (<em>boolean</em>) – Register outputs of read port memory</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Wr_clock</strong> (<em>in std_ulogic</em>) &#8211; Write port clock</li>
-<li><strong>Wr_reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous write port reset</li>
-<li><strong>We</strong> (<em>in std_ulogic</em>) &#8211; Write enable</li>
-<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) &#8211; Write data into FIFO</li>
-<li><strong>Keep</strong> (<em>in std_ulogic</em>) &#8211; Store current write packet</li>
-<li><strong>Discard</strong> (<em>in std_ulogic</em>) &#8211; Drop current erite packet</li>
-<li><strong>Rd_clock</strong> (<em>in std_ulogic</em>) &#8211; Read port clock</li>
-<li><strong>Rd_reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous read port reset</li>
-<li><strong>Re</strong> (<em>in std_ulogic</em>) &#8211; Read enable</li>
-<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) &#8211; Read data from FIFO</li>
-<li><strong>Empty</strong> (<em>out std_ulogic</em>) &#8211; Empty flag</li>
-<li><strong>Full</strong> (<em>out std_ulogic</em>) &#8211; Full flag</li>
-<li><strong>Almost_empty_thresh</strong> (<em>in natural</em>) &#8211; Capacity level when almost empty</li>
-<li><strong>Almost_full_thresh</strong> (<em>in natural</em>) &#8211; Capacity level when almost full</li>
-<li><strong>Almost_empty</strong> (<em>out std_ulogic</em>) &#8211; Almost empty flag</li>
-<li><strong>Almost_full</strong> (<em>out std_ulogic</em>) &#8211; Almost full flag</li>
+<li><strong>Wr_clock</strong> (<em>in std_ulogic</em>) – Write port clock</li>
+<li><strong>Wr_reset</strong> (<em>in std_ulogic</em>) – Asynchronous write port reset</li>
+<li><strong>We</strong> (<em>in std_ulogic</em>) – Write enable</li>
+<li><strong>Wr_data</strong> (<em>in std_ulogic_vector</em>) – Write data into FIFO</li>
+<li><strong>Keep</strong> (<em>in std_ulogic</em>) – Store current write packet</li>
+<li><strong>Discard</strong> (<em>in std_ulogic</em>) – Drop current erite packet</li>
+<li><strong>Rd_clock</strong> (<em>in std_ulogic</em>) – Read port clock</li>
+<li><strong>Rd_reset</strong> (<em>in std_ulogic</em>) – Asynchronous read port reset</li>
+<li><strong>Re</strong> (<em>in std_ulogic</em>) – Read enable</li>
+<li><strong>Rd_data</strong> (<em>out std_ulogic_vector</em>) – Read data from FIFO</li>
+<li><strong>Empty</strong> (<em>out std_ulogic</em>) – Empty flag</li>
+<li><strong>Full</strong> (<em>out std_ulogic</em>) – Full flag</li>
+<li><strong>Almost_empty_thresh</strong> (<em>in natural</em>) – Capacity level when almost empty</li>
+<li><strong>Almost_full_thresh</strong> (<em>in natural</em>) – Capacity level when almost full</li>
+<li><strong>Almost_empty</strong> (<em>out std_ulogic</em>) – Almost empty flag</li>
+<li><strong>Almost_full</strong> (<em>out std_ulogic</em>) – Almost full flag</li>
 </ul>
 </td>
 </tr>
@@ -358,7 +357,7 @@ you to take in data that may be corrupted and drop it if a trailing checksum or 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -465,17 +464,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -484,10 +480,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/fifos.txt"
+      <a href="../../_sources/rst/modules/fifos.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

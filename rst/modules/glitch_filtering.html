@@ -1,31 +1,30 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>glitch_filtering &mdash; VHDL-extras 1.0 documentation</title>
-    
+    <title>glitch_filtering &#8212; VHDL-extras 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/project.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <link rel="top" title="VHDL-extras 1.0 documentation" href="../../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="gray_code" href="gray_code.html" />
     <link rel="prev" title="filtering" href="filtering.html" />
    
@@ -38,35 +37,35 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="glitch-filtering">
 <h1>glitch_filtering<a class="headerlink" href="#glitch-filtering" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://github.com/kevinpt/vhdl-extras/blob/master/rtl/extras/glitch_filtering.vhdl">extras/glitch_filtering.vhdl</a></p>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="sizing.html"><em>sizing</em></a></p>
+<p><a class="reference internal" href="sizing.html"><span class="doc">sizing</span></a></p>
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This package provides glitch filter components that can be used to remove
 noise from digital input signals. This can be useful for debouncing
 switches directly connected to a device.
-The <a class="reference internal" href="#extras.glitch_filtering.glitch_filter" title="extras.glitch_filtering.glitch_filter"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">glitch_filter</span></tt></a> component works
-with a single <tt class="docutils literal"><span class="pre">std_ulogic</span></tt> signal while
-<a class="reference internal" href="#extras.glitch_filtering.array_glitch_filter" title="extras.glitch_filtering.array_glitch_filter"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">array_glitch_filter</span></tt></a> provides
-filtering for a <tt class="docutils literal"><span class="pre">std_ulogic_vector</span></tt>. These components include synchronizing
+The <a class="reference internal" href="#extras.glitch_filtering.glitch_filter" title="extras.glitch_filtering.glitch_filter"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">glitch_filter</span></code></a> component works
+with a single <code class="docutils literal"><span class="pre">std_ulogic</span></code> signal while
+<a class="reference internal" href="#extras.glitch_filtering.array_glitch_filter" title="extras.glitch_filtering.array_glitch_filter"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">array_glitch_filter</span></code></a> provides
+filtering for a <code class="docutils literal"><span class="pre">std_ulogic_vector</span></code>. These components include synchronizing
 flip-flops and can be directly tied to input pads.</p>
 <p>It is assumed that the signal being recovered changes relatively slowly
 compared to the clock period. These filters come in two forms. One is
-controlled by a generic <tt class="docutils literal"><span class="pre">FILTER_CYCLES</span></tt> and the other dynamic versions (<a class="reference internal" href="#extras.glitch_filtering.dynamic_glitch_filter" title="extras.glitch_filtering.dynamic_glitch_filter"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">dynamic_glitch_filter</span></tt></a> and
-<a class="reference internal" href="#extras.glitch_filtering.dynamic_array_glitch_filter" title="extras.glitch_filtering.dynamic_array_glitch_filter"><tt class="xref vhdl vhdl-entity docutils literal"><span class="pre">dynamic_array_glitch_filter</span></tt></a>) have
-a port signal <tt class="docutils literal"><span class="pre">Filter_cycles</span></tt>. These controls indicate the number of clock cycles
+controlled by a generic <code class="docutils literal"><span class="pre">FILTER_CYCLES</span></code> and the other dynamic versions (<a class="reference internal" href="#extras.glitch_filtering.dynamic_glitch_filter" title="extras.glitch_filtering.dynamic_glitch_filter"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">dynamic_glitch_filter</span></code></a> and
+<a class="reference internal" href="#extras.glitch_filtering.dynamic_array_glitch_filter" title="extras.glitch_filtering.dynamic_array_glitch_filter"><code class="xref vhdl vhdl-entity docutils literal"><span class="pre">dynamic_array_glitch_filter</span></code></a>) have
+a port signal <code class="docutils literal"><span class="pre">Filter_cycles</span></code>. These controls indicate the number of clock cycles
 the input(s) must remain stable before the filtered output register(s) are
-updated. The filtered output will lag the inputs by <tt class="docutils literal"><span class="pre">Filter_cycles</span></tt> + 3 clock
+updated. The filtered output will lag the inputs by <code class="docutils literal"><span class="pre">Filter_cycles</span></code> + 3 clock
 cycles. The dynamic versions can have their filter delay changed at any
-time if their <tt class="docutils literal"><span class="pre">Filter_cycles</span></tt> input is connected to a signal. The minimum
-pulse width that will pass through the filter will be <tt class="docutils literal"><span class="pre">Filter_cycles</span></tt> + 1
+time if their <code class="docutils literal"><span class="pre">Filter_cycles</span></code> input is connected to a signal. The minimum
+pulse width that will pass through the filter will be <code class="docutils literal"><span class="pre">Filter_cycles</span></code> + 1
 clock cycles wide.</p>
 <div class="section" id="example-usage">
 <h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
@@ -89,9 +88,9 @@ clock cycles wide.</p>
   <span class="p">);</span>
 </pre></div>
 </div>
-<p>Xilinx XST doesn&#8217;t support user defined physical types so the <a class="reference internal" href="timing_ops.html#extras.timing_ops.frequency" title="extras.timing_ops.frequency"><tt class="xref vhdl vhdl-type docutils literal"><span class="pre">frequency</span></tt></a>
-type from timing_ops.vhdl can&#8217;t be used with that synthesizer. An alternate
-solution using XST-compatible <a class="reference internal" href="timing_ops.html"><em>timing_ops_xilinx.vhdl</em></a> follows:</p>
+<p>Xilinx XST doesn’t support user defined physical types so the <a class="reference internal" href="timing_ops.html#extras.timing_ops.frequency" title="extras.timing_ops.frequency"><code class="xref vhdl vhdl-type docutils literal"><span class="pre">frequency</span></code></a>
+type from timing_ops.vhdl can’t be used with that synthesizer. An alternate
+solution using XST-compatible <a class="reference internal" href="timing_ops.html"><span class="doc">timing_ops_xilinx.vhdl</span></a> follows:</p>
 <div class="highlight-vhdl"><div class="highlight"><pre><span class="k">constant</span> <span class="n">CLOCK_FREQ</span>    <span class="o">:</span> <span class="n">real</span>         <span class="o">:=</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span><span class="n">e6</span><span class="p">;</span> <span class="c1">-- Using real in place of frequency</span>
 <span class="k">constant</span> <span class="n">FILTER_TIME</span>   <span class="o">:</span> <span class="kt">delay_length</span> <span class="o">:=</span> <span class="mi">200</span> <span class="n">ns</span><span class="p">;</span>
 <span class="k">constant</span> <span class="n">FILTER_CYCLES</span> <span class="o">:</span> <span class="n">clock_cycles</span> <span class="o">:=</span>
@@ -125,7 +124,7 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.glitch_filtering.glitch_filter">
-<tt class="descclassname">glitch_filtering.</tt><tt class="descname">glitch_filter</tt><a class="headerlink" href="#extras.glitch_filtering.glitch_filter" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">glitch_filtering.</code><code class="descname">glitch_filter</code><a class="headerlink" href="#extras.glitch_filtering.glitch_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Basic glitch filter with a constant filter delay
 This version filters a single signal of std_ulogic</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -133,16 +132,16 @@ This version filters a single signal of std_ulogic</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>FILTER_CYCLES</strong> (<em>positive</em>) &#8211; Number of clock cycles to filter</li>
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>FILTER_CYCLES</strong> (<em>positive</em>) – Number of clock cycles to filter</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Noisy</strong> (<em>in std_ulogic</em>) &#8211; Noisy input signal</li>
-<li><strong>Filtered</strong> (<em>out std_ulogic</em>) &#8211; Filtered output</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Noisy</strong> (<em>in std_ulogic</em>) – Noisy input signal</li>
+<li><strong>Filtered</strong> (<em>out std_ulogic</em>) – Filtered output</li>
 </ul>
 </td>
 </tr>
@@ -174,7 +173,7 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.glitch_filtering.dynamic_glitch_filter">
-<tt class="descclassname">glitch_filtering.</tt><tt class="descname">dynamic_glitch_filter</tt><a class="headerlink" href="#extras.glitch_filtering.dynamic_glitch_filter" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">glitch_filtering.</code><code class="descname">dynamic_glitch_filter</code><a class="headerlink" href="#extras.glitch_filtering.dynamic_glitch_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Glitch filter with a dynamically alterable filter delay
 This version filters a single signal of std_ulogic  component dynamic_glitch_filter is</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -182,16 +181,16 @@ This version filters a single signal of std_ulogic  component dynamic_glitch_fil
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Filter_cycles</strong> (<em>in unsigned</em>) &#8211; Number of clock cycles to filter</li>
-<li><strong>Noisy</strong> (<em>in std_ulogic</em>) &#8211; Noisy input signal</li>
-<li><strong>Filtered</strong> (<em>out std_ulogic</em>) &#8211; Filtered output</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Filter_cycles</strong> (<em>in unsigned</em>) – Number of clock cycles to filter</li>
+<li><strong>Noisy</strong> (<em>in std_ulogic</em>) – Noisy input signal</li>
+<li><strong>Filtered</strong> (<em>out std_ulogic</em>) – Filtered output</li>
 </ul>
 </td>
 </tr>
@@ -222,7 +221,7 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.glitch_filtering.array_glitch_filter">
-<tt class="descclassname">glitch_filtering.</tt><tt class="descname">array_glitch_filter</tt><a class="headerlink" href="#extras.glitch_filtering.array_glitch_filter" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">glitch_filtering.</code><code class="descname">array_glitch_filter</code><a class="headerlink" href="#extras.glitch_filtering.array_glitch_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Basic glitch filter with a constant filter delay
 This version filters an array of std_ulogic</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -230,16 +229,16 @@ This version filters an array of std_ulogic</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>FILTER_CYCLES</strong> (<em>positive</em>) &#8211; Number of clock cycles to filter</li>
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>FILTER_CYCLES</strong> (<em>positive</em>) – Number of clock cycles to filter</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Noisy</strong> (<em>in std_ulogic_vector</em>) &#8211; Noisy input signals</li>
-<li><strong>Filtered</strong> (<em>out std_ulogic_vector</em>) &#8211; Filtered output</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Noisy</strong> (<em>in std_ulogic_vector</em>) – Noisy input signals</li>
+<li><strong>Filtered</strong> (<em>out std_ulogic_vector</em>) – Filtered output</li>
 </ul>
 </td>
 </tr>
@@ -271,7 +270,7 @@ end component;</p></object>
 </div>
 <dl class="entity">
 <dt id="extras.glitch_filtering.dynamic_array_glitch_filter">
-<tt class="descclassname">glitch_filtering.</tt><tt class="descname">dynamic_array_glitch_filter</tt><a class="headerlink" href="#extras.glitch_filtering.dynamic_array_glitch_filter" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">glitch_filtering.</code><code class="descname">dynamic_array_glitch_filter</code><a class="headerlink" href="#extras.glitch_filtering.dynamic_array_glitch_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Glitch filter with a dynamically alterable filter delay
 This version filters an array of std_ulogic</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -279,16 +278,16 @@ This version filters an array of std_ulogic</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Generics:</th><td class="field-body"><ul class="first simple">
-<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) &#8211; Asynch. reset control level</li>
+<li><strong>RESET_ACTIVE_LEVEL</strong> (<em>std_ulogic</em>) – Asynch. reset control level</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Port:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Clock</strong> (<em>in std_ulogic</em>) &#8211; System clock</li>
-<li><strong>Reset</strong> (<em>in std_ulogic</em>) &#8211; Asynchronous reset</li>
-<li><strong>Filter_cycles</strong> (<em>in unsigned</em>) &#8211; Number of clock cycles to filter</li>
-<li><strong>Noisy</strong> (<em>in std_ulogic_vector</em>) &#8211; Noisy input signals</li>
-<li><strong>Filtered</strong> (<em>out std_ulogic_vector</em>) &#8211; Filtered output</li>
+<li><strong>Clock</strong> (<em>in std_ulogic</em>) – System clock</li>
+<li><strong>Reset</strong> (<em>in std_ulogic</em>) – Asynchronous reset</li>
+<li><strong>Filter_cycles</strong> (<em>in unsigned</em>) – Number of clock cycles to filter</li>
+<li><strong>Noisy</strong> (<em>in std_ulogic_vector</em>) – Noisy input signals</li>
+<li><strong>Filtered</strong> (<em>out std_ulogic_vector</em>) – Filtered output</li>
 </ul>
 </td>
 </tr>
@@ -304,7 +303,7 @@ This version filters an array of std_ulogic</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/vhdl-extras-sm.png" alt="Logo"/>
@@ -415,17 +414,14 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
 
 });
 </script>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -434,10 +430,10 @@ if(sessionStorage.KTcacheTime && now - sessionStorage.KTcacheTime < 5*60*1000 ) 
     </div>
 
     <div class="footer">
-      &copy;2015, Kevin Thibedeau.
+      &copy;2017, Kevin Thibedeau.
       
       |
-      <a href="../../_sources/rst/modules/glitch_filtering.txt"
+      <a href="../../_sources/rst/modules/glitch_filtering.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
