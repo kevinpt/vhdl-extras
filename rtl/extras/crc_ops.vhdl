@@ -130,7 +130,7 @@ package crc_ops is
   --## Finalize the CRC.
   --# Args:
   --#  Crc:         Current CRC state
-  --#  Reflect_out: Reverse bits of result wien true
+  --#  Reflect_out: Reverse bits of result when true
   --#  Xor_out:     Apply XOR to final state (inversion)
   --# Returns:
   --#  Final CRC value
