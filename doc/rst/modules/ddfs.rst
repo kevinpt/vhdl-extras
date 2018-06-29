@@ -9,6 +9,7 @@ Dependencies
 ------------
 
 :doc:`sizing`
+:doc:`arithmetic`
 
 Description
 -----------

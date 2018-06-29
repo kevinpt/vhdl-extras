@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/secded_edac.vhdl on 2017-08-02 00:26:37.947544
+.. Generated from ../rtl/extras/secded_edac.vhdl on 2018-06-28 23:37:28.719963
 .. vhdl:package:: extras.secded_edac
 
 

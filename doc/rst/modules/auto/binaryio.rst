@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/binaryio.vhdl on 2017-08-02 00:26:37.681279
+.. Generated from ../rtl/extras/binaryio.vhdl on 2018-06-28 23:37:28.459290
 .. vhdl:package:: extras.binaryio
 
 

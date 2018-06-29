@@ -1,52 +1,10 @@
-.. Generated from ../rtl/extras/arithmetic.vhdl on 2017-08-02 00:26:38.024403
+.. Generated from ../rtl/extras/arithmetic.vhdl on 2018-06-28 23:37:28.806720
 .. vhdl:package:: extras.arithmetic
 
 
 Components
 ----------
 
-
-coloration_test
-~~~~~~~~~~~~~~~
-
-.. symbolator::
-  :name: arithmetic-coloration_test
-
-  component coloration_test is
-  port (
-    --# {{aaa}}
-    aaa : in std_ulogic;
-    --# {{bbb}}
-    bbb : in std_ulogic;
-    --# {{ccc}}
-    ccc : out std_ulogic;
-    --# {{ddd}}
-    ddd : out std_ulogic;
-    --# {{eee}}
-    eee : inout std_ulogic;
-    --# {{fff}}
-    fff : in std_ulogic
-  );
-  end component;
-
-|
-
-
-.. vhdl:entity:: coloration_test
-
-  
-  :port aaa: None
-  :ptype aaa: in std_ulogic
-  :port bbb: None
-  :ptype bbb: in std_ulogic
-  :port ccc: None
-  :ptype ccc: out std_ulogic
-  :port ddd: None
-  :ptype ddd: out std_ulogic
-  :port eee: None
-  :ptype eee: inout std_ulogic
-  :port fff: None
-  :ptype fff: in std_ulogic
 
 pipelined_adder
 ~~~~~~~~~~~~~~~

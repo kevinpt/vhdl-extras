@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/crc_ops.vhdl on 2017-08-02 00:26:38.383136
+.. Generated from ../rtl/extras/crc_ops.vhdl on 2018-06-28 23:37:29.176993
 .. vhdl:package:: extras.crc_ops
 
 
@@ -103,7 +103,7 @@ Subprograms
   
   :param Crc: Current CRC state
   :type Crc: bit_vector
-  :param Reflect_out: Reverse bits of result wien true
+  :param Reflect_out: Reverse bits of result when true
   :type Reflect_out: boolean
   :param Xor_out: Apply XOR to final state (inversion)
   :type Xor_out: bit_vector

@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras_2008/filtering.vhdl on 2017-08-02 00:26:38.757514
+.. Generated from ../rtl/extras_2008/filtering.vhdl on 2018-06-28 23:37:29.915180
 .. vhdl:package:: extras_2008.filtering
 
 
@@ -30,51 +30,6 @@ fir_filter
     Reset : in std_ulogic;
     --# {{control|}}
     Coefficients : in signed_array;
-    --# {{data|}}
-    New_data : in std_ulogic;
-    Data_in : in signed;
-    Data_out : out signed
-  );
-  end component;
-
-|
-
-
-.. vhdl:entity:: fir_filter
-
-  
-  :generic RESET_ACTIVE_LEVEL: Asynch. reset control level
-  :gtype RESET_ACTIVE_LEVEL: std_ulogic
-  
-  :port Clock: None
-  :ptype Clock: in std_ulogic
-  :port Reset: None
-  :ptype Reset: in std_ulogic
-  :port Coefficients: None
-  :ptype Coefficients: in signed_array
-  :port New_data: None
-  :ptype New_data: in std_ulogic
-  :port Data_in: None
-  :ptype Data_in: in signed
-  :port Data_out: None
-  :ptype Data_out: out signed
-
-fir_filter_2
-~~~~~~~~~~~~
-
-.. symbolator::
-  :name: filtering-fir_filter_2
-
-  component fir_filter_2 is
-  generic (
-    RESET_ACTIVE_LEVEL : std_ulogic
-  );
-  port (
-    --# {{clocks|}}
-    Clock : in std_ulogic;
-    Reset : in std_ulogic;
-    --# {{control|}}
-    Coefficients : in signed_array;
     --# {{data|Write port}}
     Data_valid : in std_ulogic;
     Data : in signed;
@@ -89,7 +44,7 @@ fir_filter_2
 |
 
 
-.. vhdl:entity:: fir_filter_2
+.. vhdl:entity:: fir_filter
 
   Finite Impulse Response filter.
   

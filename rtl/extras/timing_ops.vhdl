@@ -324,7 +324,7 @@ package timing_ops is
   --#   Clock_freq: Frequency of the generated clock
   --#   Duty      : Optional duty cycle of the generated clock (0.0 to 1.0)
   procedure clock_gen( signal Clock : out std_ulogic; signal Stop_clock : in boolean;
-    constant Clock_freq : in frequency; constant Duty : duty_cycle := 0.5 );
+    constant Clock_freq : in frequency; constant Duty : in duty_cycle := 0.5 );
 
   --## Generate clock waveform for simulation only.
   --# Args:
@@ -333,7 +333,7 @@ package timing_ops is
   --#   Clock_period: Period of the generated clock
   --#   Duty        : Optional duty cycle of the generated clock (0.0 to 1.0)
   procedure clock_gen( signal Clock : out std_ulogic; signal Stop_clock : in boolean;
-    constant Clock_period : in delay_length; constant Duty : duty_cycle := 0.5 );
+    constant Clock_period : in delay_length; constant Duty : in duty_cycle := 0.5 );
 
 end package;
 
@@ -583,7 +583,7 @@ package body timing_ops is
   --#  Clock_freq: the frequency of the clock
   --#  Duty      : duty cycle of the generated clock from 0.0 to 1.0
   procedure clock_gen( signal Clock : out std_ulogic; signal Stop_clock : in boolean;
-    constant Clock_freq : in frequency; constant Duty : duty_cycle := 0.5 ) is
+    constant Clock_freq : in frequency; constant Duty : in duty_cycle := 0.5 ) is
 
     constant PERIOD : delay_length := to_period(Clock_freq);
     constant HIGH_TIME : delay_length := PERIOD * Duty;
@@ -601,7 +601,7 @@ package body timing_ops is
 
   --## Same as above with Clock_period replacing Clock_freq
   procedure clock_gen( signal Clock : out std_ulogic; signal Stop_clock : in boolean;
-    constant Clock_period : in delay_length; constant Duty : duty_cycle := 0.5 ) is
+    constant Clock_period : in delay_length; constant Duty : in duty_cycle := 0.5 ) is
 
     constant HIGH_TIME : delay_length := Clock_period * Duty;
     constant LOW_TIME  : delay_length := Clock_period - HIGH_TIME;

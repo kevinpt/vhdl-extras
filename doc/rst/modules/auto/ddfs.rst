@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/ddfs.vhdl on 2017-08-02 00:26:38.071989
+.. Generated from ../rtl/extras/ddfs.vhdl on 2018-06-28 23:37:28.856560
 .. vhdl:package:: extras.ddfs_pkg
 
 

@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/reg_file.vhdl on 2017-08-02 00:26:37.667782
+.. Generated from ../rtl/extras/reg_file.vhdl on 2018-06-28 23:37:28.444060
 .. vhdl:package:: extras.reg_file_pkg
 
 

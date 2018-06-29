@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/oscillator.vhdl on 2017-08-02 00:26:37.934436
+.. Generated from ../rtl/extras/oscillator.vhdl on 2018-06-28 23:37:28.705068
 .. vhdl:package:: extras.oscillator
 
 

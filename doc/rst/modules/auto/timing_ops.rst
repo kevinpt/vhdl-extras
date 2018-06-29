@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/timing_ops.vhdl on 2017-08-02 00:26:38.013241
+.. Generated from ../rtl/extras/timing_ops.vhdl on 2018-06-28 23:37:28.795715
 .. vhdl:package:: extras.timing_ops
 
 
@@ -330,7 +330,7 @@ Subprograms
   :type Actual_secs: in time
 
 
-.. vhdl:procedure:: procedure clock_gen(Clock : out std_ulogic; Stop_clock : in boolean; Clock_freq : in frequency; Duty : duty_cycle := 0.5);
+.. vhdl:procedure:: procedure clock_gen(Clock : out std_ulogic; Stop_clock : in boolean; Clock_freq : in frequency; Duty : in duty_cycle := 0.5);
 
    Generate clock waveform for simulation only.
   
@@ -341,10 +341,10 @@ Subprograms
   :param Clock_freq: Frequency of the generated clock
   :type Clock_freq: in frequency
   :param Duty: Optional duty cycle of the generated clock (0.0 to 1.0)
-  :type Duty: None duty_cycle
+  :type Duty: in duty_cycle
 
 
-.. vhdl:procedure:: procedure clock_gen(Clock : out std_ulogic; Stop_clock : in boolean; Clock_period : in delay_length; Duty : duty_cycle := 0.5);
+.. vhdl:procedure:: procedure clock_gen(Clock : out std_ulogic; Stop_clock : in boolean; Clock_period : in delay_length; Duty : in duty_cycle := 0.5);
 
    Generate clock waveform for simulation only.
   
@@ -355,5 +355,5 @@ Subprograms
   :param Clock_period: Period of the generated clock
   :type Clock_period: in delay_length
   :param Duty: Optional duty cycle of the generated clock (0.0 to 1.0)
-  :type Duty: None duty_cycle
+  :type Duty: in duty_cycle
 

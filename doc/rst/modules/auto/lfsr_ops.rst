@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/lfsr_ops.vhdl on 2017-08-02 00:26:38.181267
+.. Generated from ../rtl/extras/lfsr_ops.vhdl on 2018-06-28 23:37:28.970293
 .. vhdl:package:: extras.lfsr_ops
 
 

@@ -1,4 +1,4 @@
-.. Generated from ../rtl/extras/glitch_filtering.vhdl on 2017-08-02 00:26:37.888949
+.. Generated from ../rtl/extras/glitch_filtering.vhdl on 2018-06-28 23:37:28.660046
 .. vhdl:package:: extras.glitch_filtering
 
 
