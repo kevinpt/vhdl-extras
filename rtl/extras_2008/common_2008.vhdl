@@ -57,6 +57,12 @@ package common is
   
   --## Array of signed.
   type signed_array   is array(natural range <>) of signed;
+  
+  --## Array of unresolved_unsigned.
+  type u_unsigned_array is array(natural range <>) of u_unsigned;
+  
+  --## Array of unresolved_signed.
+  type u_signed_array   is array(natural range <>) of u_signed;
 
   --## Convert std_ulogic_vector array to std_logic_vector array.
   --# Args:
@@ -142,6 +148,132 @@ package common is
   --#  Array with new type.
   function to_unsigned_array(A : signed_array) return unsigned_array;
 
+  --## Convert std_ulogic_vector array to unresolved_unsigned array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_u_unsigned_array(A : sulv_array) return u_unsigned_array;
+
+  --## Convert unresolved_unsigned array to std_ulogic_vector array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_sulv_array(A : u_unsigned_array) return sulv_array;
+
+  --## Convert std_logic_vector array to unresolved_unsigned array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_u_unsigned_array(A : slv_array) return u_unsigned_array;
+  
+  --## Convert unresolved_unsigned array to std_logic_vector array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_slv_array(A : u_unsigned_array) return slv_array;
+
+  --## Convert unsigned array to unresolved_unsigned array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_u_unsigned_array(A : unsigned_array) return u_unsigned_array;
+  
+  --## Convert unresolved_unsigned array to unsigned array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_unsigned_array(A : u_unsigned_array) return unsigned_array;
+
+  --## Convert signed array to unresolved_unsigned array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_u_unsigned_array(A : signed_array) return u_unsigned_array;
+  
+  --## Convert unresolved_unsigned array to signed array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_signed_array(A : u_unsigned_array) return signed_array;
+
+  --## Convert unresolved_signed array to unresolved_unsigned array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_u_unsigned_array(A : u_signed_array) return u_unsigned_array;
+
+  --## Convert unresolved_unsigned array to unresolved_signed array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_u_signed_array(A : u_unsigned_array) return u_signed_array;
+
+  --## Convert std_ulogic_vector array to unresolved_signed array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_u_signed_array(A : sulv_array) return u_signed_array;
+  
+  --## Convert signed array to std_ulogic_vector array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_sulv_array(A : u_signed_array) return sulv_array;
+
+  --## Convert std_logic_vector array to unresolved_signed array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_u_signed_array(A : slv_array) return u_signed_array;
+  
+  --## Convert unresolved_signed array to std_logic_vector array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_slv_array(A : u_signed_array) return slv_array;
+
+  --## Convert unsigned array to unresolved_signed array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_u_signed_array(A : unsigned_array) return u_signed_array;
+  
+  --## Convert signed array to unsigned array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_unsigned_array(A : u_signed_array) return unsigned_array;
+
+  --## Convert signed array to unresolved_signed array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_u_signed_array(A : signed_array) return u_signed_array;
+  
+  --## Convert unresolved_signed array to signed array.
+  --# Args:
+  --#  A: Array to convert
+  --# Returns:
+  --#  Array with new type.
+  function to_signed_array(A : u_signed_array) return signed_array;
+
 
 
   --## Convert a scaler std_ulogic_vector to a single element std_ulogic_vector array.
@@ -171,6 +303,20 @@ package common is
   --# Returns:
   --#  Array with new type.
   function to_signed_array(A : signed) return signed_array;
+  
+  --## Convert a scaler unresolved_unsigned to a single element unresolved_unsigned array.
+  --# Args:
+  --#  A: Vector
+  --# Returns:
+  --#  Array with new type.
+  function to_u_unsigned_array(A : u_unsigned) return u_unsigned_array;
+
+  --## Convert a scaler unresolved_signed to a single element unresolved_signed array.
+  --# Args:
+  --#  A: Vector
+  --# Returns:
+  --#  Array with new type.  
+  function to_u_signed_array(A : u_signed) return u_signed_array;
 
 end package;
 
@@ -296,6 +442,186 @@ package body common is
 
 
 
+  function to_u_unsigned_array(a : sulv_array) return u_unsigned_array is
+    variable r : u_unsigned_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := u_unsigned(a(i));
+    end loop;
+    return r;
+  end function;
+
+  function to_sulv_array(a : u_unsigned_array) return sulv_array is
+    variable r : sulv_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := std_ulogic_vector(a(i));
+    end loop;
+    return r;
+  end function;
+
+
+
+  function to_u_unsigned_array(a : slv_array) return u_unsigned_array is
+    variable r : u_unsigned_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := u_unsigned(a(i));
+    end loop;
+    return r;
+  end function;
+
+  function to_slv_array(a : u_unsigned_array) return slv_array is
+      variable r : slv_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := std_logic_vector(a(i));
+    end loop;
+    return r;
+  end function;
+
+
+
+  function to_u_unsigned_array(a : unsigned_array) return u_unsigned_array is
+    variable r : u_unsigned_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := a(i);
+    end loop;
+    return r;
+  end function;
+
+  function to_unsigned_array(a : u_unsigned_array) return unsigned_array is
+    variable r : unsigned_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := a(i);
+    end loop;
+    return r;
+  end function;
+
+
+
+  function to_u_unsigned_array(a : signed_array) return u_unsigned_array is
+    variable r : u_unsigned_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := u_unsigned(a(i));
+    end loop;
+    return r;
+  end function;
+
+  function to_signed_array(a : u_unsigned_array) return signed_array is
+    variable r : signed_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := signed(a(i));
+    end loop;
+    return r;
+  end function;
+
+
+
+  function to_u_unsigned_array(a : u_signed_array) return u_unsigned_array is
+    variable r : u_unsigned_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := u_unsigned(a(i));
+    end loop;
+    return r;
+  end function;
+
+  function to_u_signed_array(a : u_unsigned_array) return u_signed_array is
+    variable r : u_signed_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := u_signed(a(i));
+    end loop;
+    return r;
+  end function;
+
+
+
+  function to_u_signed_array(a : sulv_array) return u_signed_array is
+    variable r : u_signed_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := u_signed(a(i));
+    end loop;
+    return r;
+  end function;
+
+  function to_sulv_array(a : u_signed_array) return sulv_array is
+    variable r : sulv_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := std_ulogic_vector(a(i));
+    end loop;
+    return r;
+  end function;
+
+
+
+  function to_u_signed_array(a : slv_array) return u_signed_array is
+    variable r : u_signed_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := u_signed(a(i));
+    end loop;
+    return r;
+  end function;
+
+  function to_slv_array(a : u_signed_array) return slv_array is
+    variable r : slv_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := std_logic_vector(a(i));
+    end loop;
+    return r;
+  end function;
+
+
+
+  function to_u_signed_array(a : unsigned_array) return u_signed_array is
+    variable r : u_signed_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := u_signed(a(i));
+    end loop;
+    return r;
+  end function;
+
+  function to_unsigned_array(a : u_signed_array) return unsigned_array is
+    variable r : unsigned_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := unsigned(a(i));
+    end loop;
+    return r;
+  end function;
+
+
+
+  function to_u_signed_array(a : signed_array) return u_signed_array is
+    variable r : u_signed_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := a(i);
+    end loop;
+    return r;
+  end function;
+
+  function to_signed_array(a : u_signed_array) return signed_array is
+    variable r : signed_array(a'range)(a'element'range);
+  begin
+    for i in a'range loop
+      r(i) := a(i);
+    end loop;
+    return r;
+  end function;
+
+
+
   function to_sulv_array(a : std_ulogic_vector) return sulv_array is
     variable r : sulv_array(0 downto 0)(a'range);
   begin
@@ -324,6 +650,19 @@ package body common is
     return r;
   end function;
 
+  function to_u_unsigned_array(a : u_unsigned) return u_unsigned_array is
+    variable r : u_unsigned_array(0 downto 0)(a'range);
+  begin
+    r(0) := a;
+    return r;
+  end function;
+
+  function to_u_signed_array(a : u_signed) return u_signed_array is
+    variable r : u_signed_array(0 downto 0)(a'range);
+  begin
+    r(0) := a;
+    return r;
+  end function;
 
 end package body;
 
