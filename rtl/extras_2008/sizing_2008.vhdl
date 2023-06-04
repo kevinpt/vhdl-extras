@@ -50,8 +50,11 @@
 --#  Additionally the package provides functions for vectors resizing with
 --#  interfaces which show clearly, how resizing should be performed (extending
 --#  or truncating, most significant bits or least significant bits).
---#  
---#  This package does not supports VHDL-2008. Use sizing_2008 instead.
+--#
+--#  This implementation excludes the overload of change_size for resolved
+--#  std_logic_vector, because it breaks VHDL-2008 compiler (slv and sulv are
+--#  basically the same type in VHDL-2008). Unsigned and signed are replaced here
+--#  with their unresolved versions.
 --#
 --# EXAMPLE USAGE:
 --#  constant MAX_COUNT  : natural := 1000;
@@ -150,19 +153,6 @@ package sizing is
   function change_size (s : std_ulogic_vector; new_size : positive; method : resize_method;
     extension : std_ulogic := '0' ) return std_ulogic_vector;
     
-  --## Resizizng function for std_logic_vector clearly stating how exactly the 
-  --# resizing will be done.
-  --#
-  --# Args:
-  --#   s: Vector to  resize
-  --#   new_size: New vector size
-  --#   method: Resizizng method
-  --#   extension: Bit used for extension
-  --# Returns:
-  --#   Resized vector.
-  function change_size (s : std_logic_vector; new_size : positive; method : resize_method;
-    extension : std_ulogic := '0' ) return std_logic_vector;
-    
   --## Resizizng function for unsigned number clearly stating how exactly the 
   --# resizing will be done. Extends numbers with zeros.
   --#
@@ -172,8 +162,8 @@ package sizing is
   --#   method: Resizizng method
   --# Returns:
   --#   Resized number.
-  function change_size (s : unsigned; new_size : positive; method : resize_method)
-    return unsigned;
+  function change_size (s : u_unsigned; new_size : positive; method : resize_method)
+    return u_unsigned;
     
   --## Resizizng function for signed number clearly stating how exactly the 
   --# resizing will be done. Extends most significant bits with a sign bit,
@@ -185,8 +175,8 @@ package sizing is
   --#   method: Resizizng method
   --# Returns:
   --#   Resized number.
-  function change_size (s : signed; new_size : positive; method : resize_method)
-    return signed;
+  function change_size (s : u_signed; new_size : positive; method : resize_method)
+    return u_signed;
 
 end package;
 
@@ -298,38 +288,29 @@ package body sizing is
     end case;
   
   end function;
-
-  --## Resizizng function for std_logic_vector clearly stating how exactly the 
-  --# resizing will be done.
-  function change_size (s : std_logic_vector; new_size : positive; method : resize_method;
-    extension : std_ulogic := '0' ) return std_logic_vector is
-  begin
-    return std_logic_vector(
-      change_size(std_ulogic_vector(s), new_size, method, extension));
-  end function;
   
   --## Resizizng function for unsigned number clearly stating how exactly the 
   --# resizing will be done. Extends numbers with zeros.
-  function change_size (s : unsigned; new_size : positive; method : resize_method)
-    return unsigned is
+  function change_size (s : u_unsigned; new_size : positive; method : resize_method)
+    return u_unsigned is
   begin
-    return unsigned(
+    return u_unsigned(
       change_size(std_ulogic_vector(s), new_size, method, '0'));
   end function;
-
+  
   --## Resizizng function for signed number clearly stating how exactly the 
   --# resizing will be done. Extends most significant bits with a sign bit,
   --# and least significant bits with zeros.
-  function change_size (s : signed; new_size : positive; method : resize_method)
-    return signed is
+  function change_size (s : u_signed; new_size : positive; method : resize_method)
+    return u_signed is
   begin
   
     case method is
       when extend_MSBs   =>
-        return signed(
+        return u_signed(
           change_size(std_ulogic_vector(s), new_size, method, s(s'high)));
       when others =>
-        return signed(
+        return u_signed(
           change_size(std_ulogic_vector(s), new_size, method, '0'));
     end case;
   
