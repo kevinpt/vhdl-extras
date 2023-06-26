@@ -78,7 +78,8 @@
 --#      DEFAULT_ELEMENT => MY_EMPTY_RECORD,
 --#      PIPELINE_STAGES => 3,
 --#      ATTR_REG_BALANCING => "backward",
---#      RESET_ACTIVE_LEVEL => '1' )
+--#      RESET_ACTIVE_LEVEL => '1',
+--#      RESET_TYPE => "async")
 --#    port map (Clock, Reset, sig_1, sig_2);
 --#
 --#  RETIMING: Here are notes on how to activate retiming in various synthesis
@@ -110,12 +111,13 @@ package pipelining is
       DEFAULT_ELEMENT : ELEMENT_TYPE; --## Reset pipeline element
       PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
       ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction ("backward", "forward" or "no", Xilinx only)
-      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
+      RESET_ACTIVE_LEVEL : std_ulogic := '1'; --# Reset control level
+      RESET_TYPE : string := "async" --# Reset type: asynchronous ("async") or synchronous ("sync")
     );
     port (
       --# {{clocks|}}
       Clock   : in std_ulogic; --# System clock
-      Reset   : in std_ulogic; --# Asynchronous reset
+      Reset   : in std_ulogic; --# Reset
       --# {{data|}}
       Sig_in  : in ELEMENT_TYPE; --# Signal from block to be pipelined
       Sig_out : out ELEMENT_TYPE --# Pipelined result
@@ -127,12 +129,13 @@ package pipelining is
     generic (
       PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
       ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction ("backward", "forward" or "no", Xilinx only)
-      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
+      RESET_ACTIVE_LEVEL : std_ulogic := '1'; --# Reset control level
+      RESET_TYPE : string := "async" --# Reset type: asynchronous ("async") or synchronous ("sync")
     );
     port (
       --# {{clocks|}}
       Clock   : in std_ulogic; --# System clock
-      Reset   : in std_ulogic; --# Asynchronous reset
+      Reset   : in std_ulogic; --# Reset
       --# {{data|}}
       Sig_in  : in std_ulogic; --# Signal from block to be pipelined
       Sig_out : out std_ulogic --# Pipelined result
@@ -144,12 +147,13 @@ package pipelining is
     generic (
       PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
       ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction ("backward", "forward" or "no", Xilinx only)
-      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
+      RESET_ACTIVE_LEVEL : std_ulogic := '1'; --# Reset control level
+      RESET_TYPE : string := "async" --# Reset type: asynchronous ("async") or synchronous ("sync")
     );
     port (
       --# {{clocks|}}
       Clock   : in std_ulogic; --# System clock
-      Reset   : in std_ulogic; --# Asynchronous reset
+      Reset   : in std_ulogic; --# Reset
       --# {{data|}}
       Sig_in  : in std_ulogic_vector; --# Signal from block to be pipelined
       Sig_out : out std_ulogic_vector --# Pipelined result
@@ -164,7 +168,8 @@ package pipelining is
     generic (
       PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
       ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction ("backward", "forward" or "no", Xilinx only)
-      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
+      RESET_ACTIVE_LEVEL : std_ulogic := '1'; --# Reset control level
+      RESET_TYPE : string := "async" --# Reset type: asynchronous ("async") or synchronous ("sync")
     );
     port (
       --# {{clocks|}}
@@ -181,12 +186,13 @@ package pipelining is
     generic (
       PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
       ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction ("backward", "forward" or "no", Xilinx only)
-      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
+      RESET_ACTIVE_LEVEL : std_ulogic := '1'; --# Reset control level
+      RESET_TYPE : string := "async" --# Reset type: asynchronous ("async") or synchronous ("sync")
     );
     port (
       --# {{clocks|}}
       Clock   : in std_ulogic; --# System clock
-      Reset   : in std_ulogic; --# Asynchronous reset
+      Reset   : in std_ulogic; --# Reset
       --# {{data|}}
       Sig_in  : in u_signed; --# Signal from block to be pipelined
       Sig_out : out u_signed --# Pipelined result
@@ -391,7 +397,8 @@ entity pipeline_universal is
 	DEFAULT_ELEMENT : ELEMENT_TYPE;
     PIPELINE_STAGES : positive;
     ATTR_REG_BALANCING : string := "backward";
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    RESET_ACTIVE_LEVEL : std_ulogic := '1';
+    RESET_TYPE : string := "async"
   );
   port (
     Clock   : in std_ulogic;
@@ -435,19 +442,40 @@ begin
     "Unknown retiming attribute. Must be forward or backward."
   severity FAILURE;
 
+  assert (RESET_TYPE = "async") or (RESET_TYPE = "sync")
+  report
+    "Unknown reset type. Must be sync or async."
+  severity FAILURE;
+
   reg: process(Clock, Reset)
     type sig_word_vector is array ( natural range <> ) of ELEMENT_TYPE;
     variable pl_regs : sig_word_vector(1 to PIPELINE_STAGES);
   begin
-    if Reset = RESET_ACTIVE_LEVEL then
-	  for i in pl_regs'range loop
-		pl_regs(i) := DEFAULT_ELEMENT;
-	  end loop;
-    elsif rising_edge(Clock) then
-      if PIPELINE_STAGES = 1 then
-        pl_regs(1) := Sig_in;
-      else
-        pl_regs := Sig_in & pl_regs(1 to pl_regs'high-1);
+    if RESET_TYPE = "async" then
+      if Reset = RESET_ACTIVE_LEVEL then
+        for i in pl_regs'range loop
+          pl_regs(i) := DEFAULT_ELEMENT;
+        end loop;
+      elsif rising_edge(Clock) then
+        if PIPELINE_STAGES = 1 then
+          pl_regs(1) := Sig_in;
+        else
+          pl_regs := Sig_in & pl_regs(1 to pl_regs'high-1);
+        end if;
+      end if;
+    elsif RESET_TYPE = "sync" then
+      if rising_edge(Clock) then
+        if Reset = RESET_ACTIVE_LEVEL then
+          for i in pl_regs'range loop
+            pl_regs(i) := DEFAULT_ELEMENT;
+          end loop;
+        else
+          if PIPELINE_STAGES = 1 then
+            pl_regs(1) := Sig_in;
+          else
+            pl_regs := Sig_in & pl_regs(1 to pl_regs'high-1);
+          end if;
+        end if;
       end if;
     end if;
 
@@ -463,7 +491,8 @@ entity pipeline_ul is
   generic (
     PIPELINE_STAGES : positive;
     ATTR_REG_BALANCING : string := "backward";
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    RESET_ACTIVE_LEVEL : std_ulogic := '1';
+    RESET_TYPE : string := "async"
   );
   port (
     Clock   : in std_ulogic;
@@ -482,7 +511,8 @@ begin
 	  DEFAULT_ELEMENT => ZERO,
 	  PIPELINE_STAGES => PIPELINE_STAGES,
 	  ATTR_REG_BALANCING => ATTR_REG_BALANCING,
-	  RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL)
+	  RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL,
+      RESET_TYPE => RESET_TYPE)
     port map (Clock, Reset, Sig_in, Sig_out);
 end architecture;
 
@@ -494,7 +524,8 @@ entity pipeline_sulv is
   generic (
     PIPELINE_STAGES : positive;
     ATTR_REG_BALANCING : string := "backward";
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    RESET_ACTIVE_LEVEL : std_ulogic := '1';
+    RESET_TYPE : string := "async"
   );
   port (
     Clock   : in std_ulogic;
@@ -514,7 +545,8 @@ begin
 	  DEFAULT_ELEMENT => ZEROS,
 	  PIPELINE_STAGES => PIPELINE_STAGES,
 	  ATTR_REG_BALANCING => ATTR_REG_BALANCING,
-	  RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL)
+	  RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL,
+      RESET_TYPE => RESET_TYPE)
 	port map (Clock, Reset, Sig_in, Sig_out);
 end architecture;
 
@@ -527,7 +559,8 @@ entity pipeline_u is
   generic (
     PIPELINE_STAGES : positive;
     ATTR_REG_BALANCING : string := "backward";
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    RESET_ACTIVE_LEVEL : std_ulogic := '1';
+    RESET_TYPE : string := "async"
   );
   port (
     Clock   : in std_ulogic;
@@ -542,7 +575,8 @@ architecture rtl of pipeline_u is
 begin
   s1 <= std_ulogic_vector(Sig_in);
   pipeline_inst : entity work.pipeline_sulv(rtl)
-	generic map (PIPELINE_STAGES, ATTR_REG_BALANCING, RESET_ACTIVE_LEVEL)
+	generic map (PIPELINE_STAGES, ATTR_REG_BALANCING,
+      RESET_ACTIVE_LEVEL, RESET_TYPE)
 	port map (Clock => Clock, Reset => Reset, Sig_in => s1, Sig_out => s2);
   Sig_out <= u_unsigned(s2);
 end architecture;
@@ -556,7 +590,8 @@ entity pipeline_s is
   generic (
     PIPELINE_STAGES : positive;
     ATTR_REG_BALANCING : string := "backward";
-    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    RESET_ACTIVE_LEVEL : std_ulogic := '1';
+    RESET_TYPE : string := "async"
   );
   port (
     Clock   : in std_ulogic;
@@ -571,7 +606,8 @@ architecture rtl of pipeline_s is
 begin
   s1 <= std_ulogic_vector(Sig_in);
   pipeline_inst : entity work.pipeline_sulv(rtl)
-	generic map (PIPELINE_STAGES, ATTR_REG_BALANCING, RESET_ACTIVE_LEVEL)
+	generic map (PIPELINE_STAGES, ATTR_REG_BALANCING,
+      RESET_ACTIVE_LEVEL, RESET_TYPE)
 	port map (Clock => Clock, Reset => Reset, Sig_in => s1, Sig_out => s2);
   Sig_out <= u_signed(s2);
 end architecture;
