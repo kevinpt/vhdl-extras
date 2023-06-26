@@ -112,7 +112,7 @@ package pipelining is
   	  type ELEMENT_TYPE; --## Type of pipeline element
   	  function RESET_ELEMENT ( element : ELEMENT_TYPE ) return ELEMENT_TYPE; --## Defines how to reset pipeline element
       PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
-      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction (Xilinx only)
+      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction ("backward", "forward" or "no", Xilinx only)
       RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
@@ -129,7 +129,7 @@ package pipelining is
   component pipeline_ul is
     generic (
       PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
-      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction (Xilinx only)
+      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction ("backward", "forward" or "no", Xilinx only)
       RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
@@ -146,7 +146,7 @@ package pipelining is
   component pipeline_sulv is
     generic (
       PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
-      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction (Xilinx only)
+      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction ("backward", "forward" or "no", Xilinx only)
       RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
@@ -166,7 +166,7 @@ package pipelining is
   component pipeline_u is
     generic (
       PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
-      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction (Xilinx only)
+      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction ("backward", "forward" or "no", Xilinx only)
       RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
@@ -183,7 +183,7 @@ package pipelining is
   component pipeline_s is
     generic (
       PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
-      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction (Xilinx only)
+      ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction ("backward", "forward" or "no", Xilinx only)
       RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
     );
     port (
@@ -405,11 +405,39 @@ entity pipeline_universal is
 end entity;
 
 architecture rtl of pipeline_universal is
-  attribute register_balancing : string;
+  function is_forward(attr_str : string) return integer is
+    variable r : integer;
+  begin
+    r := 1 when (attr_str = "forward") else 0;
+    return r;
+  end function;
+
+  function is_backward(attr_str : string) return integer is
+    variable r : integer;
+  begin
+    r := 1 when (attr_str = "backward") else 0;
+    return r;
+  end function;
+
   attribute syn_allow_retiming : boolean;
-  attribute register_balancing of Sig_out : signal is ATTR_REG_BALANCING;
   attribute syn_allow_retiming of Sig_out : signal is true;
+
+  attribute retiming_forward : integer;
+  attribute retiming_forward of Sig_out : signal is
+    is_forward(ATTR_REG_BALANCING);
+
+  attribute retiming_backward : integer;
+  attribute retiming_backward of Sig_out : signal is
+    is_backward(ATTR_REG_BALANCING);
 begin
+
+  assert (ATTR_REG_BALANCING = "backward") or
+         (ATTR_REG_BALANCING = "forward")  or
+         (ATTR_REG_BALANCING = "no")
+  report
+    "Unknown retiming attribute. Must be forward or backward."
+  severity FAILURE;
+
   reg: process(Clock, Reset)
     type sig_word_vector is array ( natural range <> ) of ELEMENT_TYPE;
     variable pl_regs : sig_word_vector(1 to PIPELINE_STAGES);
