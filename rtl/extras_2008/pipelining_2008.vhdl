@@ -70,15 +70,12 @@
 --#    field_2 : std_ulogic;
 --#  end record my_record;
 --#  
---#  function reset_my_record( rec : my_record ) return my_record is
---#  begin
---#    return ((others => '0'), '0');
---#  end function reset_my_record;
+--#  constant MY_EMPTY_RECORD : my_record := ((others => '0'), '0')'
 --#  ...
 --#  pipeline_inst : pipeline_universal
 --#    generic map (
 --#      ELEMENT_TYPE => my_record,
---#      RESET_ELEMENT => reset_my_record,
+--#      DEFAULT_ELEMENT => MY_EMPTY_RECORD,
 --#      PIPELINE_STAGES => 3,
 --#      ATTR_REG_BALANCING => "backward",
 --#      RESET_ACTIVE_LEVEL => '1' )
@@ -110,7 +107,7 @@ package pipelining is
   component pipeline_universal is
     generic (
   	  type ELEMENT_TYPE; --## Type of pipeline element
-  	  function RESET_ELEMENT ( element : ELEMENT_TYPE ) return ELEMENT_TYPE; --## Defines how to reset pipeline element
+      DEFAULT_ELEMENT : ELEMENT_TYPE; --## Reset pipeline element
       PIPELINE_STAGES : positive; --# Number of pipeline stages to insert
       ATTR_REG_BALANCING : string := "backward"; --# Control propagation direction ("backward", "forward" or "no", Xilinx only)
       RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
@@ -391,7 +388,7 @@ use ieee.std_logic_1164.all;
 entity pipeline_universal is
   generic (
 	type ELEMENT_TYPE;
-	function RESET_ELEMENT ( element : ELEMENT_TYPE ) return ELEMENT_TYPE;
+	DEFAULT_ELEMENT : ELEMENT_TYPE;
     PIPELINE_STAGES : positive;
     ATTR_REG_BALANCING : string := "backward";
     RESET_ACTIVE_LEVEL : std_ulogic := '1'
@@ -444,7 +441,7 @@ begin
   begin
     if Reset = RESET_ACTIVE_LEVEL then
 	  for i in pl_regs'range loop
-		pl_regs(i) := RESET_ELEMENT(pl_regs(i));
+		pl_regs(i) := DEFAULT_ELEMENT;
 	  end loop;
     elsif rising_edge(Clock) then
       if PIPELINE_STAGES = 1 then
@@ -477,15 +474,12 @@ entity pipeline_ul is
 end entity;
 
 architecture rtl of pipeline_ul is
-  function reset_ul (ul : std_ulogic) return std_ulogic is
-  begin
-    return '0';
-  end function;
+  constant ZERO : std_ulogic := '0';
 begin
   pipeline_inst : entity work.pipeline_universal(rtl)
 	generic map (
 	  ELEMENT_TYPE => Sig_in'subtype,
-	  RESET_ELEMENT => reset_ul,
+	  DEFAULT_ELEMENT => ZERO,
 	  PIPELINE_STAGES => PIPELINE_STAGES,
 	  ATTR_REG_BALANCING => ATTR_REG_BALANCING,
 	  RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL)
@@ -511,15 +505,13 @@ entity pipeline_sulv is
 end entity;
 
 architecture rtl of pipeline_sulv is
-  function reset_sulv (ul : std_ulogic_vector) return std_ulogic_vector is
-  begin
-    return (ul'range => '0');
-  end function;
+  constant ZEROS : std_ulogic_vector(Sig_in'range) :=
+    (Sig_in'range => '0');
 begin
   pipeline_inst : entity work.pipeline_universal(rtl)
 	generic map (
 	  ELEMENT_TYPE => Sig_in'subtype,
-	  RESET_ELEMENT => reset_sulv,
+	  DEFAULT_ELEMENT => ZEROS,
 	  PIPELINE_STAGES => PIPELINE_STAGES,
 	  ATTR_REG_BALANCING => ATTR_REG_BALANCING,
 	  RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL)
