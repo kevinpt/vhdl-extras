@@ -50,6 +50,8 @@
 --#  Additionally the package provides functions for vectors resizing with
 --#  interfaces which show clearly, how resizing should be performed (extending
 --#  or truncating, most significant bits or least significant bits).
+--#  The leftmost bit is treated as the most significant bit (like in
+--#  NUMERIC_STD).
 --#
 --#  This implementation excludes the overload of change_size for resolved
 --#  std_logic_vector, because it breaks VHDL-2008 compiler (slv and sulv are
@@ -141,7 +143,8 @@ package sizing is
   
   type resize_method is (truncate_LSBs, truncate_MSBs, extend_LSBs, extend_MSBs);
   --## Resizizng function for std_ulogic_vector clearly stating how exactly the 
-  --# resizing will be done.
+  --# resizing will be done. The leftmost bit is treated as the most significant
+  --# bit (like in NUMERIC_STD).
   --#
   --# Args:
   --#   s: Vector to  resize
@@ -154,7 +157,8 @@ package sizing is
     extension : std_ulogic := '0' ) return std_ulogic_vector;
     
   --## Resizizng function for unsigned number clearly stating how exactly the 
-  --# resizing will be done. Extends numbers with zeros.
+  --# resizing will be done. Extends numbers with zeros. The leftmost bit is
+  --# treated as the most significant bit (like in NUMERIC_STD).
   --#
   --# Args:
   --#   s: Vector to  resize
@@ -167,7 +171,8 @@ package sizing is
     
   --## Resizizng function for signed number clearly stating how exactly the 
   --# resizing will be done. Extends most significant bits with a sign bit,
-  --# and least significant bits with zeros.
+  --# and least significant bits with zeros. The leftmost bit is treated as the
+  --# most significant bit (like in NUMERIC_STD).
   --#
   --# Args:
   --#   s: Vector to  resize
@@ -279,7 +284,8 @@ package body sizing is
   end function;
 
   --## Resizizng function for std_ulogic_vector clearly stating how exactly the 
-  --# resizing will be done.
+  --# resizing will be done. The leftmost bit is treated as the most significant
+  --# bit (like in NUMERIC_STD).
   function change_size (s : std_ulogic_vector; new_size : positive; method : resize_method;
       extension : std_ulogic := '0' ) return std_ulogic_vector is
     
@@ -329,7 +335,8 @@ package body sizing is
   end function;
   
   --## Resizizng function for unsigned number clearly stating how exactly the 
-  --# resizing will be done. Extends numbers with zeros.
+  --# resizing will be done. Extends numbers with zeros. The leftmost bit is
+  --# treated as the most significant bit (like in NUMERIC_STD).
   function change_size (s : u_unsigned; new_size : positive; method : resize_method)
     return u_unsigned is
   begin
@@ -339,7 +346,8 @@ package body sizing is
   
   --## Resizizng function for signed number clearly stating how exactly the 
   --# resizing will be done. Extends most significant bits with a sign bit,
-  --# and least significant bits with zeros.
+  --# and least significant bits with zeros. The leftmost bit is treated as the
+  --# most significant bit (like in NUMERIC_STD).
   function change_size (s : u_signed; new_size : positive; method : resize_method)
     return u_signed is
   begin
