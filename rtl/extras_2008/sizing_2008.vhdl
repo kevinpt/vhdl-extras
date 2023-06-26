@@ -264,29 +264,68 @@ package body sizing is
   end function;
   
   
+  --## Checks if resize is correct
+  function is_resize_ill_formed(new_size,
+                                old_size : natural;
+                                method   : resize_method)
+                                return boolean is
+  begin
+    case method is
+      when truncate_LSBs | truncate_MSBs =>
+        return (old_size < new_size);
+      when extend_LSBs | extend_MSBs =>
+        return (old_size > new_size);
+    end case;
+  end function;
+
   --## Resizizng function for std_ulogic_vector clearly stating how exactly the 
   --# resizing will be done.
   function change_size (s : std_ulogic_vector; new_size : positive; method : resize_method;
       extension : std_ulogic := '0' ) return std_ulogic_vector is
     
-    variable v : std_ulogic_vector(new_size-1 downto 0);
+    variable v : std_ulogic_vector(s'high downto s'low); -- var to resize
+    variable r : std_ulogic_vector(new_size-1 downto 0); -- result
+
+    alias sr : std_ulogic_vector(s'reverse_range) is s;
+    alias rr : std_ulogic_vector(r'reverse_range) is r;
+
+    -- Null range sulv to trigger elaboration failure
+    constant NASULV : std_ulogic_vector (0 downto 1) := (others => '0');
   begin
   
+    -- Safeguards against ill-formed resize attempts
+    if is_resize_ill_formed(new_size, s'length, method) then
+      assert false report "Ill-formed resize." severity failure;
+      return NASULV;
+    end if;
+
+    -- No need to do anything
+    if s'length = new_size then
+      return s;
+    end if;
+
+    -- v'range is downto regardless of s'range
+    v := sr when s'ascending else s;
+
     case method is
       when truncate_LSBs =>
-        return s( s'high downto (s'length - new_size) );
+        r := v( v'left downto (v'left - (new_size - 1)) );
       when truncate_MSBs =>
-        return s(new_size-1 downto 0);
+        r := v( (v'right + (new_size - 1)) downto v'right);
       when extend_LSBs   =>
-        v(v'high downto new_size - s'length) := s;
-        v(new_size - s'length - 1 downto 0) := (others => extension);
-        return v;
+        r(r'left downto (new_size - v'length)) := v;
+        r(r'left - v'length downto 0) := (others => extension);
       when extend_MSBs   =>
-        v(new_size-1 downto s'high+1) := (others => extension);
-        v(s'high downto 0) := s;
-        return v;
+        r(r'left downto v'length) := (others => extension);
+        r(v'length-1 downto 0) := v;
     end case;
-  
+
+    -- Choose the same range as input
+    if s'ascending then
+        return rr;
+    else
+        return r;
+    end if;
   end function;
   
   --## Resizizng function for unsigned number clearly stating how exactly the 
@@ -308,7 +347,7 @@ package body sizing is
     case method is
       when extend_MSBs   =>
         return u_signed(
-          change_size(std_ulogic_vector(s), new_size, method, s(s'high)));
+          change_size(std_ulogic_vector(s), new_size, method, s(s'left)));
       when others =>
         return u_signed(
           change_size(std_ulogic_vector(s), new_size, method, '0'));
