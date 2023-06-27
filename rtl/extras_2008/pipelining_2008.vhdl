@@ -204,7 +204,8 @@ package pipelining is
   component fixed_delay_line_universal is
     generic (
 	  type ELEMENT_TYPE; --# Type of the element being delayed
-      STAGES : natural   --# Number of delay stages (0 for short circuit)
+      STAGES : natural;   --# Number of delay stages (0 for short circuit)
+      ATTR_SRL_STYLE : string := "auto" --# Shift reg. style (Xilinx only; auto, register, srl, srl_reg, reg_srl, reg_srl_reg, or block)
       );
     port (
       --# {{clocks|}}
@@ -223,7 +224,8 @@ package pipelining is
   --## Fixed delay line for std_ulogic data.
   component fixed_delay_line is
     generic (
-      STAGES : natural  --# Number of delay stages (0 for short circuit)
+      STAGES : natural;  --# Number of delay stages (0 for short circuit)
+      ATTR_SRL_STYLE : string := "auto" --# Shift reg. style (Xilinx only; auto, register, srl, srl_reg, reg_srl, reg_srl_reg, or block)
       );
     port (
       --# {{clocks|}}
@@ -242,7 +244,8 @@ package pipelining is
   --## Fixed delay line for std_ulogic_vector data.
   component fixed_delay_line_sulv is
     generic (
-      STAGES : natural  --# Number of delay stages (0 for short circuit)
+      STAGES : natural;  --# Number of delay stages (0 for short circuit)
+      ATTR_SRL_STYLE : string := "auto" --# Shift reg. style (Xilinx only; auto, register, srl, srl_reg, reg_srl, reg_srl_reg, or block)
       );
     port (
       --# {{clocks|}}
@@ -261,7 +264,8 @@ package pipelining is
   --## Fixed delay line for signed data.
   component fixed_delay_line_signed is
     generic (
-      STAGES : natural  --# Number of delay stages (0 for short circuit)
+      STAGES : natural;  --# Number of delay stages (0 for short circuit)
+      ATTR_SRL_STYLE : string := "auto" --# Shift reg. style (Xilinx only; auto, register, srl, srl_reg, reg_srl, reg_srl_reg, or block)
       );
     port (
       --# {{clocks|}}
@@ -280,7 +284,8 @@ package pipelining is
   --## Fixed delay line for unsigned data.
   component fixed_delay_line_unsigned is
     generic (
-      STAGES : natural  --# Number of delay stages (0 for short circuit)
+      STAGES : natural;  --# Number of delay stages (0 for short circuit)
+      ATTR_SRL_STYLE : string := "auto" --# Shift reg. style (Xilinx only; auto, register, srl, srl_reg, reg_srl, reg_srl_reg, or block)
       );
     port (
       --# {{clocks|}}
@@ -620,7 +625,8 @@ use ieee.std_logic_1164.all;
 entity fixed_delay_line_universal is
   generic (
     type ELEMENT_TYPE;
-    STAGES : natural
+    STAGES : natural;
+    ATTR_SRL_STYLE : string := "auto"
     );
   port (
     Clock : in std_ulogic;
@@ -631,23 +637,56 @@ entity fixed_delay_line_universal is
 end entity;
 
 architecture rtl of fixed_delay_line_universal is
+  function is_auto(attr_gen : string) return boolean is
+    constant str_auto : string := "auto";
+  begin
+    if attr_gen'length /= str_auto'length then
+      return false;
+    else
+      return (attr_gen = str_auto);
+    end if;
+  end function;
+
   type elements_vector is array ( natural range <> ) of ELEMENT_TYPE;
-  signal dly : elements_vector(0 to STAGES-1);
 begin
 
   g : if STAGES = 0 generate
     Data_out <= Data_in;
   elsif STAGES > 0 generate
-    delay: process(Clock) is
-    begin
-      if rising_edge(Clock) then
-        if Enable = '1' then
-          dly <= Data_in & dly(0 to dly'high-1);
-        end if;
-      end if;
-    end process;
 
-    Data_out <= dly(dly'high);
+    g2 : if not is_auto(ATTR_SRL_STYLE) generate
+      signal dly : elements_vector(0 to STAGES-1);
+      attribute srl_style : string;
+      attribute srl_style of dly : signal is ATTR_SRL_STYLE;
+    begin
+
+      delay: process(Clock) is
+      begin
+        if rising_edge(Clock) then
+          if Enable = '1' then
+            dly <= Data_in & dly(0 to dly'high-1);
+          end if;
+        end if;
+      end process;
+
+      Data_out <= dly(dly'high);
+
+    else generate
+      signal dly : elements_vector(0 to STAGES-1);
+    begin
+
+      delay: process(Clock) is
+      begin
+        if rising_edge(Clock) then
+          if Enable = '1' then
+            dly <= Data_in & dly(0 to dly'high-1);
+          end if;
+        end if;
+      end process;
+
+      Data_out <= dly(dly'high);
+
+    end generate g2;
   end generate;
 
 end architecture;
@@ -658,7 +697,8 @@ use ieee.std_logic_1164.all;
 
 entity fixed_delay_line is
   generic (
-    STAGES : natural
+    STAGES : natural;
+    ATTR_SRL_STYLE : string := "auto"
     );
   port (
     Clock : in std_ulogic;
@@ -671,7 +711,8 @@ end entity;
 architecture rtl of fixed_delay_line is
 begin
   dl_inst : entity work.fixed_delay_line_universal(rtl)
-    generic map (ELEMENT_TYPE => Data_in'subtype, STAGES => STAGES)
+    generic map (ELEMENT_TYPE => Data_in'subtype, STAGES => STAGES,
+      ATTR_SRL_STYLE => ATTR_SRL_STYLE)
 	port map (Clock, Enable, Data_in, Data_out);
 end architecture;
 
@@ -681,7 +722,8 @@ use ieee.std_logic_1164.all;
 
 entity fixed_delay_line_sulv is
   generic (
-    STAGES : natural
+    STAGES : natural;
+    ATTR_SRL_STYLE : string := "auto"
     );
   port (
     Clock : in std_ulogic;
@@ -694,7 +736,8 @@ end entity;
 architecture rtl of fixed_delay_line_sulv is
 begin
   dl_inst : entity work.fixed_delay_line_universal(rtl)
-    generic map (ELEMENT_TYPE => Data_in'subtype, STAGES => STAGES)
+    generic map (ELEMENT_TYPE => Data_in'subtype, STAGES => STAGES,
+      ATTR_SRL_STYLE => ATTR_SRL_STYLE)
 	port map (Clock, Enable, Data_in, Data_out);
 end architecture;
 
@@ -705,7 +748,8 @@ use ieee.numeric_std.all;
 
 entity fixed_delay_line_signed is
   generic (
-    STAGES : natural
+    STAGES : natural;
+    ATTR_SRL_STYLE : string := "auto"
     );
   port (
     Clock : in std_ulogic;
@@ -718,7 +762,8 @@ end entity;
 architecture rtl of fixed_delay_line_signed is
 begin
   dl_inst : entity work.fixed_delay_line_universal(rtl)
-    generic map (ELEMENT_TYPE => Data_in'subtype, STAGES => STAGES)
+    generic map (ELEMENT_TYPE => Data_in'subtype, STAGES => STAGES,
+      ATTR_SRL_STYLE => ATTR_SRL_STYLE)
 	port map (Clock, Enable, Data_in, Data_out);
 end architecture;
 
@@ -729,7 +774,8 @@ use ieee.numeric_std.all;
 
 entity fixed_delay_line_unsigned is
   generic (
-    STAGES : natural
+    STAGES : natural;
+    ATTR_SRL_STYLE : string := "auto"
     );
   port (
     Clock : in std_ulogic;
@@ -742,7 +788,8 @@ end entity;
 architecture rtl of fixed_delay_line_unsigned is
 begin
   dl_inst : entity work.fixed_delay_line_universal(rtl)
-    generic map (ELEMENT_TYPE => Data_in'subtype, STAGES => STAGES)
+    generic map (ELEMENT_TYPE => Data_in'subtype, STAGES => STAGES,
+      ATTR_SRL_STYLE => ATTR_SRL_STYLE)
 	port map (Clock, Enable, Data_in, Data_out);
 end architecture;
 
