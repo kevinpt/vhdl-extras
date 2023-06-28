@@ -31,7 +31,7 @@
 --# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 --# DEALINGS IN THE SOFTWARE.
 --#
---# DEPENDENCIES: common_2008 pipelining_2008
+--# DEPENDENCIES: common_2008 sizing_2008
 --#
 --# DESCRIPTION:
 --#   This package implements general purpose digital filters.
@@ -59,25 +59,6 @@ package filtering is
   --#  Signed value representing the Factor scaled to the range of Size.
   function attenuation_gain(Factor : attenuation_factor; Size : positive) return signed;
 
-
---  component fir_filter is
---    generic (
---      RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
---      );
---    port (
---      --# {{clocks|}}
---      Clock : in std_ulogic;
---      Reset : in std_ulogic;
-
---      --# {{control|}}
---      Coefficients : in signed_array;
-
---      --# {{data|}}
---      New_data : in std_ulogic;
---      Data_in  : in signed;
---      Data_out : out signed
---      );
---  end component;
   
   --# Finite Impulse Response filter.
   component fir_filter is
@@ -242,107 +223,58 @@ package body filtering is
 end package body;
 
 
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
---library ieee;
---use ieee.std_logic_1164.all;
---use ieee.numeric_std.all;
+library extras_2008;
+use extras_2008.common.all;
 
---library extras;
---use extras.sizing.ceil_log2;
+entity tapped_delay_line is
+  generic (
+    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    );
+  port (
+    Clock  : in std_ulogic;
+    Reset  : in std_ulogic;
+    Enable : in std_ulogic;
 
---library extras_2008;
---use extras_2008.common.all;
---use extras_2008.filtering.all;
---use extras_2008.pipelining.tapped_delay_line;
+    Data   : in std_ulogic_vector;
+    Taps   : out sulv_array
+    );
+end entity;
 
---entity fir_filter is
---  generic (
---    RESET_ACTIVE_LEVEL : std_ulogic := '1' --# Asynch. reset control level
---    );
---  port (
---    Clock : in std_ulogic;
---    Reset : in std_ulogic;
---    
---    Coefficients : in signed_array;
+architecture rtl of tapped_delay_line is
+begin
+  reg : process(Clock, Reset)
+  begin
+    if Reset = RESET_ACTIVE_LEVEL then
+      for i in Taps'range loop
+        Taps(i) <= (Taps(Taps'low)'range => '0');
+      end loop;
+    elsif rising_edge(Clock) then
+      if Enable = '1' then
 
---    New_data : in std_ulogic;
---    Data_in  : in signed;
---    Data_out : out signed
---    );
---end entity;
+        Taps(Taps'low) <= Data;
 
---architecture rtl of fir_filter is
---  constant ACCUM_LEN : positive := Data_out'length +
---                                   ceil_log2(Coefficients'length) +
---                                   Coefficients'element'length;
---  signal accum : signed(ACCUM_LEN-1 downto 0);
+        for i in Taps'low+1 to Taps'high loop
+          Taps(i) <= Taps(i-1);
+        end loop;
 
---  signal din : std_ulogic_vector(Data_in'length-1 downto 0);
---  signal taps_sulv : sulv_array(0 to Coefficients'length-1)(Data_in'range);
---  signal taps : signed_array(0 to Coefficients'length-1)(Data_in'range);
-
---  subtype filter_taps is integer range 0 to Coefficients'length-1;
---  signal ix : filter_taps;
---  signal shift_en : std_ulogic;
---begin
-
---  din <= to_stdulogicvector(std_logic_vector(Data_in));
-
---  dl: tapped_delay_line
---    generic map (
---      RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL,
---      REGISTER_FIRST_STAGE => true
---    )
---    port map (
---      Clock => Clock,
---      Reset => Reset,
---      Enable => shift_en,
---      Data  => din,
---      Taps  => taps_sulv
---    );
---    
---  taps <= to_signed_array(taps_sulv);
-
---  filt: process(Clock, Reset) is
---    variable prod : signed(Data_in'length + Coefficients'element'length - 1 downto 0);
---  begin
---    if Reset = RESET_ACTIVE_LEVEL then
---      ix <= filter_taps'high;
---      accum <= (others => '0');
---      Data_out <= (Data_out'range => '0');
---      shift_en <= '0';
---    elsif rising_edge(Clock) then
---      -- Multiply current tap with its coefficient
---      prod := taps(ix) * Coefficients(ix);
---      accum <= accum + resize(prod, accum'length);
-
---      shift_en <= '0';
-
---      if ix /= 0 then -- Cycle through taps
---        ix <= ix - 1;
---      elsif New_data = '1' then -- Done with each tap
---        ix <= filter_taps'high;
---        shift_en <= '1';
---        Data_out <= accum(Coefficients'element'length + Data_out'length - 1 downto Coefficients'element'length);
---        accum <= (others => '0'); -- Reset accumulator
---      end if;
---    end if;
---  end process;
-
---end architecture;
+      end if;
+    end if;
+  end process;
+end architecture;
 
 
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-library extras;
-use extras.sizing.ceil_log2;
-
 library extras_2008;
 use extras_2008.common.all;
 use extras_2008.filtering.all;
-use extras_2008.pipelining.tapped_delay_line;
+use extras_2008.sizing.ceil_log2;
 
 
 entity fir_filter is
@@ -383,10 +315,9 @@ begin
 
   din <= to_stdulogicvector(std_logic_vector(Data));
 
-  dl: tapped_delay_line
+  dl: entity work.tapped_delay_line(rtl)
     generic map (
-      RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL,
-      REGISTER_FIRST_STAGE => true
+      RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL
     )
     port map (
       Clock => Clock,
