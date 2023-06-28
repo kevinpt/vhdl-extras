@@ -31,7 +31,7 @@
 --# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 --# DEALINGS IN THE SOFTWARE.
 --#
---# DEPENDENCIES: common_2008 pipelining_2008
+--# DEPENDENCIES: common_2008 pipelining_2008 sizing_2008
 --#
 --# DESCRIPTION:
 --#   This package implements general purpose digital filters.
@@ -227,12 +227,10 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-library extras;
-use extras.sizing.ceil_log2;
-
 library extras_2008;
 use extras_2008.common.all;
 use extras_2008.filtering.all;
+use extras_2008.sizing.ceil_log2;
 use extras_2008.pipelining.tapped_delay_line;
 
 
