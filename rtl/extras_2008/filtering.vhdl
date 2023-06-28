@@ -31,7 +31,7 @@
 --# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 --# DEALINGS IN THE SOFTWARE.
 --#
---# DEPENDENCIES: common_2008 pipelining_2008 sizing_2008
+--# DEPENDENCIES: common_2008 sizing_2008
 --#
 --# DESCRIPTION:
 --#   This package implements general purpose digital filters.
@@ -229,9 +229,52 @@ use ieee.numeric_std.all;
 
 library extras_2008;
 use extras_2008.common.all;
+
+entity tapped_delay_line is
+  generic (
+    RESET_ACTIVE_LEVEL : std_ulogic := '1'
+    );
+  port (
+    Clock  : in std_ulogic;
+    Reset  : in std_ulogic;
+    Enable : in std_ulogic;
+
+    Data   : in std_ulogic_vector;
+    Taps   : out sulv_array
+    );
+end entity;
+
+architecture rtl of tapped_delay_line is
+begin
+  reg : process(Clock, Reset)
+  begin
+    if Reset = RESET_ACTIVE_LEVEL then
+      for i in Taps'range loop
+        Taps(i) <= (Taps(Taps'low)'range => '0');
+      end loop;
+    elsif rising_edge(Clock) then
+      if Enable = '1' then
+
+        Taps(Taps'low) <= Data;
+
+        for i in Taps'low+1 to Taps'high loop
+          Taps(i) <= Taps(i-1);
+        end loop;
+
+      end if;
+    end if;
+  end process;
+end architecture;
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+library extras_2008;
+use extras_2008.common.all;
 use extras_2008.filtering.all;
 use extras_2008.sizing.ceil_log2;
-use extras_2008.pipelining.tapped_delay_line;
 
 
 entity fir_filter is
@@ -272,10 +315,9 @@ begin
 
   din <= to_stdulogicvector(std_logic_vector(Data));
 
-  dl: tapped_delay_line
+  dl: entity work.tapped_delay_line(rtl)
     generic map (
-      RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL,
-      REGISTER_FIRST_STAGE => true
+      RESET_ACTIVE_LEVEL => RESET_ACTIVE_LEVEL
     )
     port map (
       Clock => Clock,
